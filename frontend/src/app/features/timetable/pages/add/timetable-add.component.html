@@ -1,0 +1,31 @@
+<section class="page">
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow">University ERP Management</span>
+
+      <h1>Add Timetable</h1>
+
+      <p>Create a new timetable record.</p>
+    </div>
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="cancel()"
+      aria-label="Go back"
+    >
+      <span class="back-icon">←</span>
+      <span>Back</span>
+    </button>
+  </header>
+
+  <div class="card">
+    <app-timetable-form
+      [model]="model()"
+      [loading]="loading()"
+      submitLabel="Create Timetable"
+      (save)="save($event)"
+      (cancel)="cancel()"
+    />
+  </div>
+</section>

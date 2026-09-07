@@ -1,0 +1,328 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+
+// ============================================================
+// FILTER CARD
+// ============================================================
+
+.filter-card {
+  width: 100%;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+
+// ============================================================
+// HEADER
+// ============================================================
+
+.filter-header {
+  margin-bottom: 18px;
+
+  h3 {
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 14px;
+    font-weight: 750;
+
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 4px 0 0;
+
+    color: #64748b;
+
+    font-size: 10px;
+    line-height: 1.5;
+  }
+}
+
+
+// ============================================================
+// FILTER GRID
+// ============================================================
+
+.filter-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+// ============================================================
+// FIELD
+// ============================================================
+
+.field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  label {
+    color: #475569;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1.4;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-height: 36px;
+
+    padding: 0 9px;
+
+    box-sizing: border-box;
+
+    color: #0f172a;
+    background: #ffffff;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 11px;
+
+    transition:
+      border-color 140ms ease,
+      box-shadow 140ms ease,
+      background-color 140ms ease;
+
+    &:hover {
+      border-color: #94a3b8;
+    }
+
+    &:focus {
+      border-color: #2563eb;
+
+      box-shadow:
+        0 0 0 3px rgb(37 99 235 / 8%);
+    }
+
+    &:disabled {
+      color: #94a3b8;
+      background: #f8fafc;
+
+      cursor: not-allowed;
+    }
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+
+  select {
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  input[type='number'] {
+    appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      margin: 0;
+
+      appearance: none;
+    }
+  }
+
+  input[type='datetime-local'] {
+    cursor: pointer;
+  }
+}
+
+
+// ============================================================
+// ACTIONS
+// ============================================================
+
+.filter-actions {
+  margin-top: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  button {
+    min-height: 35px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border-radius: 6px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+      background-color 140ms ease,
+      border-color 140ms ease,
+      color 140ms ease,
+      box-shadow 140ms ease,
+      opacity 140ms ease;
+
+    &:focus-visible {
+      outline: none;
+
+      box-shadow:
+        0 0 0 3px rgb(37 99 235 / 12%);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+
+      cursor: not-allowed;
+    }
+  }
+}
+
+
+// ============================================================
+// SEARCH BUTTON
+// ============================================================
+
+.btn-search {
+  color: #ffffff;
+
+  background: #2563eb;
+
+  border: 1px solid #2563eb;
+
+  &:hover:not(:disabled) {
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+  }
+
+  &:active:not(:disabled) {
+    background: #1e40af;
+
+    border-color: #1e40af;
+  }
+}
+
+
+// ============================================================
+// CLEAR BUTTON
+// ============================================================
+
+.btn-clear {
+  color: #475569;
+
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+
+  &:hover:not(:disabled) {
+    color: #334155;
+
+    background: #f8fafc;
+
+    border-color: #94a3b8;
+  }
+
+  &:active:not(:disabled) {
+    background: #f1f5f9;
+  }
+}
+
+
+// ============================================================
+// TABLET
+// ============================================================
+
+@media (max-width: 1100px) {
+
+  .filter-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+// ============================================================
+// MOBILE
+// ============================================================
+
+@media (max-width: 600px) {
+
+  .filter-card {
+    padding: 15px;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .filter-actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
+
+}
+
+
+// ============================================================
+// SMALL MOBILE
+// ============================================================
+
+@media (max-width: 380px) {
+
+  .filter-card {
+    padding: 12px;
+  }
+
+  .filter-header {
+    margin-bottom: 14px;
+
+    h3 {
+      font-size: 13px;
+    }
+
+    p {
+      font-size: 9px;
+    }
+  }
+
+}

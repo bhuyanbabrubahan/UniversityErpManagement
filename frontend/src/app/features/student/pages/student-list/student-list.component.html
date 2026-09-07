@@ -1,0 +1,77 @@
+<div class="page-container">
+
+  <!-- =====================================================
+       PAGE HEADER
+       ===================================================== -->
+
+  <div class="page-header">
+
+    <div class="page-title">
+
+      <mat-icon class="title-icon">
+        school
+      </mat-icon>
+
+      <span>
+        Students
+      </span>
+
+    </div>
+
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      routerLink="/dashboard/students/add"
+    >
+
+      <mat-icon>
+        add
+      </mat-icon>
+
+      <span>
+        Add Student
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       SEARCH & FILTER
+       ===================================================== -->
+
+  <app-student-search-filter
+    (search)="onSearch($event)"
+    (reset)="onReset()"
+  >
+  </app-student-search-filter>
+
+
+  <!-- =====================================================
+       STUDENT TABLE CARD
+       ===================================================== -->
+
+  <div class="student-list-card">
+
+    <app-student-table
+      [students]="students()"
+      [loading]="loading()"
+      [totalElements]="totalElements()"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageNumber()"
+
+      (pageChange)="onPageChange($event)"
+      (sortChange)="onSortChange($event)"
+
+      (view)="viewStudent($event)"
+      (edit)="editStudent($event)"
+      (delete)="deleteStudent($event)"
+    >
+    </app-student-table>
+
+  </div>
+
+</div>

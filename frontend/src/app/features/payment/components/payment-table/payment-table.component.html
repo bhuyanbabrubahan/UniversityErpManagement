@@ -1,0 +1,509 @@
+<div class="table-card">
+
+
+  <!-- ===================================================== -->
+  <!-- TABLE HEADER -->
+  <!-- ===================================================== -->
+
+  <div class="table-header">
+
+    <div>
+
+      <h3>
+        Fee Payments
+      </h3>
+
+      <span>
+        {{ totalElements }} payment(s)
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- LOADING -->
+  <!-- ===================================================== -->
+
+  @if (loading) {
+
+    <div class="loading-state">
+
+      <div class="loader"></div>
+
+      <p>
+        Loading fee payments...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ===================================================== -->
+  <!-- ERROR -->
+  <!-- ===================================================== -->
+
+  @else if (errorMessage) {
+
+    <div class="error-state">
+
+      <strong>
+        Something went wrong
+      </strong>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ===================================================== -->
+  <!-- EMPTY -->
+  <!-- ===================================================== -->
+
+  @else if (payments.length === 0) {
+
+    <div class="empty-state">
+
+      <h3>
+        No payments found
+      </h3>
+
+      <p>
+        There are no fee payment records
+        matching your search.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ===================================================== -->
+  <!-- TABLE -->
+  <!-- ===================================================== -->
+
+  @else {
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+
+            <!-- ID -->
+
+            <th
+              (click)="sort('id')">
+
+              ID
+
+              @if (
+                sortBy === 'id'
+              ) {
+
+                <span>
+
+                  {{
+                    direction === 'asc'
+                      ? '↑'
+                      : '↓'
+                  }}
+
+                </span>
+
+              }
+
+            </th>
+
+
+            <!-- STUDENT -->
+
+            <th>
+              Student
+            </th>
+
+
+            <!-- ACADEMIC YEAR -->
+
+            <th>
+              Academic Year
+            </th>
+
+
+            <!-- TOTAL FEE -->
+
+            <th
+              (click)="sort('totalFee')">
+
+              Total Fee
+
+              @if (
+                sortBy === 'totalFee'
+              ) {
+
+                <span>
+
+                  {{
+                    direction === 'asc'
+                      ? '↑'
+                      : '↓'
+                  }}
+
+                </span>
+
+              }
+
+            </th>
+
+
+            <!-- PAID -->
+
+            <th>
+              Paid
+            </th>
+
+
+            <!-- DUE -->
+
+            <th>
+              Due
+            </th>
+
+
+            <!-- STATUS -->
+
+            <th>
+              Status
+            </th>
+
+
+            <!-- MODE -->
+
+            <th>
+              Mode
+            </th>
+
+
+            <!-- PAYMENT DATE -->
+
+            <th>
+              Payment Date
+            </th>
+
+
+            <!-- ACTIONS -->
+
+            <th>
+              Actions
+            </th>
+
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            payment of payments;
+            track trackById($index, payment)
+          ) {
+
+            <tr>
+
+
+              <!-- ID -->
+
+              <td>
+
+                <strong>
+                  #{{ payment.id }}
+                </strong>
+
+              </td>
+
+
+              <!-- STUDENT -->
+
+              <td>
+
+                <div class="student-cell">
+
+                  <strong>
+                    {{ payment.studentName }}
+                  </strong>
+
+                  <small>
+                    Student ID:
+                    {{ payment.studentId }}
+                  </small>
+
+                </div>
+
+              </td>
+
+
+              <!-- ACADEMIC YEAR -->
+
+              <td>
+
+                {{ payment.academicYear }}
+
+              </td>
+
+
+              <!-- TOTAL FEE -->
+
+              <td>
+
+                ₹{{
+                  payment.totalFee
+                    | number:'1.2-2'
+                }}
+
+              </td>
+
+
+              <!-- PAID -->
+
+              <td>
+
+                <strong>
+
+                  ₹{{
+                    payment.paidAmount
+                      | number:'1.2-2'
+                  }}
+
+                </strong>
+
+              </td>
+
+
+              <!-- DUE -->
+
+              <td>
+
+                ₹{{
+                  payment.dueAmount
+                    | number:'1.2-2'
+                }}
+
+              </td>
+
+
+              <!-- STATUS -->
+
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class]="
+                    getStatusClass(
+                      payment.paymentStatus
+                    )
+                  ">
+
+                  {{
+                    getStatusLabel(
+                      payment.paymentStatus
+                    )
+                  }}
+
+                </span>
+
+              </td>
+
+
+              <!-- MODE -->
+
+              <td>
+
+                {{
+                  getModeLabel(
+                    payment.paymentMode
+                  )
+                }}
+
+              </td>
+
+
+              <!-- PAYMENT DATE -->
+
+              <td>
+
+                {{
+                  payment.paymentDate || '-'
+                }}
+
+              </td>
+
+
+              <!-- ACTIONS -->
+
+              <td>
+
+                <div class="actions">
+
+
+                  <!-- VIEW -->
+
+                  <button
+                    type="button"
+                    class="action-btn view"
+                    title="View"
+                    (click)="
+                      onView(payment.id)
+                    ">
+
+                    View
+
+                  </button>
+
+
+                  <!-- EDIT -->
+
+                  <button
+                    type="button"
+                    class="action-btn edit"
+                    title="Edit"
+                    (click)="
+                      onEdit(payment.id)
+                    ">
+
+                    Edit
+
+                  </button>
+
+
+                  <!-- DELETE -->
+
+                  <button
+                    type="button"
+                    class="action-btn delete"
+                    title="Delete"
+                    (click)="
+                      onDelete(payment.id)
+                    ">
+
+                    Delete
+
+                  </button>
+
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- =================================================== -->
+    <!-- PAGINATION -->
+    <!-- =================================================== -->
+
+    <div class="pagination">
+
+
+      <div class="page-info">
+
+        Page
+        {{ page + 1 }}
+        of
+        {{ totalPages || 1 }}
+
+      </div>
+
+
+      <div class="page-controls">
+
+
+        <!-- ROWS -->
+
+        <label>
+
+          Rows:
+
+          <select
+            [value]="size"
+            (change)="changePageSize($event)">
+
+            <option value="10">
+              10
+            </option>
+
+            <option value="20">
+              20
+            </option>
+
+            <option value="50">
+              50
+            </option>
+
+            <option value="100">
+              100
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <!-- PREVIOUS -->
+
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="
+            page === 0 ||
+            loading
+          "
+          (click)="previousPage()">
+
+          Previous
+
+        </button>
+
+
+        <!-- NEXT -->
+
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="
+            last ||
+            loading
+          "
+          (click)="nextPage()">
+
+          Next
+
+        </button>
+
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

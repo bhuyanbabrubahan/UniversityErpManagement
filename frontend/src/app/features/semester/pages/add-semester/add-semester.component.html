@@ -1,0 +1,129 @@
+<div class="page">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ===================================================== -->
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Add Semester
+      </h1>
+
+      <p>
+        Create a new semester and assign it to a course.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+
+      ← Back to Semesters
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       SUCCESS MESSAGE
+  ===================================================== -->
+
+  @if (successMessage) {
+
+    <div
+      class="toast success-toast"
+      role="alert">
+
+      <span class="toast-icon">
+        ✓
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Success
+        </strong>
+
+        <span>
+          {{ successMessage }}
+        </span>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       ERROR MESSAGE
+  ===================================================== -->
+
+  @if (errorMessage) {
+
+    <div
+      class="toast error-toast"
+      role="alert">
+
+      <span class="toast-icon">
+        !
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Error
+        </strong>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       FORM CARD
+  ===================================================== -->
+
+  <section class="form-card">
+
+    <div class="card-heading">
+
+      <h2>
+        Semester Information
+      </h2>
+
+      <p>
+        Enter the semester details below.
+      </p>
+
+    </div>
+
+
+    <app-semester-form
+      [loading]="loading"
+      submitLabel="Create Semester"
+      (formSubmit)="createSemester($event)"
+      (cancel)="cancel()">
+
+    </app-semester-form>
+
+  </section>
+
+</div>

@@ -1,0 +1,82 @@
+<div class="dialog-backdrop">
+
+  <div
+    class="dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="delete-payment-title">
+
+    <!-- ================================================= -->
+    <!-- ICON -->
+    <!-- ================================================= -->
+
+    <div class="dialog-icon">
+      !
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CONTENT -->
+    <!-- ================================================= -->
+
+    <div class="dialog-content">
+
+      <h2 id="delete-payment-title">
+        Delete Fee Payment?
+      </h2>
+
+      <p>
+        Are you sure you want to delete payment
+        <strong>#{{ paymentId }}</strong>?
+      </p>
+
+      <p class="warning">
+        This payment will be soft deleted and will no
+        longer appear in the active payment list.
+      </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ACTIONS -->
+    <!-- ================================================= -->
+
+    <div class="dialog-actions">
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        [disabled]="loading"
+        (click)="close()">
+
+        Cancel
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-danger"
+        [disabled]="loading"
+        (click)="confirmDelete()">
+
+        @if (loading) {
+
+          <span class="button-loader"></span>
+
+          Deleting...
+
+        } @else {
+
+          Delete Payment
+
+        }
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

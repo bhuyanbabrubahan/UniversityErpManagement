@@ -1,0 +1,1271 @@
+<div class="profile-page">
+  <!-- ========================================================= -->
+  <!-- LOADING -->
+  <!-- ========================================================= -->
+
+  @if (loading) {
+    <div class="profile-state loading-state">
+      <mat-spinner diameter="32"></mat-spinner>
+
+      <div class="state-content">
+        <strong>Loading profile</strong>
+        <span>Please wait...</span>
+      </div>
+    </div>
+  }
+
+  <!-- ========================================================= -->
+  <!-- PROFILE -->
+  <!-- ========================================================= -->
+
+  @else if (profile) {
+    <!-- ======================================================= -->
+    <!-- PROFILE HEADER -->
+    <!-- ======================================================= -->
+
+    <section class="profile-header">
+      <div class="profile-header-top">
+        <div class="profile-title">
+          <span class="title-icon">
+            <mat-icon>person</mat-icon>
+          </span>
+
+          <div>
+            <span class="title-main">ADMIN PROFILE</span>
+            <span class="title-sub">Account & personal information</span>
+          </div>
+        </div>
+
+        @if (!editing) {
+          <button type="button" class="top-edit-btn" (click)="startEdit()">
+            <mat-icon>edit</mat-icon>
+            <span>Edit Profile</span>
+          </button>
+        }
+      </div>
+
+      <!-- ===================================================== -->
+      <!-- PROFILE MAIN -->
+      <!-- ===================================================== -->
+
+      <div class="profile-main">
+        <!-- AVATAR -->
+
+        <div class="avatar-section">
+          <div class="avatar-wrapper">
+            <img
+              class="profile-avatar"
+              [src]="profileImage"
+              alt="Profile Image"
+            />
+
+            @if (uploadingImage) {
+              <div class="avatar-loading">
+                <mat-spinner diameter="24"></mat-spinner>
+              </div>
+            }
+
+            <button
+              type="button"
+              class="avatar-camera"
+              [disabled]="uploadingImage"
+              (click)="imageInput.click()"
+              aria-label="Change profile photo"
+            >
+              <mat-icon>photo_camera</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- PROFILE DETAILS -->
+
+        <div class="profile-details">
+          <div class="profile-name-row">
+            <h1>{{ displayName }}</h1>
+
+            @if (profile.emailVerified) {
+              <span class="verified-pill">
+                <mat-icon>verified</mat-icon>
+                VERIFIED
+              </span>
+            }
+          </div>
+
+          <div class="profile-role">
+            <mat-icon>badge</mat-icon>
+            <span>{{ displayRole }}</span>
+          </div>
+
+          <div class="profile-contact-row">
+            @if (profile.email) {
+              <div class="header-contact">
+                <mat-icon>mail_outline</mat-icon>
+                <span>{{ profile.email }}</span>
+              </div>
+            }
+
+            @if (profile.mobileNumber) {
+              <div class="header-contact">
+                <mat-icon>phone_android</mat-icon>
+                <span>{{ profile.mobileNumber }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- ACTIONS -->
+
+          <div class="profile-actions">
+            <input
+              hidden
+              type="file"
+              accept="image/jpeg,image/png,image/jpg"
+              #imageInput
+              [disabled]="uploadingImage"
+              (change)="onImageSelected($event)"
+            />
+
+            <button
+              type="button"
+              class="profile-action-btn"
+              [disabled]="uploadingImage"
+              (click)="imageInput.click()"
+            >
+              <mat-icon>photo_camera</mat-icon>
+              <span>Change Photo</span>
+            </button>
+
+            @if (profile.profileImage) {
+              <button
+                type="button"
+                class="profile-action-btn danger"
+                [disabled]="uploadingImage"
+                (click)="removeImage()"
+              >
+                <mat-icon>delete_outline</mat-icon>
+                <span>Remove</span>
+              </button>
+            }
+
+            <button
+              type="button"
+              class="profile-action-btn password"
+              (click)="openChangePasswordDialog()"
+            >
+              <mat-icon>lock_outline</mat-icon>
+              <span>Change Password</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      @if (uploadingImage) {
+        <div class="upload-status">
+          <mat-spinner diameter="15"></mat-spinner>
+          <span>Uploading profile image...</span>
+        </div>
+      }
+    </section>
+
+    <!-- ======================================================= -->
+    <!-- VIEW MODE -->
+    <!-- ======================================================= -->
+
+    @if (!editing) {
+      <div class="profile-layout">
+        <!-- PERSONAL INFORMATION -->
+
+        <section class="profile-card">
+          <div class="card-heading">
+            <div class="heading-icon purple">
+              <mat-icon>person</mat-icon>
+            </div>
+
+            <div>
+              <h2>Personal Information</h2>
+              <p>Basic personal details</p>
+            </div>
+          </div>
+
+          <div class="compact-info-grid">
+            <div class="compact-field">
+              <span>First Name</span>
+              <strong>{{ profile.firstName || "-" }}</strong>
+            </div>
+
+            <div class="compact-field">
+              <span>Middle Name</span>
+              <strong>{{ profile.middleName || "-" }}</strong>
+            </div>
+
+            <div class="compact-field">
+              <span>Last Name</span>
+              <strong>{{ profile.lastName || "-" }}</strong>
+            </div>
+
+            <div class="compact-field">
+              <span>Gender</span>
+              <strong>{{ profile.gender || "-" }}</strong>
+            </div>
+
+            <div class="compact-field">
+              <span>Date of Birth</span>
+              <strong>{{ profile.dateOfBirth || "-" }}</strong>
+            </div>
+
+            <div class="compact-field">
+              <span>Mobile</span>
+              <strong>{{ profile.mobileNumber || "-" }}</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- ADMIN INFORMATION -->
+
+        @if (isAdmin) {
+          <section class="profile-card">
+            <div class="card-heading">
+              <div class="heading-icon red">
+                <mat-icon>admin_panel_settings</mat-icon>
+              </div>
+
+              <div>
+                <h2>Admin Information</h2>
+                <p>Administrator details</p>
+              </div>
+            </div>
+
+            <div class="compact-info-grid">
+              <div class="compact-field">
+                <span>Full Name</span>
+                <strong>
+                  {{ profile.fullName || displayName || "-" }}
+                </strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Designation</span>
+                <strong>
+                  {{ profile.adminDesignation || "-" }}
+                </strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Status</span>
+
+                <strong>
+                  <span class="status-active">
+                    <i></i>
+                    Active
+                  </span>
+                </strong>
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- SUPER ADMIN -->
+
+        @if (isSuperAdmin) {
+          <section class="profile-card">
+            <div class="card-heading">
+              <div class="heading-icon violet">
+                <mat-icon>security</mat-icon>
+              </div>
+
+              <div>
+                <h2>System Information</h2>
+                <p>System administrator details</p>
+              </div>
+            </div>
+
+            <div class="compact-info-grid">
+              <div class="compact-field">
+                <span>Full Name</span>
+                <strong>{{ profile.fullName || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Email</span>
+                <strong>{{ profile.email || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Role</span>
+                <strong>{{ profile.role || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Designation</span>
+                <strong>
+                  {{ profile.superAdminDesignation || "-" }}
+                </strong>
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- STUDENT -->
+
+        @if (isStudent) {
+          <section class="profile-card">
+            <div class="card-heading">
+              <div class="heading-icon orange">
+                <mat-icon>manage_accounts</mat-icon>
+              </div>
+
+              <div>
+                <h2>Extra Personal Information</h2>
+                <p>Additional personal details</p>
+              </div>
+            </div>
+
+            <div class="compact-info-grid">
+              <div class="compact-field">
+                <span>Blood Group</span>
+                <strong>{{ profile.bloodGroup || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Category</span>
+                <strong>{{ profile.category || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Religion</span>
+                <strong>{{ profile.religion || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Nationality</span>
+                <strong>{{ profile.nationality || "-" }}</strong>
+              </div>
+            </div>
+          </section>
+
+          <!-- STUDENT ACADEMIC -->
+
+          <section class="profile-card">
+            <div class="card-heading">
+              <div class="heading-icon indigo">
+                <mat-icon>school</mat-icon>
+              </div>
+
+              <div>
+                <h2>Academic Information</h2>
+                <p>Student academic and enrollment details</p>
+              </div>
+            </div>
+
+            <div class="compact-info-grid academic-grid">
+              <div class="compact-field">
+                <span>Student Code</span>
+                <strong>{{ profile.studentCode || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Roll Number</span>
+                <strong>{{ profile.rollNumber || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Registration Number</span>
+                <strong>{{ profile.registrationNumber || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Admission Number</span>
+                <strong>{{ profile.admissionNumber || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Admission Date</span>
+                <strong>{{ profile.admissionDate || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Academic Year</span>
+                <strong>{{ profile.academicYear || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Department</span>
+                <strong>{{ departmentName || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Course</span>
+                <strong>{{ courseName || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Semester</span>
+                <strong>{{ semesterName || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Section</span>
+                <strong>{{ profile.section || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Batch</span>
+                <strong>{{ profile.batch || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Current Year</span>
+                <strong>{{ profile.currentYear ?? "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Student Type</span>
+                <strong>{{ profile.studentType || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Student Status</span>
+                <strong>{{ profile.studentStatus || "-" }}</strong>
+              </div>
+            </div>
+          </section>
+
+          <!-- STUDENT ADDITIONAL -->
+
+          <section class="profile-card">
+            <div class="card-heading">
+              <div class="heading-icon cyan">
+                <mat-icon>contact_phone</mat-icon>
+              </div>
+
+              <div>
+                <h2>Additional Information</h2>
+                <p>Alternative contact and identity details</p>
+              </div>
+            </div>
+
+            <div class="compact-info-grid">
+              <div class="compact-field">
+                <span>Alternate Mobile</span>
+                <strong>{{ profile.alternateMobile || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Alternate Email</span>
+                <strong>{{ profile.alternateEmail || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Aadhaar Number</span>
+                <strong>{{ profile.aadhaarNumber || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>PAN Number</span>
+                <strong>{{ profile.panNumber || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Signature Image</span>
+                <strong>{{ profile.signatureImage || "-" }}</strong>
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- FACULTY -->
+
+        @if (isFaculty) {
+          <section class="profile-card">
+            <div class="card-heading">
+              <div class="heading-icon teal">
+                <mat-icon>workspace_premium</mat-icon>
+              </div>
+
+              <div>
+                <h2>Faculty Information</h2>
+                <p>Professional and employment details</p>
+              </div>
+            </div>
+
+            <div class="compact-info-grid">
+              <div class="compact-field">
+                <span>Employee Code</span>
+                <strong>{{ profile.employeeCode || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Department</span>
+                <strong>{{ departmentName || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Designation</span>
+                <strong>{{ profile.facultyDesignation || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Qualification</span>
+                <strong>{{ profile.qualification || "-" }}</strong>
+              </div>
+
+              <div class="compact-field">
+                <span>Joining Date</span>
+                <strong>{{ profile.joiningDate || "-" }}</strong>
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- ADDRESS -->
+
+        <section class="profile-card full-width-card">
+          <div class="card-heading">
+            <div class="heading-icon green">
+              <mat-icon>location_on</mat-icon>
+            </div>
+
+            <div>
+              <h2>Address</h2>
+              <p>Residential and location details</p>
+            </div>
+          </div>
+
+          <div class="address-box">
+            <div class="address-icon">
+              <mat-icon>home</mat-icon>
+            </div>
+
+            <div class="address-text">
+              <strong>
+                {{ profile.houseNumber || "-" }},
+                {{ profile.street || "-" }}
+              </strong>
+
+              <span>
+                {{ profile.landmark || "-" }}
+                •
+                {{ profile.villageName || "-" }}
+                •
+                {{ profile.tehsilName || "-" }}
+              </span>
+
+              <span>
+                {{ profile.districtName || "-" }}
+                •
+                {{ profile.stateName || "-" }}
+                •
+                {{ profile.countryName || "-" }}
+                •
+                {{ profile.pincode || "-" }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+
+        <section class="profile-card">
+          <div class="card-heading">
+            <div class="heading-icon blue">
+              <mat-icon>mail</mat-icon>
+            </div>
+
+            <div>
+              <h2>Contact & Verification</h2>
+              <p>Primary contact information</p>
+            </div>
+          </div>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon email">
+                <mat-icon>mail_outline</mat-icon>
+              </div>
+
+              <div class="contact-content">
+                <span>Email</span>
+
+                <strong>
+                  {{ profile.email || "-" }}
+                </strong>
+
+                @if (profile.emailVerified) {
+                  <small class="verified-text">
+                    <mat-icon>check_circle</mat-icon>
+                    Verified
+                  </small>
+                } @else {
+                  <small class="unverified-text">
+                    <mat-icon>cancel</mat-icon>
+                    Not Verified
+                  </small>
+                }
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon mobile">
+                <mat-icon>phone_android</mat-icon>
+              </div>
+
+              <div class="contact-content">
+                <span>Mobile</span>
+
+                <strong>
+                  {{ profile.mobileNumber || "-" }}
+                </strong>
+
+                @if (profile.mobileVerified) {
+                  <small class="verified-text">
+                    <mat-icon>check_circle</mat-icon>
+                    Verified
+                  </small>
+                } @else {
+                  <small class="unverified-text">
+                    <mat-icon>cancel</mat-icon>
+                    Not Verified
+                  </small>
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- AUDIT -->
+
+        <section class="profile-card">
+          <div class="card-heading">
+            <div class="heading-icon gray">
+              <mat-icon>history</mat-icon>
+            </div>
+
+            <div>
+              <h2>Audit</h2>
+              <p>Profile history</p>
+            </div>
+          </div>
+
+          <div class="audit-list">
+            <div class="audit-row">
+              <div class="audit-label">
+                <mat-icon>add_circle_outline</mat-icon>
+                Created
+              </div>
+
+              <div class="audit-value">
+                {{ profile.createdAt || "-" }}
+              </div>
+            </div>
+
+            <div class="audit-row">
+              <div class="audit-label">
+                <mat-icon>person_outline</mat-icon>
+                Created By
+              </div>
+
+              <div class="audit-value">
+                {{ profile.createdBy || "-" }}
+              </div>
+            </div>
+
+            <div class="audit-row">
+              <div class="audit-label">
+                <mat-icon>update</mat-icon>
+                Updated
+              </div>
+
+              <div class="audit-value">
+                {{ profile.updatedAt || "-" }}
+              </div>
+            </div>
+
+            <div class="audit-row">
+              <div class="audit-label">
+                <mat-icon>person_outline</mat-icon>
+                Updated By
+              </div>
+
+              <div class="audit-value">
+                {{ profile.updatedBy || "-" }}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    }
+
+    <!-- ======================================================= -->
+    <!-- EDIT MODE -->
+    <!-- ======================================================= -->
+
+    @if (editing) {
+      <section class="profile-edit-section">
+        <div class="edit-form-shell">
+          <!-- EDIT HEADER -->
+
+          <div class="edit-header">
+            <div class="edit-header-left">
+              <div class="edit-header-icon">
+                <mat-icon>edit</mat-icon>
+              </div>
+
+              <div>
+                <h2>Edit Profile</h2>
+                <p>Update your profile information</p>
+              </div>
+            </div>
+
+            <div class="edit-mode-badge">
+              <span class="edit-dot"></span>
+              Editing
+            </div>
+          </div>
+
+          <form [formGroup]="profileForm" class="profile-edit-form">
+            <!-- ================================================= -->
+            <!-- BASIC INFORMATION -->
+            <!-- ================================================= -->
+
+            <div class="edit-card-section">
+              <div class="edit-card-header">
+                <div class="edit-card-title">
+                  <div class="edit-card-icon blue">
+                    <mat-icon>person</mat-icon>
+                  </div>
+
+                  <div>
+                    <h3>Basic Information</h3>
+                    <span>Personal details</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="edit-grid">
+                <!-- FIRST NAME -->
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+
+                    <input
+                      matInput
+                      formControlName="firstName"
+                      autocomplete="given-name"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <!-- MIDDLE NAME -->
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Middle Name</mat-label>
+
+                    <input
+                      matInput
+                      formControlName="middleName"
+                      autocomplete="additional-name"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <!-- LAST NAME -->
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+
+                    <input
+                      matInput
+                      formControlName="lastName"
+                      autocomplete="family-name"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <!-- EMAIL -->
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+
+                    <input matInput [value]="profile.email" readonly />
+
+                    <mat-icon matSuffix class="readonly-icon"> lock </mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <!-- MOBILE -->
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Mobile Number</mat-label>
+
+                    <input
+                      matInput
+                      formControlName="mobileNumber"
+                      autocomplete="tel"
+                    />
+
+                    <mat-icon matSuffix> phone </mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <!-- GENDER -->
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Gender</mat-label>
+
+                    <mat-select formControlName="gender">
+                      @for (gender of genders; track gender) {
+                        <mat-option [value]="gender">
+                          {{ gender }}
+                        </mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <!-- DOB -->
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Date of Birth</mat-label>
+
+                    <input matInput type="date" formControlName="dateOfBirth" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <!-- ================================================= -->
+            <!-- STUDENT -->
+            <!-- ================================================= -->
+
+            @if (isStudent) {
+              <div class="edit-card-section">
+                <div class="edit-card-header">
+                  <div class="edit-card-title">
+                    <div class="edit-card-icon indigo">
+                      <mat-icon>school</mat-icon>
+                    </div>
+
+                    <div>
+                      <h3>Student Information</h3>
+                      <span>Academic and additional details</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="edit-grid">
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Blood Group</mat-label>
+
+                      <mat-select formControlName="bloodGroup">
+                        @for (group of bloodGroups; track group) {
+                          <mat-option [value]="group">
+                            {{ group }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Category</mat-label>
+
+                      <mat-select formControlName="category">
+                        @for (category of studentCategories; track category) {
+                          <mat-option [value]="category">
+                            {{ category }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Religion</mat-label>
+                      <input matInput formControlName="religion" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Nationality</mat-label>
+                      <input matInput formControlName="nationality" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Alternate Mobile</mat-label>
+                      <input matInput formControlName="alternateMobile" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Alternate Email</mat-label>
+
+                      <input
+                        matInput
+                        type="email"
+                        formControlName="alternateEmail"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Academic Year</mat-label>
+                      <input matInput formControlName="academicYear" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Batch</mat-label>
+                      <input matInput formControlName="batch" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Section</mat-label>
+                      <input matInput formControlName="section" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Current Year</mat-label>
+
+                      <input
+                        matInput
+                        type="number"
+                        formControlName="currentYear"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Student Type</mat-label>
+
+                      <mat-select formControlName="studentType">
+                        @for (type of studentTypes; track type) {
+                          <mat-option [value]="type">
+                            {{ type }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Student Status</mat-label>
+
+                      <mat-select formControlName="studentStatus">
+                        @for (status of studentStatuses; track status) {
+                          <mat-option [value]="status">
+                            {{ status }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Aadhaar Number</mat-label>
+                      <input matInput formControlName="aadhaarNumber" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>PAN Number</mat-label>
+                      <input matInput formControlName="panNumber" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Signature Image</mat-label>
+                      <input matInput formControlName="signatureImage" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- FACULTY -->
+            <!-- ================================================= -->
+
+            @if (isFaculty) {
+              <div class="edit-card-section">
+                <div class="edit-card-header">
+                  <div class="edit-card-title">
+                    <div class="edit-card-icon teal">
+                      <mat-icon>workspace_premium</mat-icon>
+                    </div>
+
+                    <div>
+                      <h3>Faculty Information</h3>
+                      <span>Professional and employment details</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="edit-grid">
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Employee Code</mat-label>
+                      <input matInput formControlName="employeeCode" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Designation</mat-label>
+
+                      <mat-select formControlName="designation">
+                        @for (item of designations; track item) {
+                          <mat-option [value]="item">
+                            {{ item }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Qualification</mat-label>
+
+                      <mat-select formControlName="qualification">
+                        @for (item of qualifications; track item) {
+                          <mat-option [value]="item">
+                            {{ item }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Joining Date</mat-label>
+
+                      <input
+                        matInput
+                        type="date"
+                        formControlName="joiningDate"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- ADMIN -->
+            <!-- ================================================= -->
+
+            @if (isAdmin) {
+              <div class="edit-card-section">
+                <div class="edit-card-header">
+                  <div class="edit-card-title">
+                    <div class="edit-card-icon red">
+                      <mat-icon>admin_panel_settings</mat-icon>
+                    </div>
+
+                    <div>
+                      <h3>Admin Information</h3>
+                      <span>Administrator details</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="edit-grid">
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Full Name</mat-label>
+
+                      <input matInput formControlName="fullName" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Designation</mat-label>
+
+                      <input matInput formControlName="adminDesignation" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- SUPER ADMIN -->
+            <!-- ================================================= -->
+
+            @if (isSuperAdmin) {
+              <div class="edit-card-section">
+                <div class="edit-card-header">
+                  <div class="edit-card-title">
+                    <div class="edit-card-icon violet">
+                      <mat-icon>security</mat-icon>
+                    </div>
+
+                    <div>
+                      <h3>System Information</h3>
+                      <span>System administrator details</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="edit-grid">
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Full Name</mat-label>
+
+                      <input matInput formControlName="fullName" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="edit-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Super Admin Designation</mat-label>
+
+                      <input matInput formControlName="superAdminDesignation" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- ================================================= -->
+            <!-- ADDRESS -->
+            <!-- ================================================= -->
+
+            <div class="edit-card-section">
+              <div class="edit-card-header">
+                <div class="edit-card-title">
+                  <div class="edit-card-icon green">
+                    <mat-icon>location_on</mat-icon>
+                  </div>
+
+                  <div>
+                    <h3>Address Information</h3>
+                    <span>Residential and location details</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="edit-grid">
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>House Number</mat-label>
+                    <input matInput formControlName="houseNumber" />
+                  </mat-form-field>
+                </div>
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Street</mat-label>
+                    <input matInput formControlName="street" />
+                  </mat-form-field>
+                </div>
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Landmark</mat-label>
+                    <input matInput formControlName="landmark" />
+                  </mat-form-field>
+                </div>
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Address Type</mat-label>
+
+                    <mat-select formControlName="addressType">
+                      @for (type of addressTypes; track type) {
+                        <mat-option [value]="type">
+                          {{ type }}
+                        </mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="edit-field">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Village ID</mat-label>
+
+                    <input matInput type="number" formControlName="villageId" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <!-- ================================================= -->
+            <!-- ACTION BAR -->
+            <!-- ================================================= -->
+
+            <div class="edit-actions">
+              <button
+                type="button"
+                class="edit-action-btn cancel"
+                [disabled]="saving"
+                (click)="cancelEdit()"
+              >
+                <mat-icon>close</mat-icon>
+                <span>Cancel</span>
+              </button>
+
+              <button
+                type="button"
+                class="edit-action-btn save"
+                [disabled]="saving"
+                (click)="updateProfile()"
+              >
+                @if (saving) {
+                  <mat-spinner diameter="17"></mat-spinner>
+                  <span>Saving...</span>
+                } @else {
+                  <mat-icon>check</mat-icon>
+                  <span>Save Changes</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    }
+  }
+
+  <!-- ========================================================= -->
+  <!-- EMPTY -->
+  <!-- ========================================================= -->
+
+  @else {
+    <div class="profile-state empty-state">
+      <div class="empty-icon">
+        <mat-icon>person_off</mat-icon>
+      </div>
+
+      <h3>Profile information not available</h3>
+
+      <p>We couldn't find any profile information for this account.</p>
+    </div>
+  }
+</div>

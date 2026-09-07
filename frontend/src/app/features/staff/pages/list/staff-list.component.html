@@ -1,0 +1,16 @@
+<section class="page">
+  <header>
+    <div>
+      <span class="eyebrow">UniversityErpManagement</span>
+      <h1>Staff</h1>
+      <p>Manage staff records with reusable CRUD workflow.</p>
+    </div>
+    <a class="primary" routerLink="add">Add Staff</a>
+  </header>
+  <app-staff-search-filter
+    (search)="load($event)"
+    (reset)="load()"
+  ></app-staff-search-filter>
+  <div *ngIf="loading()" class="loading">Loading…</div>
+  <app-staff-table [rows]="rows()" (remove)="remove($event)"></app-staff-table>
+</section>

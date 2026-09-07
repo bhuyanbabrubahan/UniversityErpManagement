@@ -1,0 +1,586 @@
+<main class="page">
+
+  <!-- =========================================================
+       HEADER
+  ========================================================== -->
+
+  <header class="page-header">
+
+    <div class="header-content">
+
+      <p class="eyebrow">
+        Faculty → Attendance
+      </p>
+
+      <h1>
+        Mark Attendance
+      </h1>
+
+      <p class="subtitle">
+        Students start as Present. Click a row to quickly toggle
+        Present / Absent, or use the status selector for
+        Leave and Half Day.
+      </p>
+
+    </div>
+
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="secondary"
+        (click)="back()"
+        [disabled]="loading"
+      >
+        ← Back to Classes
+      </button>
+
+
+      <button
+        type="button"
+        class="secondary"
+        routerLink="/dashboard/attendance/bulk-upload"
+        [disabled]="loading"
+      >
+        Upload Excel
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================================
+       CONTROLS
+  ========================================================== -->
+
+  <section class="panel controls">
+    <div class="session-summary">
+      <div>
+        <span class="label">Attendance date</span>
+        <strong>{{ attendanceDate }}</strong>
+      </div>
+      <div>
+        <span class="label">Session</span>
+        <strong>{{ session?.sessionStatus || 'LOADING' }}</strong>
+      </div>
+      <div>
+        <span class="label">Source</span>
+        <strong>{{ session?.attendanceSource || '—' }}</strong>
+      </div>
+      <div>
+        <span class="label">Subject / Class</span>
+        <strong>{{ session?.subjectName || '—' }}</strong>
+      </div>
+      <div>
+        <span class="label">Opened</span>
+        <strong>{{ session?.startedAt || '—' }}</strong>
+      </div>
+      <div class="actions">
+        <button type="button" class="secondary" [disabled]="loading || !students.length || !isEditable" (click)="setAll(AttendanceStatus.PRESENT)">✓ Mark All Present</button>
+        <button type="button" class="secondary" [disabled]="loading || !students.length || !isEditable" (click)="setAll(AttendanceStatus.ABSENT)">! Mark All Absent</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SUMMARY
+  ========================================================== -->
+
+  <section class="summary-grid">
+
+    <article class="summary-card total">
+
+      <div class="summary-icon">
+        👥
+      </div>
+
+      <div>
+
+        <span>Total</span>
+
+        <strong>
+          {{ students.length }}
+        </strong>
+
+      </div>
+
+    </article>
+
+
+    <article class="summary-card present">
+
+      <div class="summary-icon">
+        ✓
+      </div>
+
+      <div>
+
+        <span>Present</span>
+
+        <strong>
+          {{ present }}
+        </strong>
+
+      </div>
+
+    </article>
+
+
+    <article class="summary-card absent">
+
+      <div class="summary-icon">
+        !
+      </div>
+
+      <div>
+
+        <span>Absent</span>
+
+        <strong>
+          {{ absent }}
+        </strong>
+
+      </div>
+
+    </article>
+
+
+    <article class="summary-card leave">
+
+      <div class="summary-icon">
+        L
+      </div>
+
+      <div>
+
+        <span>Leave</span>
+
+        <strong>
+          {{ leave }}
+        </strong>
+
+      </div>
+
+    </article>
+
+
+    <article class="summary-card half-day">
+
+      <div class="summary-icon">
+        ½
+      </div>
+
+      <div>
+
+        <span>Half Day</span>
+
+        <strong>
+          {{ halfDay }}
+        </strong>
+
+      </div>
+
+    </article>
+
+  </section>
+
+
+  <!-- =========================================================
+       STUDENTS
+  ========================================================== -->
+
+  <section class="panel students-panel">
+
+
+    <!-- LOADING -->
+
+    @if (loading && !students.length) {
+
+      <div class="loading-state">
+
+        <div class="loader"></div>
+
+        <strong>
+          Loading students...
+        </strong>
+
+        <p>
+          Please wait while the student list is loaded.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- EMPTY -->
+
+    @else if (!students.length) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          !
+        </div>
+
+        <strong>
+          No students found
+        </strong>
+
+        <p>
+          No students are available for attendance.
+        </p>
+
+        <button
+          type="button"
+          class="primary"
+          [disabled]="loading"
+          (click)="loadStudents()"
+        >
+          Retry
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- TABLE -->
+
+    @else {
+
+      <div class="table-header">
+
+        <div>
+
+          <p class="eyebrow">
+            Student List
+          </p>
+
+          <h2>
+            Attendance Records
+          </h2>
+
+        </div>
+
+        <span class="student-count">
+          {{ students.length }} Students
+        </span>
+
+      </div>
+
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th class="check-column">
+                ✓
+              </th>
+
+              <th class="serial-column">
+                #
+              </th>
+
+              <th class="roll-column">
+                Roll No
+              </th>
+
+              <th>
+                Student
+              </th>
+
+              <th class="status-column">
+                Status
+              </th>
+
+              <th>
+                Remarks
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              row of students;
+              track row.studentId;
+              let i = $index
+            ) {
+
+              <tr
+                [class.present-row]="
+                  statusValue(row.attendanceStatus)
+                  === AttendanceStatus.PRESENT
+                "
+
+                [class.absent-row]="
+                  statusValue(row.attendanceStatus)
+                  === AttendanceStatus.ABSENT
+                "
+
+                [class.leave-row]="
+                  statusValue(row.attendanceStatus)
+                  === AttendanceStatus.LEAVE
+                "
+
+                [class.half-day-row]="
+                  statusValue(row.attendanceStatus)
+                  === AttendanceStatus.HALF_DAY
+                "
+
+                (click)="toggle(row)"
+              >
+                <td class="check-cell" (click)="$event.stopPropagation()">
+                  <input
+                    type="checkbox"
+                    [checked]="statusValue(row.attendanceStatus) === AttendanceStatus.PRESENT"
+                    (change)="toggle(row)"
+                    [disabled]="loading || !isEditable"
+                    aria-label="Toggle present"
+                  />
+                </td>
+
+                <!-- NUMBER -->
+
+                <td class="serial">
+                  {{ i + 1 }}
+                </td>
+
+
+                <!-- ROLL NUMBER -->
+
+                <td class="roll">
+
+                  <span
+                    class="roll-number"
+                    [class.roll-missing]="!row.rollNumber"
+                  >
+                    {{ row.rollNumber || '—' }}
+                  </span>
+
+                </td>
+
+
+                <!-- STUDENT -->
+
+                <td>
+
+                  <div class="student-cell">
+
+                    <div class="student-avatar">
+
+                      {{
+                        row.studentName
+                          ? row.studentName
+                              .charAt(0)
+                              .toUpperCase()
+                          : '?'
+                      }}
+
+                    </div>
+
+                    <div class="student-details">
+
+                      <strong>
+                        {{ row.studentName || 'Unknown Student' }}
+                      </strong>
+
+                      @if (row.rollNumber) {
+
+                        <small>
+                          Roll No: {{ row.rollNumber }}
+                        </small>
+
+                      }
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td
+                  (click)="$event.stopPropagation()"
+                >
+
+                  <select
+                    class="status-select"
+                    [ngModel]="row.attendanceStatus"
+                    (ngModelChange)="setStatus(row, $event)"
+                    [disabled]="loading || !isEditable"
+                  >
+
+                    <option
+                      [ngValue]="AttendanceStatus.PRESENT"
+                    >
+                      PRESENT
+                    </option>
+
+                    <option
+                      [ngValue]="AttendanceStatus.ABSENT"
+                    >
+                      ABSENT
+                    </option>
+
+                    <option
+                      [ngValue]="AttendanceStatus.HALF_DAY"
+                    >
+                      HALF DAY
+                    </option>
+
+                    <option
+                      [ngValue]="AttendanceStatus.LEAVE"
+                    >
+                      LEAVE
+                    </option>
+
+                  </select>
+
+                </td>
+
+
+                <!-- REMARKS -->
+
+                <td
+                  (click)="$event.stopPropagation()"
+                >
+
+                  <input
+                    class="inline"
+                    [(ngModel)]="row.remarks"
+                    placeholder="Optional"
+                    maxlength="300"
+                    [disabled]="loading || !isEditable"
+                  />
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- =======================================================
+           FOOTER
+      ======================================================== -->
+
+      <div class="footer-actions">
+
+        <div class="record-info">
+
+          <strong>
+            {{ students.length }}
+          </strong>
+
+          <span>
+            students
+          </span>
+
+          <span class="separator">
+            •
+          </span>
+
+          <span class="present-text">
+            {{ present }} Present
+          </span>
+
+          <span class="absent-text">
+            {{ absent }} Absent
+          </span>
+
+          @if (leave > 0) {
+
+            <span class="leave-text">
+              {{ leave }} Leave
+            </span>
+
+          }
+
+          @if (halfDay > 0) {
+
+            <span class="half-day-text">
+              {{ halfDay }} Half Day
+            </span>
+
+          }
+
+        </div>
+
+
+        <div class="footer-buttons">
+
+          <button
+            type="button"
+            class="secondary"
+            [disabled]="loading"
+            (click)="back()"
+          >
+            Back
+          </button>
+
+
+          <button
+            type="button"
+            class="primary"
+            [disabled]="loading || !students.length || !isEditable"
+            (click)="submit()"
+          >
+
+            @if (loading) {
+
+              <span class="button-loader"></span>
+
+              Submitting...
+
+            } @else {
+
+              ✓ Save Attendance
+
+            }
+
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            [disabled]="loading || !isEditable"
+            (click)="completeSession()">
+            Complete Session
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            [disabled]="loading || !isEditable"
+            (click)="cancelSession()">
+            Cancel Session
+          </button>
+
+        </div>
+
+      </div>
+
+    }
+
+  </section>
+
+</main>

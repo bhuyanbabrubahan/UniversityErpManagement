@@ -1,0 +1,99 @@
+<section class="page">
+
+  <!-- =====================================================
+       PAGE HEADER
+       ===================================================== -->
+
+  <header class="page-header">
+
+    <div class="page-heading">
+
+      <p class="eyebrow">
+        Admission Management
+      </p>
+
+      <h1>
+        Admissions
+      </h1>
+
+      <p class="description">
+        Manage student admission records.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="add-btn"
+      (click)="add()">
+
+      <span class="add-icon">+</span>
+
+      Add Admission
+
+    </button>
+
+  </header>
+
+
+  <!-- =====================================================
+       SEARCH FILTER
+       ===================================================== -->
+
+  <app-admission-search-filter
+    (searched)="onSearch($event)"
+    (cleared)="onClear()">
+  </app-admission-search-filter>
+
+
+  <!-- =====================================================
+       TABLE
+       ===================================================== -->
+
+  <app-admission-table
+
+    [admissions]="admissions"
+
+    [loading]="loading"
+
+    [deletingId]="deletingId"
+
+    [totalElements]="totalElements"
+
+    [page]="page"
+
+    [size]="size"
+
+    (viewed)="view($event)"
+
+    (edited)="edit($event)"
+
+    (deleted)="requestDelete($event)"
+
+    (pageChanged)="onPageChange($event)">
+
+  </app-admission-table>
+
+
+  <!-- =====================================================
+       DELETE DIALOG
+       ===================================================== -->
+
+  @if (showDeleteDialog) {
+
+    <app-delete-admission-dialog
+
+      [admission]="selectedAdmission"
+
+      [busy]="deletingId !== null"
+
+      (confirmed)="confirmDelete()"
+
+      (cancelled)="cancelDelete()">
+
+    </app-delete-admission-dialog>
+
+  }
+
+</section>

@@ -1,0 +1,109 @@
+<section class="page">
+  <!-- HEADER -->
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">University ERP / System</span>
+
+      <h1>Notification management</h1>
+
+      <p>
+        Create, publish and maintain notifications for university audiences.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <a class="secondary-btn" [routerLink]="['./send']"> Send </a>
+
+      <a class="primary-btn" [routerLink]="['./add']">
+        <span>+</span>
+        Add notification
+      </a>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <span>Total records</span>
+      <strong>{{ totalElements() }}</strong>
+    </div>
+
+    <div class="stat">
+      <span>Loaded</span>
+      <strong>{{ rows().length }}</strong>
+    </div>
+
+    <div class="stat">
+      <span>Page</span>
+      <strong>
+        {{ totalPages() ? page() + 1 : 0 }} / {{ totalPages() }}
+      </strong>
+    </div>
+  </div>
+
+  <!-- SEARCH / FILTER -->
+  <app-notification-search-filter
+    (search)="page.set(0); load($event)"
+    (reset)="reset()"
+  ></app-notification-search-filter>
+
+  <!-- ERROR -->
+  <div class="alert" *ngIf="error()" role="alert">
+    <strong>Unable to complete request</strong>
+
+    <span>{{ error() }}</span>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-line" *ngIf="loading()" aria-live="polite">
+    <span class="spinner"></span>
+
+    Loading notifications...
+  </div>
+
+  <!-- TABLE -->
+  <app-notification-table
+    [rows]="rows()"
+    (remove)="remove($event)"
+  ></app-notification-table>
+
+  <!-- PAGINATION -->
+  <footer class="pagination" *ngIf="totalElements() > 0">
+    <div class="page-size">
+      <span>Rows</span>
+
+      <select [value]="size()" (change)="changeSize($any($event.target).value)">
+        <option *ngFor="let item of pageSizes" [value]="item">
+          {{ item }}
+        </option>
+      </select>
+    </div>
+
+    <span class="range">
+      {{ page() * size() + 1 }}–{{
+        Math.min((page() + 1) * size(), totalElements())
+      }}
+      of {{ totalElements() }}
+    </span>
+
+    <div class="page-buttons">
+      <button
+        type="button"
+        [disabled]="page() === 0 || loading()"
+        (click)="goToPage(page() - 1)"
+        aria-label="Previous page"
+      >
+        ‹
+      </button>
+
+      <button
+        type="button"
+        [disabled]="page() >= totalPages() - 1 || loading()"
+        (click)="goToPage(page() + 1)"
+        aria-label="Next page"
+      >
+        ›
+      </button>
+    </div>
+  </footer>
+</section>

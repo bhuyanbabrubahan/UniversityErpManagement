@@ -1,0 +1,679 @@
+<div class="page-container">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
+  <div class="page-header">
+
+    <div class="header-left">
+
+      <button type="button" class="back-button" (click)="goBack()">
+        <span class="back-icon">←</span>
+        <span>Back to Payments</span>
+      </button>
+
+      <div class="title-section">
+        <div class="title-icon">
+          ₹
+        </div>
+
+        <div>
+          <h1>Payment Details</h1>
+          <p>View complete student fee payment information.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button type="button" class="btn btn-secondary" (click)="goBack()">
+        <span>←</span>
+        Back
+      </button>
+
+      @if (payment) {
+      <button type="button" class="btn btn-primary" (click)="editPayment()">
+        <span>✎</span>
+        Edit Payment
+      </button>
+      }
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+  @if (loading) {
+
+  <div class="state-card loading-state">
+
+    <div class="loader"></div>
+
+    <h3>Loading Payment Details</h3>
+
+    <p>
+      Please wait while we fetch the payment information...
+    </p>
+
+  </div>
+
+  }
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+  @if (!loading && errorMessage) {
+
+  <div class="state-card error-state">
+
+    <div class="state-icon">
+      !
+    </div>
+
+    <h3>Something went wrong</h3>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+    <button type="button" class="btn btn-secondary" (click)="goBack()">
+      ← Back to Payments
+    </button>
+
+  </div>
+
+  }
+
+
+  <!-- =====================================================
+       PAYMENT DETAILS
+  ====================================================== -->
+  @if (!loading && payment) {
+
+  <div class="payment-content">
+
+
+    <!-- =================================================
+           PAYMENT HERO
+      ================================================== -->
+    <section class="payment-hero">
+
+      <div class="hero-main">
+
+        <div class="hero-avatar">
+          {{ payment.studentName.charAt(0) || 'S' }}
+        </div>
+
+        <div class="hero-info">
+
+          <div class="hero-label">
+            PAYMENT #{{ payment.id }}
+          </div>
+
+          <h2>
+            {{ payment.studentName || 'Student' }}
+          </h2>
+
+          <div class="hero-meta">
+
+            <span>
+              Student ID: #{{ payment.studentId }}
+            </span>
+
+            <span class="meta-dot">•</span>
+
+            <span>
+              Admission ID: #{{ payment.admissionId }}
+            </span>
+
+            <span class="meta-dot">•</span>
+
+            <span>
+              {{ payment.academicYear || '-' }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-status">
+
+        <span class="status-label">
+          PAYMENT STATUS
+        </span>
+
+        <span class="status" [ngClass]="getPaymentStatusClass(payment.paymentStatus)">
+          {{ getPaymentStatusLabel(payment.paymentStatus) }}
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+           QUICK SUMMARY
+      ================================================== -->
+    <section class="summary-grid">
+
+      <div class="summary-card">
+
+        <div class="summary-icon blue">
+          ₹
+        </div>
+
+        <div class="summary-content">
+          <span class="summary-label">Total Fee</span>
+          <strong>
+            ₹{{ formatCurrency(payment.totalFee) }}
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon green">
+          ✓
+        </div>
+
+        <div class="summary-content">
+          <span class="summary-label">Paid Amount</span>
+          <strong>
+            ₹{{ formatCurrency(payment.paidAmount) }}
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon orange">
+          !
+        </div>
+
+        <div class="summary-content">
+          <span class="summary-label">Due Amount</span>
+          <strong class="due-value">
+            ₹{{ formatCurrency(payment.dueAmount) }}
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-icon purple">
+          %
+        </div>
+
+        <div class="summary-content">
+          <span class="summary-label">Payment Progress</span>
+          <strong>
+            {{ getPaymentProgress() | number:'1.0-0' }}%
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+           MAIN GRID
+      ================================================== -->
+    <div class="details-grid">
+
+
+      <!-- =================================================
+             PAYMENT INFORMATION
+        ================================================== -->
+      <section class="detail-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrap">
+
+            <div class="card-icon blue-icon">
+              ₹
+            </div>
+
+            <div>
+              <h2>Payment Information</h2>
+              <p>Transaction and payment details</p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="detail-list">
+
+          <div class="detail-row">
+
+            <span>Payment ID</span>
+
+            <strong>
+              #{{ payment.id }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Academic Year</span>
+
+            <strong>
+              {{ payment.academicYear || '-' }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Payment Date</span>
+
+            <strong>
+              {{ payment.paymentDate || '-' }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Payment Mode</span>
+
+            <span class="payment-mode" [ngClass]="getPaymentModeClass(payment.paymentMode)">
+              {{ getPaymentModeLabel(payment.paymentMode) }}
+            </span>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Transaction Reference</span>
+
+            <strong class="reference-value">
+              {{ payment.transactionReference || '-' }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Payment Status</span>
+
+            <span class="status" [ngClass]="getPaymentStatusClass(payment.paymentStatus)">
+              {{ getPaymentStatusLabel(payment.paymentStatus) }}
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+             STUDENT & ADMISSION
+        ================================================== -->
+      <section class="detail-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrap">
+
+            <div class="card-icon purple-icon">
+              👤
+            </div>
+
+            <div>
+              <h2>Student & Admission</h2>
+              <p>Student enrollment information</p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="detail-list">
+
+          <div class="detail-row">
+
+            <span>Student ID</span>
+
+            <strong>
+              #{{ payment.studentId }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Student Name</span>
+
+            <strong>
+              {{ payment.studentName || '-' }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Admission ID</span>
+
+            <strong>
+              #{{ payment.admissionId }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Scholarship ID</span>
+
+            <strong>
+              {{ payment.scholarshipId ?? '-' }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+             FEE SUMMARY
+        ================================================== -->
+      <section class="detail-card fee-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrap">
+
+            <div class="card-icon green-icon">
+              ₹
+            </div>
+
+            <div>
+              <h2>Fee Summary</h2>
+              <p>Complete payment calculation</p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="fee-details">
+
+          <div class="fee-row">
+
+            <span>Total Fee</span>
+
+            <strong>
+              ₹{{ formatCurrency(payment.totalFee) }}
+            </strong>
+
+          </div>
+
+
+          <div class="fee-row">
+
+            <span>Scholarship Amount</span>
+
+            <strong class="scholarship-value">
+              − ₹{{ formatCurrency(payment.scholarshipAmount) }}
+            </strong>
+
+          </div>
+
+
+          <div class="final-payable">
+
+            <div>
+              <span>Final Payable</span>
+              <small>Amount to be paid</small>
+            </div>
+
+            <strong>
+              ₹{{ formatCurrency(payment.finalPayableAmount) }}
+            </strong>
+
+          </div>
+
+
+          <div class="fee-row paid-row">
+
+            <span>Paid Amount</span>
+
+            <strong>
+              ₹{{ formatCurrency(payment.paidAmount) }}
+            </strong>
+
+          </div>
+
+
+          <div class="fee-row due-row">
+
+            <span>Due Amount</span>
+
+            <strong>
+              ₹{{ formatCurrency(payment.dueAmount) }}
+            </strong>
+
+          </div>
+
+
+          <!-- PAYMENT PROGRESS -->
+          <div class="progress-section">
+
+            <div class="progress-header">
+
+              <div>
+                <span>Payment Progress</span>
+                <small>Amount paid against final payable</small>
+              </div>
+
+              <strong>
+                {{ getPaymentProgress() | number:'1.0-0' }}%
+              </strong>
+
+            </div>
+
+
+            <div class="progress-track">
+
+              <div class="progress-fill" [style.width.%]="getPaymentProgress()">
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+             REMARKS
+        ================================================== -->
+      <section class="detail-card remarks-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrap">
+
+            <div class="card-icon orange-icon">
+              ≡
+            </div>
+
+            <div>
+              <h2>Remarks</h2>
+              <p>Additional payment information</p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="remarks-box">
+
+          <div class="remarks-quote">
+            “
+          </div>
+
+          <p>
+            {{
+            payment.remarks ||
+            'No remarks available.'
+            }}
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+             AUDIT INFORMATION
+        ================================================== -->
+      <section class="detail-card audit-card">
+
+        <div class="card-header">
+
+          <div class="card-title-wrap">
+
+            <div class="card-icon gray-icon">
+              ✓
+            </div>
+
+            <div>
+              <h2>Audit Information</h2>
+              <p>Record history and ownership</p>
+            </div>
+
+          </div>
+
+          <span class="active-badge">
+            {{ payment.status }}
+          </span>
+
+        </div>
+
+
+        <div class="detail-list">
+
+          <div class="detail-row">
+
+            <span>Record Status</span>
+
+            <strong class="active-text">
+              {{ payment.status }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>Created By</span>
+
+            <strong>
+              {{ payment.createdBy || '-' }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+            <span>Created At</span>
+            <strong>
+              {{ payment.createdAt ? (payment.createdAt | date:'d MMMM yyyy, h.mm a') : '-' }}
+            </strong>
+          </div>
+
+          <div class="detail-row">
+
+            <span>Updated By</span>
+
+            <strong>
+              {{ payment.updatedBy || '-' }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+            <span>Updated At</span>
+
+            <strong>
+              {{ payment.updatedAt ? (payment.updatedAt | date:'d MMMM yyyy, h.mm a') : '-' }}
+            </strong>
+          </div>
+
+
+          @if (payment.deletedBy) {
+
+          <div class="detail-row">
+
+            <span>Deleted By</span>
+
+            <strong>
+              {{ payment.deletedBy }}
+            </strong>
+
+          </div>
+
+          }
+
+
+          @if (payment.deletedDate) {
+
+          <div class="detail-row">
+
+            <span>Deleted Date</span>
+
+            <strong>
+              {{ payment.deletedDate }}
+            </strong>
+
+          </div>
+
+          }
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  }
+
+</div>

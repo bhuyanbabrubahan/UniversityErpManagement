@@ -1,0 +1,268 @@
+<section class="table-card">
+
+  <!-- Header -->
+  <div class="table-header">
+
+    <div>
+      <h2>Course List</h2>
+
+      <span>
+        {{ totalElements }} course(s)
+      </span>
+    </div>
+
+  </div>
+
+
+  <!-- Loading -->
+  @if (loading) {
+
+    <div class="loading-state">
+
+      <div class="loader"></div>
+
+      <h3>Loading courses</h3>
+
+      <p>
+        Please wait while we fetch the course data.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <!-- Table -->
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('id')">
+                ID
+              </button>
+            </th>
+
+            <th>
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('courseCode')">
+                Code
+              </button>
+            </th>
+
+            <th>
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('courseName')">
+                Course
+              </button>
+            </th>
+
+            <th>
+              Department
+            </th>
+
+            <th>
+              Duration
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th class="actions-column">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            course of courses;
+            track course.id
+          ) {
+
+            <tr>
+
+              <!-- ID -->
+              <td>
+                <span class="course-id">
+                  #{{ course.id }}
+                </span>
+              </td>
+
+
+              <!-- Code -->
+              <td>
+
+                <span class="course-code">
+                  {{ course.courseCode }}
+                </span>
+
+              </td>
+
+
+              <!-- Course -->
+              <td>
+
+                <div class="course-info">
+
+                  <strong>
+                    {{ course.courseName }}
+                  </strong>
+
+                  @if (course.description) {
+
+                    <span>
+                      {{ course.description }}
+                    </span>
+
+                  }
+
+                </div>
+
+              </td>
+
+
+              <!-- Department -->
+              <td>
+
+                <div class="department-info">
+
+                  <strong>
+                    {{ course.departmentName || '—' }}
+                  </strong>
+
+                  @if (course.departmentId) {
+
+                    <small>
+                      ID: {{ course.departmentId }}
+                    </small>
+
+                  }
+
+                </div>
+
+              </td>
+
+
+              <!-- Duration -->
+              <td>
+
+                <span class="duration">
+                  {{ course.durationInMonths }} months
+                </span>
+
+              </td>
+
+
+              <!-- Status -->
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class]="getStatusClass(course.status)">
+
+                  <span class="status-dot"></span>
+
+                  {{ course.status }}
+
+                </span>
+
+              </td>
+
+
+              <!-- Actions -->
+              <td>
+
+                <div class="actions">
+
+                  <button
+                    type="button"
+                    class="action-btn view"
+                    title="View course"
+                    (click)="onView(course.id)">
+
+                    View
+
+                  </button>
+
+                  <button
+                    type="button"
+                    class="action-btn edit"
+                    title="Edit course"
+                    (click)="onEdit(course.id)">
+
+                    Edit
+
+                  </button>
+
+                  <button
+                    type="button"
+                    class="action-btn delete"
+                    title="Delete course"
+                    [disabled]="course.status === 'DELETED'"
+                    (click)="onDelete(course)">
+
+                    Delete
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          } @empty {
+
+            <tr>
+
+              <td
+                colspan="7"
+                class="empty-cell">
+
+                <div class="empty-state">
+
+                  <div class="empty-icon">
+                    📚
+                  </div>
+
+                  <h3>
+                    No courses found
+                  </h3>
+
+                  <p>
+                    No courses match your current search criteria.
+                  </p>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+</section>

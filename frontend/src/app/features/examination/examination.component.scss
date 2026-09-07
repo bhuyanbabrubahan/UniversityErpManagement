@@ -1,0 +1,1 @@
+:host{display:block}.exam-grid{display:grid;gap:16px}.result-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}.result-form button{grid-column:1/-1;justify-self:start}@media(max-width:700px){.result-form{grid-template-columns:1fr}.result-form button{grid-column:auto}}

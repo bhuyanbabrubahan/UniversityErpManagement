@@ -1,0 +1,233 @@
+<div class="document-list-page"> 
+ 
+  <!-- ============================================================ 
+       PAGE HEADER 
+  ============================================================= --> 
+ 
+  <div class="page-header"> 
+ 
+    <div class="header-content"> 
+ 
+      <div class="title-section"> 
+ 
+        <div class="title-icon"> 
+          <mat-icon>description</mat-icon> 
+        </div> 
+ 
+        <div> 
+          <h1>Student Documents</h1> 
+ 
+          <p> 
+            Manage, search and download student documents. 
+          </p> 
+        </div> 
+ 
+      </div> 
+ 
+ 
+      <button 
+        type="button" 
+        class="btn-add" 
+        (click)="addDocument()" 
+        [disabled]="loading" 
+      > 
+ 
+        <mat-icon>add</mat-icon> 
+ 
+        <span> 
+          Add Document 
+        </span> 
+ 
+      </button> 
+ 
+    </div> 
+ 
+  </div> 
+ 
+ 
+  <!-- ============================================================ 
+       SEARCH FILTER 
+  ============================================================= --> 
+ 
+  <section class="filter-section"> 
+ 
+    <app-student-document-search-filter 
+      (searched)="onSearch($event)" 
+      (reset)="clearSearch()" 
+    /> 
+ 
+  </section> 
+ 
+ 
+  <!-- ============================================================ 
+       CONTENT CARD 
+  ============================================================= --> 
+ 
+  <section class="content-card"> 
+ 
+    <!-- ========================================================== 
+         TABLE HEADER 
+    =========================================================== --> 
+ 
+    <div class="table-header"> 
+ 
+      <div> 
+ 
+        <h2> 
+          Document List 
+        </h2> 
+ 
+        <p *ngIf="searchMode"> 
+          Search results for the selected filters. 
+        </p> 
+ 
+        <p *ngIf="!searchMode"> 
+          All uploaded student documents. 
+        </p> 
+ 
+      </div> 
+ 
+ 
+      <div class="table-summary"> 
+ 
+        <span> 
+          Total: 
+        </span> 
+ 
+        <strong> 
+          {{ totalElements }} 
+        </strong> 
+ 
+      </div> 
+ 
+    </div> 
+ 
+ 
+    <!-- ========================================================== 
+         LOADING STATE 
+    =========================================================== --> 
+ 
+    <div 
+      class="loading-state" 
+      *ngIf="loading" 
+    > 
+ 
+      <mat-spinner 
+        diameter="38" 
+      /> 
+ 
+      <p> 
+        Loading documents... 
+      </p> 
+ 
+    </div> 
+ 
+ 
+    <!-- ========================================================== 
+         EMPTY STATE 
+    =========================================================== --> 
+ 
+    <div 
+      class="empty-state" 
+      *ngIf=" 
+        !loading && 
+        documents.length === 0 
+      " 
+    > 
+ 
+      <div class="empty-icon"> 
+ 
+        <mat-icon> 
+          folder_open 
+        </mat-icon> 
+ 
+      </div> 
+ 
+      <h3> 
+        No documents found 
+      </h3> 
+ 
+      <p *ngIf="searchMode"> 
+        No student documents match the selected search criteria. 
+      </p> 
+ 
+      <p *ngIf="!searchMode"> 
+        No student documents have been uploaded yet. 
+      </p> 
+ 
+      <button 
+        type="button" 
+        class="btn-empty-action" 
+        (click)="searchMode ? clearSearch() : addDocument()" 
+      > 
+ 
+        <mat-icon> 
+          {{ searchMode ? 'clear' : 'add' }} 
+        </mat-icon> 
+ 
+        <span> 
+          {{ searchMode ? 'Clear Search' : 'Add Document' }} 
+        </span> 
+ 
+      </button> 
+ 
+    </div> 
+ 
+ 
+    <!-- ========================================================== 
+         REUSABLE DOCUMENT TABLE 
+    =========================================================== --> 
+ 
+    <app-student-document-table 
+      *ngIf=" 
+        !loading && 
+        documents.length > 0 
+      " 
+      [documents]="documents" 
+      [loading]="loading" 
+      (view)="viewDocument($event)" 
+      (edit)="editDocument($event)" 
+      (download)="downloadDocument($event)" 
+      (delete)="deleteDocument($event)" 
+    /> 
+ 
+ 
+    <!-- ========================================================== 
+         PAGINATION 
+    =========================================================== --> 
+ 
+    <div
+      class="pagination-wrapper"
+      *ngIf="
+        !loading &&
+        documents.length > 0
+      "
+    >
+      <mat-paginator
+        [length]="totalElements"
+        [pageIndex]="page"
+        [pageSize]="size"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+        [showFirstLastButtons]="true"
+        (page)="onPageChange($event)"
+      />
+    </div>
+ 
+    
+ 
+  </section> 
+ 
+ 
+  <!-- ============================================================ 
+       DELETE CONFIRMATION DIALOG 
+  ============================================================= --> 
+ 
+  <app-delete-student-document-dialog 
+    *ngIf="deleteDialogVisible" 
+    [document]="selectedDocumentForDelete" 
+    [loading]="deletingId !== null" 
+    (confirmed)="confirmDelete($event)" 
+    (cancelled)="cancelDelete()" 
+  /> 
+ 
+</div> 

@@ -1,0 +1,810 @@
+// ============================================================
+// HOST
+// ============================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+
+// ============================================================
+// PAGE
+// ============================================================
+
+.document-list-page {
+  width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+  padding: 20px;
+
+  background: #f8fafc;
+}
+
+
+// ============================================================
+// PAGE HEADER
+// ============================================================
+
+.page-header {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+
+.header-content {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+}
+
+
+// ============================================================
+// TITLE
+// ============================================================
+
+.title-section {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.title-icon {
+  width: 42px;
+  height: 42px;
+
+  flex: 0 0 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #2563eb;
+
+  background: #eff6ff;
+
+  border: 1px solid #dbeafe;
+  border-radius: 9px;
+
+  box-sizing: border-box;
+
+  mat-icon {
+    width: 21px;
+    height: 21px;
+
+    font-size: 21px;
+
+    line-height: 21px;
+  }
+}
+
+
+.title-section h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 19px;
+  font-weight: 750;
+
+  line-height: 1.35;
+}
+
+
+.title-section p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+// ============================================================
+// ADD BUTTON
+// ============================================================
+
+.btn-add {
+  min-height: 36px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  color: #ffffff;
+
+  background: #2563eb;
+
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    opacity 140ms ease;
+
+  mat-icon {
+    width: 17px;
+    height: 17px;
+
+    font-size: 17px;
+
+    line-height: 17px;
+  }
+
+  &:hover:not(:disabled) {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+
+  &:active:not(:disabled) {
+    background: #1e40af;
+    border-color: #1e40af;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    box-shadow:
+      0 0 0 3px rgb(37 99 235 / 14%);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+  }
+}
+
+
+// ============================================================
+// FILTER
+// ============================================================
+
+.filter-section {
+  width: 100%;
+
+  margin-bottom: 18px;
+}
+
+
+// ============================================================
+// CONTENT CARD
+// ============================================================
+
+.content-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+
+// ============================================================
+// TABLE HEADER
+// ============================================================
+
+.table-header {
+  min-height: 66px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 14px 18px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  box-sizing: border-box;
+}
+
+
+.table-header h2 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 14px;
+  font-weight: 750;
+
+  line-height: 1.4;
+}
+
+
+.table-header p {
+  margin: 3px 0 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.45;
+}
+
+
+.table-summary {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  white-space: nowrap;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  strong {
+    color: #0f172a;
+
+    font-size: 11px;
+    font-weight: 750;
+  }
+}
+
+
+// ============================================================
+// LOADING
+// ============================================================
+
+.loading-state {
+  min-height: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 11px;
+  }
+}
+
+
+// ============================================================
+// EMPTY STATE
+// ============================================================
+
+.empty-state {
+  min-height: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 35px 20px;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+
+.empty-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  color: #64748b;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+
+  mat-icon {
+    width: 25px;
+    height: 25px;
+
+    font-size: 25px;
+
+    line-height: 25px;
+  }
+}
+
+
+.empty-state h3 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+
+.empty-state p {
+  max-width: 420px;
+
+  margin: 5px 0 16px;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+}
+
+
+.btn-empty-action {
+  min-height: 34px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 0 12px;
+
+  color: #2563eb;
+
+  background: #ffffff;
+
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease;
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+
+    font-size: 16px;
+
+    line-height: 16px;
+  }
+
+  &:hover {
+    background: #eff6ff;
+
+    border-color: #93c5fd;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    box-shadow:
+      0 0 0 3px rgb(37 99 235 / 10%);
+  }
+}
+
+
+// ============================================================
+// PAGINATION
+// ============================================================
+
+.pagination-wrapper {
+  width: 100%;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  border-top: 1px solid #e2e8f0;
+
+  box-sizing: border-box;
+}
+
+
+.pagination-wrapper mat-paginator {
+  width: auto;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+
+// ============================================================
+// MATERIAL PAGINATION OVERRIDES
+// ============================================================
+
+::ng-deep {
+
+  .pagination-wrapper {
+
+    .mat-mdc-paginator-container {
+      min-height: 52px;
+
+      padding: 0 12px;
+    }
+
+    .mat-mdc-paginator-page-size-label,
+    .mat-mdc-paginator-range-label {
+      color: #64748b;
+
+      font-size: 9px;
+    }
+
+    .mat-mdc-paginator-page-size-select {
+      font-size: 9px;
+    }
+
+    .mat-mdc-icon-button {
+      width: 32px;
+      height: 32px;
+
+      padding: 4px;
+    }
+  }
+}
+
+
+// ============================================================
+// TABLET
+// ============================================================
+
+@media (max-width: 1100px) {
+
+  .document-list-page {
+    padding: 16px;
+  }
+
+}
+
+
+// ============================================================
+// MOBILE
+// ============================================================
+
+@media (max-width: 700px) {
+
+  .document-list-page {
+    padding: 12px;
+  }
+
+
+  .header-content {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .title-section {
+    width: 100%;
+  }
+
+
+  .title-section h1 {
+    font-size: 17px;
+  }
+
+
+  .btn-add {
+    width: 100%;
+  }
+
+
+  .table-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .table-summary {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+
+
+  .content-card {
+    border-radius: 8px;
+  }
+
+
+  .pagination-wrapper {
+    justify-content: center;
+
+    overflow-x: auto;
+  }
+
+}
+
+
+// ============================================================
+// SMALL MOBILE
+// ============================================================
+
+@media (max-width: 420px) {
+
+  .document-list-page {
+    padding: 10px;
+  }
+
+
+  .title-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+
+    mat-icon {
+      width: 19px;
+      height: 19px;
+
+      font-size: 19px;
+
+      line-height: 19px;
+    }
+  }
+
+
+  .title-section {
+    gap: 9px;
+  }
+
+
+  .title-section h1 {
+    font-size: 15px;
+  }
+
+
+  .title-section p {
+    font-size: 9px;
+  }
+
+
+  .table-header {
+    padding: 12px;
+  }
+
+
+  .table-header h2 {
+    font-size: 13px;
+  }
+
+
+  .table-header p {
+    font-size: 9px;
+  }
+
+}
+
+/* ============================================================
+   PAGINATION
+============================================================ */
+
+.pagination-wrapper {
+  margin-top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  min-height: 58px;
+
+  padding: 0 14px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e2e8f0;
+
+  box-sizing: border-box;
+
+  ::ng-deep {
+    .mat-mdc-paginator {
+      width: 100%;
+
+      min-height: 58px;
+
+      padding: 0;
+
+      background: transparent;
+
+      color: #64748b;
+
+      font-size: 11px;
+    }
+
+    /* Items per page */
+    .mat-mdc-paginator-page-size {
+      margin-right: 18px;
+
+      color: #64748b;
+
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .mat-mdc-paginator-page-size-label {
+      margin-right: 7px;
+
+      color: #64748b;
+
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Page size select */
+    .mat-mdc-paginator-page-size-select {
+      width: 64px;
+
+      margin: 0;
+    }
+
+    .mat-mdc-form-field {
+      margin: 0;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      min-height: 34px;
+
+      padding: 0 8px;
+
+      background: #ffffff;
+
+      border-radius: 6px;
+    }
+
+    .mdc-notched-outline {
+      border-color: #cbd5e1 !important;
+    }
+
+    .mat-mdc-select-value {
+      color: #334155;
+
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .mat-mdc-select-arrow {
+      color: #64748b;
+    }
+
+    /* Range text: 1 – 1 of 1 */
+    .mat-mdc-paginator-range-label {
+      margin: 0 14px 0 8px;
+
+      color: #64748b;
+
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Navigation buttons */
+    .mat-mdc-icon-button {
+      width: 32px;
+      height: 32px;
+
+      padding: 4px;
+
+      color: #475569;
+
+      border-radius: 6px;
+
+      transition:
+        background 0.15s ease,
+        color 0.15s ease;
+
+      &:hover:not(:disabled) {
+        color: #2563eb;
+
+        background: #eff6ff;
+      }
+
+      &:disabled {
+        color: #cbd5e1;
+      }
+    }
+
+    .mat-mdc-paginator-navigation-first,
+    .mat-mdc-paginator-navigation-previous,
+    .mat-mdc-paginator-navigation-next,
+    .mat-mdc-paginator-navigation-last {
+      margin: 0 2px;
+    }
+
+    .mat-mdc-paginator-container {
+      min-height: 58px;
+
+      padding: 0;
+
+      justify-content: flex-end;
+    }
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE PAGINATION
+============================================================ */
+
+@media (max-width: 700px) {
+
+  .pagination-wrapper {
+    padding: 6px 10px;
+
+    ::ng-deep {
+
+      .mat-mdc-paginator-container {
+        min-height: auto;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 4px;
+      }
+
+      .mat-mdc-paginator-page-size {
+        margin-right: 8px;
+      }
+
+      .mat-mdc-paginator-range-label {
+        margin: 0 6px;
+      }
+    }
+  }
+}

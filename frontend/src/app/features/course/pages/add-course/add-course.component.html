@@ -1,0 +1,70 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+      <span class="eyebrow">
+        Course Management
+      </span>
+
+      <h1>Add Course</h1>
+
+      <p>
+        Create a new academic course.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+
+      ← Back to Courses
+
+    </button>
+
+  </div>
+
+
+  @if (errorMessage) {
+
+    <div class="page-error">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+
+  @if (loadingDepartments) {
+
+    <div class="loading-card">
+      Loading departments...
+    </div>
+
+  } @else {
+
+    <section class="form-card">
+
+      <div class="card-heading">
+
+        <h2>Course Information</h2>
+
+        <p>
+          Enter the course details below.
+        </p>
+
+      </div>
+
+      <app-course-form
+        [departments]="departments"
+        [loading]="loading"
+        submitLabel="Create Course"
+        (formSubmit)="save($event)"
+        (cancel)="cancel()">
+      </app-course-form>
+
+    </section>
+
+  }
+
+</div>

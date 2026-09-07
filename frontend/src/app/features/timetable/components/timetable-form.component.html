@@ -1,0 +1,222 @@
+<form #form="ngForm" (ngSubmit)="submit()" novalidate>
+  <div class="form-grid">
+    <div class="field">
+      <label for="code"> Code <span>*</span> </label>
+
+      <input
+        id="code"
+        name="code"
+        type="text"
+        required
+        maxlength="100"
+        [(ngModel)]="model.code"
+        placeholder="TT-CSE-S1-A-MON-01"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="field">
+      <label for="academicYear"> Academic Year <span>*</span> </label>
+
+      <input
+        id="academicYear"
+        name="academicYear"
+        type="text"
+        required
+        maxlength="20"
+        [(ngModel)]="model.academicYear"
+        placeholder="2026-2027"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="field">
+      <label for="semester"> Semester <span>*</span> </label>
+
+      <input
+        id="semester"
+        name="semester"
+        type="text"
+        required
+        maxlength="50"
+        [(ngModel)]="model.semester"
+        placeholder="Semester 1"
+      />
+    </div>
+
+    <div class="field">
+      <label for="course"> Course <span>*</span> </label>
+
+      <input
+        id="course"
+        name="course"
+        type="text"
+        required
+        maxlength="100"
+        [(ngModel)]="model.course"
+        placeholder="B.Tech CSE"
+      />
+    </div>
+
+    <div class="field">
+      <label for="section"> Section <span>*</span> </label>
+
+      <input
+        id="section"
+        name="section"
+        type="text"
+        required
+        maxlength="20"
+        [(ngModel)]="model.section"
+        placeholder="A"
+      />
+    </div>
+
+    <div class="field">
+      <label for="subject"> Subject <span>*</span> </label>
+
+      <input
+        id="subject"
+        name="subject"
+        type="text"
+        required
+        maxlength="150"
+        [(ngModel)]="model.subject"
+        placeholder="Database Management Systems"
+      />
+    </div>
+
+    <div class="field">
+      <label for="faculty"> Faculty <span>*</span> </label>
+
+      <input
+        id="faculty"
+        name="faculty"
+        type="text"
+        required
+        maxlength="150"
+        [(ngModel)]="model.faculty"
+        placeholder="Faculty name"
+      />
+    </div>
+
+    <div class="field">
+      <label for="room"> Room <span>*</span> </label>
+
+      <input
+        id="room"
+        name="room"
+        type="text"
+        required
+        maxlength="50"
+        [(ngModel)]="model.room"
+        placeholder="CSE-101"
+      />
+    </div>
+
+    <div class="field">
+      <label for="dayOfWeek"> Day <span>*</span> </label>
+
+      <select
+        id="dayOfWeek"
+        name="dayOfWeek"
+        required
+        [(ngModel)]="model.dayOfWeek"
+      >
+        <option value="">Select day</option>
+
+        @for (day of daysOfWeek; track day.value) {
+          <option [value]="day.value">
+            {{ day.label }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="startTime"> Start Time <span>*</span> </label>
+
+      <input
+        id="startTime"
+        name="startTime"
+        type="time"
+        required
+        [(ngModel)]="model.startTime"
+      />
+    </div>
+
+    <div class="field">
+      <label for="endTime"> End Time <span>*</span> </label>
+
+      <input
+        id="endTime"
+        name="endTime"
+        type="time"
+        required
+        [(ngModel)]="model.endTime"
+      />
+    </div>
+
+    <div class="field">
+      <label for="period"> Period <span>*</span> </label>
+
+      <input
+        id="period"
+        name="period"
+        type="text"
+        required
+        maxlength="20"
+        [(ngModel)]="model.period"
+        placeholder="1"
+      />
+    </div>
+
+    <div class="field">
+      <label for="status"> Status <span>*</span> </label>
+
+      <select id="status" name="status" required [(ngModel)]="model.status">
+        <option value="">Select status</option>
+
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value">
+            {{ option.label }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="field field-full">
+      <label for="description"> Description <span>*</span> </label>
+
+      <textarea
+        id="description"
+        name="description"
+        required
+        maxlength="500"
+        rows="4"
+        [(ngModel)]="model.description"
+        placeholder="Enter timetable description"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button
+      type="button"
+      class="ghost"
+      [disabled]="loading"
+      (click)="cancel.emit()"
+    >
+      Cancel
+    </button>
+
+    <button type="submit" class="primary" [disabled]="loading || form.invalid">
+      @if (loading) {
+        <span class="button-spinner"></span>
+        Saving...
+      } @else {
+        {{ submitLabel }}
+      }
+    </button>
+  </div>
+</form>

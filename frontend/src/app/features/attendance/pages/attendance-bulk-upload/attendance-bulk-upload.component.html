@@ -1,0 +1,812 @@
+<main class="page">
+
+  <!-- =======================================================
+       HEADER
+  ======================================================== -->
+
+  <header class="page-header">
+
+    <div class="header-content">
+
+      <p class="eyebrow">
+        Attendance → Bulk Upload
+      </p>
+
+      <h1>
+        Bulk Attendance Upload
+      </h1>
+
+      <p class="subtitle">
+        Open an attendance session, upload the official Excel
+        sheet, validate the records, and submit attendance.
+      </p>
+
+    </div>
+
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="secondary header-button"
+        (click)="back()"
+        [disabled]="loading"
+      >
+        <span class="button-icon">←</span>
+        Back
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       WORKFLOW
+  ======================================================== -->
+
+  <section class="workflow">
+
+    <div class="workflow-step active">
+
+      <span class="step-number">
+        1
+      </span>
+
+      <div>
+        <strong>
+          Session
+        </strong>
+
+        <small>
+          Select date & subject
+        </small>
+      </div>
+
+    </div>
+
+
+    <span class="workflow-line"></span>
+
+
+    <div
+      class="workflow-step"
+      [class.active]="!!sessionId"
+    >
+
+      <span class="step-number">
+        2
+      </span>
+
+      <div>
+        <strong>
+          Upload
+        </strong>
+
+        <small>
+          Select Excel file
+        </small>
+      </div>
+
+    </div>
+
+
+    <span class="workflow-line"></span>
+
+
+    <div
+      class="workflow-step"
+      [class.active]="!!rows.length"
+    >
+
+      <span class="step-number">
+        3
+      </span>
+
+      <div>
+        <strong>
+          Validate
+        </strong>
+
+        <small>
+          Preview & submit
+        </small>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       ERROR
+  ======================================================== -->
+
+  @if (errorMessage) {
+
+    <section class="error-panel">
+
+      <span class="error-icon">
+        !
+      </span>
+
+      <div>
+        <strong>
+          Unable to continue
+        </strong>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+      </div>
+
+    </section>
+
+  }
+
+
+  <!-- =======================================================
+       SESSION CONTEXT
+  ======================================================== -->
+
+  @if (!sessionId) {
+
+    <section class="panel context-card">
+
+      <div class="context-header">
+
+        <div>
+
+          <p class="eyebrow">
+            Step 1
+          </p>
+
+          <h2>
+            Attendance Session
+          </h2>
+
+          <p>
+            Select the assigned subject and attendance date.
+            An existing session will be reused automatically;
+            otherwise a new session will be created.
+          </p>
+
+        </div>
+
+
+        <span class="required-badge">
+          Required
+        </span>
+
+      </div>
+
+
+      <div class="context-grid">
+
+        <!-- SUBJECT -->
+
+        <label class="form-field">
+
+          <span>
+            Faculty Subject <b>*</b>
+          </span>
+
+          <select
+            [(ngModel)]="selectedMappingId"
+            [disabled]="loading"
+          >
+
+            <option [ngValue]="0">
+              Select assigned subject
+            </option>
+
+            @for (
+              mapping of mappings;
+              track mapping.id
+            ) {
+
+              <option
+                [ngValue]="mapping.id"
+              >
+                {{ mapping.subjectName }}
+                —
+                {{ mapping.facultyName || 'Assigned Faculty' }}
+
+                @if (mapping.semesterName) {
+                  — {{ mapping.semesterName }}
+                }
+              </option>
+
+            }
+
+          </select>
+
+          <small>
+            Academic Year: {{ academicYear }}
+          </small>
+
+        </label>
+
+
+        <!-- DATE -->
+
+        <label class="form-field">
+
+          <span>
+            Attendance Date <b>*</b>
+          </span>
+
+          <input
+            type="date"
+            [(ngModel)]="attendanceDate"
+            [max]="today"
+            [disabled]="loading"
+          >
+
+          <small>
+            Future dates are not allowed.
+          </small>
+
+        </label>
+
+
+        <!-- ACTION -->
+
+        <div class="form-field action-field">
+
+          <span>
+            Session
+          </span>
+
+          <button
+            type="button"
+            class="primary large-button"
+            [disabled]="
+              loading ||
+              !selectedMappingId ||
+              !attendanceDate
+            "
+            (click)="openSession()"
+          >
+
+            @if (loading) {
+
+              <span class="loader small-loader"></span>
+
+              Checking session...
+
+            } @else {
+
+              Open Session →
+
+            }
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- CONTEXT SUMMARY -->
+
+      @if (selectedMapping) {
+
+        <div class="context-summary">
+
+          <div class="summary-item mapping">
+
+            <span>
+              Subject
+            </span>
+
+            <strong>
+              {{ selectedMapping.subjectName }}
+            </strong>
+
+          </div>
+
+
+          <div class="summary-item">
+
+            <span>
+              Faculty
+            </span>
+
+            <strong>
+              {{ selectedMapping.facultyName || 'Assigned Faculty' }}
+            </strong>
+
+          </div>
+
+
+          @if (selectedMapping.semesterName) {
+
+            <div class="summary-item">
+
+              <span>
+                Semester
+              </span>
+
+              <strong>
+                {{ selectedMapping.semesterName }}
+              </strong>
+
+            </div>
+
+          }
+
+
+          <div class="summary-item">
+
+            <span>
+              Academic Year
+            </span>
+
+            <strong>
+              {{ academicYear }}
+            </strong>
+
+          </div>
+
+
+          <div class="summary-item">
+
+            <span>
+              Attendance Date
+            </span>
+
+            <strong>
+              {{ attendanceDate }}
+            </strong>
+
+          </div>
+
+
+          <div class="summary-item">
+
+            <span>
+              Source
+            </span>
+
+            <strong>
+              {{
+                attendanceDate === today
+                  ? 'Online'
+                  : 'Manual Backdate'
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      }
+
+    </section>
+
+  }
+
+
+  <!-- =======================================================
+       UPLOAD PANEL
+  ======================================================== -->
+
+  @if (sessionId) {
+
+    <section class="panel upload-panel">
+
+      <div class="panel-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            Step 2
+          </p>
+
+          <h2>
+            Upload Attendance Excel
+          </h2>
+
+          <p>
+            Upload the official attendance sheet for this
+            attendance session.
+          </p>
+          <button type="button" class="secondary" (click)="downloadTemplate()" [disabled]="loading">
+            ↓ Download Excel Template
+          </button>
+
+        </div>
+
+
+        <div class="session-badges">
+
+          <span class="session-badge">
+            Session #{{ sessionId }}
+          </span>
+
+          @if (isSessionOpen(sessionStatus)) {
+
+            <span class="status-badge open">
+              OPEN
+            </span>
+
+          } @else if (isSessionCompleted(sessionStatus)) {
+
+            <span class="status-badge completed">
+              COMPLETED
+            </span>
+
+          } @else if (isSessionCancelled(sessionStatus)) {
+
+            <span class="status-badge cancelled">
+              CANCELLED
+            </span>
+
+          } @else {
+
+            <span class="status-badge">
+              {{ sessionStatus || 'UNKNOWN' }}
+            </span>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- SESSION SUMMARY -->
+
+      <div class="session-summary">
+
+        <div>
+
+          <span>
+            Subject
+          </span>
+
+          <strong>
+            {{ selectedMapping?.subjectName || 'Assigned Subject' }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Date
+          </span>
+
+          <strong>
+            {{ attendanceDate }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Academic Year
+          </span>
+
+          <strong>
+            {{ academicYear }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           DROPZONE
+      ==================================================== -->
+
+      <label
+        class="dropzone"
+        [class.has-file]="!!selectedFile"
+        [class.loading]="loading"
+      >
+
+        <input
+          #fileInput
+          type="file"
+          accept=".xlsx,.xls"
+          (change)="onFile($event)"
+          [disabled]="
+            loading ||
+            sessionStatus !== 'OPEN'
+          "
+        >
+
+
+        @if (loading) {
+
+          <div class="upload-icon loading-icon">
+
+            <span class="loader"></span>
+
+          </div>
+
+          <strong>
+            Reading Excel file...
+          </strong>
+
+          <span>
+            Please wait while attendance records are loaded.
+          </span>
+
+        } @else if (selectedFile) {
+
+          <div class="upload-icon success-icon">
+            ✓
+          </div>
+
+          <strong>
+            Excel file loaded
+          </strong>
+
+          <span>
+            Select another file to replace it.
+          </span>
+
+        } @else {
+
+          <div class="upload-icon">
+            ↑
+          </div>
+
+          <strong>
+            Click to select Excel file
+          </strong>
+
+          <span>
+            Supported formats: .xlsx and .xls
+          </span>
+
+        }
+
+      </label>
+
+
+      <!-- ===================================================
+           SELECTED FILE
+      ==================================================== -->
+
+      @if (selectedFile) {
+
+        <div class="selected-file">
+
+          <div class="selected-file-info">
+
+            <div class="file-icon">
+              XLS
+            </div>
+
+            <div>
+
+              <strong>
+                {{ selectedFile }}
+              </strong>
+
+              <span>
+                {{ rows.length }} attendance
+                {{ rows.length === 1 ? 'record' : 'records' }}
+                loaded successfully
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="remove-button"
+            (click)="removeFile(fileInput)"
+            [disabled]="loading"
+          >
+            Remove
+          </button>
+
+        </div>
+
+      }
+
+
+      <!-- ===================================================
+           REQUIREMENTS
+      ==================================================== -->
+
+      <div class="requirements">
+
+        <div class="requirements-title">
+
+          <span class="info-icon">
+            i
+          </span>
+
+          <strong>
+            Excel file requirements
+          </strong>
+
+        </div>
+
+
+        <div class="column-list">
+
+          <span>
+            Roll Number
+          </span>
+
+          <span>
+            Student ID
+          </span>
+
+          <span>
+            Attendance
+          </span>
+
+        </div>
+
+
+        <p class="requirements-note">
+          Use the official attendance Excel format.
+          Records will be validated on the next preview step
+          before they are submitted.
+        </p>
+
+      </div>
+
+
+      <!-- ===================================================
+           FOOTER
+      ==================================================== -->
+
+      <div class="upload-footer">
+
+        <div class="helper-text">
+
+          @if (isSessionOpen(sessionStatus)) {
+
+            <span class="check-icon">
+              ✓
+            </span>
+
+            <span>
+              Session is open and ready for bulk attendance.
+            </span>
+
+          } @else {
+
+            <span class="warning-icon">
+              !
+            </span>
+
+            <span>
+              Bulk upload is available only for OPEN sessions.
+            </span>
+
+          }
+
+        </div>
+
+
+        <div class="footer-buttons">
+
+          <button
+            type="button"
+            class="secondary"
+            (click)="back()"
+            [disabled]="loading"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="button"
+            class="primary large-button"
+            [disabled]="
+              loading ||
+              !rows.length ||
+              sessionStatus !== 'OPEN'
+            "
+            (click)="preview()"
+          >
+
+            Preview & Validate
+
+            <span class="count-badge">
+              {{ rows.length }}
+            </span>
+
+            →
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+
+  <!-- =======================================================
+       HELP
+  ======================================================== -->
+
+  <section class="help-grid">
+
+    <article class="help-card">
+
+      <div class="help-icon blue">
+        1
+      </div>
+
+      <div>
+
+        <h3>
+          Open Session
+        </h3>
+
+        <p>
+          Select your assigned subject and date. Existing
+          sessions are detected from attendance history.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <article class="help-card">
+
+      <div class="help-icon purple">
+        2
+      </div>
+
+      <div>
+
+        <h3>
+          Upload Excel
+        </h3>
+
+        <p>
+          Upload the official Excel attendance sheet only
+          after the session is OPEN.
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <article class="help-card">
+
+      <div class="help-icon green">
+        3
+      </div>
+
+      <div>
+
+        <h3>
+          Validate & Submit
+        </h3>
+
+        <p>
+          Review the imported records on the preview page
+          before submitting attendance.
+        </p>
+
+      </div>
+
+    </article>
+
+  </section>
+
+</main>

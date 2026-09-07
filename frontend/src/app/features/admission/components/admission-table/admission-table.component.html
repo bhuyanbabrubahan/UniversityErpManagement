@@ -1,0 +1,267 @@
+<div class="table-card">
+
+  <!-- =====================================================
+       DESKTOP TABLE
+       ===================================================== -->
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Admission</th>
+          <th>Student</th>
+          <th>Department</th>
+          <th>Course</th>
+          <th>Academic Year</th>
+          <th>Semester</th>
+          <th>Admission Date</th>
+          <th>Admission Status</th>
+          <th>Record Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+
+        <!-- =================================================
+             LOADING
+             ================================================= -->
+
+        @if (loading) {
+
+          <tr class="state-row">
+            <td colspan="10" class="state">
+              <div class="loading-state">
+                <span class="spinner"></span>
+                <span>Loading admissions...</span>
+              </div>
+            </td>
+          </tr>
+
+        }
+
+
+        <!-- =================================================
+             EMPTY
+             ================================================= -->
+
+        @else if (!admissions.length) {
+
+          <tr class="state-row">
+            <td colspan="10" class="state">
+              No admissions found.
+            </td>
+          </tr>
+
+        }
+
+
+        <!-- =================================================
+             DATA
+             ================================================= -->
+
+        @else {
+
+          @for (admission of admissions; track admission.id) {
+
+            <tr>
+
+              <!-- Admission -->
+
+              <td data-label="Admission">
+                <strong>
+                  {{ admission.admissionNumber }}
+                </strong>
+
+                <span>
+                  #{{ admission.id }}
+                </span>
+              </td>
+
+
+              <!-- Student -->
+
+              <td data-label="Student">
+                <strong>
+                  {{ admission.studentName || '—' }}
+                </strong>
+
+                <span>
+                  ID {{ admission.studentId }}
+                  ·
+                  {{ admission.studentRollNumber || '—' }}
+                </span>
+              </td>
+
+
+              <!-- Department -->
+
+              <td data-label="Department">
+                <strong>
+                  {{ admission.departmentName || '—' }}
+                </strong>
+
+                <span>
+                  ID {{ admission.departmentId }}
+                </span>
+              </td>
+
+
+              <!-- Course -->
+
+              <td data-label="Course">
+                <strong>
+                  {{ admission.courseName || '—' }}
+                </strong>
+
+                <span>
+                  ID {{ admission.courseId }}
+                </span>
+              </td>
+
+
+              <!-- Academic Year -->
+
+              <td data-label="Academic Year">
+                <span class="mobile-value">
+                  {{ admission.academicYear || '—' }}
+                </span>
+              </td>
+
+
+              <!-- Semester -->
+
+              <td data-label="Semester">
+                <span class="mobile-value">
+                  {{ admission.semesterName || admission.semesterId || '—' }}
+                </span>
+              </td>
+
+
+              <!-- Admission Date -->
+
+              <td data-label="Admission Date">
+                <span class="mobile-value">
+                  {{ formatDate(admission.admissionDate) }}
+                </span>
+              </td>
+
+
+              <!-- Admission Status -->
+
+              <td data-label="Admission Status">
+
+                <span
+                  class="badge"
+
+                  [class.active]="
+                    admission.admissionStatus ===
+                    admissionStatuses.ACTIVE
+                  "
+
+                  [class.cancelled]="
+                    admission.admissionStatus ===
+                    admissionStatuses.CANCELLED
+                  "
+
+                  [class.completed]="
+                    admission.admissionStatus ===
+                    admissionStatuses.COMPLETED
+                  ">
+
+                  {{ admission.admissionStatus }}
+
+                </span>
+
+              </td>
+
+
+              <!-- Record Status -->
+
+              <td data-label="Record Status">
+
+                <span class="record-badge">
+                  {{ admission.status }}
+                </span>
+
+              </td>
+
+
+              <!-- Actions -->
+
+              <td
+                data-label="Actions"
+                class="actions">
+
+                <button
+                  type="button"
+                  title="View"
+                  (click)="viewed.emit(admission)">
+
+                  View
+
+                </button>
+
+
+                <button
+                  type="button"
+                  title="Edit"
+                  (click)="edited.emit(admission)">
+
+                  Edit
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="delete"
+                  title="Cancel"
+
+                  [disabled]="
+                    deletingId === admission.id
+                  "
+
+                  (click)="deleted.emit(admission)">
+
+                  {{
+                    deletingId === admission.id
+                      ? '...'
+                      : 'Cancel'
+                  }}
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- =====================================================
+       PAGINATOR
+       ===================================================== -->
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageIndex]="page"
+    [pageSize]="size"
+    [pageSizeOptions]="[10, 20, 50]"
+    [showFirstLastButtons]="true"
+    (page)="pageChange($event)">
+
+  </mat-paginator>
+
+</div>

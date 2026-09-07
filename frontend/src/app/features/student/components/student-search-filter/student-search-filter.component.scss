@@ -1,0 +1,289 @@
+/* Component-specific styles are intentionally minimal; shared ERP visual rules live in src/styles.scss. */
+// ============================================================
+// STUDENT SEARCH / FILTER
+// Enterprise ERP UI
+// ============================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.search-card {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid var(--erp-border, #e2e8f0);
+  border-radius: 14px;
+  background: var(--erp-surface, #ffffff);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 6px 20px rgba(15, 23, 42, 0.04);
+
+  overflow: hidden;
+}
+
+// ------------------------------------------------------------
+// HEADER
+// ------------------------------------------------------------
+
+.search-header {
+  min-height: 78px;
+  padding: 18px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(248, 250, 252, 0.95),
+      rgba(255, 255, 255, 1)
+    );
+}
+
+.header-title {
+  min-width: 0;
+
+  h2 {
+    margin: 0;
+
+    font-size: 17px;
+    line-height: 1.35;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--erp-text-primary, #172033);
+  }
+
+  p {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--erp-text-secondary, #64748b);
+  }
+}
+
+// ------------------------------------------------------------
+// HEADER ACTIONS
+// ------------------------------------------------------------
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+
+  button {
+    height: 40px;
+    min-width: 108px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 7px;
+      font-size: 18px;
+    }
+  }
+
+  .mat-mdc-outlined-button {
+    border-color: var(--erp-border, #cbd5e1);
+    color: var(--erp-text-primary, #334155);
+    background: #fff;
+
+    &:hover {
+      background: #f8fafc;
+      border-color: var(--erp-primary, #2563eb);
+    }
+  }
+
+  .mat-mdc-unelevated-button {
+    box-shadow: none;
+  }
+}
+
+// ------------------------------------------------------------
+// DIVIDER
+// ------------------------------------------------------------
+
+mat-divider {
+  border-top-color: var(--erp-border, #e2e8f0);
+}
+
+// ------------------------------------------------------------
+// FORM
+// ------------------------------------------------------------
+
+.search-form {
+  padding: 22px;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+
+  background: #fff;
+
+  mat-form-field {
+    width: 100%;
+    min-width: 0;
+
+    // Prevent Angular Material fields from becoming too tall
+    --mdc-outlined-text-field-container-shape: 8px;
+  }
+
+  // ----------------------------------------------------------
+  // Material field typography
+  // ----------------------------------------------------------
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: #fff;
+    }
+
+    .mat-mdc-form-field-flex {
+      min-height: 48px;
+    }
+
+    .mat-mdc-form-field-infix {
+      min-height: 48px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .mat-mdc-floating-label {
+      font-size: 13px;
+    }
+
+    .mat-mdc-input-element {
+      font-size: 13px;
+      color: var(--erp-text-primary, #1e293b);
+    }
+
+    .mat-mdc-select-value {
+      font-size: 13px;
+      color: var(--erp-text-primary, #1e293b);
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+      padding-left: 2px;
+      padding-right: 8px;
+
+      mat-icon {
+        width: 19px;
+        height: 19px;
+        font-size: 19px;
+        color: #64748b;
+      }
+    }
+
+    .mdc-notched-outline {
+      border-color: #d7dee8;
+    }
+
+    .mat-mdc-form-field:hover {
+      .mdc-notched-outline {
+        border-color: #94a3b8;
+      }
+    }
+
+    .mat-mdc-form-field.mat-focused {
+      .mdc-notched-outline {
+        border-width: 1.5px;
+      }
+
+      .mat-mdc-form-field-icon-prefix mat-icon {
+        color: var(--erp-primary, #2563eb);
+      }
+    }
+  }
+}
+
+// ============================================================
+// RESPONSIVE
+// ============================================================
+
+// Large desktop
+@media (max-width: 1200px) {
+  .search-form {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// Tablet
+@media (max-width: 900px) {
+  .search-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .header-buttons {
+    width: 100%;
+
+    button {
+      flex: 1;
+    }
+  }
+
+  .search-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// Mobile
+@media (max-width: 600px) {
+  .search-header {
+    padding: 17px 16px;
+  }
+
+  .header-title {
+    h2 {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  .header-buttons {
+    gap: 8px;
+
+    button {
+      min-width: 0;
+      height: 40px;
+      font-size: 12px;
+
+      mat-icon {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .search-form {
+    padding: 18px 16px;
+
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+// Small mobile
+@media (max-width: 380px) {
+  .header-buttons {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

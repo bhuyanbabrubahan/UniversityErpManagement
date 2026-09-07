@@ -1,0 +1,28 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">University ERP Management</span>
+
+      <h1>Edit Curriculum</h1>
+
+      <p>Update the curriculum details below.</p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-card">
+      <span class="spinner"></span>
+      <span>Loading curriculum...</span>
+    </div>
+  } @else {
+    <div class="card">
+      <app-curriculum-form
+        [model]="model()"
+        submitLabel="Update"
+        [loading]="saving()"
+        (save)="save($event)"
+        (cancel)="cancel()"
+      />
+    </div>
+  }
+</section>

@@ -1,0 +1,455 @@
+/* Component-specific styles are intentionally minimal; shared ERP visual rules live in src/styles.scss. */
+/* STUDENT VIEW — ENTERPRISE ERP */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.student-details {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px 28px 32px;
+  color: #172033;
+}
+
+/* PAGE HEADER */
+.page-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.header-content button {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  color: #2563eb;
+  background: #eff6ff;
+  border-radius: 8px;
+}
+
+.header-content button:hover {
+  background: #dbeafe;
+}
+
+.header-content mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.header-text {
+  min-width: 0;
+}
+
+.header-text h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.header-text p {
+  margin: 3px 0 0;
+  color: #64748b;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+/* DETAIL CARDS */
+.student-details > mat-card {
+  position: relative;
+  width: 100%;
+  margin-bottom: 14px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 3%);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.student-details > mat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, #2563eb, #60a5fa);
+}
+
+.student-details > mat-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 5px 16px rgb(15 23 42 / 6%);
+}
+
+/* CARD HEADER */
+.student-details mat-card-header {
+  min-height: 50px;
+  padding: 9px 18px 9px 20px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #fff, #f8fbff);
+  border-bottom: 1px solid #edf1f5;
+}
+
+.student-details mat-card-title {
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #172033;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.student-details mat-card-title::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 0 4px #eff6ff;
+}
+
+/* CARD CONTENT */
+.student-details mat-card-content {
+  padding: 16px 18px 18px !important;
+}
+
+/* FOUR-COLUMN VIEW */
+.form-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 16px;
+  row-gap: 12px;
+}
+
+/* INFO ITEM */
+.info-item {
+  min-width: 0;
+  min-height: 62px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: #fbfcfe;
+  border: 1px solid #e8edf3;
+  border-radius: 7px;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.info-item:hover {
+  background: #f7faff;
+  border-color: #d6e2f2;
+  box-shadow: 0 2px 7px rgb(37 99 235 / 5%);
+}
+
+/* LABEL */
+.info-item .label {
+  display: block;
+  width: 100%;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 550;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* VALUE */
+.info-item .value {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  color: #172033;
+  font-size: 10.5px;
+  font-weight: 550;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* EMPTY VALUE */
+.info-item .value:empty {
+  color: #94a3b8;
+}
+
+/* MASKED DATA */
+.masked-value {
+  color: #334155 !important;
+  letter-spacing: 0.01em;
+}
+
+/* VERIFIED GROUP */
+.verified-group {
+  display: flex !important;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.verified-group .masked-value {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+/* BADGES */
+.badge {
+  width: fit-content;
+  min-height: 22px;
+  padding: 3px 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 5px;
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge mat-icon {
+  width: 13px;
+  height: 13px;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.badge.success {
+  color: #15803d;
+  background: #ecfdf3;
+  border: 1px solid #bbf7d0;
+}
+
+.badge.danger {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.badge.active {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+/* LOADING */
+.loading-container {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.loading-container ::ng-deep .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: #2563eb !important;
+}
+
+/* ERROR */
+.error-card {
+  margin-bottom: 16px;
+  border: 1px solid #fecaca !important;
+  border-left: 3px solid #dc2626 !important;
+  border-radius: 9px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.error-card mat-card-content {
+  padding: 13px 16px !important;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.error-message mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+/* TABLET — 33 / 33 / 33 */
+@media (max-width: 1200px) {
+  .student-details {
+    padding: 18px 22px 28px;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 14px;
+  }
+}
+
+/* SMALL TABLET — 50 / 50 */
+@media (max-width: 900px) {
+  .student-details {
+    padding: 16px 18px 26px;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+  }
+
+  .student-details mat-card-content {
+    padding: 14px !important;
+  }
+}
+
+/* MOBILE — 100 */
+@media (max-width: 600px) {
+  .student-details {
+    padding: 12px 12px 22px;
+  }
+
+  .page-header {
+    margin-bottom: 12px;
+    padding: 12px 13px;
+  }
+
+  .header-content {
+    gap: 9px;
+  }
+
+  .header-content button {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .header-text h2 {
+    font-size: 16px;
+  }
+
+  .header-text p {
+    font-size: 10.5px;
+  }
+
+  .student-details > mat-card {
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  .student-details mat-card-header {
+    min-height: 46px;
+    padding: 8px 12px 8px 15px;
+  }
+
+  .student-details mat-card-title {
+    font-size: 12px;
+  }
+
+  .student-details mat-card-content {
+    padding: 12px !important;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .info-item {
+    min-height: 58px;
+    padding: 9px 11px;
+  }
+
+  .info-item .label {
+    font-size: 9.5px;
+  }
+
+  .info-item .value {
+    font-size: 12px;
+  }
+}
+
+/* VERY SMALL MOBILE */
+@media (max-width: 380px) {
+  .student-details {
+    padding: 10px 8px 18px;
+  }
+
+  .student-details mat-card-content {
+    padding: 10px !important;
+  }
+
+  .info-item {
+    min-height: 55px;
+    padding: 8px 10px;
+  }
+
+  .verified-group {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  .student-details *,
+  .student-details *::before,
+  .student-details *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* PRINT */
+@media print {
+  .student-details {
+    max-width: none;
+    padding: 0;
+    background: #fff;
+  }
+
+  .page-header,
+  .student-details > mat-card {
+    box-shadow: none !important;
+  }
+
+  .student-details > mat-card {
+    break-inside: avoid;
+  }
+}

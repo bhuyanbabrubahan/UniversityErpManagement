@@ -1,0 +1,22 @@
+<form (ngSubmit)="save.emit(model)">
+  <div class="form-grid">
+    <label>Code<input type="text" [(ngModel)]="model.code" /></label
+    ><label
+      >Employeecode<input type="text" [(ngModel)]="model.employeeCode" /></label
+    ><label>Fullname<input type="text" [(ngModel)]="model.fullName" /></label
+    ><label
+      >Department<input type="text" [(ngModel)]="model.department" /></label
+    ><label>Email<input type="text" [(ngModel)]="model.email" /></label
+    ><label>Phone<input type="text" [(ngModel)]="model.phone" /></label
+    ><label
+      >Designation<input type="text" [(ngModel)]="model.designation" /></label
+    ><label>Status<input type="text" [(ngModel)]="model.status" /></label
+    ><label
+      >Description<input type="text" [(ngModel)]="model.description"
+    /></label>
+  </div>
+  <div class="form-actions">
+    <button type="button" class="ghost" (click)="cancel.emit()">Cancel</button
+    ><button type="submit">{{ submitLabel }}</button>
+  </div>
+</form>

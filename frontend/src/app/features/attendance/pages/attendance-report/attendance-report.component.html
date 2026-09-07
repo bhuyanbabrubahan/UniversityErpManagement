@@ -1,0 +1,520 @@
+<main class="page">
+
+  <!-- ============================================================
+       PAGE HEADER
+  ============================================================ -->
+
+  <header class="page-header">
+
+    <div class="page-title">
+
+      <p class="eyebrow">
+        Analytics
+      </p>
+
+      <h1>
+        Attendance Report
+      </h1>
+
+      <p class="subtitle">
+        Generate, review and export attendance records.
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="secondary"
+        routerLink="/dashboard/attendance/export">
+
+        Export Excel
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ============================================================
+       FILTER PANEL
+  ============================================================ -->
+
+  <section class="panel filter-panel">
+
+    <div class="filter-grid">
+
+      <div class="field">
+
+        <label for="attendanceDate">
+          Attendance Date
+        </label>
+
+        <input
+          id="attendanceDate"
+          type="date"
+          [(ngModel)]="date"
+          [disabled]="loading" />
+
+      </div>
+
+
+      <div class="filter-actions">
+
+        <button
+          type="button"
+          class="primary"
+          [disabled]="loading"
+          (click)="run()">
+
+          @if (loading) {
+            Generating...
+          } @else {
+            Generate Report
+          }
+
+        </button>
+
+
+        <button
+          type="button"
+          class="secondary"
+          [disabled]="loading"
+          (click)="clear()">
+
+          Clear
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       SUMMARY
+  ============================================================ -->
+
+  @if (hasGenerated) {
+
+    <section
+      class="summary-grid"
+      aria-label="Attendance summary">
+
+      <article class="summary-card total">
+
+        <div class="summary-content">
+
+          <span class="summary-label">
+            Total Records
+          </span>
+
+          <strong class="summary-value">
+            {{ total }}
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article class="summary-card present">
+
+        <div class="summary-content">
+
+          <span class="summary-label">
+            Present
+          </span>
+
+          <strong class="summary-value">
+            {{ present }}
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article class="summary-card absent">
+
+        <div class="summary-content">
+
+          <span class="summary-label">
+            Absent
+          </span>
+
+          <strong class="summary-value">
+            {{ absent }}
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article class="summary-card leave">
+
+        <div class="summary-content">
+
+          <span class="summary-label">
+            Leave
+          </span>
+
+          <strong class="summary-value">
+            {{ leave }}
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      @if (halfDay > 0) {
+
+        <article class="summary-card half">
+
+          <div class="summary-content">
+
+            <span class="summary-label">
+              Half Day
+            </span>
+
+            <strong class="summary-value">
+              {{ halfDay }}
+            </strong>
+
+          </div>
+
+        </article>
+
+      }
+
+    </section>
+
+  }
+
+
+  <!-- ============================================================
+       REPORT PANEL
+  ============================================================ -->
+
+  <section class="panel report-panel">
+
+    <div class="panel-header">
+
+      <div>
+
+        <p class="eyebrow">
+          Attendance Records
+        </p>
+
+        <h2>
+          Report Data
+        </h2>
+
+        @if (hasGenerated) {
+
+          <p class="record-count">
+
+            {{ records.length }}
+
+            records displayed
+
+            @if (date) {
+              for <strong>{{ date }}</strong>
+            }
+
+          </p>
+
+        } @else {
+
+          <p class="record-count">
+            Select a date and generate the report.
+          </p>
+
+        }
+
+      </div>
+
+
+      <!-- ========================================================
+           TOTAL - TOP RIGHT
+      ========================================================= -->
+
+      @if (hasGenerated) {
+
+        <div class="total-box">
+
+          <span>
+            Total
+          </span>
+
+          <strong>
+            {{ totalElements }}
+          </strong>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- ============================================================
+         LOADING
+    ============================================================ -->
+
+    @if (loading) {
+
+      <div class="state loading-state">
+
+        <div class="loader"></div>
+
+        <p>
+          Loading attendance records...
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- ============================================================
+         TABLE
+    ============================================================ -->
+
+    @else {
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Student
+              </th>
+
+              <th>
+                Faculty
+              </th>
+
+              <th>
+                Subject
+              </th>
+
+              <th>
+                Date
+              </th>
+
+              <th>
+                Status
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              record of records;
+              track record.id
+            ) {
+
+              <tr>
+
+                <td>
+
+                  <strong>
+                    {{ record.studentName || '—' }}
+                  </strong>
+
+                </td>
+
+                <td>
+                  {{ record.facultyName || '—' }}
+                </td>
+
+                <td>
+                  {{ record.subjectName || '—' }}
+                </td>
+
+                <td>
+                  {{ record.attendanceDate || '—' }}
+                </td>
+
+                <td>
+
+                  <span
+                    class="status"
+                    [class.present]="
+                      statusValue(record.attendanceStatus) === 'PRESENT'
+                    "
+                    [class.absent]="
+                      statusValue(record.attendanceStatus) === 'ABSENT'
+                    "
+                    [class.leave]="
+                      statusValue(record.attendanceStatus) === 'LEAVE'
+                    "
+                    [class.half-day]="
+                      statusValue(record.attendanceStatus) === 'HALF_DAY'
+                    ">
+
+                    {{ statusValue(record.attendanceStatus) || '—' }}
+
+                  </span>
+
+                </td>
+
+              </tr>
+
+            }
+
+            @empty {
+
+              <tr>
+
+                <td
+                  colspan="5"
+                  class="empty-cell">
+
+                  <div class="empty-state">
+
+                    <strong>
+
+                      @if (hasGenerated) {
+                        No attendance records found
+                      } @else {
+                        No report generated
+                      }
+
+                    </strong>
+
+                    <span>
+
+                      @if (hasGenerated) {
+                        There are no attendance records
+                        for the selected date.
+                      } @else {
+                        Select an attendance date and
+                        click Generate Report.
+                      }
+
+                    </span>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- ========================================================
+           PAGINATION
+      ========================================================= -->
+
+      @if (hasGenerated && totalElements > 0) {
+
+        <div class="pagination">
+
+          <div class="rows-control">
+
+            <span>
+              Rows per page ↕
+            </span>
+
+            <select
+              [(ngModel)]="pageSize"
+              [disabled]="loading"
+              (change)="changePageSize()">
+
+              @for (size of pageSizeOptions; track size) {
+
+                <option [value]="size">
+                  {{ size }}
+                </option>
+
+              }
+
+            </select>
+
+          </div>
+
+
+          <div class="page-info">
+
+            <span>
+              Page
+            </span>
+
+            <strong>
+              {{ currentPage }}
+            </strong>
+
+            <span>
+              of
+            </span>
+
+            <strong>
+              {{ totalPages }}
+            </strong>
+
+          </div>
+
+
+          <div class="page-actions">
+
+            <button
+              type="button"
+              class="page-button"
+              [disabled]="
+                loading ||
+                pageIndex === 0
+              "
+              (click)="previousPage()">
+
+              ← Previous
+
+            </button>
+
+
+            <button
+              type="button"
+              class="page-button"
+              [disabled]="
+                loading ||
+                pageIndex >= totalPages - 1
+              "
+              (click)="nextPage()">
+
+              Next →
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    }
+
+  </section>
+
+</main>

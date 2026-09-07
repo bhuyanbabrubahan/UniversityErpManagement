@@ -1,0 +1,267 @@
+<main class="export-page">
+  <div class="page-shell">
+    <!-- Header -->
+    <header class="page-header">
+      <div class="header-left">
+        <button
+          type="button"
+          class="back-button"
+          (click)="back()"
+          [disabled]="loading"
+          aria-label="Back to attendance"
+        >
+          <svg
+            class="back-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+
+          <span>Back</span>
+        </button>
+
+        <div class="header-divider"></div>
+
+        <div class="header-content">
+          <div class="breadcrumb">
+            <span>Attendance</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+            <span>Reports</span>
+          </div>
+
+          <h3>Export Attendance</h3>
+
+          <p class="subtitle">
+            Download your attendance register in Excel or PDF format.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Card -->
+    <section class="export-card">
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="export-icon-wrapper">
+          <div class="export-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M12 3v12"></path>
+              <path d="m7 10 5 5 5-5"></path>
+              <path d="M5 21h14"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card-title">
+          <span class="section-label">REPORT EXPORT</span>
+
+          <span class="section-label2">
+            / Choose an attendance date or leave it empty to export all
+            available attendance records.</span
+          >
+        </div>
+      </div>
+
+      <!-- Date Field -->
+      <div class="form-section">
+        <label class="date-field">
+          <div class="field-heading">
+            <div class="field-title">
+              <span class="calendar-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="4" width="18" height="17" rx="2"></rect>
+                  <path d="M16 2v4"></path>
+                  <path d="M8 2v4"></path>
+                  <path d="M3 10h18"></path>
+                </svg>
+              </span>
+
+              <span>Attendance Date</span>
+            </div>
+
+            <span class="optional-badge">Optional</span>
+          </div>
+
+          <div class="date-input-wrapper">
+            <input
+              type="date"
+              [(ngModel)]="date"
+              [disabled]="loading"
+              aria-label="Select attendance date"
+            />
+
+            <svg
+              class="input-calendar"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <rect x="3" y="4" width="18" height="17" rx="2"></rect>
+              <path d="M16 2v4"></path>
+              <path d="M8 2v4"></path>
+              <path d="M3 10h18"></path>
+            </svg>
+          </div>
+
+          <span class="field-hint">
+            Leave this field empty to include all available records.
+          </span>
+        </label>
+      </div>
+
+      <!-- Export Options -->
+      <div class="export-section">
+        <div class="section-heading">
+          <div>
+            <span class="section-label">CHOOSE FORMAT</span>
+            <h3>Download your report</h3>
+          </div>
+        </div>
+
+        <div class="format-grid">
+          <!-- Excel -->
+          <button
+            type="button"
+            class="export-button excel-button"
+            (click)="export('xlsx')"
+            [disabled]="loading"
+          >
+            <span class="format-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path
+                  d="M14 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"
+                ></path>
+                <path d="M9 3h5v5H9z"></path>
+                <path d="M8 13l4 4"></path>
+                <path d="m12 13-4 4"></path>
+              </svg>
+            </span>
+
+            <span class="button-content">
+              <strong>Download Excel</strong>
+              <small>Excel attendance register</small>
+            </span>
+
+            <span class="button-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+            </span>
+          </button>
+
+          <!-- PDF -->
+          <button
+            type="button"
+            class="export-button pdf-button"
+            (click)="export('pdf')"
+            [disabled]="loading"
+          >
+            <span class="format-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="M6 2h9l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"></path>
+                <path d="M14 2v6h6"></path>
+                <path d="M8 15h2"></path>
+                <path d="M8 18h6"></path>
+              </svg>
+            </span>
+
+            <span class="button-content">
+              <strong>Download PDF</strong>
+              <small>Printable attendance report</small>
+            </span>
+
+            <span class="button-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Access Note -->
+      <div class="access-note">
+        <div class="note-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+        </div>
+
+        <div class="note-content">
+          <strong>Access controlled</strong>
+
+          <p>
+            Global attendance reports are available to Admin and Super Admin.
+            Faculty session exports remain available from the session view.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Hint -->
+    <footer class="page-footer">
+      <span class="status-dot"></span>
+      <span>Secure attendance report export</span>
+    </footer>
+  </div>
+</main>

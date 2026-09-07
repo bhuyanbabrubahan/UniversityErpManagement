@@ -1,0 +1,344 @@
+<mat-card class="search-card">
+
+  <!-- =========================================================
+       SEARCH HEADER
+  ========================================================== -->
+
+  <div class="search-header">
+
+    <div class="search-heading">
+
+      <div class="search-icon">
+        <mat-icon>filter_alt</mat-icon>
+      </div>
+
+      <div class="search-title">
+
+        <span class="search-eyebrow">
+          Faculty Directory
+        </span>
+
+        <h2>
+          Search & Filter
+        </h2>
+
+        <p>
+          Find faculty records using one or more filters.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="header-buttons">
+
+      <button
+        mat-stroked-button
+        type="button"
+        class="reset-button"
+        (click)="onReset()"
+      >
+
+        <mat-icon>
+          refresh
+        </mat-icon>
+
+        <span>
+          Reset
+        </span>
+
+      </button>
+
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        form="facultySearchForm"
+        class="search-button"
+      >
+
+        <mat-icon>
+          search
+        </mat-icon>
+
+        <span>
+          Search
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       DIVIDER
+  ========================================================== -->
+
+  <mat-divider></mat-divider>
+
+
+  <!-- =========================================================
+       SEARCH FORM
+  ========================================================== -->
+
+  <mat-card-content>
+
+    <form
+      id="facultySearchForm"
+      [formGroup]="form"
+      (ngSubmit)="onSearch()"
+      class="search-form"
+      autocomplete="off"
+    >
+
+
+      <!-- =====================================================
+           FACULTY ID
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          badge
+        </mat-icon>
+
+        <mat-label>
+          Faculty ID
+        </mat-label>
+
+        <input
+          matInput
+          type="number"
+          formControlName="id"
+        >
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           EMPLOYEE CODE
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          fingerprint
+        </mat-icon>
+
+        <mat-label>
+          Employee Code
+        </mat-label>
+
+        <input
+          matInput
+          formControlName="employeeCode"
+        >
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           FIRST NAME
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          person
+        </mat-icon>
+
+        <mat-label>
+          First Name
+        </mat-label>
+
+        <input
+          matInput
+          formControlName="firstName"
+        >
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           LAST NAME
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          person_outline
+        </mat-icon>
+
+        <mat-label>
+          Last Name
+        </mat-label>
+
+        <input
+          matInput
+          formControlName="lastName"
+        >
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           FULL NAME
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          badge
+        </mat-icon>
+
+        <mat-label>
+          Full Name
+        </mat-label>
+
+        <input
+          matInput
+          formControlName="fullName"
+        >
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           DEPARTMENT
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          account_tree
+        </mat-icon>
+
+        <mat-label>
+          Department ID
+        </mat-label>
+
+        <input
+          matInput
+          type="number"
+          formControlName="departmentId"
+        >
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           DESIGNATION
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          work
+        </mat-icon>
+
+        <mat-label>
+          Designation
+        </mat-label>
+
+        <mat-select formControlName="designation">
+
+          <mat-option value="">
+            All Designations
+          </mat-option>
+
+          @for (
+            designation of designations;
+            track designation
+          ) {
+
+            <mat-option [value]="designation">
+              {{ designation }}
+            </mat-option>
+
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           QUALIFICATION
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          school
+        </mat-icon>
+
+        <mat-label>
+          Qualification
+        </mat-label>
+
+        <mat-select formControlName="qualification">
+
+          <mat-option value="">
+            All Qualifications
+          </mat-option>
+
+          @for (
+            qualification of qualifications;
+            track qualification
+          ) {
+
+            <mat-option [value]="qualification">
+              {{ qualification }}
+            </mat-option>
+
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+
+      <!-- =====================================================
+           STATUS
+      ====================================================== -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-icon matPrefix>
+          verified
+        </mat-icon>
+
+        <mat-label>
+          Status
+        </mat-label>
+
+        <mat-select formControlName="status">
+
+          <mat-option value="">
+            All Status
+          </mat-option>
+
+          @for (
+            status of statuses;
+            track status
+          ) {
+
+            <mat-option [value]="status">
+              {{ status }}
+            </mat-option>
+
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>

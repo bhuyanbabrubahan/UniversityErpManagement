@@ -1,0 +1,98 @@
+<form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-header">
+    <div>
+      <h2>{{ mode === 'create' ? 'Create Admission' : 'Edit Admission' }}</h2>
+      <p>
+        {{ mode === 'create'
+          ? 'Enter the required admission information.'
+          : 'Update the admission information below.' }}
+      </p>
+    </div>
+
+    @if (admission) {
+      <span class="number-badge">{{ admission.admissionNumber }}</span>
+    }
+  </div>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="studentId">Student ID *</label>
+      <input id="studentId" type="number" min="1" formControlName="studentId" />
+      @if (controlInvalid('studentId')) {
+        <small>Valid student ID is required.</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="departmentId">Department ID *</label>
+      <input id="departmentId" type="number" min="1" formControlName="departmentId" />
+      @if (controlInvalid('departmentId')) {
+        <small>Valid department ID is required.</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="courseId">Course ID *</label>
+      <input id="courseId" type="number" min="1" formControlName="courseId" />
+      @if (controlInvalid('courseId')) {
+        <small>Valid course ID is required.</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="semesterId">Semester ID *</label>
+
+      <input
+        id="semesterId"
+        type="number"
+        min="1"
+        formControlName="semesterId" />
+
+      @if (controlInvalid('semesterId')) {
+        <small>Valid semester ID is required.</small>
+      }
+    </div>
+
+
+    <div class="field">
+      <label for="academicYear">Academic Year *</label>
+      <input
+        id="academicYear"
+        type="text"
+        maxlength="9"
+        placeholder="2026-2027"
+        formControlName="academicYear" />
+      @if (controlInvalid('academicYear')) {
+        <small>Use the format YYYY-YYYY.</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="admissionDate">Admission Date *</label>
+      <input id="admissionDate" type="date" formControlName="admissionDate" />
+      @if (controlInvalid('admissionDate')) {
+        <small>Admission date is required.</small>
+      }
+    </div>
+
+    <div class="field full">
+      <label for="remarks">Remarks</label>
+      <textarea
+        id="remarks"
+        rows="4"
+        maxlength="500"
+        formControlName="remarks"
+        placeholder="Additional remarks"></textarea>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn secondary" [disabled]="submitting" (click)="cancel()">
+      Back
+    </button>
+
+    <button type="submit" class="btn primary" [disabled]="submitting">
+      {{ submitting ? 'Saving…' : mode === 'create' ? 'Create Admission' : 'Save Changes' }}
+    </button>
+  </div>
+</form>

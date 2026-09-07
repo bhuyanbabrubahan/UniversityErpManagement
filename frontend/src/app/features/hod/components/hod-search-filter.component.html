@@ -1,0 +1,31 @@
+<div class="filter-card">
+  <div class="filter-field">
+    <label>Search</label>
+    <input
+      [(ngModel)]="keyword"
+      placeholder="Name, employee, email..."
+      (keyup.enter)="submit()"
+    />
+  </div>
+
+  <div class="filter-field">
+    <label>Code</label>
+    <input [(ngModel)]="code" placeholder="HOD code" (keyup.enter)="submit()" />
+  </div>
+
+  <div class="filter-field">
+    <label>Status</label>
+
+    <select [(ngModel)]="status">
+      <option value="">All Status</option>
+      <option value="ACTIVE">ACTIVE</option>
+      <option value="INACTIVE">INACTIVE</option>
+    </select>
+  </div>
+
+  <div class="filter-actions">
+    <button type="button" (click)="submit()">Search</button>
+
+    <button type="button" class="ghost" (click)="clear()">Reset</button>
+  </div>
+</div>

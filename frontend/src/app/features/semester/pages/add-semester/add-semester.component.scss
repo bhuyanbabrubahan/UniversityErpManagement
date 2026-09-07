@@ -1,0 +1,317 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+
+// =====================================================
+// PAGE
+// =====================================================
+
+.page {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+  padding: 28px;
+
+  box-sizing: border-box;
+}
+
+
+// =====================================================
+// PAGE HEADER
+// =====================================================
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.page-header p {
+  margin: 7px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+// =====================================================
+// BACK BUTTON
+// =====================================================
+
+.back-btn {
+  min-height: 40px;
+
+  padding: 0 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.back-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.back-btn:focus-visible {
+  outline: 3px solid rgb(37 99 235 / 15%);
+  outline-offset: 2px;
+}
+
+.back-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+// =====================================================
+// TOAST
+// =====================================================
+
+.toast {
+  width: 100%;
+
+  margin-bottom: 18px;
+  padding: 12px 15px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  box-sizing: border-box;
+
+  border-radius: 9px;
+}
+
+.success-toast {
+  border: 1px solid #bbf7d0;
+
+  background: #f0fdf4;
+
+  color: #166534;
+}
+
+.error-toast {
+  border: 1px solid #fecaca;
+
+  background: #fef2f2;
+
+  color: #991b1b;
+}
+
+.toast-icon {
+  width: 24px;
+  height: 24px;
+
+  flex: 0 0 24px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.success-toast .toast-icon {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.error-toast .toast-icon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.toast-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.toast-content strong {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.toast-content span {
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+
+// =====================================================
+// FORM CARD
+// =====================================================
+
+.form-card {
+  width: 100%;
+
+  overflow: hidden;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 18px rgb(15 23 42 / 5%);
+}
+
+
+// =====================================================
+// CARD HEADING
+// =====================================================
+
+.card-heading {
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  background: #ffffff;
+}
+
+.card-heading h2 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 17px;
+  font-weight: 750;
+
+  line-height: 1.3;
+}
+
+.card-heading p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+// =====================================================
+// RESPONSIVE
+// =====================================================
+
+@media (max-width: 768px) {
+
+  .page {
+    padding: 18px;
+  }
+
+  .page-header {
+    flex-direction: column;
+
+    gap: 16px;
+  }
+
+  .page-header > div {
+    width: 100%;
+  }
+
+  .back-btn {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .form-card {
+    border-radius: 10px;
+  }
+
+  .card-heading {
+    padding: 18px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .page {
+    padding: 14px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .page-header p {
+    font-size: 12px;
+  }
+
+  .toast {
+    align-items: flex-start;
+
+    padding: 11px 12px;
+  }
+
+  .card-heading h2 {
+    font-size: 16px;
+  }
+}

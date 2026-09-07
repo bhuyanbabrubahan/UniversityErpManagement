@@ -1,0 +1,74 @@
+<main class="page">
+  <header class="page-header">
+    <div class="header-content">
+      <div class="eyebrow">Faculty Workspace</div>
+      <h1>Attendance Classes</h1>
+      <p class="header-description">Only subjects assigned to the signed-in faculty are shown. Pick the attendance date and open the session.</p>
+    </div>
+    <button type="button" class="btn secondary header-back" (click)="goBack()" [disabled]="loading">← Attendance Dashboard</button>
+  </header>
+
+  <section class="security-banner">
+    <div class="security-icon">✓</div>
+    <div><strong>Faculty-only attendance</strong><p>Attendance marking is restricted to the faculty-subject mapping returned by the server.</p></div>
+  </section>
+
+  @if (loading && !classes.length) {
+    <section class="state-card"><div class="spinner"></div><strong>Loading your classes…</strong><p>Checking your faculty assignments.</p></section>
+  } @else if (errorMessage) {
+    <section class="state-card error-state"><div class="state-icon">!</div><strong>{{ errorMessage }}</strong><button type="button" class="primary" (click)="loadClasses()">Retry</button></section>
+  } @else if (!classes.length) {
+    <section class="state-card"><div class="state-icon">📚</div><strong>No assigned classes</strong><p>No active faculty-subject mapping was found.</p><button type="button" class="primary" (click)="loadClasses()">Refresh</button></section>
+  } @else {
+    <section class="toolbar"><div><span class="toolbar-label">Assigned classes</span><strong>{{ classes.length }}</strong></div><span class="toolbar-note">Today: {{ today }}</span></section>
+
+    <section class="class-list">
+      @for (c of classes; track c.id) {
+        <article class="class-card">
+          <div class="class-main">
+            <div class="subject-badge">{{ (c.subjectName || 'SUB').slice(0,3).toUpperCase() }}</div>
+            <div class="class-info">
+              <div class="class-kicker">{{ c.className || 'Assigned Class' }}</div>
+              <h2>{{ c.subjectName || 'Subject' }}</h2>
+              <div class="meta-row">
+                @if (c.subjectCode) { <span>{{ c.subjectCode }}</span> }
+                @if (c.semesterName) { <span>{{ c.semesterName }}</span> }
+                @if (c.facultyName) { <span>{{ c.facultyName }}</span> }
+              </div>
+              @if (c.timetableSlots?.length) {
+                <div class="schedule-row">
+                  @for (slot of c.timetableSlots; track slot.timetableId) {
+                    <span>▣ {{ slot.dayOfWeek }} · {{ slot.startTime }}–{{ slot.endTime }} · {{ slot.room || 'Room TBA' }}{{ slot.section ? ' · Sec ' + slot.section : '' }}</span>
+                  }
+                </div>
+              } @else {
+                <div class="schedule-row muted">Timetable slot not linked; attendance uses the selected date.</div>
+              }
+            </div>
+          </div>
+
+          <div class="class-controls">
+            <label><span>Attendance date</span><input type="date" [max]="today" [(ngModel)]="dates[c.id]" (change)="onDateChange(c.id)" [disabled]="loading || openingMappingId === c.id"></label>
+
+            <div class="session-status">
+              @if (isSessionOpen(c.id)) { <span class="status open">● OPEN</span> }
+              @else if (isSessionCompleted(c.id)) { <span class="status completed">✓ COMPLETED</span> }
+              @else if (isSessionCancelled(c.id)) { <span class="status cancelled">× CANCELLED</span> }
+              @else { <span class="status new">NEW SESSION</span> }
+            </div>
+
+            @if (isSessionCompleted(c.id)) {
+              <button type="button" class="primary action-button" (click)="viewAttendance(c.id)">View Attendance →</button>
+            } @else if (isSessionCancelled(c.id)) {
+              <button type="button" class="secondary action-button" disabled>Session Cancelled</button>
+            } @else {
+              <button type="button" class="primary action-button" (click)="takeAttendance(c)" [disabled]="loading || openingMappingId === c.id || !dates[c.id] || dates[c.id] > today">
+                @if (openingMappingId === c.id) { Opening… } @else { Take Attendance → }
+              </button>
+            }
+          </div>
+        </article>
+      }
+    </section>
+  }
+</main>

@@ -1,0 +1,214 @@
+<div class="page">
+
+  <div class="content-container">
+
+    <header class="page-header">
+
+      <div>
+        <span class="eyebrow">
+          Course Management
+        </span>
+
+        <h1>Course Details</h1>
+
+        <p>
+          View complete course information.
+        </p>
+      </div>
+
+      <div class="header-actions">
+
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="goBack()">
+
+          Back
+
+        </button>
+
+        @if (course) {
+
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="editCourse()">
+
+            Edit Course
+
+          </button>
+
+        }
+
+      </div>
+
+    </header>
+
+
+    @if (loading) {
+
+      <div class="loading-card">
+        Loading course details...
+      </div>
+
+    }
+
+
+    @if (!loading && errorMessage) {
+
+      <div class="error-card">
+
+        <strong>
+          Something went wrong
+        </strong>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="goBack()">
+
+          Back to Courses
+
+        </button>
+
+      </div>
+
+    }
+
+
+    @if (!loading && course) {
+
+      <section class="details-card">
+
+        <div class="course-heading">
+
+          <div>
+
+            <span class="course-code">
+              {{ course.courseCode }}
+            </span>
+
+            <h2>
+              {{ course.courseName }}
+            </h2>
+
+            <p>
+              {{ course.description || 'No description available.' }}
+            </p>
+
+          </div>
+
+          <span
+            class="status"
+            [class.active]="course.status === 'ACTIVE'"
+            [class.inactive]="course.status === 'INACTIVE'">
+
+            {{ course.status }}
+
+          </span>
+
+        </div>
+
+
+        <div class="details-grid">
+
+          <div class="detail">
+            <span>Course ID</span>
+            <strong>#{{ course.id }}</strong>
+          </div>
+
+          <div class="detail">
+            <span>Course Code</span>
+            <strong>{{ course.courseCode }}</strong>
+          </div>
+
+          <div class="detail">
+            <span>Department</span>
+            <strong>{{ course.departmentName }}</strong>
+          </div>
+
+          <div class="detail">
+            <span>Duration</span>
+            <strong>{{ course.durationInMonths }} Months</strong>
+          </div>
+
+          <div class="detail">
+            <span>Status</span>
+            <strong>{{ course.status }}</strong>
+          </div>
+
+          @if (course.createdAt || course.createdDate) {
+
+            <div class="detail">
+
+              <span>Created At</span>
+
+              <strong>
+                {{
+                  (course.createdAt || course.createdDate)
+                    | date:'medium'
+                }}
+              </strong>
+
+            </div>
+
+          }
+
+          @if (course.createdBy) {
+
+            <div class="detail">
+
+              <span>Created By</span>
+
+              <strong>
+                {{ course.createdBy }}
+              </strong>
+
+            </div>
+
+          }
+
+          @if (course.updatedAt || course.updatedDate) {
+
+            <div class="detail">
+
+              <span>Updated At</span>
+
+              <strong>
+                {{
+                  (course.updatedAt || course.updatedDate)
+                    | date:'medium'
+                }}
+              </strong>
+
+            </div>
+
+          }
+
+          @if (course.updatedBy) {
+
+            <div class="detail">
+
+              <span>Updated By</span>
+
+              <strong>
+                {{ course.updatedBy }}
+              </strong>
+
+            </div>
+
+          }
+
+        </div>
+
+      </section>
+
+    }
+
+  </div>
+
+</div>

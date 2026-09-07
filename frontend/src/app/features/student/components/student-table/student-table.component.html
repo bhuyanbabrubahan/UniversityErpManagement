@@ -1,0 +1,381 @@
+@if (loading()) {
+
+  <!-- =====================================================
+       LOADING
+       ===================================================== -->
+
+  <div class="loading-container">
+
+    <mat-spinner diameter="36"></mat-spinner>
+
+    <span>
+      Loading students...
+    </span>
+
+  </div>
+
+} @else {
+
+  @if (students().length > 0) {
+
+    <!-- =====================================================
+         TABLE AREA
+         ===================================================== -->
+
+    <div class="table-scroll">
+
+      <table
+        mat-table
+        [dataSource]="students()"
+        matSort
+        (matSortChange)="onSortChange($event)"
+      >
+
+        <!-- =====================================================
+             ROLL NUMBER
+             ===================================================== -->
+
+        <ng-container matColumnDef="rollNumber">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="rollNumber"
+          >
+            Roll Number
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let student"
+          >
+
+            <strong>
+              {{ student.rollNumber || '-' }}
+            </strong>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- =====================================================
+             STUDENT
+             IMAGE + NAME + EMAIL
+             ===================================================== -->
+
+        <ng-container matColumnDef="student">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="firstName"
+          >
+            Student
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let student"
+          >
+
+            <div class="student-info">
+
+              <!-- =================================================
+                   IMAGE
+                   ================================================= -->
+
+              @if (getProfileImage(student)) {
+
+                <img
+                  class="student-image"
+                  [src]="getStudentImageUrl(student)"
+                  [alt]="getStudentName(student)"
+                  loading="lazy"
+                  (error)="onImageError($event)"
+                  (click)="openStudentImage(student)"
+                />
+
+              } @else {
+
+                <!-- =================================================
+                     AVATAR
+                     ================================================= -->
+
+                <div
+                  class="student-avatar"
+                  (click)="openStudentImage(student)"
+                  role="button"
+                  tabindex="0"
+                >
+
+                  {{ getStudentInitial(student) }}
+
+                </div>
+
+              }
+
+
+              <!-- =================================================
+                   STUDENT DETAILS
+                   NAME
+                   EMAIL
+                   ================================================= -->
+
+              <div class="student-details">
+
+                <div class="student-name">
+
+                  {{ getStudentName(student) }}
+
+                </div>
+
+                <div class="student-email">
+
+                  {{ getStudentEmail(student) }}
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- =====================================================
+             DEPARTMENT
+             ===================================================== -->
+
+        <ng-container matColumnDef="department">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+          >
+            Department
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let student"
+          >
+
+            {{ getDepartmentName(student) }}
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- =====================================================
+             GENDER
+             ===================================================== -->
+
+        <ng-container matColumnDef="gender">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="gender"
+          >
+            Gender
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let student"
+          >
+
+            {{ getGender(student) }}
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- =====================================================
+             STATUS
+             ===================================================== -->
+
+        <ng-container matColumnDef="status">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+          >
+            Status
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let student"
+          >
+
+            <span
+              class="status-badge"
+              [class.active]="isActive(student)"
+              [class.inactive]="!isActive(student)"
+            >
+
+              {{ getStatus(student) }}
+
+            </span>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- =====================================================
+             ACTIONS
+             ===================================================== -->
+
+        <ng-container matColumnDef="actions">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+          >
+            Actions
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let student"
+          >
+
+            <div class="actions">
+
+              <!-- =================================================
+                   VIEW
+                   ================================================= -->
+
+              <button
+                mat-icon-button
+                color="primary"
+                matTooltip="View Student"
+                type="button"
+                (click)="viewStudent(student.id)"
+              >
+
+                <mat-icon>
+                  visibility
+                </mat-icon>
+
+              </button>
+
+
+              <!-- =================================================
+                   EDIT
+                   ================================================= -->
+
+              <button
+                mat-icon-button
+                color="accent"
+                matTooltip="Edit Student"
+                type="button"
+                (click)="editStudent(student.id)"
+              >
+
+                <mat-icon>
+                  edit
+                </mat-icon>
+
+              </button>
+
+
+              <!-- =================================================
+                   DELETE
+                   ================================================= -->
+
+              <button
+                mat-icon-button
+                color="warn"
+                matTooltip="Delete Student"
+                type="button"
+                (click)="deleteStudent(student.id)"
+              >
+
+                <mat-icon>
+                  delete
+                </mat-icon>
+
+              </button>
+
+            </div>
+
+          </td>
+
+        </ng-container>
+
+
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+        ></tr>
+
+
+        <!-- =====================================================
+             ROW
+             ===================================================== -->
+
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: displayedColumns
+          "
+        ></tr>
+
+      </table>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAGINATION
+         ===================================================== -->
+
+    <mat-paginator
+      [length]="totalElements()"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageIndex()"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+
+
+  } @else {
+
+    <!-- =====================================================
+         EMPTY
+         ===================================================== -->
+
+    <div class="empty-state">
+
+      <mat-icon>
+        school
+      </mat-icon>
+
+      <h3>
+        No Students Found
+      </h3>
+
+      <p>
+        There are no student records matching your criteria.
+      </p>
+
+    </div>
+
+  }
+
+}

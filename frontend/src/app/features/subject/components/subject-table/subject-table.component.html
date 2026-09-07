@@ -1,0 +1,574 @@
+<section class="subject-table-card">
+
+  <!-- =====================================================
+       TABLE HEADER
+  ===================================================== -->
+
+  <div class="table-header">
+
+    <div class="table-title">
+
+      <span class="eyebrow">
+        Subject Records
+      </span>
+
+      <h3>
+        Subjects
+      </h3>
+
+      @if (totalElements > 0) {
+
+        <span class="record-count">
+          {{ totalElements }} records
+        </span>
+
+      }
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       LOADING
+  ===================================================== -->
+
+  @if (loading) {
+
+    <div class="table-state loading-state">
+
+      <div class="loader"></div>
+
+      <strong>
+        Loading subjects...
+      </strong>
+
+      <span>
+        Please wait while the records are being loaded.
+      </span>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       EMPTY
+  ===================================================== -->
+
+  @else if (subjects.length === 0) {
+
+    <div class="table-state empty-state">
+
+      <div class="empty-icon">
+        📚
+      </div>
+
+      <strong>
+        No subjects found
+      </strong>
+
+      <span>
+        Try changing your search filters or add a new subject.
+      </span>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       TABLE
+  ===================================================== -->
+
+  @else {
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <!-- CODE -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                [class.active]="isSorted('subjectCode')"
+                (click)="onSort('subjectCode')">
+
+                <span>
+                  Code
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('subjectCode') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- SUBJECT -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                [class.active]="isSorted('subjectName')"
+                (click)="onSort('subjectName')">
+
+                <span>
+                  Subject
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('subjectName') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- SEMESTER -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                [class.active]="isSorted('semesterName')"
+                (click)="onSort('semesterName')">
+
+                <span>
+                  Semester
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('semesterName') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- CREDITS -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                [class.active]="isSorted('credits')"
+                (click)="onSort('credits')">
+
+                <span>
+                  Credits
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('credits') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- MARKS -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                [class.active]="isSorted('marks')"
+                (click)="onSort('marks')">
+
+                <span>
+                  Marks
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('marks') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- STATUS -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                [class.active]="isSorted('status')"
+                (click)="onSort('status')">
+
+                <span>
+                  Status
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('status') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- CREATED -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                [class.active]="isSorted('createdAt')"
+                (click)="onSort('createdAt')">
+
+                <span>
+                  Created
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('createdAt') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- ACTIONS -->
+
+            <th class="action-column">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            subject of subjects;
+            track trackById($index, subject)
+          ) {
+
+            <tr>
+
+              <!-- CODE -->
+
+              <td>
+
+                <span class="subject-code">
+                  {{ subject.subjectCode }}
+                </span>
+
+              </td>
+
+
+              <!-- SUBJECT -->
+
+              <td>
+
+                <div class="subject-name">
+
+                  <strong>
+                    {{ subject.subjectName }}
+                  </strong>
+
+                </div>
+
+              </td>
+
+
+              <!-- SEMESTER -->
+
+              <td>
+
+                <span class="semester-name">
+                  {{ subject.semesterName }}
+                </span>
+
+              </td>
+
+
+              <!-- CREDITS -->
+
+              <td>
+
+                <span class="credit-badge">
+                  {{ subject.credits }}
+                </span>
+
+              </td>
+
+
+              <!-- MARKS -->
+
+              <td>
+
+                <span class="marks">
+                  {{ getMarksDisplay(subject) }}
+                </span>
+
+              </td>
+
+
+              <!-- STATUS -->
+
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class.active]="subject.status === 'ACTIVE'"
+                  [class.inactive]="subject.status !== 'ACTIVE'">
+
+                  <span class="status-dot"></span>
+
+                  {{ subject.status }}
+
+                </span>
+
+              </td>
+
+
+              <!-- CREATED -->
+
+              <td>
+
+                <span class="date">
+                  {{ formatSubjectDate(subject.createdAt) }}
+                </span>
+
+              </td>
+
+
+              <!-- ACTIONS -->
+
+              <td class="actions">
+
+                <button
+                  type="button"
+                  class="action-btn view-btn"
+                  title="View subject"
+                  (click)="view.emit(subject)">
+
+                  View
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action-btn edit-btn"
+                  title="Edit subject"
+                  (click)="edit.emit(subject)">
+
+                  Edit
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="action-btn delete-btn"
+                  title="Delete subject"
+                  (click)="delete.emit(subject)">
+
+                  Delete
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAGINATION
+    ===================================================== -->
+
+    @if (totalElements > 0) {
+
+      <div class="pagination">
+
+        <!-- LEFT -->
+
+        <div class="pagination-info">
+
+          <span>
+            Showing
+          </span>
+
+          <strong>
+            {{ displayStart }}–{{ displayEnd }}
+          </strong>
+
+          <span>
+            of
+          </span>
+
+          <strong>
+            {{ totalElements }}
+          </strong>
+
+        </div>
+
+
+        <!-- CENTER -->
+
+        <div class="pagination-controls">
+
+          <!-- FIRST -->
+
+          <button
+            type="button"
+            class="page-btn navigation-btn"
+            title="First page"
+            [disabled]="page === 0 || loading"
+            (click)="firstPage()">
+
+            «
+
+          </button>
+
+
+          <!-- PREVIOUS -->
+
+          <button
+            type="button"
+            class="page-btn navigation-btn"
+            title="Previous page"
+            [disabled]="page === 0 || loading"
+            (click)="previousPage()">
+
+            ‹
+
+          </button>
+
+
+          <!-- PAGE NUMBERS -->
+
+          @for (
+            pageNumber of visiblePages;
+            track $index
+          ) {
+
+            @if (pageNumber === -1) {
+
+              <span class="page-dots">
+                ...
+              </span>
+
+            } @else {
+
+              <button
+                type="button"
+                class="page-btn"
+                [class.active]="pageNumber === page"
+                [disabled]="loading"
+                (click)="goToPage(pageNumber)">
+
+                {{ pageNumber + 1 }}
+
+              </button>
+
+            }
+
+          }
+
+
+          <!-- NEXT -->
+
+          <button
+            type="button"
+            class="page-btn navigation-btn"
+            title="Next page"
+            [disabled]="last || loading"
+            (click)="nextPage()">
+
+            ›
+
+          </button>
+
+
+          <!-- LAST -->
+
+          <button
+            type="button"
+            class="page-btn navigation-btn"
+            title="Last page"
+            [disabled]="last || loading"
+            (click)="lastPage()">
+
+            »
+
+          </button>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="page-size">
+
+          <label for="subjectPageSize">
+            Rows
+          </label>
+
+          <select
+            id="subjectPageSize"
+            [value]="size"
+            [disabled]="loading"
+            (change)="changePageSize(+$any($event.target).value)">
+
+            @for (
+              option of pageSizeOptions;
+              track option
+            ) {
+
+              <option
+                [value]="option">
+
+                {{ option }}
+
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+      </div>
+
+    }
+
+  }
+
+</section>

@@ -1,0 +1,27 @@
+<form class="filter-card" (ngSubmit)="submit()">
+  <div class="filter-field search-field">
+    <span>Search</span
+    ><input
+      name="keyword"
+      [(ngModel)]="keyword"
+      placeholder="Search title or message"
+    />
+  </div>
+  <div class="filter-field">
+    <span>Code</span
+    ><input name="code" [(ngModel)]="code" placeholder="Notification code" />
+  </div>
+  <div class="filter-field">
+    <span>Status</span
+    ><select name="status" [(ngModel)]="status">
+      <option value="">All statuses</option>
+      <option *ngFor="let item of statuses" [value]="item">{{ item }}</option>
+    </select>
+  </div>
+  <div class="filter-actions">
+    <button class="btn primary" type="submit">Search</button
+    ><button class="btn secondary" type="button" (click)="clear()">
+      Reset
+    </button>
+  </div>
+</form>

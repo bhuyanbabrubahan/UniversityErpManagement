@@ -1,0 +1,695 @@
+<main class="page">
+
+  <!-- =========================================================
+       PAGE HEADER
+  ========================================================== -->
+
+  <header class="page-header">
+
+    <div class="header-content">
+
+      <div class="breadcrumb">
+        Attendance
+        <span>/</span>
+        Bulk Upload
+        <span>/</span>
+        Preview
+      </div>
+
+      <p class="eyebrow">
+        Attendance Management
+      </p>
+
+      <h1>
+        Review Attendance Upload
+      </h1>
+
+      <p class="subtitle">
+        Verify class, faculty, subject, date and every student
+        attendance record before final submission.
+      </p>
+
+    </div>
+
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="btn secondary"
+        (click)="back()"
+        [disabled]="loading">
+
+        <span class="btn-icon">
+          ←
+        </span>
+
+        Back to Upload
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn secondary"
+        (click)="download()"
+        [disabled]="loading || !rows.length">
+
+        <span class="btn-icon">
+          ↓
+        </span>
+
+        Download Preview
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================================
+       WORKFLOW
+  ========================================================== -->
+
+  <section class="workflow">
+
+    <div class="workflow-step completed">
+
+      <span class="step-number">
+        ✓
+      </span>
+
+      <div>
+        <strong>Upload</strong>
+        <small>Excel selected</small>
+      </div>
+
+    </div>
+
+
+    <span class="workflow-line completed-line"></span>
+
+
+    <div class="workflow-step active">
+
+      <span class="step-number">
+        2
+      </span>
+
+      <div>
+        <strong>Preview</strong>
+        <small>Verify records</small>
+      </div>
+
+    </div>
+
+
+    <span class="workflow-line"></span>
+
+
+    <div class="workflow-step">
+
+      <span class="step-number">
+        3
+      </span>
+
+      <div>
+        <strong>Submit</strong>
+        <small>Save attendance</small>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       EMPTY STATE
+  ========================================================== -->
+
+  @if (!rows.length) {
+
+    <section class="panel empty-state">
+
+      <div class="empty-icon">
+        !
+      </div>
+
+      <h2>
+        No Attendance Records
+      </h2>
+
+      <p>
+        No attendance records were found in the uploaded
+        Excel file.
+      </p>
+
+      <button
+        type="button"
+        class="btn primary"
+        (click)="back()">
+
+        ← Back to Upload
+
+      </button>
+
+    </section>
+
+  }
+
+
+  @else {
+
+    <!-- =======================================================
+         ATTENDANCE CONTEXT
+    ======================================================== -->
+
+    <section class="panel context-panel">
+
+      <div class="section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            Attendance Context
+          </p>
+
+          <h2>
+            Upload Configuration
+          </h2>
+
+          <p>
+            Confirm exactly where this attendance will be recorded.
+          </p>
+
+        </div>
+
+        <div class="record-count">
+
+          <strong>
+            {{ rows.length }}
+          </strong>
+
+          <span>
+            Students
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="context-grid">
+
+        <!-- Mapping -->
+
+        <div class="context-card">
+
+          <span class="context-label">
+            Faculty Subject Mapping
+          </span>
+
+          <strong>
+            Mapping #{{ mappingId || 'Not selected' }}
+          </strong>
+
+          <small>
+            Required for submission
+          </small>
+
+        </div>
+
+
+        <!-- Faculty -->
+
+        <div class="context-card">
+
+          <span class="context-label">
+            Faculty
+          </span>
+
+          <strong>
+            {{ facultyName || 'Not selected' }}
+          </strong>
+
+          <small>
+            Assigned faculty
+          </small>
+
+        </div>
+
+
+        <!-- Subject -->
+
+        <div class="context-card">
+
+          <span class="context-label">
+            Subject
+          </span>
+
+          <strong>
+            {{ subjectName || 'Not selected' }}
+          </strong>
+
+          <small>
+            Attendance subject
+          </small>
+
+        </div>
+
+
+        <!-- Class -->
+
+        <div class="context-card">
+
+          <span class="context-label">
+            Class / Section
+          </span>
+
+          <strong>
+            {{ className || 'Not selected' }}
+            @if (sectionName) {
+              <span> / {{ sectionName }}</span>
+            }
+          </strong>
+
+          <small>
+            Student group
+          </small>
+
+        </div>
+
+
+        <!-- Academic Year -->
+
+        <div class="context-card">
+
+          <span class="context-label">
+            Academic Year
+          </span>
+
+          <strong>
+            {{ academicYear || 'Not selected' }}
+          </strong>
+
+          <small>
+            Academic session
+          </small>
+
+        </div>
+
+
+        <!-- Date -->
+
+        <div class="context-card date-card">
+
+          <label>
+
+            <span class="context-label">
+              Attendance Date <b>*</b>
+            </span>
+
+            <input
+              type="date"
+              [(ngModel)]="attendanceDate"
+              [disabled]="loading">
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           MAPPING CONFIGURATION
+      ====================================================== -->
+
+      <div class="configuration-box">
+
+        <div class="configuration-title">
+
+          <span class="config-icon">
+            #
+          </span>
+
+          <div>
+
+            <strong>
+              Submission Mapping
+            </strong>
+
+            <small>
+              Required backend mapping identifier
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <label class="mapping-input">
+
+          <span>
+            Faculty Subject Mapping ID
+            <b>*</b>
+          </span>
+
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="mappingId"
+            placeholder="Enter mapping ID"
+            [disabled]="loading">
+
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         SUMMARY
+    ======================================================== -->
+
+    <section class="summary-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <p class="eyebrow">
+            Attendance Summary
+          </p>
+
+          <h2>
+            Record Overview
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <app-attendance-summary
+        [total]="rows.length"
+        [present]="present">
+      </app-attendance-summary>
+
+
+    </section>
+
+
+    <!-- =======================================================
+         RECORD TABLE
+    ======================================================== -->
+
+    <section class="panel records-panel">
+
+      <div class="records-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            Excel Records
+          </p>
+
+          <h2>
+            Student Attendance
+          </h2>
+
+          <p>
+            Review student identity, status, source and remarks.
+          </p>
+
+        </div>
+
+
+        <div class="review-status">
+          <span class="review-dot"></span>
+          Review Required
+        </div>
+
+      </div>
+
+
+      <div class="table-container">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>#</th>
+
+              <th>Student ID</th>
+
+              <th>Roll No</th>
+
+              <th>Student</th>
+
+              <th>Status</th>
+
+              <th>Source</th>
+
+              <th>Remarks</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              row of rows;
+              track row.studentId;
+              let i = $index
+            ) {
+
+              <tr>
+
+                <!-- # -->
+
+                <td class="serial">
+                  {{ i + 1 }}
+                </td>
+
+
+                <!-- Student ID -->
+
+                <td>
+
+                  <span class="student-id">
+                    {{ row.studentId || '—' }}
+                  </span>
+
+                </td>
+
+
+                <!-- Roll Number -->
+
+                <td>
+
+                  <span class="roll-number">
+                    {{ row.rollNumber || '—' }}
+                  </span>
+
+                </td>
+
+
+                <!-- Student -->
+
+                <td>
+
+                  <div class="student-cell">
+
+                    <div class="avatar">
+                      {{ studentInitial(row) }}
+                    </div>
+
+                    <div class="student-info">
+
+                      <strong>
+                        {{ studentName(row) || 'Unknown Student' }}
+                      </strong>
+
+                      <small>
+                        {{ row.studentId || 'No student ID' }}
+                      </small>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- Status -->
+
+                <td>
+
+                  <span
+                    class="status"
+                    [class.present]="
+                      statusValue(row.attendanceStatus) === 'PRESENT'
+                    "
+                    [class.absent]="
+                      statusValue(row.attendanceStatus) === 'ABSENT'
+                    "
+                    [class.leave]="
+                      statusValue(row.attendanceStatus) === 'LEAVE'
+                    "
+                    [class.half-day]="
+                      statusValue(row.attendanceStatus) === 'HALF_DAY'
+                    "
+                  >
+
+                    <span class="status-dot"></span>
+
+                    {{ statusLabel(row.attendanceStatus) }}
+
+                  </span>
+
+                </td>
+
+
+                <!-- Source -->
+
+                <td>
+
+                  <span class="source">
+                    {{ sourceLabel(row.attendanceSource) }}
+                  </span>
+
+                </td>
+
+
+                <!-- Remarks -->
+
+                <td>
+
+                  <span
+                    class="remarks"
+                    [title]="row.remarks || 'No remarks'"
+                  >
+                    {{ row.remarks || 'No remarks' }}
+                  </span>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <div class="table-footer">
+
+        <span>
+          Showing
+          <strong>{{ rows.length }}</strong>
+          attendance records
+        </span>
+
+        <span>
+          Excel Preview
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FINAL WARNING / ACTION
+    ======================================================== -->
+
+    <section class="final-actions">
+
+      <div class="final-info">
+
+        <div class="warning-icon">
+          !
+        </div>
+
+        <div>
+
+          <strong>
+            Ready for final submission?
+          </strong>
+
+          <p>
+            Once submitted, these attendance records will be
+            sent to the server for processing.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="action-buttons">
+
+        <button
+          type="button"
+          class="btn secondary"
+          (click)="cancel()"
+          [disabled]="loading">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn secondary"
+          (click)="back()"
+          [disabled]="loading">
+
+          ← Back
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn primary submit-button"
+          (click)="submit()"
+          [disabled]="loading || !rows.length">
+
+          @if (loading) {
+
+            <span class="button-loader"></span>
+
+            Uploading...
+
+          }
+
+          @else {
+
+            <span>
+              ✓
+            </span>
+
+            Final Upload
+
+          }
+
+        </button>
+
+      </div>
+
+    </section>
+
+  }
+
+</main>

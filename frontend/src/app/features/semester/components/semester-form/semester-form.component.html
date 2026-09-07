@@ -1,0 +1,324 @@
+<form
+  class="semester-form"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  novalidate>
+
+
+  <!-- =====================================================
+       SEMESTER INFORMATION
+  ===================================================== -->
+
+  <div class="form-section">
+
+    <div class="section-heading">
+
+      <span class="section-eyebrow">
+        Academic Structure
+      </span>
+
+      <h3>
+        Semester Information
+      </h3>
+
+      <p>
+        Configure semester details and its course.
+      </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <!-- =================================================
+           SEMESTER NAME
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="semesterName">
+          Semester Name
+          <span class="required">*</span>
+        </label>
+
+        <input
+          id="semesterName"
+          type="text"
+          formControlName="semesterName"
+          maxlength="50"
+          placeholder="e.g. Semester 1"
+          autocomplete="off"
+        />
+
+        @if (isInvalid('semesterName')) {
+
+          <span class="field-error">
+            Semester name is required.
+          </span>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           SEMESTER NUMBER
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="semesterNumber">
+          Semester Number
+          <span class="required">*</span>
+        </label>
+
+        <select
+          id="semesterNumber"
+          formControlName="semesterNumber">
+
+          <option [ngValue]="0">
+            Select semester number
+          </option>
+
+          @for (
+            number of semesterNumbers;
+            track number
+          ) {
+
+            <option [ngValue]="number">
+              Semester {{ number }}
+            </option>
+
+          }
+
+        </select>
+
+        @if (isInvalid('semesterNumber')) {
+
+          <span class="field-error">
+            Semester number is required.
+          </span>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           COURSE
+      ================================================= -->
+
+      <div class="form-field full-width">
+
+        <label for="courseId">
+          Course
+          <span class="required">*</span>
+        </label>
+
+        <select
+          id="courseId"
+          formControlName="courseId"
+          [disabled]="loadingCourses">
+
+          <option [ngValue]="0">
+
+            @if (loadingCourses) {
+              Loading courses...
+            } @else {
+              Select course
+            }
+
+          </option>
+
+
+          @for (
+            course of courses;
+            track course.id
+          ) {
+
+            <option
+              [ngValue]="course.id">
+
+              {{ course.courseCode }}
+              -
+              {{ course.courseName }}
+
+            </option>
+
+          }
+
+        </select>
+
+
+        @if (loadingCourses) {
+
+          <span class="field-hint">
+            Loading courses...
+          </span>
+
+        }
+
+
+        @if (coursesError) {
+
+          <span class="field-error">
+            {{ coursesError }}
+          </span>
+
+        }
+
+
+        @if (
+          !loadingCourses &&
+          !coursesError &&
+          courses.length === 0
+        ) {
+
+          <span class="field-hint">
+            No courses available.
+          </span>
+
+        }
+
+
+        @if (isInvalid('courseId')) {
+
+          <span class="field-error">
+            Course is required.
+          </span>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           START DATE
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="semesterStartDate">
+          Start Date
+          <span class="required">*</span>
+        </label>
+
+        <input
+          id="semesterStartDate"
+          type="date"
+          formControlName="semesterStartDate"
+          (change)="onDateChange()"
+        />
+
+        @if (
+          isInvalid('semesterStartDate')
+        ) {
+
+          <span class="field-error">
+            Start date is required.
+          </span>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           END DATE
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="semesterEndDate">
+          End Date
+          <span class="required">*</span>
+        </label>
+
+        <input
+          id="semesterEndDate"
+          type="date"
+          formControlName="semesterEndDate"
+          (change)="onDateChange()"
+        />
+
+        @if (
+          isInvalid('semesterEndDate')
+        ) {
+
+          <span class="field-error">
+            End date is required.
+          </span>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           TOTAL WORKING DAYS
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="totalWorkingDays">
+          Total Working Days
+        </label>
+
+        <input
+          id="totalWorkingDays"
+          type="number"
+          formControlName="totalWorkingDays"
+          readonly
+        />
+
+        <span class="field-hint">
+          Automatically calculated from the selected dates.
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ACTIONS
+  ===================================================== -->
+
+  <div class="form-actions">
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="loading"
+      (click)="onCancel()">
+
+      Cancel
+
+    </button>
+
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="loading || loadingCourses">
+
+      @if (loading) {
+
+        <span class="button-spinner"></span>
+
+        Saving...
+
+      } @else {
+
+        {{ submitLabel }}
+
+      }
+
+    </button>
+
+  </div>
+
+</form>

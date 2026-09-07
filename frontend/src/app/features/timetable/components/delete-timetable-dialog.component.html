@@ -1,0 +1,21 @@
+<div class="dialog">
+  <div class="dialog-icon">!</div>
+
+  <h2>Delete Timetable?</h2>
+
+  <p>
+    Are you sure you want to delete
+    <strong>{{ data.code }}</strong
+    >?
+  </p>
+
+  <p class="subject">
+    {{ data.subject }}
+  </p>
+
+  <div class="dialog-actions">
+    <button type="button" class="cancel" (click)="cancel()">Cancel</button>
+
+    <button type="button" class="delete" (click)="confirm()">Delete</button>
+  </div>
+</div>

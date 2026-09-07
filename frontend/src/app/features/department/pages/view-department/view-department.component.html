@@ -1,0 +1,188 @@
+<div class="page">
+
+  <div class="content-container">
+
+    <header class="page-header">
+
+      <div>
+        <span class="eyebrow">
+          Department Management
+        </span>
+
+        <h1>Department Details</h1>
+
+        <p>
+          View complete department information.
+        </p>
+      </div>
+
+      <div class="header-actions">
+
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="goBack()">
+
+          Back
+
+        </button>
+
+        @if (department) {
+
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="editDepartment()">
+
+            Edit Department
+
+          </button>
+
+        }
+
+      </div>
+
+    </header>
+
+
+    @if (loading) {
+
+      <div class="loading-card">
+        Loading department details...
+      </div>
+
+    }
+
+
+    @if (!loading && errorMessage) {
+
+      <div class="error-card">
+
+        <strong>
+          Something went wrong
+        </strong>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="goBack()">
+
+          Back to Departments
+
+        </button>
+
+      </div>
+
+    }
+
+
+    @if (!loading && department) {
+
+      <section class="details-card">
+
+        <div class="course-heading">
+
+          <div>
+
+            <span class="course-code">
+              {{ department.departmentCode }}
+            </span>
+
+            <h2>
+              {{ department.departmentName }}
+            </h2>
+
+            <p>
+              {{ department.description || 'No description available.' }}
+            </p>
+
+          </div>
+
+          <span
+            class="status"
+            [class.active]="department.status === 'ACTIVE'"
+            [class.inactive]="department.status === 'INACTIVE'"
+            [class.deleted]="department.status === 'DELETED'">
+
+            {{ department.status }}
+
+          </span>
+
+        </div>
+
+
+        <div class="details-grid">
+
+          <div class="detail">
+            <span>Department ID</span>
+            <strong>#{{ department.id }}</strong>
+          </div>
+
+          <div class="detail">
+            <span>Department Code</span>
+            <strong>{{ department.departmentCode }}</strong>
+          </div>
+
+          <div class="detail">
+            <span>Department Name</span>
+            <strong>{{ department.departmentName }}</strong>
+          </div>
+
+          <div class="detail">
+            <span>Status</span>
+            <strong>{{ department.status }}</strong>
+          </div>
+
+          @if (department.createdAt) {
+
+            <div class="detail">
+              <span>Created At</span>
+              <strong>
+                {{ department.createdAt | date:'medium' }}
+              </strong>
+            </div>
+
+          }
+
+          @if (department.createdBy) {
+
+            <div class="detail">
+              <span>Created By</span>
+              <strong>{{ department.createdBy }}</strong>
+            </div>
+
+          }
+
+          @if (department.updatedAt) {
+
+            <div class="detail">
+              <span>Updated At</span>
+              <strong>
+                {{ department.updatedAt | date:'medium' }}
+              </strong>
+            </div>
+
+          }
+
+          @if (department.updatedBy) {
+
+            <div class="detail">
+              <span>Updated By</span>
+              <strong>{{ department.updatedBy }}</strong>
+            </div>
+
+          }
+
+        </div>
+
+      </section>
+
+    }
+
+  </div>
+
+</div>

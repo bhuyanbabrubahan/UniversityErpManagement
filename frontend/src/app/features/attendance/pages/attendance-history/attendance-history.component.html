@@ -1,0 +1,921 @@
+<main class="page">
+
+
+  <!-- =========================================================
+       PAGE HEADER
+  ========================================================== -->
+
+  <header class="page-header">
+
+    <div class="header-content">
+
+      <p class="eyebrow">
+        Attendance / Records
+      </p>
+
+      <h1>
+        Attendance History
+      </h1>
+
+      <p class="subtitle">
+        Search, review, edit and manage attendance records.
+      </p>
+
+    </div>
+
+
+    <div class="header-actions">
+
+      <!-- BACK -->
+
+      <button
+        type="button"
+        class="secondary header-button"
+        (click)="back()"
+        [disabled]="loading">
+
+        <span class="icon">
+          ←
+        </span>
+
+        <span>
+          Back
+        </span>
+
+      </button>
+
+
+      <!-- TAKE ATTENDANCE -->
+
+      <button
+        type="button"
+        class="primary header-button"
+        routerLink="/dashboard/attendance/classes"
+        [disabled]="loading">
+
+        <span class="icon">
+          +
+        </span>
+
+        <span>
+          Take Attendance
+        </span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================================
+       SEARCH PANEL
+  ========================================================== -->
+
+  <section class="panel search-panel">
+
+    <div class="panel-heading">
+
+      <div>
+
+        <p class="eyebrow">
+          Search & Filters
+        </p>
+
+        <h2>
+          Attendance Filters
+        </h2>
+
+      </div>
+
+      <span class="filter-hint">
+        Refine attendance records
+      </span>
+
+    </div>
+
+
+    <div class="filter-grid">
+
+
+      <!-- STUDENT ID -->
+
+      <label>
+
+        <span>
+          Student ID
+        </span>
+
+        <div class="input-wrap">
+
+          <span class="input-icon">
+            ♙
+          </span>
+
+          <input
+            type="number"
+            [(ngModel)]="studentId"
+            placeholder="Enter student ID"
+            [disabled]="loading">
+
+        </div>
+
+      </label>
+
+
+
+      <!-- FACULTY ID -->
+
+      <label>
+
+        <span>
+          Faculty ID
+        </span>
+
+        <div class="input-wrap">
+
+          <span class="input-icon">
+            ♟
+          </span>
+
+          <input
+            type="number"
+            [(ngModel)]="facultyId"
+            placeholder="Enter faculty ID"
+            [disabled]="loading">
+
+        </div>
+
+      </label>
+
+
+
+      <!-- SUBJECT ID -->
+
+      <label>
+
+        <span>
+          Subject ID
+        </span>
+
+        <div class="input-wrap">
+
+          <span class="input-icon">
+            ▤
+          </span>
+
+          <input
+            type="number"
+            [(ngModel)]="subjectId"
+            placeholder="Enter subject ID"
+            [disabled]="loading">
+
+        </div>
+
+      </label>
+
+
+
+      <!-- MAPPING ID -->
+
+      <label>
+
+        <span>
+          Mapping ID
+        </span>
+
+        <div class="input-wrap">
+
+          <span class="input-icon">
+            #
+          </span>
+
+          <input
+            type="number"
+            [(ngModel)]="mappingId"
+            placeholder="Faculty subject mapping"
+            [disabled]="loading">
+
+        </div>
+
+      </label>
+
+
+
+      <!-- DATE -->
+
+      <label>
+
+        <span>
+          Attendance Date
+        </span>
+
+        <div class="input-wrap">
+
+          <span class="input-icon">
+            ▣
+          </span>
+
+          <input
+            type="date"
+            [(ngModel)]="attendanceDate"
+            [disabled]="loading">
+
+        </div>
+
+      </label>
+
+
+
+      <!-- STATUS -->
+
+      <label>
+
+        <span>
+          Attendance Status
+        </span>
+
+        <div class="input-wrap select-wrap">
+
+          <span class="input-icon">
+            ●
+          </span>
+
+          <select
+            [(ngModel)]="attendanceStatus"
+            [disabled]="loading">
+
+            <option [ngValue]="null">
+              All statuses
+            </option>
+
+            @for (
+              status of (AttendanceStatus | keyvalue);
+              track status.key
+            ) {
+
+              <option
+                [ngValue]="status.value">
+
+                {{ status.value }}
+
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+      </label>
+
+    </div>
+
+
+
+    <!-- FILTER ACTIONS -->
+
+    <div class="filter-actions">
+
+      <button
+        type="button"
+        class="primary action-main"
+        (click)="searchFromFirstPage()"
+        [disabled]="loading">
+
+        <span class="icon">
+          ⌕
+        </span>
+
+        Search
+
+      </button>
+
+
+      <button
+        type="button"
+        class="secondary"
+        (click)="reset()"
+        [disabled]="loading">
+
+        <span class="icon">
+          ↺
+        </span>
+
+        Reset
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       RECORDS PANEL
+  ========================================================== -->
+
+  <section class="panel records-panel">
+
+
+    <!-- =======================================================
+         RECORD HEADER
+    ======================================================== -->
+
+    <div class="results-header">
+
+
+      <!-- TITLE -->
+
+      <div class="results-title">
+
+        <p class="eyebrow">
+          Records
+        </p>
+
+        <h2>
+          Attendance Records
+        </h2>
+
+      </div>
+
+
+      <!-- TOOLS -->
+
+      <div class="results-tools">
+
+
+        <!-- SORT -->
+
+        <button
+          type="button"
+          class="sort-button"
+          (click)="toggleSort()"
+          [disabled]="loading"
+          [title]="sortLabel">
+
+          <span class="sort-icon">
+            ↕
+          </span>
+
+          <span class="sort-text">
+            {{ sortLabel }}
+          </span>
+
+        </button>
+
+
+        <!-- TOTAL -->
+
+        <div class="total-box">
+
+          <span>
+            Total
+          </span>
+
+          <strong>
+            {{ totalElements }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =======================================================
+         LOADING
+    ======================================================== -->
+
+    @if (loading) {
+
+      <div class="loading-state">
+
+        <div class="loader"></div>
+
+        <strong>
+          Loading attendance records...
+        </strong>
+
+        <p>
+          Please wait while the records are being loaded.
+        </p>
+
+      </div>
+
+    }
+
+
+    @else {
+
+
+      <!-- =====================================================
+           TABLE
+      ====================================================== -->
+
+      @if (records.length > 0) {
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th class="student-column">
+                  Student
+                </th>
+
+                <th class="faculty-column">
+                  Faculty
+                </th>
+
+                <th class="subject-column">
+                  Subject
+                </th>
+
+                <th class="date-column">
+                  Date
+                </th>
+
+                <th class="status-column">
+                  Status
+                </th>
+
+                <th class="source-column">
+                  Source
+                </th>
+
+                <th class="actions-column">
+                  Actions
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                record of records;
+                track record.id
+              ) {
+
+                <tr>
+
+
+                  <!-- =================================================
+                       STUDENT
+                  ================================================== -->
+
+                  <td class="student-column">
+
+                    <div class="student-cell">
+
+                      <div class="student-avatar">
+
+                        {{
+                          studentInitial(
+                            record.studentName
+                          )
+                        }}
+
+                      </div>
+
+
+                      <div class="student-details">
+
+                        <strong>
+                          {{
+                            record.studentName ||
+                            'Unknown Student'
+                          }}
+                        </strong>
+
+                        <span class="roll-number">
+
+                          <span class="roll-label">
+                            Roll No.
+                          </span>
+
+                          <span>
+                            {{ record.rollNumber || '—' }}
+                          </span>
+
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </td>
+
+
+
+                  <!-- =================================================
+                       FACULTY
+                  ================================================== -->
+
+                  <td class="faculty-column">
+
+                    <span class="primary-text">
+                      {{ record.facultyName || '—' }}
+                    </span>
+
+                  </td>
+
+
+
+                  <!-- =================================================
+                       SUBJECT
+                  ================================================== -->
+
+                  <td class="subject-column">
+
+                    <span class="primary-text subject-name">
+                      {{ record.subjectName || '—' }}
+                    </span>
+
+                  </td>
+
+
+
+                  <!-- =================================================
+                       DATE
+                  ================================================== -->
+
+                  <td class="date-column">
+
+                    <span class="date-cell">
+
+                      <span class="date-icon">
+                        ▣
+                      </span>
+
+                      <span>
+                        {{ record.attendanceDate || '—' }}
+                      </span>
+
+                    </span>
+
+                  </td>
+
+
+
+                  <!-- =================================================
+                       STATUS
+                  ================================================== -->
+
+                  <td class="status-column">
+
+                    <span
+                      class="status"
+
+                      [class.present]="
+                        statusValue(
+                          record.attendanceStatus
+                        ) === 'PRESENT'
+                      "
+
+                      [class.absent]="
+                        statusValue(
+                          record.attendanceStatus
+                        ) === 'ABSENT'
+                      "
+
+                      [class.leave]="
+                        statusValue(
+                          record.attendanceStatus
+                        ) === 'LEAVE'
+                      "
+
+                      [class.half-day]="
+                        statusValue(
+                          record.attendanceStatus
+                        ) === 'HALF_DAY'
+                      ">
+
+                      <span class="status-dot"></span>
+
+                      {{
+                        statusLabel(
+                          record.attendanceStatus
+                        )
+                      }}
+
+                    </span>
+
+                  </td>
+
+
+
+                  <!-- =================================================
+                       SOURCE
+                  ================================================== -->
+
+                  <td class="source-column">
+
+                    <span class="source">
+
+                      <span class="source-icon">
+                        ↑
+                      </span>
+
+                      {{
+                        sourceLabel(
+                          record.attendanceSource
+                        )
+                      }}
+
+                    </span>
+
+                  </td>
+
+
+
+                  <!-- =================================================
+                       ACTIONS
+                  ================================================== -->
+
+                  <td class="actions-column">
+
+                    <div class="actions">
+
+
+                      <!-- VIEW -->
+
+                      <button
+                        type="button"
+                        class="action-button view"
+
+                        [routerLink]="[
+                          '/dashboard/attendance/view'
+                        ]"
+
+                        [queryParams]="{
+                          id: record.id
+                        }"
+
+                        title="View attendance">
+
+                        <span class="action-icon">
+                          ◉
+                        </span>
+
+                        <span>
+                          View
+                        </span>
+
+                      </button>
+
+
+
+                      <!-- EDIT -->
+
+                      <button
+                        type="button"
+                        class="action-button edit"
+
+                        [routerLink]="[
+                          '/dashboard/attendance/edit'
+                        ]"
+
+                        [queryParams]="{
+                          id: record.id
+                        }"
+
+                        title="Edit attendance">
+
+                        <span class="action-icon">
+                          ✎
+                        </span>
+
+                        <span>
+                          Edit
+                        </span>
+
+                      </button>
+
+
+
+                      <!-- DELETE -->
+
+                      <button
+                        type="button"
+                        class="action-button delete"
+
+                        (click)="remove(record.id)"
+
+                        [disabled]="loading"
+
+                        title="Delete attendance">
+
+                        <span class="action-icon">
+                          ▪
+                        </span>
+
+                        <span>
+                          Delete
+                        </span>
+
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+
+      <!-- =====================================================
+           EMPTY STATE
+      ====================================================== -->
+
+      @else {
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            ✓
+          </div>
+
+          <strong>
+            No attendance records found
+          </strong>
+
+          <p>
+            Try changing your filters or reset the search
+            to view all attendance records.
+          </p>
+
+          <button
+            type="button"
+            class="secondary"
+            (click)="reset()">
+
+            <span class="icon">
+              ↺
+            </span>
+
+            Reset Filters
+
+          </button>
+
+        </div>
+
+      }
+
+
+
+      <!-- =====================================================
+           PAGINATION
+      ====================================================== -->
+
+      @if (totalElements > 0) {
+
+        <div class="pagination-bar">
+
+
+          <!-- ROWS PER PAGE -->
+
+          <div class="rows-control">
+
+            <span>
+              Rows per page
+            </span>
+
+            <select
+              [(ngModel)]="size"
+              (ngModelChange)="changePageSize()"
+              [disabled]="loading">
+
+              @for (
+                pageSize of pageSizes;
+                track pageSize
+              ) {
+
+                <option
+                  [ngValue]="pageSize">
+
+                  {{ pageSize }}
+
+                </option>
+
+              }
+
+            </select>
+
+          </div>
+
+
+
+          <!-- PAGE INFO -->
+
+          <div class="page-info">
+
+            <span>
+              Page
+            </span>
+
+            <strong>
+              {{ page + 1 }}
+            </strong>
+
+            <span>
+              of
+            </span>
+
+            <strong>
+              {{ totalPages || 1 }}
+            </strong>
+
+          </div>
+
+
+
+          <!-- PREVIOUS / NEXT -->
+
+          <div class="pagination-buttons">
+
+
+            <!-- PREVIOUS -->
+
+            <button
+              type="button"
+
+              class="pagination-button previous"
+
+              (click)="previousPage()"
+
+              [disabled]="
+                page === 0 ||
+                loading
+              "
+
+              title="Previous page">
+
+              <span class="pagination-icon">
+                ←
+              </span>
+
+              <span>
+                Previous
+              </span>
+
+            </button>
+
+
+
+            <!-- NEXT -->
+
+            <button
+              type="button"
+
+              class="pagination-button next"
+
+              (click)="nextPage()"
+
+              [disabled]="
+                page + 1 >= totalPages ||
+                loading
+              "
+
+              title="Next page">
+
+              <span>
+                Next
+              </span>
+
+              <span class="pagination-icon">
+                →
+              </span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    }
+
+  </section>
+
+</main>

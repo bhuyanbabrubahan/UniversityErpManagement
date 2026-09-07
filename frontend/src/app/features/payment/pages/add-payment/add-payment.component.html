@@ -1,0 +1,34 @@
+<div class="page-container">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Add Fee Payment</h1>
+
+      <p>
+        Create a new student fee payment record.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="onCancel()">
+
+      Cancel
+
+    </button>
+
+  </div>
+
+
+  <div class="page-content">
+
+    <app-payment-form
+      (submitted)="onSubmitted($event)"
+      (cancelled)="onCancel()">
+    </app-payment-form>
+
+  </div>
+
+</div>

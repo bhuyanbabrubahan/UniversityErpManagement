@@ -1,0 +1,106 @@
+@if (course) {
+
+  <div
+    class="dialog-backdrop"
+    role="presentation"
+    (click)="cancel()">
+
+    <section
+      class="dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="deleteCourseTitle"
+      (click)="$event.stopPropagation()">
+
+
+      <!-- =====================================================
+           ICON
+           ===================================================== -->
+
+      <div class="dialog-icon">
+        !
+      </div>
+
+
+      <!-- =====================================================
+           CONTENT
+           ===================================================== -->
+
+      <div class="dialog-content">
+
+        <h2 id="deleteCourseTitle">
+          Delete Course?
+        </h2>
+
+        <p>
+          You are about to delete
+
+          <strong>
+            {{ course.courseName }}
+          </strong>
+
+          <span class="code">
+            {{ course.courseCode }}
+          </span>
+        </p>
+
+
+        <div class="warning">
+
+          <strong>
+            This action will soft-delete the course.
+          </strong>
+
+          <span>
+            The course will no longer appear in the active course list.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           ACTIONS
+           ===================================================== -->
+
+      <div class="dialog-actions">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [disabled]="loading"
+          (click)="cancel()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          [disabled]="loading"
+          (click)="confirmDelete()">
+
+          @if (loading) {
+
+            <span class="spinner"></span>
+
+            Deleting...
+
+          } @else {
+
+            Delete Course
+
+          }
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+}

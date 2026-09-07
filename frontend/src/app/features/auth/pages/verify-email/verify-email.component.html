@@ -1,0 +1,47 @@
+<div class="email-verify-page">
+    <mat-card class="email-card">
+
+        <div class="icon">
+
+            @if(success()){
+            <mat-icon>check_circle</mat-icon>
+            }
+            @else{
+            <mat-icon>mark_email_read</mat-icon>
+            }
+
+        </div>
+
+        <h1>Email Verification</h1>
+
+        <p class="main-message">
+            {{message()}}
+        </p>
+
+        @if(loading()){
+        <mat-spinner diameter="45"></mat-spinner>
+        }
+
+        @if(success()){
+
+        <div class="info-box">
+
+            <mat-icon>info</mat-icon>
+
+            <div>
+
+                <strong>Next Step</strong>
+
+                <p>
+                    Your email verification is complete.
+                    Please complete mobile verification to activate your account.
+                </p>
+
+            </div>
+
+        </div>
+
+        }
+
+    </mat-card>
+</div>

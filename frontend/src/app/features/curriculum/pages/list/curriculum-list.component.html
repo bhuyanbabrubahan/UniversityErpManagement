@@ -1,0 +1,108 @@
+<section class="page">
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow"> University ERP Management </span>
+
+      <h1>Curriculum</h1>
+
+      <p>Manage curriculum records with a reusable CRUD workflow.</p>
+    </div>
+
+    <a class="primary" routerLink="add">
+      <span class="primary-icon">+</span>
+      Add Curriculum
+    </a>
+  </header>
+
+  <app-curriculum-search-filter (search)="load($event)" (reset)="load()" />
+
+  @if (loading()) {
+    <div class="loading-card">
+      <span class="loading-spinner"></span>
+
+      <div>
+        <strong>Loading curriculum...</strong>
+        <span> Please wait while records are being loaded. </span>
+      </div>
+    </div>
+  }
+
+  @if (!loading()) {
+    <app-curriculum-table
+      [rows]="rows()"
+      [loading]="loading()"
+      (remove)="remove($event)"
+    />
+  }
+
+  @if (!loading() && totalElements() > 0) {
+    <div class="pagination-card">
+      <div class="pagination-info">
+        Showing
+        <strong>{{ startRecord }}</strong>
+        -
+        <strong>{{ endRecord }}</strong>
+        of
+        <strong>{{ totalElements() }}</strong>
+        records
+      </div>
+
+      <div class="page-size">
+        <label for="pageSize"> Rows per page </label>
+
+        <select id="pageSize" [value]="size()" (change)="changeSize($event)">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <nav class="pagination" aria-label="Curriculum pagination">
+        <button
+          type="button"
+          class="page-btn arrow"
+          [disabled]="page() === 0"
+          (click)="previousPage()"
+          aria-label="Previous page"
+        >
+          ←
+        </button>
+
+        @for (pageNumber of pageNumbers; track pageNumber) {
+          <button
+            type="button"
+            class="page-btn"
+            [class.active]="pageNumber === page()"
+            (click)="changePage(pageNumber)"
+          >
+            {{ pageNumber + 1 }}
+          </button>
+        }
+
+        <button
+          type="button"
+          class="page-btn arrow"
+          [disabled]="page() >= totalPages() - 1"
+          (click)="nextPage()"
+          aria-label="Next page"
+        >
+          →
+        </button>
+      </nav>
+    </div>
+  }
+
+  @if (!loading() && totalElements() === 0) {
+    <div class="empty-page">
+      <div class="empty-icon">▦</div>
+
+      <h3>No curriculum records found</h3>
+
+      <p>Try changing your search filters or add a new curriculum record.</p>
+
+      <a class="empty-action" routerLink="add"> Add Curriculum </a>
+    </div>
+  }
+</section>

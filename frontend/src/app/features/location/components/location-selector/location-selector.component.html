@@ -1,0 +1,93 @@
+<div class="address-grid" [formGroup]="form">
+  <!-- LOCATION -->
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>public</mat-icon>
+    <mat-label>Country</mat-label>
+    <mat-select formControlName="countryId" (selectionChange)="onCountryChange()">
+      <mat-option *ngFor="let country of countries" [value]="Number(country.id)">
+        {{ country.countryName }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('countryId')?.hasError('required')">Country is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>map</mat-icon>
+    <mat-label>State</mat-label>
+    <mat-select formControlName="stateId" (selectionChange)="onStateChange()">
+      <mat-option *ngFor="let state of states" [value]="Number(state.id)">
+        {{ state.stateName }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('stateId')?.hasError('required')">State is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>location_city</mat-icon>
+    <mat-label>District</mat-label>
+    <mat-select formControlName="districtId" (selectionChange)="onDistrictChange()">
+      <mat-option *ngFor="let district of districts" [value]="Number(district.id)">
+        {{ district.districtName }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('districtId')?.hasError('required')">District is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>account_balance</mat-icon>
+    <mat-label>Tehsil</mat-label>
+    <mat-select formControlName="tehsilId" (selectionChange)="onTehsilChange()">
+      <mat-option *ngFor="let tehsil of tehsils" [value]="Number(tehsil.id)">
+        {{ tehsil.tehsilName }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('tehsilId')?.hasError('required')">Tehsil is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>home_work</mat-icon>
+    <mat-label>Village</mat-label>
+    <mat-select formControlName="villageId" (selectionChange)="onVillageChange()">
+      <mat-option *ngFor="let village of villages" [value]="Number(village.id)">
+        {{ village.villageName }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('villageId')?.hasError('required')">Village is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>pin_drop</mat-icon>
+    <mat-label>Pincode</mat-label>
+    <input matInput readonly formControlName="pincode">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>home</mat-icon>
+    <mat-label>House Number</mat-label>
+    <input matInput formControlName="houseNumber">
+    <mat-error *ngIf="form.get('houseNumber')?.hasError('required')">House Number is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>signpost</mat-icon>
+    <mat-label>Street</mat-label>
+    <input matInput formControlName="street">
+    <mat-error *ngIf="form.get('street')?.hasError('required')">Street is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>near_me</mat-icon>
+    <mat-label>Landmark</mat-label>
+    <input matInput formControlName="landmark">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>category</mat-icon>
+    <mat-label>Address Type</mat-label>
+    <mat-select formControlName="addressType">
+      <mat-option value="PERMANENT">Permanent</mat-option>
+      <mat-option value="CURRENT">Current</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('addressType')?.hasError('required')">Address Type is required</mat-error>
+  </mat-form-field>
+</div>

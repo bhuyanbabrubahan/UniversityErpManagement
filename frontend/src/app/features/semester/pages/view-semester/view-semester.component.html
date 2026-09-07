@@ -1,0 +1,239 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Semester Details
+      </h1>
+
+      <p>
+        View complete semester information.
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="secondary-btn"
+        (click)="back()">
+
+        ← Back
+
+      </button>
+
+      @if (semester) {
+
+        <button
+          type="button"
+          class="primary-btn"
+          (click)="edit()">
+
+          Edit Semester
+
+        </button>
+
+      }
+
+    </div>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="loading-card">
+      Loading semester...
+    </div>
+
+  }
+  @else if (semester) {
+
+    <section class="details-card">
+
+      <div class="details-heading">
+
+        <div>
+
+          <span class="code">
+            {{ semester.courseCode }}
+          </span>
+
+          <h2>
+            {{ semester.semesterName }}
+          </h2>
+
+          <p>
+            {{ semester.courseName }}
+          </p>
+
+        </div>
+
+        <span
+          class="status"
+          [class.active]="semester.status === 'ACTIVE'"
+          [class.inactive]="semester.status !== 'ACTIVE'">
+
+          {{ semester.status }}
+
+        </span>
+
+      </div>
+
+
+      <div class="details-grid">
+
+        <div class="detail">
+
+          <span>
+            Semester Number
+          </span>
+
+          <strong>
+            {{ semester.semesterNumber }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Course ID
+          </span>
+
+          <strong>
+            {{ semester.courseId }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Start Date
+          </span>
+
+          <strong>
+            {{ semester.semesterStartDate }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            End Date
+          </span>
+
+          <strong>
+            {{ semester.semesterEndDate }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Total Working Days
+          </span>
+
+          <strong>
+            {{ semester.totalWorkingDays ?? '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Record Status
+          </span>
+
+          <strong>
+            {{ semester.status }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="audit-card">
+
+      <div class="audit-heading">
+        <h2>
+          Audit Information
+        </h2>
+      </div>
+
+      <div class="audit-grid">
+
+        <div>
+
+          <span>
+            Created By
+          </span>
+
+          <strong>
+            {{ semester.createdBy || '—' }}
+          </strong>
+
+        </div>
+
+        <div>
+
+          <span>
+            Created Date
+          </span>
+
+          <strong>
+            {{ semester.createdAt || '—' }}
+          </strong>
+
+        </div>
+
+        <div>
+
+          <span>
+            Updated By
+          </span>
+
+          <strong>
+            {{ semester.updatedBy || '—' }}
+          </strong>
+
+        </div>
+
+        <div>
+
+          <span>
+            Updated Date
+          </span>
+
+          <strong>
+            {{ semester.updatedAt || '—' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

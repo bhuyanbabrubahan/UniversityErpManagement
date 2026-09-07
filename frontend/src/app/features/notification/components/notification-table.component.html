@@ -1,0 +1,281 @@
+<div class="table-card">
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="table-topbar">
+    <div class="table-heading">
+      <div class="table-heading-icon">
+        <span></span>
+      </div>
+
+      <div>
+        <h2>Notifications</h2>
+
+        <p>Manage your notifications and delivery status.</p>
+      </div>
+    </div>
+
+    <div class="record-count">
+      <strong>
+        {{ rows.length }}
+      </strong>
+
+      <span>
+        {{ rows.length === 1 ? "notification" : "notifications" }}
+      </span>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       DESKTOP TABLE
+  ====================================================== -->
+
+  <div class="table-wrap" *ngIf="rows.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th class="notification-column">Notification</th>
+
+          <th class="audience-column">Audience</th>
+
+          <th class="channel-column">Channel</th>
+
+          <th class="published-column">Published</th>
+
+          <th class="status-column">Status</th>
+
+          <th class="actions-column">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of rows; trackBy: trackById">
+          <!-- NOTIFICATION -->
+
+          <td class="notification-cell">
+            <div class="notification-main">
+              <div class="notification-avatar">
+                {{ (row.title || "N").charAt(0).toUpperCase() }}
+              </div>
+
+              <div class="notification-info">
+                <div class="code">
+                  {{ row.code || "NO CODE" }}
+                </div>
+
+                <strong>
+                  {{ row.title || "Untitled notification" }}
+                </strong>
+
+                <p>
+                  {{ row.message || "No message available" }}
+                </p>
+              </div>
+            </div>
+          </td>
+
+          <!-- AUDIENCE -->
+
+          <td>
+            <span class="role-chip">
+              <span class="chip-dot"></span>
+
+              {{ row.targetRole || "ALL" }}
+            </span>
+          </td>
+
+          <!-- CHANNEL -->
+
+          <td>
+            <span
+              class="channel-chip"
+              [class.sms]="channelClass(row.channel) === 'sms'"
+            >
+              <span class="channel-icon">
+                {{ row.channel === "SMS" ? "S" : "E" }}
+              </span>
+
+              {{ row.channel || "—" }}
+            </span>
+          </td>
+
+          <!-- PUBLISHED -->
+
+          <td class="published-cell">
+            <ng-container *ngIf="row.publishedAt; else unpublished">
+              <div class="published-date">
+                <span class="published-icon"> ✓ </span>
+
+                <div>
+                  <strong>
+                    {{ formatDate(row.publishedAt) }}
+                  </strong>
+
+                  <small> Published </small>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-template #unpublished>
+              <div class="published-date unpublished">
+                <span class="published-icon"> — </span>
+
+                <div>
+                  <strong> — </strong>
+
+                  <small> Not published </small>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+
+          <!-- STATUS -->
+
+          <td>
+            <span class="status" [ngClass]="statusClass(row.status)">
+              <span class="status-dot"></span>
+
+              {{ row.status || "UNKNOWN" }}
+            </span>
+          </td>
+
+          <!-- ACTIONS -->
+
+          <td class="actions-cell">
+            <div class="actions">
+              <a
+                class="action-btn view"
+                [routerLink]="['./', row.id]"
+                title="View notification"
+              >
+                <span> View </span>
+              </a>
+
+              <a
+                class="action-btn edit"
+                [routerLink]="['./edit', row.id]"
+                title="Edit notification"
+              >
+                <span> Edit </span>
+              </a>
+
+              <button
+                type="button"
+                class="action-btn delete"
+                title="Delete notification"
+                (click)="deleteRow(row.id)"
+              >
+                <span> Delete </span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- =====================================================
+       MOBILE
+  ====================================================== -->
+
+  <div class="mobile-list" *ngIf="rows.length > 0">
+    <article
+      class="mobile-notification"
+      *ngFor="let row of rows; trackBy: trackById"
+    >
+      <div class="mobile-card-top">
+        <div class="notification-avatar">
+          {{ (row.title || "N").charAt(0).toUpperCase() }}
+        </div>
+
+        <div class="mobile-title">
+          <div class="code">
+            {{ row.code || "NO CODE" }}
+          </div>
+
+          <strong>
+            {{ row.title || "Untitled notification" }}
+          </strong>
+        </div>
+
+        <span class="status" [ngClass]="statusClass(row.status)">
+          <span class="status-dot"></span>
+
+          {{ row.status || "UNKNOWN" }}
+        </span>
+      </div>
+
+      <p class="mobile-message">
+        {{ row.message || "No message available" }}
+      </p>
+
+      <div class="mobile-meta">
+        <!-- AUDIENCE -->
+
+        <div class="meta-item">
+          <span class="meta-label"> Audience </span>
+
+          <span class="role-chip">
+            {{ row.targetRole || "ALL" }}
+          </span>
+        </div>
+
+        <!-- CHANNEL -->
+
+        <div class="meta-item">
+          <span class="meta-label"> Channel </span>
+
+          <span
+            class="channel-chip"
+            [class.sms]="channelClass(row.channel) === 'sms'"
+          >
+            {{ row.channel || "—" }}
+          </span>
+        </div>
+
+        <!-- PUBLISHED -->
+
+        <div class="meta-item">
+          <span class="meta-label"> Published </span>
+
+          <span class="mobile-date">
+            {{
+              row.publishedAt ? formatDate(row.publishedAt) : "Not published"
+            }}
+          </span>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+
+      <div class="mobile-actions">
+        <a class="mobile-action view" [routerLink]="['./', row.id]"> View </a>
+
+        <a class="mobile-action edit" [routerLink]="['./edit', row.id]">
+          Edit
+        </a>
+
+        <button
+          type="button"
+          class="mobile-action delete"
+          (click)="deleteRow(row.id)"
+        >
+          Delete
+        </button>
+      </div>
+    </article>
+  </div>
+
+  <!-- =====================================================
+       EMPTY
+  ====================================================== -->
+
+  <div class="empty" *ngIf="rows.length === 0">
+    <div class="empty-icon">N</div>
+
+    <strong> No notifications found </strong>
+
+    <span> Try changing your filters or create a new notification. </span>
+  </div>
+</div>

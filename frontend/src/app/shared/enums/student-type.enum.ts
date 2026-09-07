@@ -1,0 +1,6 @@
+export enum StudentType{
+REGULAR='REGULAR',
+PART_TIME='PART_TIME',
+DISTANCE='DISTANCE',
+ONLINE='ONLINE'
+}

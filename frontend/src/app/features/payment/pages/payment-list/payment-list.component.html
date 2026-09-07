@@ -1,0 +1,182 @@
+<div class="payment-list-page">
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>
+        Student Fee Payments
+      </h1>
+
+      <p>
+        Manage, search and track student fee payments.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="addPayment()">
+
+      + Add Payment
+
+    </button>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- SEARCH FILTER -->
+  <!-- ===================================================== -->
+
+  <section class="filter-card">
+
+    <app-payment-search-filter
+      (search)="searchPayments($event)"
+      (reset)="clearSearch()">
+    </app-payment-search-filter>
+
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- TABLE CARD -->
+  <!-- ===================================================== -->
+
+  <section class="table-card">
+
+
+    <!-- =================================================== -->
+    <!-- TABLE HEADER -->
+    <!-- =================================================== -->
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Payments
+        </h2>
+
+
+        @if (totalElements > 0) {
+
+          <span class="record-count">
+
+            Showing
+            {{ getStartRecord() }}–{{ getEndRecord() }}
+            of
+            {{ totalElements }}
+
+          </span>
+
+        }
+
+
+        @if (
+          totalElements === 0 &&
+          !loading
+        ) {
+
+          <span class="record-count">
+            No payment records found
+          </span>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================== -->
+    <!-- PAYMENT TABLE -->
+    <!-- =================================================== -->
+
+    <div class="table-wrapper">
+
+      <app-payment-table
+
+        [payments]="payments"
+
+        [loading]="loading"
+
+        [page]="currentPage"
+
+        [size]="pageSize"
+
+        [totalElements]="totalElements"
+
+        [totalPages]="totalPages"
+
+      [last]="
+          totalPages === 0 ||
+          currentPage >= totalPages - 1
+        "
+
+        (pageChange)="
+          onPageChange($event)
+        "
+
+        (pageSizeChange)="
+          onPageSizeChange($event)
+        "
+
+        (sortChange)="
+          onSortChange(
+            $event.sortBy,
+            $event.direction
+          )
+        "
+
+        (view)="
+          viewPayment($event)
+        "
+
+        (edit)="
+          editPayment($event)
+        "
+
+        (delete)="
+          openDeleteDialog($event)
+        ">
+
+      </app-payment-table>
+
+    </div>
+
+
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- DELETE DIALOG -->
+  <!-- ===================================================== -->
+
+  @if (
+    showDeleteDialog &&
+    selectedPayment
+  ) {
+
+    <app-delete-payment-dialog
+
+      [paymentId]="selectedPayment.id"
+
+      [loading]="deleting"
+
+      (closed)="closeDeleteDialog()"
+
+      (deleted)="confirmDelete()">
+
+    </app-delete-payment-dialog>
+
+  }
+
+
+</div>

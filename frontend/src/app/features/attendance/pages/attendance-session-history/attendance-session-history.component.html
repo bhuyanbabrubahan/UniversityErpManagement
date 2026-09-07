@@ -1,0 +1,156 @@
+<main class="page">
+  <header class="page-header">
+    <div class="header-content">
+      <p class="eyebrow">ATTENDANCE</p>
+
+      <h1>Session History</h1>
+
+      <p class="subtitle">
+        View completed and active attendance sessions with student-level
+        attendance records.
+      </p>
+    </div>
+
+    <button class="secondary" type="button" routerLink="/dashboard/attendance">
+      ← Dashboard
+    </button>
+  </header>
+
+  <!-- Subject filter -->
+  <section class="panel controls">
+    <label>
+      <span>Assigned Subject</span>
+
+      <select
+        [(ngModel)]="mappingId"
+        (ngModelChange)="load()"
+        [disabled]="subjectsLoading || loading"
+      >
+        <option [ngValue]="0">Select subject</option>
+
+        @for (m of mappings; track m.id) {
+          <option [ngValue]="m.id">
+            {{ m.subjectName }}
+            —
+            {{ m.facultyName || "Faculty" }}
+          </option>
+        }
+      </select>
+    </label>
+
+    @if (subjectsLoading) {
+      <p class="hint">Loading assigned subjects...</p>
+    }
+
+    @if (!subjectsLoading && !mappings.length) {
+      <p class="hint warning">No assigned subjects found.</p>
+    }
+  </section>
+
+  <!-- Session list -->
+  <section class="panel">
+    @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading attendance sessions...</p>
+      </div>
+    } @else if (!mappingId) {
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+
+        <h3>Select a subject</h3>
+
+        <p>
+          Select an assigned subject above to view its attendance session
+          history.
+        </p>
+      </div>
+    } @else if (!sessions.length) {
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+
+        <h3>No attendance sessions found</h3>
+
+        <p>No attendance sessions are available for the selected subject.</p>
+      </div>
+    } @else {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Session ID</th>
+              <th>Date</th>
+              <th>Subject</th>
+              <th>Source</th>
+              <th>Status</th>
+              <th>Marked</th>
+              <th>Present</th>
+              <th>Absent</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (
+              session of sessions;
+              track trackBySessionId($index, session)
+            ) {
+              <tr>
+                <td>
+                  <strong> #{{ session.id }} </strong>
+                </td>
+
+                <td>
+                  {{ session.attendanceDate || "—" }}
+                </td>
+
+                <td>
+                  {{ session.subjectName || "—" }}
+                </td>
+
+                <td>
+                  {{ session.attendanceSource || "—" }}
+                </td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.completed]="session.sessionStatus === 'COMPLETED'"
+                    [class.open]="session.sessionStatus === 'OPEN'"
+                    [class.cancelled]="session.sessionStatus === 'CANCELLED'"
+                  >
+                    {{ session.sessionStatus || "—" }}
+                  </span>
+                </td>
+
+                <td>
+                  {{ session.markedStudents ?? 0 }}
+                  /
+                  {{ session.totalStudents ?? 0 }}
+                </td>
+
+                <td>
+                  {{ session.presentCount ?? 0 }}
+                </td>
+
+                <td>
+                  {{ session.absentCount ?? 0 }}
+                </td>
+
+                <td>
+                  <button
+                    class="secondary action-button"
+                    type="button"
+                    (click)="open(session)"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</main>

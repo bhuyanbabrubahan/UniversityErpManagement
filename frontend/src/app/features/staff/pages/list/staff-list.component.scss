@@ -1,0 +1,46 @@
+.page {
+  padding: 24px;
+  max-width: 1440px;
+  margin: auto;
+}
+.page header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.page h1 {
+  margin: 4px 0;
+  font-size: 30px;
+}
+.page p {
+  margin: 0;
+  color: #64748b;
+}
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #2563eb;
+}
+.primary {
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  padding: 11px 16px;
+  border-radius: 9px;
+}
+.loading {
+  padding: 12px;
+  color: #64748b;
+}
+@media (max-width: 700px) {
+  .page {
+    padding: 14px;
+  }
+  .page header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

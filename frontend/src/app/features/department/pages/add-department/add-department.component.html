@@ -1,0 +1,39 @@
+<div class="department-page">
+
+  <div class="page-header">
+
+    <div class="heading">
+
+      <div class="breadcrumb">
+        Departments
+        <span>/</span>
+        Add Department
+      </div>
+
+      <h1>Add Department</h1>
+
+      <p>
+        Create a new academic department.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="cancel()">
+
+      ← Back to Departments
+
+    </button>
+
+  </div>
+
+  <app-department-form
+    [loading]="loading"
+    submitLabel="Create Department"
+    (formSubmit)="submit($event)"
+    (cancel)="cancel()">
+  </app-department-form>
+
+</div>

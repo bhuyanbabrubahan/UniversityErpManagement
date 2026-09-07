@@ -1,0 +1,278 @@
+<form
+  class="filter-card"
+  [formGroup]="form"
+  (ngSubmit)="search()"
+>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================= -->
+
+  <div class="filter-header">
+
+    <div>
+
+      <h3>
+        Search Documents
+      </h3>
+
+      <p>
+        Filter student documents using available criteria.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       FILTER GRID
+  ============================================================= -->
+
+  <div class="filter-grid">
+
+    <!-- =========================================================
+         DOCUMENT ID
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="documentId">
+        Document ID
+      </label>
+
+      <input
+        id="documentId"
+        type="number"
+        min="1"
+        formControlName="id"
+        placeholder="Document ID"
+        autocomplete="off"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         STUDENT ID
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="studentId">
+        Student ID
+      </label>
+
+      <input
+        id="studentId"
+        type="number"
+        min="1"
+        formControlName="studentId"
+        placeholder="Student ID"
+        autocomplete="off"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         DOCUMENT TYPE
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="documentType">
+        Document Type
+      </label>
+
+      <select
+        id="documentType"
+        formControlName="documentType"
+      >
+
+        <option [ngValue]="null">
+          All types
+        </option>
+
+        @for (type of documentTypes; track type) {
+
+          <option [value]="type">
+            {{ type.replaceAll('_', ' ') }}
+          </option>
+
+        }
+
+      </select>
+
+    </div>
+
+
+    <!-- =========================================================
+         ORIGINAL FILE NAME
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="originalFileName">
+        Original File Name
+      </label>
+
+      <input
+        id="originalFileName"
+        type="text"
+        formControlName="originalFileName"
+        placeholder="Search file name"
+        autocomplete="off"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         STORED FILE NAME
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="storedFileName">
+        Stored File Name
+      </label>
+
+      <input
+        id="storedFileName"
+        type="text"
+        formControlName="storedFileName"
+        placeholder="Stored name"
+        autocomplete="off"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         CONTENT TYPE
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="contentType">
+        Content Type
+      </label>
+
+      <input
+        id="contentType"
+        type="text"
+        formControlName="contentType"
+        placeholder="application/pdf"
+        autocomplete="off"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         MINIMUM FILE SIZE
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="minFileSize">
+        Min File Size
+      </label>
+
+      <input
+        id="minFileSize"
+        type="number"
+        min="0"
+        formControlName="minFileSize"
+        placeholder="Bytes"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         MAXIMUM FILE SIZE
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="maxFileSize">
+        Max File Size
+      </label>
+
+      <input
+        id="maxFileSize"
+        type="number"
+        min="0"
+        formControlName="maxFileSize"
+        placeholder="Bytes"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         UPLOADED FROM
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="uploadedFrom">
+        Uploaded From
+      </label>
+
+      <input
+        id="uploadedFrom"
+        type="datetime-local"
+        formControlName="uploadedFrom"
+      />
+
+    </div>
+
+
+    <!-- =========================================================
+         UPLOADED TO
+    ========================================================== -->
+
+    <div class="field">
+
+      <label for="uploadedTo">
+        Uploaded To
+      </label>
+
+      <input
+        id="uploadedTo"
+        type="datetime-local"
+        formControlName="uploadedTo"
+      />
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       ACTIONS
+  ============================================================= -->
+
+  <div class="filter-actions">
+
+    <button
+      type="button"
+      class="btn-clear"
+      (click)="clear()"
+    >
+      Clear
+    </button>
+
+    <button
+      type="submit"
+      class="btn-search"
+    >
+      Search
+    </button>
+
+  </div>
+
+</form>

@@ -1,0 +1,276 @@
+<section class="subject-form">
+
+  <!-- =====================================================
+       FORM HEADER
+  ===================================================== -->
+
+  <div class="form-header">
+
+    <div>
+
+      <span class="form-eyebrow">
+        Subject Management
+      </span>
+
+      <h2>
+        Subject Information
+      </h2>
+
+      <p>
+        Enter the subject details and academic configuration.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       FORM
+  ===================================================== -->
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+    <div class="form-grid">
+
+
+      <!-- =================================================
+           SUBJECT NAME
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="subjectName">
+          Subject Name
+          <span class="required">*</span>
+        </label>
+
+        <input id="subjectName" type="text" formControlName="subjectName" placeholder="Enter subject name"
+          autocomplete="off" />
+
+        @if (hasError('subjectName', 'required')) {
+
+        <small class="field-error">
+          Subject name is required.
+        </small>
+
+        }
+
+        @if (hasError('subjectName', 'maxlength')) {
+
+        <small class="field-error">
+          Subject name cannot exceed 150 characters.
+        </small>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+      SEMESTER
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="semesterId">
+          Semester
+          <span class="required">*</span>
+        </label>
+
+        <select
+          id="semesterId"
+          formControlName="semesterId"
+          [disabled]="loadingSemesters">
+
+          <option [ngValue]="null">
+
+            @if (loadingSemesters) {
+              Loading semesters...
+            } @else {
+              Select semester
+            }
+
+          </option>
+
+
+          @for (
+            semester of semesters;
+            track semester.id
+          ) {
+
+            <option [ngValue]="semester.id">
+
+              {{ semester.semesterName }}
+
+            </option>
+
+          }
+
+        </select>
+
+
+        @if (loadingSemesters) {
+
+          <small class="field-hint">
+            Loading semesters...
+          </small>
+
+        }
+
+
+        @if (
+          !loadingSemesters &&
+          semesters.length === 0
+        ) {
+
+          <small class="field-error">
+            No active semesters available.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           CREDITS
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="credits">
+          Credits
+          <span class="required">*</span>
+        </label>
+
+        <input id="credits" type="number" formControlName="credits" min="1" max="10" step="1" placeholder="1 - 10" />
+
+        @if (hasError('credits', 'required')) {
+
+        <small class="field-error">
+          Credits are required.
+        </small>
+
+        }
+
+        @if (
+        hasError('credits', 'min') ||
+        hasError('credits', 'max')
+        ) {
+
+        <small class="field-error">
+          Credits must be between 1 and 10.
+        </small>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           THEORY MARKS
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="theoryMarks">
+          Theory Marks
+        </label>
+
+        <input id="theoryMarks" type="number" formControlName="theoryMarks" min="0" max="100" step="1"
+          placeholder="Maximum theory marks" />
+
+        @if (
+        hasError('theoryMarks', 'min') ||
+        hasError('theoryMarks', 'max')
+        ) {
+
+        <small class="field-error">
+          Theory marks must be between 0 and 100.
+        </small>
+
+        }
+
+      </div>
+
+
+      <!-- =================================================
+           PRACTICAL MARKS
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="practicalMarks">
+          Practical Marks
+        </label>
+
+        <input id="practicalMarks" type="number" formControlName="practicalMarks" min="0" max="100" step="1"
+          placeholder="Maximum practical marks" />
+
+        @if (
+        hasError('practicalMarks', 'min') ||
+        hasError('practicalMarks', 'max')
+        ) {
+
+        <small class="field-error">
+          Practical marks must be between 0 and 100.
+        </small>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         INFORMATION
+    ===================================================== -->
+
+    <div class="form-info">
+
+      <span class="info-icon">
+        i
+      </span>
+
+      <p>
+        Subject code is generated automatically by the system.
+      </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         ACTIONS
+    ===================================================== -->
+
+    <div class="form-actions">
+
+      <button type="button" class="btn btn-secondary" [disabled]="loading" (click)="onCancel()">
+
+        Cancel
+
+      </button>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+
+        @if (loading) {
+
+        <span class="button-spinner"></span>
+
+        Saving...
+
+        } @else {
+
+        {{ submitLabel }}
+
+        }
+
+      </button>
+
+    </div>
+
+  </form>
+
+</section>

@@ -1,0 +1,138 @@
+<div class="faculty-page">
+
+  <!-- =========================================================
+       PAGE HEADER
+  ========================================================== -->
+
+  <header class="page-header">
+
+    <div class="page-heading">
+
+      <div class="page-icon">
+        <mat-icon>school</mat-icon>
+      </div>
+
+      <div class="page-heading-text">
+
+        <div class="eyebrow">
+          Academic Management
+        </div>
+
+        <h1>
+          Faculty
+        </h1>
+
+        <p>
+          Manage faculty members, profiles and academic information.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      class="add-faculty-btn"
+      (click)="addFaculty()"
+    >
+
+      <mat-icon>
+        add
+      </mat-icon>
+
+      <span>
+        Add Faculty
+      </span>
+
+    </button>
+
+  </header>
+
+
+  <!-- =========================================================
+       SEARCH / FILTER SECTION
+  ========================================================== -->
+
+  <section class="filter-section">
+
+      <app-faculty-search-filter
+        (search)="onSearch($event)"
+        (reset)="onReset()">
+      </app-faculty-search-filter>
+
+  </section>
+
+
+  <!-- =========================================================
+       FACULTY DATA
+  ========================================================== -->
+
+  <section class="table-section">
+
+    <div class="table-section-header">
+
+      <div class="section-heading">
+
+        <div class="section-icon section-icon--blue">
+          <mat-icon>groups</mat-icon>
+        </div>
+
+        <div>
+          <h2>
+            Faculty Records
+          </h2>
+
+          <p>
+            View and manage registered faculty members
+          </p>
+        </div>
+
+      </div>
+
+
+      @if (!loading()) {
+
+        <div class="record-count">
+
+          <span class="count-label">
+            Total
+          </span>
+
+          <span class="count-value">
+            {{ totalElements() }}
+          </span>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <div class="table-content">
+
+      <app-faculty-table
+        [faculties]="faculties()"
+        [loading]="loading()"
+        [totalElements]="totalElements()"
+        [pageSize]="pageSize()"
+        [pageIndex]="pageNumber()"
+        [deleting]="deleting()"
+
+        (pageChange)="onPageChange($event)"
+        (sortChange)="onSortChange($event)"
+
+        (view)="viewFaculty($event)"
+        (edit)="editFaculty($event)"
+        (delete)="deleteFaculty($event)"
+      >
+      </app-faculty-table>
+
+    </div>
+
+  </section>
+
+</div>

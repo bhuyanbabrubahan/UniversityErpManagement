@@ -1,0 +1,480 @@
+<form
+  class="faculty-form"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  autocomplete="off"
+>
+  <!-- =====================================================
+       FORM TOP BAR
+  ====================================================== -->
+
+  <div class="form-topbar">
+    <div class="form-title-area">
+      <div class="form-title-icon">
+        <mat-icon>
+          {{ isEditMode ? "edit" : "person_add" }}
+        </mat-icon>
+      </div>
+
+      <div>
+        <div class="form-kicker">FACULTY MANAGEMENT</div>
+
+        <h2>
+          {{ isEditMode ? "Edit Faculty" : "Add Faculty" }}
+        </h2>
+
+        <p>
+          {{
+            isEditMode
+              ? "Update faculty account and professional details."
+              : "Create a new faculty account and professional profile."
+          }}
+        </p>
+      </div>
+    </div>
+
+    <div class="form-status">
+      <span class="status-indicator"></span>
+
+      <span>
+        {{ isEditMode ? "Editing" : "New Record" }}
+      </span>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       ACCOUNT
+  ====================================================== -->
+
+  <section class="form-section">
+    <div class="section-header">
+      <div class="section-icon">
+        <mat-icon>manage_accounts</mat-icon>
+      </div>
+
+      <div class="section-heading">
+        <h3>Account Information</h3>
+
+        <p>Login credentials and contact information</p>
+      </div>
+
+      <span class="section-number"> 01 </span>
+    </div>
+
+    <div class="section-body">
+      <div class="field-grid field-grid-3">
+        <!-- EMAIL -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+
+          <mat-icon matPrefix> email </mat-icon>
+
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            [readonly]="isEditMode"
+          />
+
+          @if (form.get("email")?.hasError("required")) {
+            <mat-error> Email is required. </mat-error>
+          }
+
+          @if (form.get("email")?.hasError("email")) {
+            <mat-error> Enter a valid email address. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- PASSWORD -->
+
+        @if (!isEditMode) {
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+
+            <mat-icon matPrefix> lock </mat-icon>
+
+            <input matInput type="password" formControlName="password" />
+
+            @if (form.get("password")?.hasError("required")) {
+              <mat-error> Password is required. </mat-error>
+            }
+
+            @if (form.get("password")?.hasError("minlength")) {
+              <mat-error> Minimum 8 characters required. </mat-error>
+            }
+          </mat-form-field>
+        }
+
+        <!-- MOBILE -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile Number</mat-label>
+
+          <mat-icon matPrefix> phone </mat-icon>
+
+          <input
+            matInput
+            type="tel"
+            maxlength="10"
+            formControlName="mobileNumber"
+            [readonly]="isEditMode"
+          />
+
+          @if (form.get("mobileNumber")?.hasError("required")) {
+            <mat-error> Mobile number is required. </mat-error>
+          }
+
+          @if (form.get("mobileNumber")?.hasError("pattern")) {
+            <mat-error> Enter a valid 10-digit mobile number. </mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PERSONAL INFORMATION
+  ====================================================== -->
+
+  <section class="form-section">
+    <div class="section-header">
+      <div class="section-icon">
+        <mat-icon>badge</mat-icon>
+      </div>
+
+      <div class="section-heading">
+        <h3>Faculty Information</h3>
+
+        <p>Personal and professional information</p>
+      </div>
+
+      <span class="section-number"> 02 </span>
+    </div>
+
+    <div class="section-body">
+      <div class="field-grid field-grid-4">
+        <!-- FIRST NAME -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+
+          <mat-icon matPrefix> person </mat-icon>
+
+          <input matInput formControlName="firstName" />
+
+          @if (form.get("firstName")?.hasError("required")) {
+            <mat-error> First name is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- MIDDLE NAME -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Middle Name</mat-label>
+
+          <mat-icon matPrefix> person_outline </mat-icon>
+
+          <input matInput formControlName="middleName" />
+        </mat-form-field>
+
+        <!-- LAST NAME -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+
+          <mat-icon matPrefix> person </mat-icon>
+
+          <input matInput formControlName="lastName" />
+
+          @if (form.get("lastName")?.hasError("required")) {
+            <mat-error> Last name is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- GENDER -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Gender</mat-label>
+
+          <mat-icon matPrefix> wc </mat-icon>
+
+          <mat-select formControlName="gender">
+            <mat-option [value]="null"> Select Gender </mat-option>
+
+            @for (gender of genders; track gender) {
+              <mat-option [value]="gender">
+                {{ gender }}
+              </mat-option>
+            }
+          </mat-select>
+
+          @if (form.get("gender")?.hasError("required")) {
+            <mat-error> Gender is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- DOB -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+
+          <mat-icon matPrefix> cake </mat-icon>
+
+          <input
+            matInput
+            [matDatepicker]="dobPicker"
+            formControlName="dateOfBirth"
+            placeholder="DD/MM/YYYY"
+          />
+
+          <mat-datepicker-toggle matIconSuffix [for]="dobPicker">
+          </mat-datepicker-toggle>
+
+          <mat-datepicker #dobPicker></mat-datepicker>
+
+          @if (form.get("dateOfBirth")?.hasError("required")) {
+            <mat-error> Date of birth is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- JOINING DATE -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Joining Date</mat-label>
+
+          <mat-icon matPrefix> event </mat-icon>
+
+          <input
+            matInput
+            [matDatepicker]="joiningDatePicker"
+            formControlName="joiningDate"
+            placeholder="DD/MM/YYYY"
+          />
+
+          <mat-datepicker-toggle matIconSuffix [for]="joiningDatePicker">
+          </mat-datepicker-toggle>
+
+          <mat-datepicker #joiningDatePicker></mat-datepicker>
+
+          @if (form.get("joiningDate")?.hasError("required")) {
+            <mat-error> Joining date is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- DESIGNATION -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Designation</mat-label>
+
+          <mat-icon matPrefix> work </mat-icon>
+
+          <mat-select formControlName="designation">
+            <mat-option [value]="null"> Select Designation </mat-option>
+
+            @for (designation of designations; track designation) {
+              <mat-option [value]="designation">
+                {{ designation }}
+              </mat-option>
+            }
+          </mat-select>
+
+          @if (form.get("designation")?.hasError("required")) {
+            <mat-error> Designation is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- QUALIFICATION -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Qualification</mat-label>
+
+          <mat-icon matPrefix> workspace_premium </mat-icon>
+
+          <mat-select formControlName="qualification">
+            <mat-option [value]="null"> Select Qualification </mat-option>
+
+            @for (qualification of qualifications; track qualification) {
+              <mat-option [value]="qualification">
+                {{ qualification }}
+              </mat-option>
+            }
+          </mat-select>
+
+          @if (form.get("qualification")?.hasError("required")) {
+            <mat-error> Qualification is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- SALARY -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Monthly Salary</mat-label>
+
+          <mat-icon matPrefix> payments </mat-icon>
+
+          <span matTextPrefix>₹&nbsp;</span>
+
+          <input matInput type="number" min="0" formControlName="salary" />
+
+          @if (form.get("salary")?.hasError("required")) {
+            <mat-error> Salary is required. </mat-error>
+          }
+
+          @if (form.get("salary")?.hasError("min")) {
+            <mat-error> Salary cannot be negative. </mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       DEPARTMENT
+  ====================================================== -->
+
+  <section class="form-section">
+    <div class="section-header">
+      <div class="section-icon">
+        <mat-icon>account_balance</mat-icon>
+      </div>
+
+      <div class="section-heading">
+        <h3>Department Information</h3>
+
+        <p>Department assignment and faculty documents</p>
+      </div>
+
+      <span class="section-number"> 03 </span>
+    </div>
+
+    <div class="section-body">
+      <div class="field-grid field-grid-3">
+        <!-- DEPARTMENT -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+
+          <mat-icon matPrefix> business </mat-icon>
+
+          <mat-select formControlName="departmentId">
+            <mat-option [value]="null"> Select Department </mat-option>
+
+            @for (department of departments; track department.id) {
+              <mat-option [value]="department.id">
+                {{ department.departmentName }}
+              </mat-option>
+            }
+          </mat-select>
+
+          @if (form.get("departmentId")?.hasError("required")) {
+            <mat-error> Department is required. </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- PROFILE IMAGE -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Profile Image</mat-label>
+
+          <mat-icon matPrefix> image </mat-icon>
+
+          <input matInput formControlName="profileImage" />
+        </mat-form-field>
+
+        <!-- SIGNATURE -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Signature Image</mat-label>
+
+          <mat-icon matPrefix> draw </mat-icon>
+
+          <input matInput formControlName="signatureImage" />
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       ADDRESS
+  ====================================================== -->
+
+  <section class="form-section">
+    <div class="section-header">
+      <div class="section-icon">
+        <mat-icon>location_on</mat-icon>
+      </div>
+
+      <div class="section-heading">
+        <h3>Address Information</h3>
+
+        <p>Residential and location details</p>
+      </div>
+
+      <span class="section-number"> 04 </span>
+    </div>
+
+    <div class="section-body address-section">
+      <app-location-selector [form]="$any(form.get('address'))">
+      </app-location-selector>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       ACTION BAR
+  ====================================================== -->
+
+  <div class="form-actions">
+    <div class="action-message">
+      <mat-icon> verified_user </mat-icon>
+
+      <span>
+        {{
+          isEditMode
+            ? "Review the information before updating."
+            : "Complete the required fields before saving."
+        }}
+      </span>
+    </div>
+
+    <div class="action-buttons">
+      <button
+        mat-stroked-button
+        type="button"
+        [disabled]="loading"
+        (click)="cancel.emit()"
+      >
+        <mat-icon> close </mat-icon>
+
+        <span> Cancel </span>
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="loading"
+      >
+        @if (loading) {
+          <span class="button-inner">
+            <mat-spinner diameter="17"></mat-spinner>
+
+            <span>
+              {{ isEditMode ? "Updating..." : "Saving..." }}
+            </span>
+          </span>
+        } @else {
+          <span class="button-inner">
+            <mat-icon>
+              {{ isEditMode ? "save" : "person_add" }}
+            </mat-icon>
+
+            <span>
+              {{ isEditMode ? "Update Faculty" : "Save Faculty" }}
+            </span>
+          </span>
+        }
+      </button>
+    </div>
+  </div>
+</form>

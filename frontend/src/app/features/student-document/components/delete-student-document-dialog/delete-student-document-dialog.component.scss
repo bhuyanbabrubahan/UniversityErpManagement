@@ -1,0 +1,502 @@
+// ============================================================
+// HOST
+// ============================================================
+
+:host {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: block;
+
+  pointer-events: none;
+}
+
+
+// ============================================================
+// BACKDROP
+// ============================================================
+
+.dialog-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: rgb(15 23 42 / 45%);
+
+  pointer-events: auto;
+
+  animation: backdrop-enter 160ms ease-out;
+}
+
+
+// ============================================================
+// DIALOG
+// ============================================================
+
+.delete-dialog {
+  width: min(420px, 100%);
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  box-shadow:
+    0 20px 45px rgb(15 23 42 / 18%),
+    0 5px 15px rgb(15 23 42 / 6%);
+
+  animation: dialog-enter 180ms ease-out;
+}
+
+
+// ============================================================
+// DIALOG ICON
+// ============================================================
+
+.dialog-icon {
+  width: 42px;
+  height: 42px;
+
+  margin-bottom: 16px;
+
+  display: grid;
+  place-items: center;
+
+  color: #dc2626;
+
+  background: #fef2f2;
+
+  border: 1px solid #fee2e2;
+
+  border-radius: 9px;
+
+  mat-icon {
+    width: 22px;
+    height: 22px;
+
+    font-size: 22px;
+    line-height: 22px;
+  }
+}
+
+
+// ============================================================
+// DIALOG CONTENT
+// ============================================================
+
+.dialog-content {
+
+  h2 {
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 17px;
+    font-weight: 750;
+
+    line-height: 1.35;
+  }
+
+  p {
+    margin: 8px 0 16px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+  }
+}
+
+
+// ============================================================
+// DOCUMENT PREVIEW
+// ============================================================
+
+.document-preview {
+  min-width: 0;
+
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  box-sizing: border-box;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+}
+
+
+// ============================================================
+// PREVIEW ICON
+// ============================================================
+
+.preview-icon {
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 32px;
+
+  display: grid;
+  place-items: center;
+
+  color: #64748b;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 6px;
+
+  mat-icon {
+    width: 17px;
+    height: 17px;
+
+    font-size: 17px;
+  }
+}
+
+
+// ============================================================
+// PREVIEW CONTENT
+// ============================================================
+
+.preview-content {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #334155;
+
+    font-size: 11px;
+    font-weight: 650;
+
+    line-height: 1.4;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span {
+    color: #94a3b8;
+
+    font-size: 9px;
+
+    line-height: 1.4;
+  }
+}
+
+
+// ============================================================
+// ACTIONS
+// ============================================================
+
+.dialog-actions {
+  margin-top: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  button {
+    min-height: 36px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border-radius: 6px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+      background-color 140ms ease,
+      border-color 140ms ease,
+      color 140ms ease,
+      box-shadow 140ms ease,
+      opacity 140ms ease;
+
+    &:focus-visible {
+      outline: none;
+
+      box-shadow:
+        0 0 0 3px rgb(37 99 235 / 12%);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+
+      cursor: not-allowed;
+    }
+  }
+}
+
+
+// ============================================================
+// CANCEL BUTTON
+// ============================================================
+
+.cancel-button {
+  color: #475569;
+
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+
+  &:hover:not(:disabled) {
+    color: #334155;
+
+    background: #f8fafc;
+
+    border-color: #94a3b8;
+  }
+
+  &:active:not(:disabled) {
+    background: #f1f5f9;
+  }
+}
+
+
+// ============================================================
+// DELETE BUTTON
+// ============================================================
+
+.delete-button {
+  color: #ffffff;
+
+  background: #dc2626;
+
+  border: 1px solid #dc2626;
+
+  &:hover:not(:disabled) {
+    background: #b91c1c;
+
+    border-color: #b91c1c;
+  }
+
+  &:active:not(:disabled) {
+    background: #991b1b;
+
+    border-color: #991b1b;
+  }
+}
+
+
+// ============================================================
+// BUTTON CONTENT
+// ============================================================
+
+.button-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  min-height: 36px;
+
+  white-space: nowrap;
+
+  mat-icon {
+    width: 17px;
+    height: 17px;
+
+    margin: 0;
+
+    font-size: 17px;
+  }
+}
+
+
+// ============================================================
+// LOADING SPINNER
+// ============================================================
+
+.loading-spinner {
+  width: 14px;
+  height: 14px;
+
+  flex: 0 0 14px;
+
+  box-sizing: border-box;
+
+  border: 2px solid rgb(255 255 255 / 35%);
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: spin 700ms linear infinite;
+}
+
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+
+@keyframes backdrop-enter {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+@keyframes dialog-enter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(8px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+// ============================================================
+// MOBILE
+// ============================================================
+
+@media (max-width: 500px) {
+
+  .dialog-backdrop {
+    padding: 14px;
+  }
+
+  .delete-dialog {
+    width: 100%;
+
+    padding: 20px;
+
+    border-radius: 11px;
+  }
+
+  .dialog-icon {
+    width: 40px;
+    height: 40px;
+
+    margin-bottom: 14px;
+  }
+
+  .dialog-content {
+
+    h2 {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 11px;
+    }
+  }
+
+  .dialog-actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
+
+}
+
+
+// ============================================================
+// SMALL MOBILE
+// ============================================================
+
+@media (max-width: 380px) {
+
+  .dialog-backdrop {
+    padding: 10px;
+  }
+
+  .delete-dialog {
+    padding: 18px;
+  }
+
+  .document-preview {
+    padding: 9px 10px;
+  }
+
+  .dialog-actions {
+    margin-top: 18px;
+  }
+
+}
+
+
+// ============================================================
+// REDUCED MOTION
+// ============================================================
+
+@media (prefers-reduced-motion: reduce) {
+
+  .dialog-backdrop,
+  .delete-dialog,
+  .loading-spinner {
+    animation: none;
+  }
+
+}

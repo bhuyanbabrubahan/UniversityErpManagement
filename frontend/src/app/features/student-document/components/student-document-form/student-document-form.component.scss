@@ -1,0 +1,593 @@
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+// ============================================================
+// DOCUMENT FORM
+// ============================================================
+
+.document-form {
+  width: 100%;
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 4%);
+}
+
+
+// ============================================================
+// FORM HEADER
+// ============================================================
+
+.form-header {
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 18px;
+    font-weight: 750;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 6px 0 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+
+// ============================================================
+// FORM GRID
+// ============================================================
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+// ============================================================
+// FORM FIELD
+// ============================================================
+
+.form-field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+
+
+  // ----------------------------------------------------------
+  // LABEL
+  // ----------------------------------------------------------
+
+  label {
+    display: block;
+
+    color: #334155;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+
+
+    span {
+      margin-left: 2px;
+
+      color: #ef4444;
+
+      font-weight: 700;
+    }
+  }
+
+
+  // ----------------------------------------------------------
+  // INPUT + SELECT
+  // ----------------------------------------------------------
+
+  input,
+  select {
+    width: 100%;
+    min-height: 40px;
+
+    padding: 0 11px;
+
+    color: #0f172a;
+
+    background: #ffffff;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    transition:
+      border-color 140ms ease,
+      box-shadow 140ms ease,
+      background-color 140ms ease;
+
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+
+
+    &:hover:not(:disabled) {
+      border-color: #94a3b8;
+    }
+
+
+    &:focus {
+      border-color: #2563eb;
+
+      box-shadow:
+        0 0 0 3px rgb(37 99 235 / 10%);
+    }
+
+
+    &:disabled {
+      color: #94a3b8;
+
+      background: #f8fafc;
+
+      cursor: not-allowed;
+    }
+  }
+
+
+  // ----------------------------------------------------------
+  // SELECT
+  // ----------------------------------------------------------
+
+  select {
+    cursor: pointer;
+
+    appearance: auto;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+
+  // ----------------------------------------------------------
+  // FILE INPUT
+  // ----------------------------------------------------------
+
+  input[type='file'] {
+    min-height: 42px;
+
+    padding: 7px 8px;
+
+    cursor: pointer;
+
+
+    &::file-selector-button {
+      margin-right: 10px;
+
+      padding: 7px 12px;
+
+      color: #1d4ed8;
+
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        background-color 140ms ease,
+        border-color 140ms ease;
+    }
+
+
+    &::file-selector-button:hover {
+      background: #dbeafe;
+
+      border-color: #93c5fd;
+    }
+
+
+    &:disabled {
+      cursor: not-allowed;
+
+      &::file-selector-button {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+
+// ============================================================
+// HINT
+// ============================================================
+
+.hint {
+  display: block;
+
+  color: #64748b;
+
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+// ============================================================
+// ERROR
+// ============================================================
+
+.error {
+  display: block;
+
+  color: #dc2626;
+
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+
+// ============================================================
+// SELECTED FILE
+// ============================================================
+
+.selected-file {
+  width: 100%;
+
+  padding: 10px 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  color: #334155;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+
+  box-sizing: border-box;
+
+  font-size: 11px;
+
+
+  div {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    width: 100%;
+  }
+
+
+  strong {
+    min-width: 0;
+
+    overflow: hidden;
+
+    color: #0f172a;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+
+  span {
+    flex-shrink: 0;
+
+    color: #64748b;
+
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+
+
+// ============================================================
+// FORM ACTIONS
+// ============================================================
+
+.form-actions {
+  margin-top: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+
+  button {
+    min-height: 38px;
+
+    padding: 0 16px;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+      background-color 140ms ease,
+      border-color 140ms ease,
+      color 140ms ease,
+      box-shadow 140ms ease,
+      opacity 140ms ease;
+
+
+    &:disabled {
+      opacity: 0.55;
+
+      cursor: not-allowed;
+    }
+
+
+    &:focus-visible {
+      outline: none;
+
+      box-shadow:
+        0 0 0 3px rgb(37 99 235 / 12%);
+    }
+  }
+}
+
+
+// ============================================================
+// PRIMARY BUTTON
+// ============================================================
+
+.btn-primary {
+  color: #ffffff;
+
+  background: #2563eb;
+
+  border: 1px solid #2563eb;
+
+
+  &:hover:not(:disabled) {
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+  }
+
+
+  &:active:not(:disabled) {
+    background: #1e40af;
+
+    border-color: #1e40af;
+  }
+}
+
+
+// ============================================================
+// SECONDARY BUTTON
+// ============================================================
+
+.btn-secondary {
+  color: #334155;
+
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+
+
+  &:hover:not(:disabled) {
+    color: #0f172a;
+
+    background: #f8fafc;
+
+    border-color: #94a3b8;
+  }
+
+
+  &:active:not(:disabled) {
+    background: #f1f5f9;
+  }
+}
+
+
+// ============================================================
+// INVALID FORM CONTROLS
+// ============================================================
+
+.form-field {
+
+  input.ng-invalid.ng-touched,
+  select.ng-invalid.ng-touched {
+    border-color: #ef4444;
+
+    box-shadow:
+      0 0 0 2px rgb(239 68 68 / 8%);
+  }
+
+
+  input.ng-invalid.ng-touched:focus,
+  select.ng-invalid.ng-touched:focus {
+    border-color: #dc2626;
+
+    box-shadow:
+      0 0 0 3px rgb(239 68 68 / 10%);
+  }
+}
+
+
+// ============================================================
+// RESPONSIVE - TABLET
+// ============================================================
+
+@media (max-width: 850px) {
+
+  .document-form {
+    padding: 20px;
+  }
+
+
+  .form-grid {
+    gap: 15px;
+  }
+
+}
+
+
+// ============================================================
+// RESPONSIVE - MOBILE
+// ============================================================
+
+@media (max-width: 700px) {
+
+  .document-form {
+    padding: 18px;
+
+    border-radius: 10px;
+  }
+
+
+  .form-header {
+    margin-bottom: 20px;
+
+
+    h2 {
+      font-size: 17px;
+    }
+
+
+    p {
+      font-size: 11px;
+    }
+  }
+
+
+  .form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+
+  .form-field.full-width {
+    grid-column: auto;
+  }
+
+
+  .form-actions {
+    margin-top: 22px;
+
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+
+    button {
+      width: 100%;
+    }
+  }
+
+
+  .selected-file {
+
+    div {
+      flex-direction: column;
+
+      align-items: flex-start;
+
+      gap: 3px;
+    }
+
+
+    strong {
+      max-width: 100%;
+    }
+  }
+
+}
+
+
+// ============================================================
+// SMALL MOBILE
+// ============================================================
+
+@media (max-width: 420px) {
+
+  .document-form {
+    padding: 15px;
+  }
+
+
+  .form-field {
+
+    input,
+    select {
+      min-height: 42px;
+
+      font-size: 12px;
+    }
+
+
+    input[type='file'] {
+      min-height: 44px;
+    }
+  }
+
+
+  .form-actions {
+
+    button {
+      min-height: 40px;
+    }
+  }
+
+}

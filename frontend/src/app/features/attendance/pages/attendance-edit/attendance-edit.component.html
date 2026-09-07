@@ -1,0 +1,200 @@
+<main class="page">
+  <header class="page-header">
+    <div class="page-header-content">
+      <p class="eyebrow">Attendance → Records</p>
+
+      <h1>Edit Attendance</h1>
+
+      <p class="subtitle">
+        Update attendance status and remarks.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="secondary"
+      (click)="back()"
+      [disabled]="saving"
+    >
+      ← Back to History
+    </button>
+  </header>
+
+  @if (loading) {
+    <section
+      class="panel loading-state"
+      aria-live="polite"
+    >
+      <div
+        class="loader"
+        aria-hidden="true"
+      ></div>
+
+      <strong>Loading attendance record...</strong>
+    </section>
+  } @else if (!record) {
+    <section class="panel empty-state">
+      <strong>Attendance record not found.</strong>
+
+      <button
+        type="button"
+        class="primary"
+        (click)="back()"
+      >
+        Back to History
+      </button>
+    </section>
+  } @else {
+    <section class="panel">
+      <div class="record-heading">
+        <div>
+          <p class="eyebrow">Attendance Record</p>
+
+          <h2>{{ record.studentName }}</h2>
+        </div>
+
+        <span class="record-id">
+          #{{ record.id }}
+        </span>
+      </div>
+
+      @if (!editable) {
+        <div class="readonly-notice">
+          <strong>Read only</strong>
+
+          <span>
+            This attendance session is
+            {{ record.sessionStatus | lowercase }}.
+            It cannot be edited.
+          </span>
+        </div>
+      }
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span>Faculty</span>
+
+          <strong>
+            {{ record.facultyName || '—' }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span>Subject</span>
+
+          <strong>
+            {{ record.subjectName || '—' }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span>Student ID</span>
+
+          <strong>
+            {{ record.studentId }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span>Source</span>
+
+          <strong>
+            {{ record.attendanceSource || '—' }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span>Attendance Date</span>
+
+          <strong>
+            {{ record.attendanceDate || '—' }}
+          </strong>
+        </div>
+
+        <div class="info-item">
+          <span>Session Status</span>
+
+          <strong
+            [class.status-open]="record.sessionStatus === 'OPEN'"
+            [class.status-completed]="record.sessionStatus === 'COMPLETED'"
+            [class.status-cancelled]="record.sessionStatus === 'CANCELLED'"
+          >
+            {{ record.sessionStatus || '—' }}
+          </strong>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <label>
+          <span>Attendance Status</span>
+
+          <select
+            [(ngModel)]="record.attendanceStatus"
+            [disabled]="saving || !editable"
+          >
+            <option [value]="AttendanceStatus.PRESENT">
+              Present
+            </option>
+
+            <option [value]="AttendanceStatus.ABSENT">
+              Absent
+            </option>
+
+            <option [value]="AttendanceStatus.LEAVE">
+              Leave
+            </option>
+
+            <option [value]="AttendanceStatus.HALF_DAY">
+              Half Day
+            </option>
+          </select>
+        </label>
+
+        <label class="full-width">
+          <span>Remarks</span>
+
+          <textarea
+            [(ngModel)]="record.remarks"
+            maxlength="300"
+            rows="4"
+            placeholder="Optional remarks..."
+            [disabled]="saving || !editable"
+          ></textarea>
+
+          <small>
+            {{ record.remarks?.length || 0 }}/300
+          </small>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="button"
+          class="secondary"
+          (click)="back()"
+          [disabled]="saving"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="primary"
+          (click)="save()"
+          [disabled]="saving || !editable"
+        >
+          @if (saving) {
+            <span
+              class="button-loader"
+              aria-hidden="true"
+            ></span>
+
+            Saving...
+          } @else {
+            ✓ Save Changes
+          }
+        </button>
+      </div>
+    </section>
+  }
+</main>

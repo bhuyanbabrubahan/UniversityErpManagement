@@ -1,0 +1,14 @@
+<section class="page">
+  <header>
+    <h1>Edit Staff</h1>
+    <p>Complete staff form.</p>
+  </header>
+  <div class="card">
+    <app-staff-form
+      [model]="model()"
+      submitLabel="Update"
+      (save)="save($event)"
+      (cancel)="cancel()"
+    ></app-staff-form>
+  </div>
+</section>

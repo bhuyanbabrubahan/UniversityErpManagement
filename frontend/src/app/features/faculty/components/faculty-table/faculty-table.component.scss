@@ -1,0 +1,1139 @@
+// ============================================================
+// FACULTY TABLE
+// Clean / Modern Enterprise UI
+// ============================================================
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+// ============================================================
+// TABLE WRAPPER
+// ============================================================
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 7px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+// ============================================================
+// TABLE
+// ============================================================
+
+table {
+  width: 100%;
+  min-width: 1180px;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  background: #ffffff;
+
+  color: #334155;
+  font-size: 12px;
+}
+
+
+// ============================================================
+// HEADER
+// ============================================================
+
+thead {
+  background: #f8fafc;
+}
+
+thead tr {
+  height: 48px;
+}
+
+th {
+  height: 48px;
+
+  padding: 0 14px;
+
+  color: #64748b;
+  background: #f8fafc;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  font-size: 10px;
+  font-weight: 750;
+
+  letter-spacing: 0.045em;
+  line-height: 1;
+
+  text-align: left;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+th:first-child {
+  padding-left: 20px;
+}
+
+th:last-child {
+  padding-right: 20px;
+}
+
+
+// ============================================================
+// SORT BUTTON
+// ============================================================
+
+.sort-button {
+  width: 100%;
+  min-height: 34px;
+
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 6px;
+
+  color: inherit;
+  background: transparent;
+
+  border: 0;
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    color 140ms ease,
+    background 140ms ease;
+}
+
+.sort-button:hover {
+  color: #2563eb;
+}
+
+.sort-button:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.sort-icon {
+  width: 15px;
+  height: 15px;
+
+  flex: 0 0 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  transition:
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.sort-button:hover .sort-icon {
+  color: #2563eb;
+}
+
+
+// ============================================================
+// BODY ROW
+// ============================================================
+
+tbody tr {
+  height: 68px;
+
+  background: #ffffff;
+
+  transition:
+    background 140ms ease,
+    box-shadow 140ms ease;
+}
+
+tbody tr:hover {
+  background: #f8fbff;
+}
+
+tbody tr:not(:last-child) td {
+  border-bottom: 1px solid #edf1f5;
+}
+
+
+// ============================================================
+// CELLS
+// ============================================================
+
+td {
+  padding: 11px 14px;
+
+  color: #475569;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+}
+
+td:first-child {
+  padding-left: 20px;
+}
+
+td:last-child {
+  padding-right: 20px;
+}
+
+
+// ============================================================
+// COLUMN WIDTHS
+// ============================================================
+
+.employee-code-column {
+  width: 130px;
+}
+
+.faculty-column {
+  width: 285px;
+}
+
+.actions-column {
+  width: 245px;
+}
+
+
+// ============================================================
+// EMPLOYEE CODE
+// ============================================================
+
+.employee-code {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 26px;
+  padding: 0 9px;
+
+  color: #1e40af;
+  background: #eff6ff;
+
+  border: 1px solid #dbeafe;
+  border-radius: 6px;
+
+  font-size: 10.5px;
+  font-weight: 750;
+
+  letter-spacing: 0.02em;
+}
+
+
+// ============================================================
+// FACULTY CELL
+// ============================================================
+
+.faculty-cell {
+  min-width: 230px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+
+// ============================================================
+// PROFILE IMAGE / AVATAR
+// ============================================================
+
+.faculty-image,
+.faculty-avatar {
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 40px;
+
+  border-radius: 50%;
+}
+
+
+// ============================================================
+// PROFILE IMAGE
+// ============================================================
+
+.faculty-image {
+  display: block;
+
+  object-fit: cover;
+
+  background: #f1f5f9;
+
+  border: 1px solid #e2e8f0;
+
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.faculty-image:hover {
+  transform: scale(1.04);
+
+  box-shadow:
+    0 4px 12px rgb(15 23 42 / 14%);
+}
+
+
+// ============================================================
+// FALLBACK AVATAR
+// ============================================================
+
+.faculty-avatar {
+  display: grid;
+  place-items: center;
+
+  color: #1d4ed8;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #dbeafe
+    );
+
+  border: 1px solid #bfdbfe;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.faculty-avatar:hover {
+  background: #dbeafe;
+
+  transform: scale(1.04);
+
+  box-shadow:
+    0 4px 10px rgb(37 99 235 / 12%);
+}
+
+.faculty-avatar:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+
+// ============================================================
+// FACULTY DETAILS
+// ============================================================
+
+.faculty-details {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+// ============================================================
+// FACULTY NAME
+// ============================================================
+
+.faculty-name {
+  display: block;
+
+  max-width: 215px;
+
+  overflow: hidden;
+
+  color: #172033;
+
+  font-size: 12px;
+  font-weight: 750;
+
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+// ============================================================
+// EMAIL
+// ============================================================
+
+.faculty-email {
+  display: block;
+
+  max-width: 215px;
+
+  overflow: hidden;
+
+  color: #94a3b8;
+
+  font-size: 10.5px;
+
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+// ============================================================
+// DEPARTMENT
+// ============================================================
+
+.department-name {
+  display: inline-block;
+
+  max-width: 190px;
+
+  overflow: hidden;
+
+  color: #475569;
+
+  font-size: 11.5px;
+  font-weight: 500;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+// ============================================================
+// DESIGNATION
+// ============================================================
+
+.designation {
+  display: inline-block;
+
+  max-width: 170px;
+
+  overflow: hidden;
+
+  color: #334155;
+
+  font-size: 11.5px;
+  font-weight: 650;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+// ============================================================
+// QUALIFICATION
+// ============================================================
+
+.qualification {
+  display: inline-block;
+
+  max-width: 170px;
+
+  overflow: hidden;
+
+  color: #64748b;
+
+  font-size: 11.5px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+// ============================================================
+// MOBILE NUMBER
+// ============================================================
+
+.mobile-number {
+  color: #475569;
+
+  font-size: 11.5px;
+
+  font-variant-numeric: tabular-nums;
+
+  white-space: nowrap;
+}
+
+
+// ============================================================
+// STATUS
+// ============================================================
+
+.status-badge {
+  min-height: 26px;
+
+  padding: 0 10px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  border: 1px solid;
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 750;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  flex: 0 0 6px;
+
+  border-radius: 50%;
+}
+
+
+// ============================================================
+// ACTIVE
+// ============================================================
+
+.status-active {
+  color: #166534;
+
+  background: #f0fdf4;
+
+  border-color: #bbf7d0;
+}
+
+.status-active .status-dot {
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 2px rgb(34 197 94 / 10%);
+}
+
+
+// ============================================================
+// INACTIVE
+// ============================================================
+
+.status-inactive {
+  color: #991b1b;
+
+  background: #fef2f2;
+
+  border-color: #fecaca;
+}
+
+.status-inactive .status-dot {
+  background: #ef4444;
+
+  box-shadow:
+    0 0 0 2px rgb(239 68 68 / 10%);
+}
+
+
+// ============================================================
+// ACTIONS
+// ============================================================
+
+.row-actions {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+
+// ============================================================
+// ACTION BUTTON
+// ============================================================
+
+.action-button {
+  min-height: 32px;
+
+  padding: 0 9px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  border: 1px solid;
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    transform 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.action-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.action-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.action-button:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.action-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+
+// ============================================================
+// VIEW
+// ============================================================
+
+.action-button.view {
+  color: #2563eb;
+
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.action-button.view:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+
+  box-shadow:
+    0 3px 8px rgb(37 99 235 / 10%);
+}
+
+
+// ============================================================
+// EDIT
+// ============================================================
+
+.action-button.edit {
+  color: #7c3aed;
+
+  background: #f5f3ff;
+  border-color: #ddd6fe;
+}
+
+.action-button.edit:hover {
+  background: #ede9fe;
+  border-color: #c4b5fd;
+
+  box-shadow:
+    0 3px 8px rgb(124 58 237 / 10%);
+}
+
+
+// ============================================================
+// DELETE
+// ============================================================
+
+.action-button.delete {
+  color: #dc2626;
+
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.action-button.delete:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+
+  box-shadow:
+    0 3px 8px rgb(220 38 38 / 10%);
+}
+
+.action-button.delete:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+// ============================================================
+// PAGINATION
+// ============================================================
+
+.pagination {
+  min-height: 60px;
+
+  padding: 11px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e2e8f0;
+}
+
+
+// ============================================================
+// PAGINATION LEFT
+// ============================================================
+
+.pagination-left {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.pagination-left label {
+  white-space: nowrap;
+}
+
+
+// ============================================================
+// PAGE SIZE
+// ============================================================
+
+.pagination-left select {
+  min-width: 58px;
+  height: 32px;
+
+  padding: 0 8px;
+
+  color: #334155;
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+
+  outline: none;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.pagination-left select:hover {
+  border-color: #94a3b8;
+}
+
+.pagination-left select:focus {
+  border-color: #60a5fa;
+
+  box-shadow:
+    0 0 0 3px rgb(59 130 246 / 10%);
+}
+
+
+// ============================================================
+// PAGINATION INFO
+// ============================================================
+
+.pagination-info {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+.pagination-info strong {
+  color: #172033;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+// ============================================================
+// PAGINATION ACTIONS
+// ============================================================
+
+.pagination-actions {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+// ============================================================
+// PAGINATION BUTTON
+// ============================================================
+
+.pagination-button {
+  min-height: 32px;
+
+  padding: 0 11px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  color: #475569;
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    color 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  color: #1d4ed8;
+
+  background: #eff6ff;
+
+  border-color: #93c5fd;
+}
+
+.pagination-button:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.pagination-button:disabled {
+  color: #cbd5e1;
+
+  background: #f8fafc;
+
+  border-color: #e2e8f0;
+
+  cursor: not-allowed;
+}
+
+
+// ============================================================
+// LOADING
+// ============================================================
+
+.loading-container {
+  min-height: 300px;
+
+  padding: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  color: #64748b;
+
+  background: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+// ============================================================
+// LOADING SPINNER
+// ============================================================
+
+.loading-spinner {
+  width: 25px;
+  height: 25px;
+
+  border: 3px solid #dbeafe;
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation: faculty-spinner 700ms linear infinite;
+}
+
+@keyframes faculty-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+// ============================================================
+// EMPTY STATE
+// ============================================================
+
+.empty-state {
+  min-height: 300px;
+
+  padding: 45px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  text-align: center;
+
+  background: #ffffff;
+}
+
+
+// ============================================================
+// EMPTY ICON
+// ============================================================
+
+.empty-icon {
+  width: 54px;
+  height: 54px;
+
+  margin-bottom: 14px;
+
+  display: grid;
+  place-items: center;
+
+  color: #64748b;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+
+  font-size: 20px;
+}
+
+
+// ============================================================
+// EMPTY TITLE
+// ============================================================
+
+.empty-state h3 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 15px;
+  font-weight: 750;
+}
+
+
+// ============================================================
+// EMPTY DESCRIPTION
+// ============================================================
+
+.empty-state p {
+  max-width: 430px;
+
+  margin: 7px 0 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+
+// ============================================================
+// TABLET
+// ============================================================
+
+@media (max-width: 900px) {
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .pagination-info {
+    order: 3;
+
+    width: 100%;
+
+    justify-content: center;
+  }
+
+}
+
+
+// ============================================================
+// MOBILE
+// ============================================================
+
+@media (max-width: 600px) {
+
+  table {
+    min-width: 1120px;
+  }
+
+  th {
+    padding: 0 11px;
+
+    font-size: 9px;
+  }
+
+  td {
+    padding: 9px 11px;
+
+    font-size: 11px;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 13px;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-right: 13px;
+  }
+
+  .faculty-cell {
+    gap: 9px;
+  }
+
+  .faculty-image,
+  .faculty-avatar {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+  .pagination {
+    padding: 12px;
+
+    gap: 10px;
+  }
+
+  .pagination-left {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .pagination-actions {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .pagination-button {
+    flex: 1;
+  }
+
+}
+
+
+// ============================================================
+// SMALL MOBILE
+// ============================================================
+
+@media (max-width: 400px) {
+
+  .pagination-button span:last-child {
+    display: none;
+  }
+
+  .pagination-button {
+    width: 42px;
+
+    flex: 0 0 42px;
+
+    padding: 0;
+  }
+
+}
+
+
+// ============================================================
+// REDUCED MOTION
+// ============================================================
+
+@media (prefers-reduced-motion: reduce) {
+
+  .table-wrapper *,
+  .table-wrapper *::before,
+  .table-wrapper *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+}

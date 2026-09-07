@@ -1,0 +1,138 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.summary-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 105px;
+  padding: 18px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 14px;
+  background: var(--surface-color, #ffffff);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.summary-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.summary-content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.summary-content span {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.65;
+}
+
+.summary-content strong {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 750;
+}
+
+.summary-card.total::before {
+  background: #64748b;
+}
+
+.summary-card.present::before {
+  background: #16a34a;
+}
+
+.summary-card.present .summary-icon {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.summary-card.absent::before {
+  background: #dc2626;
+}
+
+.summary-card.absent .summary-icon {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.summary-card.leave::before {
+  background: #d97706;
+}
+
+.summary-card.leave .summary-icon {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.summary-card.half::before {
+  background: #7c3aed;
+}
+
+.summary-card.half .summary-icon {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+@media (max-width: 1200px) {
+  .summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .summary-card {
+    min-height: 90px;
+    padding: 14px;
+  }
+
+  .summary-content strong {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    min-height: 82px;
+  }
+}

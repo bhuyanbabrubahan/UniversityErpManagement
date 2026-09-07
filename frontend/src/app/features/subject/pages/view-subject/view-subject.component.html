@@ -1,0 +1,252 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Subject Details
+      </h1>
+
+      <p>
+        View complete subject information.
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="secondary-btn"
+        (click)="back()">
+
+        ← Back
+
+      </button>
+
+      @if (subject) {
+
+        <button
+          type="button"
+          class="primary-btn"
+          (click)="edit()">
+
+          Edit Subject
+
+        </button>
+
+      }
+
+    </div>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="loading-card">
+      Loading subject...
+    </div>
+
+  } @else if (errorMessage) {
+
+    <div class="error-card">
+
+      <strong>
+        Unable to load subject
+      </strong>
+
+      <span>
+        {{ errorMessage }}
+      </span>
+
+    </div>
+
+  } @else if (subject) {
+
+    <section class="details-card">
+
+      <div class="card-heading">
+
+        <div>
+
+          <h2>
+            {{ subject.subjectName }}
+          </h2>
+
+          <p>
+            {{ subject.subjectCode }}
+          </p>
+
+        </div>
+
+        <span
+          class="status-badge"
+          [class.active]="subject.status === 'ACTIVE'"
+          [class.inactive]="subject.status !== 'ACTIVE'">
+
+          {{ subject.status }}
+
+        </span>
+
+      </div>
+
+
+      <div class="details-grid">
+
+        <div class="detail">
+
+          <span>
+            Subject Code
+          </span>
+
+          <strong>
+            {{ subject.subjectCode }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Subject Name
+          </span>
+
+          <strong>
+            {{ subject.subjectName }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Credits
+          </span>
+
+          <strong>
+            {{ subject.credits }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Semester
+          </span>
+
+          <strong>
+            {{ subject.semesterName }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Theory Marks
+          </span>
+
+          <strong>
+            {{ subject.theoryMarks }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Practical Marks
+          </span>
+
+          <strong>
+            {{ subject.practicalMarks }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Semester ID
+          </span>
+
+          <strong>
+            {{ subject.semesterId }}
+          </strong>
+
+        </div>
+
+
+        <div class="detail">
+
+          <span>
+            Record Status
+          </span>
+
+          <strong>
+            {{ subject.status }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="audit-card">
+
+      <div class="audit-heading">
+        Audit Information
+      </div>
+
+      <div class="audit-grid">
+
+        <div>
+          <span>Created By</span>
+          <strong>
+            {{ subject.createdBy || '—' }}
+          </strong>
+        </div>
+
+        <div>
+          <span>Created At</span>
+          <strong>
+            {{ subject.createdAt || '—' }}
+          </strong>
+        </div>
+
+        <div>
+          <span>Updated By</span>
+          <strong>
+            {{ subject.updatedBy || '—' }}
+          </strong>
+        </div>
+
+        <div>
+          <span>Updated At</span>
+          <strong>
+            {{ subject.updatedAt || '—' }}
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

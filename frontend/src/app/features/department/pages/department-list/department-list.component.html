@@ -1,0 +1,791 @@
+<div class="department-page">
+
+  <!-- =====================================================
+       PAGE HEADER
+       ===================================================== -->
+
+  <section class="page-header">
+
+    <div class="header-content">
+
+      <div class="title-icon">
+        <span>▦</span>
+      </div>
+
+      <div>
+
+        <div class="breadcrumb">
+          Dashboard
+          <span>/</span>
+          Academic
+          <span>/</span>
+          Departments
+        </div>
+
+        <h1>Departments</h1>
+
+        <p>
+          Manage academic departments, codes, and their status.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="btn btn-primary add-button"
+      [disabled]="loading"
+      (click)="addDepartment()">
+
+      <span class="button-icon">+</span>
+
+      Add Department
+
+    </button>
+
+  </section>
+
+
+  <!-- =====================================================
+       SEARCH / FILTER
+       ===================================================== -->
+
+  <section class="filter-card">
+
+    <div class="filter-header">
+
+      <div>
+
+        <h2>
+          Search & Filter
+        </h2>
+
+        <p>
+          Find departments by name, code, or status.
+        </p>
+
+      </div>
+
+
+      @if (searching) {
+
+        <span class="filter-active">
+          Filter applied
+        </span>
+
+      }
+
+    </div>
+
+
+    <div class="filter-grid">
+
+      <!-- =================================================
+           DEPARTMENT NAME
+           ================================================= -->
+
+      <div class="form-field">
+
+        <label for="departmentName">
+          Department Name
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            ⌕
+          </span>
+
+          <input
+            id="departmentName"
+            type="text"
+            [(ngModel)]="search.departmentName"
+            placeholder="Search by department name"
+            autocomplete="off"
+            [disabled]="loading"
+            (keyup.enter)="searchDepartments()" />
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           DEPARTMENT CODE
+           ================================================= -->
+
+      <div class="form-field">
+
+        <label for="departmentCode">
+          Department Code
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            #
+          </span>
+
+          <input
+            id="departmentCode"
+            type="text"
+            [(ngModel)]="search.departmentCode"
+            placeholder="e.g. CSE, ECE"
+            autocomplete="off"
+            [disabled]="loading"
+            (keyup.enter)="searchDepartments()" />
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           STATUS
+           ================================================= -->
+
+      <div class="form-field">
+
+        <label for="status">
+          Status
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+            ●
+          </span>
+
+          <select
+            id="status"
+            [(ngModel)]="search.status"
+            [disabled]="loading">
+
+            <option [ngValue]="null">
+              All Status
+            </option>
+
+            @for (status of statusOptions; track status) {
+
+              <option [ngValue]="status">
+                {{ status }}
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           FILTER ACTIONS
+           ================================================= -->
+
+      <div class="filter-actions">
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="loading"
+          (click)="searchDepartments()">
+
+          <span>⌕</span>
+
+          Search
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn btn-light"
+          [disabled]="loading"
+          (click)="clearSearch()">
+
+          Clear
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       DEPARTMENT TABLE
+       ===================================================== -->
+
+  <section class="table-card">
+
+
+    <!-- ===================================================
+         TABLE HEADER
+         =================================================== -->
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Department List
+        </h2>
+
+        <p>
+
+          @if (loading) {
+
+            Loading departments...
+
+          } @else {
+
+            {{ totalElements }}
+            department{{ totalElements === 1 ? '' : 's' }}
+            found
+
+          }
+
+        </p>
+
+      </div>
+
+
+      <div class="table-meta">
+
+        @if (!loading && totalElements > 0) {
+
+          <span class="record-count">
+            {{ totalElements }} Records
+          </span>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         LOADING STATE
+         =================================================== -->
+
+    @if (loading) {
+
+      <div class="loading-container">
+
+        <div class="loading-spinner"></div>
+
+        <h3>
+          Loading departments
+        </h3>
+
+        <p>
+          Please wait while we fetch the department data.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- ===================================================
+         DATA / EMPTY STATE
+         =================================================== -->
+
+    @if (!loading) {
+
+
+      <!-- =================================================
+           DATA TABLE
+           ================================================= -->
+
+      @if (departments.length > 0) {
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <!-- ID -->
+
+                <th class="id-column">
+
+                  <button
+                    type="button"
+                    class="sort-button"
+                    (click)="sort('id')">
+
+                    ID
+
+                    <span>
+                      {{ getSortIcon('id') }}
+                    </span>
+
+                  </button>
+
+                </th>
+
+
+                <!-- DEPARTMENT -->
+
+                <th>
+
+                  <button
+                    type="button"
+                    class="sort-button"
+                    (click)="sort('departmentName')">
+
+                    Department
+
+                    <span>
+                      {{ getSortIcon('departmentName') }}
+                    </span>
+
+                  </button>
+
+                </th>
+
+
+                <!-- CODE -->
+
+                <th>
+
+                  <button
+                    type="button"
+                    class="sort-button"
+                    (click)="sort('departmentCode')">
+
+                    Code
+
+                    <span>
+                      {{ getSortIcon('departmentCode') }}
+                    </span>
+
+                  </button>
+
+                </th>
+
+
+                <!-- STATUS -->
+
+                <th>
+
+                  <button
+                    type="button"
+                    class="sort-button"
+                    (click)="sort('status')">
+
+                    Status
+
+                    <span>
+                      {{ getSortIcon('status') }}
+                    </span>
+
+                  </button>
+
+                </th>
+
+
+                <!-- ACTIONS -->
+
+                <th class="actions-column">
+                  Actions
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                department of departments;
+                track trackByDepartmentId($index, department)
+              ) {
+
+                <tr>
+
+
+                  <!-- =====================================
+                       ID
+                       ===================================== -->
+
+                  <td class="id-cell">
+
+                    #{{ department.id }}
+
+                  </td>
+
+
+                  <!-- =====================================
+                       DEPARTMENT
+                       ===================================== -->
+
+                  <td>
+
+                    <div class="department-cell">
+
+                      <div class="department-avatar">
+
+                        {{
+                          department.departmentName
+                            ? department.departmentName
+                              .charAt(0)
+                              .toUpperCase()
+                            : '?'
+                        }}
+
+                      </div>
+
+
+                      <div class="department-info">
+
+                        <strong>
+                          {{ department.departmentName }}
+                        </strong>
+
+
+                        @if (department.createdAt) {
+
+                          <span>
+
+                            Created
+                            {{
+                              department.createdAt
+                                | date:'mediumDate'
+                            }}
+
+                          </span>
+
+                        }
+
+                      </div>
+
+                    </div>
+
+                  </td>
+
+
+                  <!-- =====================================
+                       CODE
+                       ===================================== -->
+
+                  <td>
+
+                    <span class="department-code">
+
+                      {{ department.departmentCode }}
+
+                    </span>
+
+                  </td>
+
+
+                  <!-- =====================================
+                       STATUS
+                       ===================================== -->
+
+                  <td>
+
+                    @switch (department.status) {
+
+                      @case (recordStatus.ACTIVE) {
+
+                        <span
+                          class="status-badge status-active">
+
+                          <span class="status-dot"></span>
+
+                          Active
+
+                        </span>
+
+                      }
+
+
+                      @case (recordStatus.INACTIVE) {
+
+                        <span
+                          class="status-badge status-inactive">
+
+                          <span class="status-dot"></span>
+
+                          Inactive
+
+                        </span>
+
+                      }
+
+
+                      @default {
+
+                        <span class="status-badge">
+
+                          <span class="status-dot"></span>
+
+                          {{ department.status }}
+
+                        </span>
+
+                      }
+
+                    }
+
+                  </td>
+
+
+                  <!-- =====================================
+                       ACTIONS
+                       ===================================== -->
+
+                  <td>
+
+                    <div class="row-actions">
+
+
+                      <!-- VIEW -->
+
+                      <button
+                        type="button"
+                        class="action-button view"
+                        title="View department"
+                        [disabled]="deleting"
+                        (click)="viewDepartment(department.id)">
+
+                        <span>
+                          View
+                        </span>
+
+                      </button>
+
+
+                      <!-- EDIT -->
+
+                      <button
+                        type="button"
+                        class="action-button edit"
+                        title="Edit department"
+                        [disabled]="deleting"
+                        (click)="editDepartment(department.id)">
+
+                        <span>
+                          Edit
+                        </span>
+
+                      </button>
+
+
+                      <!-- DELETE -->
+
+                      <button
+                        type="button"
+                        class="action-button delete"
+                        title="Delete department"
+                        [disabled]="deleting"
+                        (click)="deleteDepartment(department)">
+
+                        @if (deleting) {
+
+                          <span>
+                            Deleting...
+                          </span>
+
+                        } @else {
+
+                          <span>
+                            Delete
+                          </span>
+
+                        }
+
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <!-- =================================================
+             PAGINATION
+             ================================================= -->
+
+        <div class="pagination">
+
+
+          <!-- LEFT -->
+
+          <div class="pagination-left">
+
+            <label for="pageSize">
+              Rows per page
+            </label>
+
+            <select
+              id="pageSize"
+              [(ngModel)]="size"
+              [disabled]="loading"
+              (change)="onPageSizeChange()">
+
+              <option [ngValue]="5">
+                5
+              </option>
+
+              <option [ngValue]="10">
+                10
+              </option>
+
+              <option [ngValue]="20">
+                20
+              </option>
+
+              <option [ngValue]="50">
+                50
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- PAGE INFO -->
+
+          <div class="pagination-info">
+
+            Page
+
+            <strong>
+              {{ page + 1 }}
+            </strong>
+
+            of
+
+            <strong>
+              {{ totalPages || 1 }}
+            </strong>
+
+          </div>
+
+
+          <!-- PAGE ACTIONS -->
+
+          <div class="pagination-actions">
+
+            <button
+              type="button"
+              class="pagination-button"
+              [disabled]="page === 0 || loading"
+              (click)="previousPage()">
+
+              ← Previous
+
+            </button>
+
+
+            <button
+              type="button"
+              class="pagination-button"
+              [disabled]="last || loading"
+              (click)="nextPage()">
+
+              Next →
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+      } @else {
+
+
+        <!-- =================================================
+             EMPTY STATE
+             ================================================= -->
+
+        <div class="empty-container">
+
+          <div class="empty-icon">
+            ▦
+          </div>
+
+
+          <h3>
+            No departments found
+          </h3>
+
+
+          <p>
+            There are no departments matching your current
+            search criteria.
+          </p>
+
+
+          <div class="empty-actions">
+
+
+            @if (searching) {
+
+              <button
+                type="button"
+                class="btn btn-light"
+                (click)="clearSearch()">
+
+                Clear Filters
+
+              </button>
+
+            }
+
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="addDepartment()">
+
+              + Add Department
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    }
+
+  </section>
+
+</div>
+
+
+<!-- DELETE DEPARTMENT DIALOG -->
+
+<app-delete-department-dialog
+  [visible]="deleteDialogVisible"
+  [departmentName]="selectedDepartment?.departmentName || ''"
+  [loading]="deleting"
+  (confirmDelete)="confirmDeleteDepartment()"
+  (cancel)="cancelDeleteDepartment()">
+</app-delete-department-dialog>

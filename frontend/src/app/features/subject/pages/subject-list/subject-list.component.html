@@ -1,0 +1,167 @@
+<div class="page">
+
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <div class="page-header">
+
+    <div class="page-heading">
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Subjects
+      </h1>
+
+      <p>
+        Manage subjects, credits, marks and semester assignments.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="primary-btn"
+      (click)="onAdd()">
+
+      <span class="plus-icon">
+        +
+      </span>
+
+      <span>
+        Add Subject
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       SUCCESS MESSAGE
+  ===================================================== -->
+
+  @if (successMessage) {
+
+    <div
+      class="toast success-toast"
+      role="alert">
+
+      <span class="toast-icon">
+        ✓
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Success
+        </strong>
+
+        <span>
+          {{ successMessage }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="toast-close"
+        aria-label="Close success message"
+        (click)="closeSuccessMessage()">
+
+        ×
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       ERROR MESSAGE
+  ===================================================== -->
+
+  @if (errorMessage) {
+
+    <div
+      class="toast error-toast"
+      role="alert">
+
+      <span class="toast-icon">
+        !
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Error
+        </strong>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="toast-close"
+        aria-label="Close error message"
+        (click)="closeErrorMessage()">
+
+        ×
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       SEARCH FILTER
+  ===================================================== -->
+
+  <section class="filter-card">
+
+    <app-subject-search-filter
+      (search)="onSearch($event)"
+      (reset)="onReset()">
+    </app-subject-search-filter>
+
+  </section>
+
+
+  <!-- =====================================================
+       SUBJECT TABLE
+  ===================================================== -->
+
+  <section class="table-card">
+
+    <app-subject-table
+      [subjects]="subjects"
+      [loading]="loading"
+
+      [page]="page"
+      [size]="size"
+      [totalElements]="totalElements"
+      [totalPages]="totalPages"
+      [last]="last"
+
+      (view)="onView($event)"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
+
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+      (sortChange)="onSortChange($event)">
+
+    </app-subject-table>
+
+  </section>
+
+</div>

@@ -1,0 +1,227 @@
+<form
+  class="notification-form"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  novalidate
+>
+  <!-- =====================================================
+       01 — BASIC INFORMATION
+  ====================================================== -->
+  <section class="form-section">
+    <div class="section-heading">
+      <div class="section-number">01</div>
+
+      <div class="section-copy">
+        <h3>Basic information</h3>
+        <p>Identify the notification clearly.</p>
+      </div>
+    </div>
+
+    <div class="form-grid three">
+      <!-- CODE -->
+      <label class="field" [class.invalid]="invalid('code')">
+        <span>
+          Notification code
+          <b>*</b>
+        </span>
+
+        <input
+          type="text"
+          formControlName="code"
+          placeholder="e.g. EXAM-001"
+          autocomplete="off"
+          maxlength="60"
+        />
+
+        <small *ngIf="invalid('code')">
+          {{ errorMessage("code") }}
+        </small>
+      </label>
+
+      <!-- TITLE -->
+      <label class="field" [class.invalid]="invalid('title')">
+        <span>
+          Title
+          <b>*</b>
+        </span>
+
+        <input
+          type="text"
+          formControlName="title"
+          placeholder="Notification title"
+          maxlength="160"
+        />
+
+        <small *ngIf="invalid('title')">
+          {{ errorMessage("title") }}
+        </small>
+      </label>
+
+      <!-- PUBLICATION DATE -->
+      <label class="field">
+        <span> Publication date </span>
+
+        <input type="datetime-local" formControlName="publishedAt" />
+      </label>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       02 — DELIVERY SETTINGS
+  ====================================================== -->
+  <section class="form-section">
+    <div class="section-heading">
+      <div class="section-number">02</div>
+
+      <div class="section-copy">
+        <h3>Delivery settings</h3>
+        <p>Choose the audience, channel and state.</p>
+      </div>
+    </div>
+
+    <div class="form-grid three">
+      <!-- TARGET ROLE -->
+      <label class="field" [class.invalid]="invalid('targetRole')">
+        <span>
+          Target role
+          <b>*</b>
+        </span>
+
+        <select formControlName="targetRole">
+          <option *ngFor="let role of targetRoles" [value]="role">
+            {{ role.replace("_", " ") }}
+          </option>
+        </select>
+
+        <small *ngIf="invalid('targetRole')">
+          {{ errorMessage("targetRole") }}
+        </small>
+      </label>
+
+      <!-- CHANNEL -->
+      <label class="field" [class.invalid]="invalid('channel')">
+        <span>
+          Channel
+          <b>*</b>
+        </span>
+
+        <select formControlName="channel">
+          <option *ngFor="let channel of channels" [value]="channel">
+            {{ channel.replace("_", " ") }}
+          </option>
+        </select>
+
+        <small *ngIf="invalid('channel')">
+          {{ errorMessage("channel") }}
+        </small>
+      </label>
+
+      <!-- STATUS -->
+      <label class="field" [class.invalid]="invalid('status')">
+        <span>
+          Status
+          <b>*</b>
+        </span>
+
+        <select formControlName="status">
+          <option *ngFor="let status of statuses" [value]="status">
+            {{ status.replace("_", " ") }}
+          </option>
+        </select>
+
+        <small *ngIf="invalid('status')">
+          {{ errorMessage("status") }}
+        </small>
+      </label>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       03 — MESSAGE CONTENT
+  ====================================================== -->
+  <section class="form-section">
+    <div class="section-heading">
+      <div class="section-number">03</div>
+
+      <div class="section-copy">
+        <h3>Message content</h3>
+        <p>Write the message recipients will receive.</p>
+      </div>
+    </div>
+
+    <div class="form-grid one">
+      <!-- MESSAGE -->
+      <label class="field" [class.invalid]="invalid('message')">
+        <div class="field-label-row">
+          <span>
+            Message
+            <b>*</b>
+          </span>
+
+          <small class="counter">
+            {{ form.controls.message.value.length }}/5000
+          </small>
+        </div>
+
+        <textarea
+          formControlName="message"
+          rows="5"
+          maxlength="5000"
+          placeholder="Write the notification message..."
+        ></textarea>
+
+        <small class="error-text" *ngIf="invalid('message')">
+          {{ errorMessage("message") }}
+        </small>
+      </label>
+
+      <!-- DESCRIPTION -->
+      <label class="field" [class.invalid]="invalid('description')">
+        <div class="field-label-row">
+          <span> Description </span>
+
+          <small class="counter">
+            {{ form.controls.description.value.length }}/1000
+          </small>
+        </div>
+
+        <textarea
+          formControlName="description"
+          rows="3"
+          maxlength="1000"
+          placeholder="Optional internal description..."
+        ></textarea>
+
+        <small class="error-text" *ngIf="invalid('description')">
+          {{ errorMessage("description") }}
+        </small>
+      </label>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       ACTIONS
+  ====================================================== -->
+  <footer class="form-actions">
+    <button
+      type="button"
+      class="btn secondary"
+      [disabled]="busy"
+      (click)="cancelForm()"
+    >
+      <mat-icon aria-hidden="true"> close </mat-icon>
+
+      <span> Cancel </span>
+    </button>
+
+    <button type="submit" class="btn primary" [disabled]="busy || form.invalid">
+      <span class="spinner" *ngIf="busy"></span>
+
+      <mat-icon *ngIf="!busy" aria-hidden="true"> check </mat-icon>
+
+      <span>
+        {{ busy ? "Saving..." : submitLabel }}
+      </span>
+    </button>
+  </footer>
+</form>

@@ -1,0 +1,107 @@
+<div class="page">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ===================================================== -->
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Semesters
+      </h1>
+
+      <p>
+        Manage course semesters, schedules and working days.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="primary-btn"
+      (click)="addSemester()">
+
+      <span>+</span>
+
+      Add Semester
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       SEARCH FILTER
+  ===================================================== -->
+
+  <section class="content-card">
+
+    <app-semester-search-filter
+      (search)="onSearch($event)"
+      (reset)="onReset()">
+    </app-semester-search-filter>
+
+  </section>
+
+
+  <!-- =====================================================
+       SEMESTER TABLE
+  ===================================================== -->
+
+  <section class="content-card table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Semester List
+        </h2>
+
+        <p>
+          {{ totalElements }} semester(s) found.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <app-semester-table
+      [semesters]="semesters"
+      [loading]="loading"
+      [page]="page"
+      [size]="size"
+      [totalPages]="totalPages"
+      [totalElements]="totalElements"
+      [last]="last"
+
+      (view)="viewSemester($event)"
+      (edit)="editSemester($event)"
+      (delete)="deleteSemester($event)"
+      (pageChange)="onPageChange($event)">
+
+    </app-semester-table>
+
+  </section>
+
+</div>
+
+
+<!-- =====================================================
+     DELETE SEMESTER DIALOG
+===================================================== -->
+
+<app-delete-semester-dialog
+  [semester]="selectedSemester"
+  [loading]="deleteLoading"
+  (confirm)="onDeleteConfirm($event)"
+  (cancel)="onDeleteCancel()">
+</app-delete-semester-dialog>

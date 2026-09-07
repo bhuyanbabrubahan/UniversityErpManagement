@@ -1,0 +1,106 @@
+<div class="course-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="page-header">
+
+    <div>
+
+      <div class="breadcrumb">
+        Courses
+        <span>/</span>
+        Edit Course
+      </div>
+
+      <h1>
+        Edit Course
+      </h1>
+
+      <p>
+        Update course information.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="cancel()">
+
+      ← Back to Courses
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  @if (loadingData) {
+
+    <div class="loading-card">
+
+      <div class="loader"></div>
+
+      <span>
+        Loading course information...
+      </span>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       FORM
+  ====================================================== -->
+
+  @else if (course) {
+
+    <app-course-form
+      [course]="course"
+      [departments]="departments"
+      [loading]="loading"
+      submitLabel="Update Course"
+      (formSubmit)="update($event)"
+      (cancel)="cancel()">
+    </app-course-form>
+
+  }
+
+
+  <!-- =====================================================
+       NOT FOUND
+  ====================================================== -->
+
+  @else {
+
+    <div class="empty-card">
+
+      <h3>
+        Course not found
+      </h3>
+
+      <p>
+        The requested course could not be loaded.
+      </p>
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="cancel()">
+
+        Back to Courses
+
+      </button>
+
+    </div>
+
+  }
+
+</div>

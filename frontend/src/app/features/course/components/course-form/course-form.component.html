@@ -1,0 +1,250 @@
+<form
+  class="course-form"
+  [formGroup]="courseForm"
+  (ngSubmit)="submit()">
+
+  <div class="form-grid">
+
+    <!-- COURSE CODE -->
+    <div class="form-field">
+
+      <label for="courseCode">
+        Course Code
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="courseCode"
+        type="text"
+        formControlName="courseCode"
+        placeholder="e.g. CSE101"
+        maxlength="20"
+        autocomplete="off"
+        [class.invalid]="isInvalid('courseCode')" />
+
+      @if (isInvalid('courseCode')) {
+
+        <div class="field-error">
+
+          @if (f.courseCode.errors?.['required']) {
+            Course code is required.
+          }
+
+          @if (f.courseCode.errors?.['maxlength']) {
+            Course code cannot exceed 20 characters.
+          }
+
+        </div>
+      }
+
+    </div>
+
+
+    <!-- COURSE NAME -->
+    <div class="form-field">
+
+      <label for="courseName">
+        Course Name
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="courseName"
+        type="text"
+        formControlName="courseName"
+        placeholder="Enter course name"
+        maxlength="100"
+        autocomplete="off"
+        [class.invalid]="isInvalid('courseName')" />
+
+      @if (isInvalid('courseName')) {
+
+        <div class="field-error">
+
+          @if (f.courseName.errors?.['required']) {
+            Course name is required.
+          }
+
+          @if (f.courseName.errors?.['maxlength']) {
+            Course name cannot exceed 100 characters.
+          }
+
+        </div>
+      }
+
+    </div>
+
+
+    <!-- DEPARTMENT -->
+    <div class="form-field">
+
+      <label for="departmentId">
+        Department
+        <span class="required">*</span>
+      </label>
+
+      <select
+        id="departmentId"
+        formControlName="departmentId"
+        [class.invalid]="isInvalid('departmentId')">
+
+        <option [ngValue]="0">
+          Select Department
+        </option>
+
+        @for (
+          department of departments;
+          track department.id
+        ) {
+
+          <option [ngValue]="department.id">
+            {{ department.departmentName }}
+          </option>
+
+        }
+
+      </select>
+
+      @if (isInvalid('departmentId')) {
+
+        <div class="field-error">
+          Department is required.
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- DURATION -->
+    <div class="form-field">
+
+      <label for="durationInMonths">
+        Duration
+        <span class="required">*</span>
+      </label>
+
+      <div class="input-with-suffix">
+
+        <input
+          id="durationInMonths"
+          type="number"
+          min="1"
+          formControlName="durationInMonths"
+          placeholder="e.g. 48"
+          [class.invalid]="isInvalid('durationInMonths')" />
+
+        <span>Months</span>
+
+      </div>
+
+      @if (isInvalid('durationInMonths')) {
+
+        <div class="field-error">
+
+          @if (f.durationInMonths.errors?.['required']) {
+            Duration is required.
+          }
+
+          @if (f.durationInMonths.errors?.['min']) {
+            Duration must be at least 1 month.
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- STATUS -->
+    <div class="form-field">
+
+      <label for="status">
+        Status
+        <span class="required">*</span>
+      </label>
+
+      <select
+        id="status"
+        formControlName="status">
+
+        <option value="ACTIVE">
+          Active
+        </option>
+
+        <option value="INACTIVE">
+          Inactive
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- DESCRIPTION -->
+    <div class="form-field full-width">
+
+      <label for="description">
+        Description
+      </label>
+
+      <textarea
+        id="description"
+        rows="4"
+        formControlName="description"
+        maxlength="500"
+        placeholder="Enter course description"></textarea>
+
+      <div class="character-count">
+        {{ f.description.value.length }}/500
+      </div>
+
+      @if (isInvalid('description')) {
+
+        <div class="field-error">
+          Description cannot exceed 500 characters.
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+
+  <!-- ACTIONS -->
+
+  <div class="form-actions">
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="loading"
+      (click)="onCancel()">
+
+      Cancel
+
+    </button>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="loading">
+
+      @if (loading) {
+
+        <span class="spinner"></span>
+        Saving...
+
+      } @else {
+
+        {{ submitLabel }}
+
+      }
+
+    </button>
+
+  </div>
+
+</form>

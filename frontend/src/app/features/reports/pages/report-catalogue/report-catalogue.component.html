@@ -1,0 +1,14 @@
+<section class="page">
+  <header>
+    <div><span class="eyebrow">MIS & Analytics</span><h1>Reports</h1><p>Role-permitted operational and management reports.</p></div>
+  </header>
+  <div class="grid" *ngIf="!loading()">
+    <article class="report-card" *ngFor="let report of reports()">
+      <div class="icon">▣</div>
+      <div><span class="category">{{ report.category }}</span><h2>{{ report.name }}</h2><p>{{ report.code }}</p></div>
+      <div class="actions"><button *ngIf="report.pdfAvailable" (click)="openPdf(report)">Open PDF</button><button *ngIf="report.pdfAvailable" (click)="openExcel(report)">Excel</button></div>
+    </article>
+  </div>
+  <div class="loading" *ngIf="loading()">Loading reports…</div>
+  <div class="pdf-viewer" *ngIf="selectedPdf()"><iframe [src]="selectedPdf()" title="ERP PDF report"></iframe></div>
+</section>

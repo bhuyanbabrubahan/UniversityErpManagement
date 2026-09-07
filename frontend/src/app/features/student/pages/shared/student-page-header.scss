@@ -1,0 +1,370 @@
+// ============================================================
+// STUDENT PAGE — SHARED ADD / EDIT ERP UI
+// ============================================================
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+// ============================================================
+// PAGE CONTAINER
+// ============================================================
+
+.student-page-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 22px 28px 32px;
+  box-sizing: border-box;
+}
+
+// ============================================================
+// PAGE HEADER
+// ============================================================
+
+.student-page-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.03),
+    0 4px 12px rgba(15, 23, 42, 0.035);
+  box-sizing: border-box;
+}
+
+// ============================================================
+// HEADER ICON
+// ============================================================
+
+.student-page-header-icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-sizing: border-box;
+
+  mat-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
+    line-height: 22px;
+  }
+}
+
+// ============================================================
+// ADD / EDIT ICON VARIANTS
+// ============================================================
+
+.student-page-header--add {
+  .student-page-header-icon {
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    color: #2563eb;
+  }
+}
+
+.student-page-header--edit {
+  .student-page-header-icon {
+    background: #eef2ff;
+    border: 1px solid #e0e7ff;
+    color: #4f46e5;
+  }
+}
+
+// ============================================================
+// HEADER CONTENT
+// ============================================================
+
+.student-page-header-content {
+  min-width: 0;
+  flex: 1;
+
+  h1 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+}
+
+// ============================================================
+// FORM WRAPPER
+// ============================================================
+
+.student-form-wrapper {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+// ============================================================
+// STUDENT FORM HOST
+// ============================================================
+
+app-student-form {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+// ============================================================
+// HEADER ACTION AREA
+// ============================================================
+
+.student-page-header-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.student-page-header-actions button {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.student-page-header-actions mat-icon {
+  width: 17px;
+  height: 17px;
+  font-size: 17px;
+  line-height: 17px;
+}
+
+// ============================================================
+// TABLET
+// ============================================================
+
+@media (max-width: 1200px) {
+  .student-page-container {
+    padding: 20px 24px 30px;
+  }
+
+  .student-page-header {
+    margin-bottom: 16px;
+  }
+}
+
+// ============================================================
+// SMALL TABLET
+// ============================================================
+
+@media (max-width: 900px) {
+  .student-page-container {
+    padding: 18px 20px 28px;
+  }
+
+  .student-page-header {
+    gap: 12px;
+    padding: 15px 18px;
+    border-radius: 11px;
+  }
+
+  .student-page-header-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    border-radius: 9px;
+
+    mat-icon {
+      width: 21px;
+      height: 21px;
+      font-size: 21px;
+      line-height: 21px;
+    }
+  }
+
+  .student-page-header-content {
+    h1 {
+      font-size: 19px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+}
+
+// ============================================================
+// MOBILE
+// ============================================================
+
+@media (max-width: 600px) {
+  .student-page-container {
+    padding: 14px 14px 24px;
+  }
+
+  .student-page-header {
+    gap: 11px;
+    margin-bottom: 14px;
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .student-page-header-icon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    border-radius: 9px;
+
+    mat-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      line-height: 20px;
+    }
+  }
+
+  .student-page-header-content {
+    h1 {
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    p {
+      margin-top: 3px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+  }
+
+  .student-page-header-actions {
+    gap: 5px;
+  }
+
+  .student-page-header-actions button {
+    min-height: 34px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+}
+
+// ============================================================
+// VERY SMALL MOBILE
+// ============================================================
+
+@media (max-width: 420px) {
+  .student-page-container {
+    padding: 12px 10px 22px;
+  }
+
+  .student-page-header {
+    gap: 9px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 9px;
+  }
+
+  .student-page-header-icon {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+    border-radius: 8px;
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+
+  .student-page-header-content {
+    h1 {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 10.5px;
+      line-height: 1.35;
+    }
+  }
+
+  .student-page-header-actions button {
+    min-width: 34px;
+    padding: 0 7px;
+  }
+}
+
+// ============================================================
+// EXTRA SMALL DEVICES
+// ============================================================
+
+@media (max-width: 360px) {
+  .student-page-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .student-page-header {
+    padding: 11px;
+  }
+
+  .student-page-header-content {
+    h1 {
+      font-size: 15px;
+    }
+
+    p {
+      font-size: 10px;
+    }
+  }
+}
+
+// ============================================================
+// ACCESSIBILITY
+// ============================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .student-page-container *,
+  .student-page-container *::before,
+  .student-page-container *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+// ============================================================
+// PRINT
+// ============================================================
+
+@media print {
+  .student-page-container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .student-page-header {
+    border: 1px solid #d1d5db;
+    box-shadow: none;
+  }
+}

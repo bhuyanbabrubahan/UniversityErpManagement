@@ -1,0 +1,156 @@
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0;
+  padding: 20px 22px 14px;
+
+  font-size: 18px;
+  font-weight: 700;
+  color: #172033;
+}
+
+.title-icon {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.title-icon mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.dialog-content {
+  min-width: 420px;
+  padding: 4px 22px 18px;
+}
+
+.message {
+  margin: 0 0 16px;
+
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.record-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  margin-bottom: 16px;
+  padding: 12px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #f8fafc;
+}
+
+.preview-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.preview-item span {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.preview-item strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 13px;
+  color: #111827;
+}
+
+.warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 12px;
+
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.warning mat-icon {
+  flex: 0 0 auto;
+
+  width: 20px;
+  height: 20px;
+
+  font-size: 20px;
+}
+
+.warning div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.warning strong {
+  font-size: 13px;
+}
+
+.warning span {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #c2410c;
+}
+
+.dialog-actions {
+  gap: 8px;
+
+  padding: 12px 22px 20px;
+}
+
+.cancel-btn,
+.delete-btn {
+  min-height: 38px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.delete-btn mat-icon {
+  margin-right: 5px;
+
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 520px) {
+  .dialog-content {
+    min-width: auto;
+  }
+
+  .record-preview {
+    grid-template-columns: 1fr;
+  }
+}

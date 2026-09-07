@@ -1,0 +1,16 @@
+<div class="faculty-page">
+
+    <div class="faculty-form-wrapper">
+
+    <app-faculty-form
+      [form]="facultyForm"
+      [departments]="departments"
+      [loading]="loading"
+      [isEditMode]="false"
+      (save)="saveFaculty()"
+      (cancel)="cancel()">
+    </app-faculty-form>
+
+  </div>
+
+</div>

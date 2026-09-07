@@ -1,0 +1,425 @@
+<div class="table-container">
+
+  <!-- ========================================================= -->
+  <!-- LOADING -->
+  <!-- ========================================================= -->
+
+  @if (loading) {
+
+    <div class="loading-state">
+
+      <div class="loading-icon">
+        <mat-spinner diameter="34"></mat-spinner>
+      </div>
+
+      <strong>
+        Loading documents...
+      </strong>
+
+      <span>
+        Please wait while documents are being loaded.
+      </span>
+
+    </div>
+
+  }
+
+  <!-- ========================================================= -->
+  <!-- EMPTY -->
+  <!-- ========================================================= -->
+
+  @else if (documents.length === 0) {
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        <mat-icon>
+          folder_open
+        </mat-icon>
+      </div>
+
+      <strong>
+        No documents found
+      </strong>
+
+      <span>
+        No student documents are available.
+      </span>
+
+    </div>
+
+  }
+
+  <!-- ========================================================= -->
+  <!-- TABLE -->
+  <!-- ========================================================= -->
+
+  @else {
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <!-- =================================================== -->
+        <!-- HEADER -->
+        <!-- =================================================== -->
+
+        <thead>
+
+          <tr>
+
+            <th class="id-column">
+              ID
+            </th>
+
+            <th>
+              Student
+            </th>
+
+            <th>
+              Document
+            </th>
+
+            <th>
+              File Name
+            </th>
+
+            <th>
+              Content Type
+            </th>
+
+            <th>
+              Size
+            </th>
+
+            <th>
+              Uploaded
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th class="actions-column">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <!-- =================================================== -->
+        <!-- BODY -->
+        <!-- =================================================== -->
+
+        <tbody>
+
+          @for (
+            document of documents;
+            track document.id
+          ) {
+
+            <tr>
+
+              <!-- ================================================= -->
+              <!-- ID -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <span class="id">
+                  #{{ document.id }}
+                </span>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- STUDENT -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <div class="student-cell">
+
+                  <strong
+                    [title]="
+                      document.studentName ||
+                      ('Student #' + document.studentId)
+                    "
+                  >
+                    {{
+                      document.studentName
+                        || ('Student #' + document.studentId)
+                    }}
+                  </strong>
+
+                  @if (document.studentCode) {
+
+                    <small>
+                      {{ document.studentCode }}
+                    </small>
+
+                  }
+
+                  <small>
+                    ID: {{ document.studentId }}
+                  </small>
+
+                </div>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- DOCUMENT TYPE -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <span class="document-type">
+
+                  {{
+                    formatDocumentType(
+                      document.documentType
+                    )
+                  }}
+
+                </span>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- FILE NAME -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <div class="file-cell">
+
+                  <span class="file-icon">
+
+                    <mat-icon>
+                      description
+                    </mat-icon>
+
+                  </span>
+
+                  <div class="file-details">
+
+                    <span
+                      class="file-name"
+                      [title]="document.originalFileName"
+                    >
+                      {{
+                        document.originalFileName
+                          || 'Unnamed document'
+                      }}
+                    </span>
+
+                    @if (document.storedFileName) {
+
+                      <small
+                        class="stored-name"
+                        [title]="document.storedFileName"
+                      >
+                        {{ document.storedFileName }}
+                      </small>
+
+                    }
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- CONTENT TYPE -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <span
+                  class="content-type"
+                  [title]="document.contentType || ''"
+                >
+                  {{ document.contentType || '—' }}
+                </span>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- SIZE -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <span class="file-size">
+
+                  {{
+                    formatFileSize(
+                      document.fileSize
+                    )
+                  }}
+
+                </span>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- UPLOADED -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <span class="uploaded-date">
+
+                  {{
+                    document.uploadedAt
+                      ? (
+                          document.uploadedAt
+                          | date:'dd MMM yyyy, hh:mm a'
+                        )
+                      : '—'
+                  }}
+
+                </span>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- STATUS -->
+              <!-- ================================================= -->
+
+              <td>
+
+                <span 
+                    class="status"
+
+                    [class.active]="
+                      document.status === RecordStatus.ACTIVE
+                    "
+
+                    [class.deleted]="
+                      document.status === RecordStatus.DELETED
+                    "
+
+                    [class.inactive]="
+                      document.status === RecordStatus.INACTIVE
+                    "
+                  >
+
+                    <span class="status-dot"></span>
+
+                    {{
+                      document.status || 'UNKNOWN'
+                    }}
+
+                  </span>
+
+              </td>
+
+
+              <!-- ================================================= -->
+              <!-- ACTIONS -->
+              <!-- ================================================= -->
+
+              <td class="actions-column">
+
+                <div class="action-buttons">
+
+                  <!-- VIEW -->
+
+                  <button
+                    mat-icon-button
+                    type="button"
+                    class="action-button view-button"
+                    matTooltip="View document"
+                    aria-label="View document"
+                    (click)="onView(document)"
+                  >
+
+                    <mat-icon>
+                      visibility
+                    </mat-icon>
+
+                  </button>
+
+
+                  <!-- DOWNLOAD -->
+
+                  <button
+                    mat-icon-button
+                    type="button"
+                    class="action-button download-button"
+                    matTooltip="Download document"
+                    aria-label="Download document"
+                    (click)="onDownload(document)"
+                  >
+
+                    <mat-icon>
+                      download
+                    </mat-icon>
+
+                  </button>
+
+
+                  <!-- EDIT -->
+
+                  <button
+                    mat-icon-button
+                    type="button"
+                    class="action-button edit-button"
+                    matTooltip="Edit document"
+                    aria-label="Edit document"
+                    (click)="onEdit(document)"
+                  >
+
+                    <mat-icon>
+                      edit
+                    </mat-icon>
+
+                  </button>
+
+
+                  <!-- DELETE -->
+
+                  <button
+                    mat-icon-button
+                    type="button"
+                    class="action-button delete-button"
+                    matTooltip="Delete document"
+                    aria-label="Delete document"
+                    (click)="onDelete(document)"
+                  >
+
+                    <mat-icon>
+                      delete_outline
+                    </mat-icon>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+</div>

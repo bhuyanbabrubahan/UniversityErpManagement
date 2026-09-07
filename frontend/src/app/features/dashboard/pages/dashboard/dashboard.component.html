@@ -1,0 +1,124 @@
+<section class="dashboard-page enterprise-dashboard">
+
+  <header class="page-header">
+    <div class="page-heading">
+      <div class="heading-icon">
+        <mat-icon>dashboard</mat-icon>
+      </div>
+
+      <div>
+        <span class="section-eyebrow">UNIVERSITY ERP</span>
+        <h1>{{ dashboardTitle }}</h1>
+        <p>{{ dashboardSubtitle }}</p>
+      </div>
+    </div>
+
+    <div class="workspace-status">
+      <span class="status-dot"></span>
+      Live workspace
+    </div>
+  </header>
+
+  <!-- Key Metrics -->
+  <section class="section-block">
+    <div class="section-heading">
+      <div>
+        <span class="section-eyebrow">KEY METRICS</span>
+        <h2>Operational overview</h2>
+      </div>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="openOperationalOverview()"
+      >
+        <mat-icon>open_in_new</mat-icon>
+        Open overview
+      </button>
+    </div>
+
+    @if (stats.length) {
+      <div class="dashboard-grid">
+        @for (item of stats; track item.title) {
+          <app-stat-card [stat]="item"></app-stat-card>
+        }
+      </div>
+    } @else {
+      <mat-card class="empty-state">
+        <mat-card-content>
+          <mat-icon>dashboard</mat-icon>
+          <strong>No dashboard data available</strong>
+          <span>Dashboard information could not be loaded.</span>
+        </mat-card-content>
+      </mat-card>
+    }
+  </section>
+
+  <!-- Quick Actions & Activity -->
+  <section class="quick-grid">
+
+    <!-- Quick Actions -->
+    <mat-card class="quick-card">
+      <mat-card-content>
+
+        <div class="section-heading compact">
+          <div>
+            <span class="section-eyebrow">QUICK ACTIONS</span>
+            <h2>Common tasks</h2>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          @for (a of quickActions; track a.label) {
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="navigate(a.route)"
+            >
+              <mat-icon>{{ a.icon }}</mat-icon>
+              {{ a.label }}
+            </button>
+          }
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Workspace Activity -->
+    <mat-card class="activity-card">
+      <mat-card-content>
+
+        <div class="section-heading compact">
+          <div>
+            <span class="section-eyebrow">SYSTEM</span>
+            <h2>Workspace activity</h2>
+          </div>
+
+          <mat-icon>monitor_heart</mat-icon>
+        </div>
+
+        <div class="activity-list">
+          @for (a of activities; track a.title) {
+            <button
+              class="activity-item"
+              type="button"
+              (click)="navigate(a.route)"
+            >
+              <span class="activity-indicator success"></span>
+
+              <span>
+                <strong>{{ a.title }}</strong>
+                <small>{{ a.text }}</small>
+              </span>
+
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          }
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </section>
+
+</section>

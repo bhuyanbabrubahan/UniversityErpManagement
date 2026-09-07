@@ -1,0 +1,136 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Edit Subject
+      </h1>
+
+      <p>
+        Update subject information and semester assignment.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+
+      ← Back to Subjects
+
+    </button>
+
+  </div>
+
+
+  @if (successMessage) {
+
+    <div class="toast success-toast">
+
+      <span class="toast-icon">
+        ✓
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Success
+        </strong>
+
+        <span>
+          {{ successMessage }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="toast-close"
+        (click)="closeSuccessMessage()">
+
+        ×
+
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div class="toast error-toast">
+
+      <span class="toast-icon">
+        !
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Error
+        </strong>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="toast-close"
+        (click)="closeErrorMessage()">
+
+        ×
+
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (loadingData) {
+
+    <div class="loading-card">
+      Loading subject...
+    </div>
+
+  } @else if (subject) {
+
+    <section class="form-card">
+
+      <div class="card-heading">
+
+        <h2>
+          Subject Information
+        </h2>
+
+        <p>
+          Modify the details and save your changes.
+        </p>
+
+      </div>
+
+      <app-subject-form
+        [subject]="subject"
+        [semesters]="semesters"
+        [loading]="loading"
+        submitLabel="Update Subject"
+        (formSubmit)="update($event)"
+        (cancel)="cancel()">
+      </app-subject-form>
+
+    </section>
+
+  }
+
+</div>

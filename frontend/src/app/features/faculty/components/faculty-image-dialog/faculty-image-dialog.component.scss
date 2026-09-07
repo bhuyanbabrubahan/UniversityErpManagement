@@ -1,0 +1,277 @@
+// ============================================================
+// FACULTY IMAGE DIALOG
+// Enterprise ERP / MNC Style
+// ============================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.faculty-image-dialog {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+  color: #172033;
+
+  overflow: hidden;
+}
+
+// ============================================================
+// HEADER
+// ============================================================
+
+.image-dialog-header {
+  min-height: 68px;
+  padding: 0 18px 0 22px;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+
+  box-sizing: border-box;
+}
+
+.image-dialog-title {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #1e293b;
+
+  span {
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  mat-icon {
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    font-size: 22px;
+    color: var(--erp-primary, #2563eb);
+  }
+}
+
+// ============================================================
+// CLOSE BUTTON
+// ============================================================
+
+.image-dialog-header > button {
+  flex-shrink: 0;
+
+  width: 38px;
+  height: 38px;
+
+  color: #64748b;
+
+  border-radius: 8px;
+
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
+
+  &:hover {
+    color: #1e293b;
+    background: #f1f5f9;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--erp-primary, #2563eb);
+    outline-offset: 2px;
+  }
+
+  mat-icon {
+    font-size: 20px;
+  }
+}
+
+// ============================================================
+// IMAGE CONTENT
+// ============================================================
+
+.image-dialog-content {
+  margin: 0 !important;
+  padding: 28px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 320px;
+  max-height: min(70vh, 680px);
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8fafc 0%,
+      #f1f5f9 100%
+    );
+
+  box-sizing: border-box;
+
+  overflow: auto !important;
+}
+
+// ============================================================
+// FACULTY PROFILE IMAGE
+// ============================================================
+
+.full-profile-image {
+  display: block;
+
+  width: auto;
+  height: auto;
+
+  max-width: 100%;
+  max-height: min(62vh, 600px);
+
+  object-fit: contain;
+
+  border-radius: 10px;
+
+  background: #fff;
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.08),
+    0 12px 30px rgba(15, 23, 42, 0.08);
+
+  user-select: none;
+}
+
+// ============================================================
+// FOOTER
+// ============================================================
+
+.image-dialog-actions {
+  min-height: 64px;
+
+  margin: 0 !important;
+  padding: 10px 18px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  background: #fff;
+
+  border-top: 1px solid #e2e8f0;
+
+  box-sizing: border-box;
+
+  button {
+    min-width: 82px;
+    height: 38px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #475569;
+
+    &:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--erp-primary, #2563eb);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// ============================================================
+// RESPONSIVE
+// ============================================================
+
+@media (max-width: 600px) {
+  .image-dialog-header {
+    min-height: 60px;
+    padding: 0 12px 0 16px;
+  }
+
+  .image-dialog-title {
+    font-size: 14px;
+    gap: 8px;
+
+    mat-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+    }
+  }
+
+  .image-dialog-header > button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .image-dialog-content {
+    min-height: 240px;
+    max-height: 70vh;
+
+    padding: 18px !important;
+  }
+
+  .full-profile-image {
+    max-height: 60vh;
+    border-radius: 8px;
+  }
+
+  .image-dialog-actions {
+    min-height: 58px;
+    padding: 8px 14px !important;
+  }
+}
+
+// ============================================================
+// VERY SMALL DEVICES
+// ============================================================
+
+@media (max-width: 380px) {
+  .image-dialog-content {
+    padding: 12px !important;
+  }
+
+  .full-profile-image {
+    max-width: 100%;
+    max-height: 58vh;
+  }
+}
+
+// ============================================================
+// ACCESSIBILITY
+// ============================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .faculty-image-dialog *,
+  .faculty-image-dialog *::before,
+  .faculty-image-dialog *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

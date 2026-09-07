@@ -1,0 +1,190 @@
+<form
+  class="department-form"
+  [formGroup]="departmentForm"
+  (ngSubmit)="onSubmit()"
+  novalidate>
+
+  <div class="form-section">
+
+    <div class="section-title">
+      <div>
+        <h3>Department Information</h3>
+        <p>
+          Enter the basic academic department details.
+        </p>
+      </div>
+    </div>
+
+    <div class="form-grid">
+
+      <!-- Department Name -->
+      <div class="form-field">
+
+        <label for="departmentName">
+          Department Name
+          <span class="required">*</span>
+        </label>
+
+        <input
+          id="departmentName"
+          type="text"
+          formControlName="departmentName"
+          placeholder="e.g. Computer Science & Information Technology"
+          autocomplete="off"
+          [class.invalid]="isInvalid('departmentName')" />
+
+        @if (isInvalid('departmentName')) {
+
+          <div class="field-error">
+
+            @if (departmentName?.errors?.['required']) {
+              Department name is required.
+            }
+
+            @if (departmentName?.errors?.['maxlength']) {
+              Maximum 100 characters allowed.
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+      <!-- Department Code -->
+      <div class="form-field">
+
+        <label for="departmentCode">
+          Department Code
+          <span class="required">*</span>
+        </label>
+
+        <input
+          id="departmentCode"
+          type="text"
+          formControlName="departmentCode"
+          placeholder="e.g. CSE"
+          autocomplete="off"
+          [class.invalid]="isInvalid('departmentCode')" />
+
+        @if (isInvalid('departmentCode')) {
+
+          <div class="field-error">
+
+            @if (departmentCode?.errors?.['required']) {
+              Department code is required.
+            }
+
+            @if (departmentCode?.errors?.['maxlength']) {
+              Maximum 30 characters allowed.
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+      <!-- Description -->
+      <div class="form-field">
+
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Enter department description"
+          rows="3"
+          autocomplete="off"
+          [class.invalid]="isInvalid('description')">
+        </textarea>
+
+        @if (isInvalid('description')) {
+
+          <div class="field-error">
+
+            @if (description?.errors?.['maxlength']) {
+              Maximum 500 characters allowed.
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+      <!-- Status -->
+      <div class="form-field">
+
+        <label for="status">
+          Status
+          <span class="required">*</span>
+        </label>
+
+        <select
+          id="status"
+          formControlName="status"
+          [class.invalid]="isInvalid('status')">
+
+          <option value="ACTIVE">
+            Active
+          </option>
+
+          <option value="INACTIVE">
+            Inactive
+          </option>
+
+        </select>
+
+        @if (isInvalid('status')) {
+
+          <div class="field-error">
+            Status is required.
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+
+  <div class="form-actions">
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="loading"
+      (click)="onCancel()">
+
+      Cancel
+
+    </button>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="loading">
+
+      @if (loading) {
+
+        <span class="spinner"></span>
+
+        Saving...
+
+      } @else {
+
+        {{ submitLabel }}
+
+      }
+
+    </button>
+
+  </div>
+
+</form>

@@ -1,0 +1,613 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+
+// =====================================================
+// TABLE CARD
+// =====================================================
+
+.table-card {
+  width: 100%;
+
+  overflow: hidden;
+    
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+
+// =====================================================
+// TABLE
+// =====================================================
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+
+  min-width: 1050px;
+
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f8fafc;
+}
+
+th {
+  height: 42px;
+
+  padding: 0 14px;
+
+  color: #64748b;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+
+  text-align: left;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+td {
+  padding: 13px 14px;
+
+  color: #334155;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  font-size: 11px;
+
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background 120ms ease;
+
+  &:hover {
+    background: #f8fafc;
+  }
+
+  &:last-child td {
+    border-bottom: 0;
+  }
+}
+
+
+// =====================================================
+// TEXT
+// =====================================================
+
+.primary-text {
+  color: #0f172a;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.secondary-text {
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 9px;
+}
+
+
+// =====================================================
+// NUMBER
+// =====================================================
+
+.number-badge {
+  width: 27px;
+  height: 27px;
+
+  display: inline-grid;
+
+  place-items: center;
+
+  color: #1d4ed8;
+  background: #eff6ff;
+
+  border: 1px solid #dbeafe;
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+// =====================================================
+// DATES
+// =====================================================
+
+.date-range {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #475569;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+}
+
+.date-arrow {
+  color: #94a3b8;
+}
+
+
+// =====================================================
+// WORKING DAYS
+// =====================================================
+
+.working-days {
+  color: #0f172a;
+
+  font-size: 12px;
+}
+
+.days-label {
+  margin-left: 3px;
+
+  color: #94a3b8;
+
+  font-size: 9px;
+}
+
+
+// =====================================================
+// STATUS
+// =====================================================
+
+.status-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  min-height: 24px;
+
+  padding: 0 8px;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  &.active {
+    color: #15803d;
+
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+  }
+
+  &.inactive {
+    color: #64748b;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+  }
+}
+
+
+// =====================================================
+// ACTIONS
+// =====================================================
+
+.actions-column {
+  width: 210px;
+
+  text-align: right;
+}
+
+.actions {
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.action-btn {
+  min-height: 28px;
+
+  padding: 0 9px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  border: 0;
+
+  transition:
+    background 120ms ease,
+    transform 120ms ease;
+
+  &:hover {
+    filter: brightness(0.96);
+
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #93c5fd;
+
+    outline-offset: 2px;
+  }
+
+  &.view {
+    color: #475569;
+
+    background: #f1f5f9;
+  }
+
+  &.edit {
+    color: #1d4ed8;
+
+    background: #eff6ff;
+  }
+
+  &.delete {
+    color: #dc2626;
+
+    background: #fef2f2;
+  }
+}
+
+
+// =====================================================
+// TABLE STATES
+// =====================================================
+
+.table-state {
+  height: 180px;
+
+  color: #64748b;
+
+  text-align: center;
+
+  vertical-align: middle;
+}
+
+.empty-state {
+
+  strong,
+  span {
+    display: block;
+  }
+
+  strong {
+    margin-top: 8px;
+
+    color: #334155;
+
+    font-size: 12px;
+  }
+
+  span {
+    margin-top: 4px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+  }
+}
+
+.empty-icon {
+  color: #94a3b8;
+
+  font-size: 26px;
+}
+
+
+// =====================================================
+// SPINNER
+// =====================================================
+
+.spinner {
+  width: 18px;
+  height: 18px;
+
+  display: inline-block;
+
+  margin-right: 7px;
+
+  vertical-align: middle;
+
+  border: 2px solid #dbeafe;
+
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+// =====================================================
+// PAGINATION
+// =====================================================
+
+.pagination {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e2e8f0;
+}
+
+
+// =====================================================
+// PAGE NUMBERS
+// =====================================================
+
+.page-numbers {
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+}
+
+.page-number {
+  min-width: 30px;
+  height: 30px;
+
+  padding: 0 7px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #475569;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 6px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+
+  &:hover {
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+  }
+
+  &.active {
+    color: #ffffff;
+
+    background: #2563eb;
+
+    border-color: #2563eb;
+  }
+}
+
+
+// =====================================================
+// PREVIOUS / NEXT
+// =====================================================
+
+.page-btn {
+  min-height: 30px;
+
+  padding: 0 11px;
+
+  color: #475569;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 6px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+
+  &:hover:not(:disabled) {
+    background: #f8fafc;
+  }
+
+  &:disabled {
+    color: #cbd5e1;
+
+    background: #f8fafc;
+
+    cursor: not-allowed;
+
+    border-color: #f1f5f9;
+  }
+}
+
+
+// =====================================================
+// PAGINATION INFO
+// =====================================================
+
+.pagination-info {
+  padding: 8px 14px 12px;
+
+  color: #94a3b8;
+
+  font-size: 9px;
+
+  text-align: right;
+
+  border-top: 1px solid #f1f5f9;
+
+  strong {
+    color: #475569;
+
+    font-weight: 700;
+  }
+}
+
+
+// =====================================================
+// RESPONSIVE
+// =====================================================
+
+@media (max-width: 700px) {
+
+  .pagination {
+    flex-wrap: wrap;
+
+    justify-content: center;
+  }
+
+  .page-btn {
+    order: 2;
+  }
+
+  .page-numbers {
+    order: 1;
+
+    width: 100%;
+
+    justify-content: center;
+
+    overflow-x: auto;
+
+    padding-bottom: 2px;
+  }
+
+  .pagination-info {
+    text-align: center;
+  }
+
+}
+
+// =====================================================
+// SORTABLE HEADER
+// =====================================================
+
+th.sortable {
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    color 120ms ease,
+    background 120ms ease;
+}
+
+th.sortable:hover {
+  color: #334155;
+
+  background: #f1f5f9;
+}
+
+th.sortable.sorted {
+  color: #2563eb;
+}
+
+
+// =====================================================
+// HEADER CONTENT
+// =====================================================
+
+.th-content {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+
+// =====================================================
+// SORT ICON
+// =====================================================
+
+.sort-icon {
+  width: 14px;
+  height: 14px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  line-height: 1;
+
+  transition:
+    color 120ms ease,
+    transform 120ms ease;
+}
+
+th.sortable:hover .sort-icon {
+  color: #64748b;
+}
+
+th.sortable.sorted .sort-icon {
+  color: #2563eb;
+}

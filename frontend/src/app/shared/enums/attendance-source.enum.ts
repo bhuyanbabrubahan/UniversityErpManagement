@@ -1,0 +1,5 @@
+export enum AttendanceSource {
+  ONLINE = 'ONLINE',
+  EXCEL_IMPORT = 'EXCEL_IMPORT',
+  MANUAL_BACKDATE = 'MANUAL_BACKDATE',
+}

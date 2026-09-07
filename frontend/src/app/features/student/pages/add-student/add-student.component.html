@@ -1,0 +1,36 @@
+<div class="student-page-container">
+
+  <div class="student-page-header student-page-header--add">
+
+    <div class="student-page-header-icon">
+      <mat-icon>person_add</mat-icon>
+    </div>
+
+    <div class="student-page-header-content">
+
+      <h1>
+        Add Student
+      </h1>
+
+      <p>
+        Create a new student account and academic profile.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="student-form-wrapper">
+
+    <app-student-form
+      [form]="studentForm"
+      [departments]="departments"
+      [loading]="loading"
+      [isEditMode]="false"
+      (save)="saveStudent()"
+      (cancel)="cancel()">
+    </app-student-form>
+
+  </div>
+
+</div>

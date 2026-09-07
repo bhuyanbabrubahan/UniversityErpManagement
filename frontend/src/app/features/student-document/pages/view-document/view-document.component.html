@@ -1,0 +1,581 @@
+<div class="page-container">
+
+  <!-- ====================================================== -->
+  <!-- PAGE HEADER -->
+  <!-- ====================================================== -->
+
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <div class="breadcrumb">
+        Student Documents / View Document
+      </div>
+
+      <h1>
+        Document Details
+      </h1>
+
+      <p>
+        View student document information and file details.
+      </p>
+
+    </div>
+
+
+    <button
+      mat-stroked-button
+      type="button"
+      [disabled]="loading || downloading"
+      (click)="back()"
+    >
+
+      <mat-icon>
+        arrow_back
+      </mat-icon>
+
+      <span>
+        Back
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- LOADING -->
+  <!-- ====================================================== -->
+
+  @if (loading) {
+
+    <div class="loading-state">
+
+      <div class="loading-icon">
+
+        <mat-spinner
+          diameter="38"
+        ></mat-spinner>
+
+      </div>
+
+      <strong>
+        Loading document...
+      </strong>
+
+      <span>
+        Please wait while the document information is being loaded.
+      </span>
+
+    </div>
+
+  }
+
+
+  <!-- ====================================================== -->
+  <!-- DOCUMENT -->
+  <!-- ====================================================== -->
+
+  @else if (document) {
+
+    <mat-card class="details-card">
+
+
+      <!-- ==================================================== -->
+      <!-- DOCUMENT HERO -->
+      <!-- ==================================================== -->
+
+      <div class="document-hero">
+
+        <div class="file-icon">
+
+          <mat-icon>
+            description
+          </mat-icon>
+
+        </div>
+
+
+        <div class="file-heading">
+
+          <h2
+            [title]="document.originalFileName"
+          >
+            {{ document.originalFileName || 'Unnamed document' }}
+          </h2>
+
+          <div class="file-meta">
+
+            <span>
+              {{ document.contentType || 'Unknown file type' }}
+            </span>
+
+            <span class="meta-separator">
+              •
+            </span>
+
+            <span>
+              {{ formatFileSize(document.fileSize) }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- HERO ACTIONS -->
+        <!-- ================================================== -->
+
+        <div class="hero-actions">
+
+          <button
+            mat-stroked-button
+            type="button"
+            [disabled]="downloading"
+            (click)="edit()"
+          >
+
+            <mat-icon>
+              edit
+            </mat-icon>
+
+            <span>
+              Edit
+            </span>
+
+          </button>
+
+
+          <button
+            mat-flat-button
+            type="button"
+            [disabled]="downloading"
+            (click)="download()"
+          >
+            <span class="button-content">
+
+              @if (downloading) {
+
+                <mat-spinner
+                  diameter="18"
+                ></mat-spinner>
+
+                <span>
+                  Downloading...
+                </span>
+
+              } @else {
+
+                <mat-icon>
+                  download
+                </mat-icon>
+
+                <span>
+                  Download
+                </span>
+
+              }
+
+            </span>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <mat-divider></mat-divider>
+
+
+      <!-- ==================================================== -->
+      <!-- CARD CONTENT -->
+      <!-- ==================================================== -->
+
+      <mat-card-content>
+
+
+        <!-- ================================================== -->
+        <!-- DOCUMENT INFORMATION -->
+        <!-- ================================================== -->
+
+        <section class="details-section">
+
+          <div class="section-heading">
+
+            <div class="section-icon">
+              <mat-icon>
+                description
+              </mat-icon>
+            </div>
+
+            <div>
+
+              <h3>
+                Document Information
+              </h3>
+
+              <p>
+                Basic information about this uploaded document.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="details-grid">
+
+
+            <div class="detail-item">
+
+              <span>
+                Document ID
+              </span>
+
+              <strong>
+                #{{ document.id }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Document Type
+              </span>
+
+              <strong>
+                {{ formatDocumentType(document.documentType) }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item wide-item">
+
+              <span>
+                Original File Name
+              </span>
+
+              <strong
+                [title]="document.originalFileName"
+              >
+                {{ document.originalFileName || '—' }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item wide-item">
+
+              <span>
+                Stored File Name
+              </span>
+
+              <strong
+                [title]="document.storedFileName"
+              >
+                {{ document.storedFileName || '—' }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Content Type
+              </span>
+
+              <strong>
+                {{ document.contentType || '—' }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                File Size
+              </span>
+
+              <strong>
+                {{ formatFileSize(document.fileSize) }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Status
+              </span>
+
+              <span
+                class="status-badge"
+
+                [class.active]="
+                  document.status === 'ACTIVE'
+                "
+
+                [class.deleted]="
+                  document.status === 'DELETED'
+                "
+              >
+
+                <span class="status-dot"></span>
+
+                {{ document.status || 'UNKNOWN' }}
+
+              </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Uploaded At
+              </span>
+
+              <strong>
+                {{ formatDate(document.uploadedAt) }}
+              </strong>
+
+            </div>
+
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- STUDENT INFORMATION -->
+        <!-- ================================================== -->
+
+        <section class="details-section">
+
+          <div class="section-heading">
+
+            <div class="section-icon student">
+              <mat-icon>
+                person
+              </mat-icon>
+            </div>
+
+            <div>
+
+              <h3>
+                Student Information
+              </h3>
+
+              <p>
+                Student associated with this document.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="details-grid">
+
+
+            <div class="detail-item">
+
+              <span>
+                Student ID
+              </span>
+
+              <strong>
+                #{{ document.studentId }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Student Name
+              </span>
+
+              <strong>
+                {{ document.studentName || '—' }}
+              </strong>
+
+            </div>
+
+
+            @if (document.studentCode) {
+
+              <div class="detail-item">
+
+                <span>
+                  Student Code
+                </span>
+
+                <strong>
+                  {{ document.studentCode }}
+                </strong>
+
+              </div>
+
+            }
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- AUDIT INFORMATION -->
+        <!-- ================================================== -->
+
+        <section class="details-section">
+
+          <div class="section-heading">
+
+            <div class="section-icon audit">
+              <mat-icon>
+                history
+              </mat-icon>
+            </div>
+
+            <div>
+
+              <h3>
+                Audit Information
+              </h3>
+
+              <p>
+                Record creation and update information.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="details-grid">
+
+
+            <div class="detail-item">
+
+              <span>
+                Created At
+              </span>
+
+              <strong>
+                {{ formatDate(document.createdAt) }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Created By
+              </span>
+
+              <strong>
+                {{ document.createdBy || '—' }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Updated At
+              </span>
+
+              <strong>
+                {{ formatDate(document.updatedAt) }}
+              </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+              <span>
+                Updated By
+              </span>
+
+              <strong>
+                {{ document.updatedBy || '—' }}
+              </strong>
+
+            </div>
+
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- FILE LOCATION -->
+        <!-- ================================================== -->
+
+        <section class="details-section">
+
+          <div class="section-heading">
+
+            <div class="section-icon location">
+              <mat-icon>
+                folder
+              </mat-icon>
+            </div>
+
+            <div>
+
+              <h3>
+                File Location
+              </h3>
+
+              <p>
+                Storage location of the uploaded document.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="path-box">
+
+            <div class="path-icon">
+
+              <mat-icon>
+                folder
+              </mat-icon>
+
+            </div>
+
+            <span
+              [title]="document.filePath || ''"
+            >
+              {{ document.filePath || 'File path not available' }}
+            </span>
+
+          </div>
+
+        </section>
+
+
+      </mat-card-content>
+
+    </mat-card>
+
+  }
+
+</div>

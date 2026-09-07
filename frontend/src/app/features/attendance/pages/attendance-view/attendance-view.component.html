@@ -1,0 +1,296 @@
+<section class="workspace-page attendance-session-page">
+  <!-- Header -->
+  <header class="workspace-header">
+    <div>
+      <span class="eyebrow"> ATTENDANCE SESSION </span>
+
+      <h1>Session Details</h1>
+
+      <p>
+        Faculty, subject, session summary and student-level attendance records.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <button mat-stroked-button type="button" (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+        Back
+      </button>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="download('xlsx')"
+        [disabled]="loading || !session"
+      >
+        <mat-icon>table_view</mat-icon>
+        Excel
+      </button>
+
+      <button
+        mat-flat-button
+        type="button"
+        (click)="download('pdf')"
+        [disabled]="loading || !session"
+      >
+        <mat-icon>picture_as_pdf</mat-icon>
+        Download PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-state">
+      <mat-spinner diameter="42"></mat-spinner>
+
+      <h3>
+        @if (resolvingId) {
+          Resolving attendance record...
+        } @else {
+          Loading attendance session...
+        }
+      </h3>
+
+      <p>Please wait while attendance details are being loaded.</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @else if (errorMessage) {
+    <div class="error-state">
+      <div class="error-icon">!</div>
+
+      <h2>Unable to load session</h2>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      @if (sessionId > 0) {
+        <small>
+          Requested Session ID:
+          <strong>#{{ sessionId }}</strong>
+        </small>
+      }
+
+      <div class="error-actions">
+        <button mat-stroked-button type="button" (click)="retry()">
+          <mat-icon>refresh</mat-icon>
+          Retry
+        </button>
+
+        <button mat-flat-button type="button" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to History
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Session -->
+  @else if (session) {
+    <!-- Session metadata -->
+    <div class="session-meta">
+      <div class="meta-card">
+        <span>Session ID</span>
+        <strong> #{{ session.id }} </strong>
+      </div>
+
+      <div class="meta-card">
+        <span>Date</span>
+        <strong>
+          {{ session.attendanceDate || "—" }}
+        </strong>
+      </div>
+
+      <div class="meta-card">
+        <span>Started</span>
+        <strong>
+          {{ session.startedAt || "—" }}
+        </strong>
+      </div>
+
+      <div class="meta-card">
+        <span>Completed</span>
+        <strong>
+          {{ session.completedAt || "—" }}
+        </strong>
+      </div>
+
+      <div class="meta-card">
+        <span>Faculty</span>
+        <strong>
+          {{ session.facultyName || "—" }}
+        </strong>
+      </div>
+
+      <div class="meta-card">
+        <span>Subject</span>
+        <strong>
+          {{ session.subjectName || "—" }}
+        </strong>
+
+        @if (session.subjectCode) {
+          <small>
+            {{ session.subjectCode }}
+          </small>
+        }
+      </div>
+
+      <div class="meta-card">
+        <span>Semester</span>
+        <strong>
+          {{ session.semesterName || "—" }}
+        </strong>
+      </div>
+
+      <div class="meta-card">
+        <span>Status</span>
+
+        <strong>
+          <span
+            class="status-chip"
+            [class.completed]="session.sessionStatus === 'COMPLETED'"
+            [class.active]="session.sessionStatus === 'ACTIVE'"
+          >
+            {{ session.sessionStatus || "—" }}
+          </span>
+        </strong>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="count-grid">
+      <div class="count-card">
+        <span>Total Students</span>
+        <strong>
+          {{ session.totalStudents ?? total }}
+        </strong>
+      </div>
+
+      <div class="count-card">
+        <span>Marked</span>
+        <strong>
+          {{ session.markedStudents ?? total }}
+        </strong>
+      </div>
+
+      <div class="count-card">
+        <span>Present</span>
+        <strong>
+          {{ session.presentCount ?? present }}
+        </strong>
+      </div>
+
+      <div class="count-card">
+        <span>Absent</span>
+        <strong>
+          {{ session.absentCount ?? absent }}
+        </strong>
+      </div>
+
+      <div class="count-card">
+        <span>Leave</span>
+        <strong>
+          {{ session.leaveCount ?? leave }}
+        </strong>
+      </div>
+
+      <div class="count-card">
+        <span>Half Day</span>
+        <strong>
+          {{ session.halfDayCount ?? halfDay }}
+        </strong>
+      </div>
+
+      <div class="count-card percentage">
+        <span>Attendance</span>
+        <strong> {{ attendancePercentage }}% </strong>
+      </div>
+    </div>
+
+    <!-- Attendance table -->
+    <div class="table-wrap attendance-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Roll Number</th>
+            <th>Student Name</th>
+            <th>Status</th>
+            <th>Marked At</th>
+            <th>Source</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (record of records; track trackByRecordId($index, record)) {
+            <tr>
+              <td>
+                {{ record.studentId || "—" }}
+              </td>
+
+              <td>
+                <strong>
+                  {{ record.rollNumber || "—" }}
+                </strong>
+              </td>
+
+              <td>
+                {{ record.studentName || "—" }}
+              </td>
+
+              <td>
+                <span
+                  class="status-chip"
+                  [class.present]="record.attendanceStatus === 'PRESENT'"
+                  [class.absent]="record.attendanceStatus === 'ABSENT'"
+                  [class.leave]="record.attendanceStatus === 'LEAVE'"
+                  [class.half-day]="record.attendanceStatus === 'HALF_DAY'"
+                >
+                  {{ record.attendanceStatus || "—" }}
+                </span>
+              </td>
+
+              <td>
+                {{ record.markedAt || "—" }}
+              </td>
+
+              <td>
+                {{ record.attendanceSource || "—" }}
+              </td>
+
+              <td>
+                {{ record.remarks || "—" }}
+              </td>
+            </tr>
+
+          } @empty {
+            <tr>
+              <td colspan="7" class="empty-row">
+                No attendance records found for this session.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <!-- No session -->
+  @else {
+    <div class="empty-state">
+      <div class="empty-icon">📋</div>
+
+      <h2>Session not available</h2>
+
+      <p>Attendance session details could not be loaded.</p>
+
+      <button mat-flat-button type="button" (click)="back()">
+        Back to Session History
+      </button>
+    </div>
+  }
+</section>

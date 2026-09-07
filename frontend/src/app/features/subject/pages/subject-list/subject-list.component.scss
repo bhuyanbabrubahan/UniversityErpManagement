@@ -1,0 +1,336 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+
+// =====================================================
+// PAGE
+// =====================================================
+
+.page {
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+
+// =====================================================
+// HEADER
+// =====================================================
+
+.page-header {
+  margin-bottom: 22px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.page-heading {
+  min-width: 0;
+}
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #2563eb;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 26px;
+  font-weight: 750;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.025em;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+// =====================================================
+// ADD BUTTON
+// =====================================================
+
+.primary-btn {
+  min-height: 40px;
+
+  padding: 0 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+
+  background: #2563eb;
+
+  border: 0;
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 140ms ease,
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.primary-btn:hover {
+  background: #1d4ed8;
+
+  box-shadow:
+    0 4px 10px rgb(37 99 235 / 20%);
+}
+
+.primary-btn:active {
+  transform: translateY(1px);
+}
+
+.primary-btn:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.plus-icon {
+  font-size: 17px;
+
+  line-height: 1;
+
+  font-weight: 400;
+}
+
+
+// =====================================================
+// CARDS
+// =====================================================
+
+.filter-card,
+.table-card {
+  margin-bottom: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 2px 8px rgb(15 23 42 / 4%);
+}
+
+.filter-card {
+  padding: 18px;
+}
+
+.table-card {
+  overflow: hidden;
+}
+
+
+// =====================================================
+// TOAST
+// =====================================================
+
+.toast {
+  margin-bottom: 16px;
+
+  padding: 11px 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border-radius: 8px;
+
+  border: 1px solid;
+
+  box-sizing: border-box;
+}
+
+.success-toast {
+  color: #166534;
+
+  background: #f0fdf4;
+
+  border-color: #bbf7d0;
+}
+
+.error-toast {
+  color: #991b1b;
+
+  background: #fef2f2;
+
+  border-color: #fecaca;
+}
+
+
+// =====================================================
+// TOAST ICON
+// =====================================================
+
+.toast-icon {
+  width: 25px;
+  height: 25px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 25px;
+
+  border-radius: 50%;
+
+  font-size: 12px;
+
+  font-weight: 800;
+}
+
+.success-toast .toast-icon {
+  background: #dcfce7;
+}
+
+.error-toast .toast-icon {
+  background: #fee2e2;
+}
+
+
+// =====================================================
+// TOAST CONTENT
+// =====================================================
+
+.toast-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  font-size: 11px;
+}
+
+.toast-content strong {
+  font-size: 11px;
+}
+
+.toast-content span {
+  overflow-wrap: anywhere;
+}
+
+
+// =====================================================
+// TOAST CLOSE
+// =====================================================
+
+.toast-close {
+  width: 28px;
+  height: 28px;
+
+  margin-left: auto;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 28px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: inherit;
+
+  font-size: 20px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  border-radius: 5px;
+
+  transition:
+    background 120ms ease;
+}
+
+.toast-close:hover {
+  background: rgb(15 23 42 / 6%);
+}
+
+.toast-close:focus-visible {
+  outline: 2px solid currentColor;
+
+  outline-offset: 1px;
+}
+
+
+// =====================================================
+// RESPONSIVE
+// =====================================================
+
+@media (max-width: 768px) {
+
+  .page {
+    padding: 16px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+  .primary-btn {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .page {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .filter-card {
+    padding: 12px;
+  }
+
+}

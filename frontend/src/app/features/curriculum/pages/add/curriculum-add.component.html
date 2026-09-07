@@ -1,0 +1,20 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow"> University ERP Management </span>
+
+      <h1>Add Curriculum</h1>
+
+      <p>Create a new curriculum record.</p>
+    </div>
+  </header>
+
+  <div class="card">
+    <app-curriculum-form
+      [model]="model()"
+      submitLabel="Create"
+      (save)="save($event)"
+      (cancel)="cancel()"
+    />
+  </div>
+</section>

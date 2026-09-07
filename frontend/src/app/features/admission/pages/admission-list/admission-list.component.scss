@@ -1,0 +1,419 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.page {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+  gap: 18px;
+
+  padding: 2px 0 24px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+  min-height: 62px;
+
+  box-sizing: border-box;
+}
+
+
+.page-heading {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.eyebrow {
+  margin: 0 0 5px;
+
+  color: #2563eb;
+
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 800;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.description {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ADD BUTTON
+   ========================================================= */
+
+.add-btn {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-height: 38px;
+  min-width: 138px;
+
+  padding: 0 15px;
+
+  color: #ffffff;
+  background: #2563eb;
+
+  border: 1px solid #2563eb;
+  border-radius: 7px;
+
+  font: inherit;
+  font-size: 11px;
+  font-weight: 750;
+
+  line-height: 1;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+.add-btn:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+
+  box-shadow:
+    0 4px 12px rgba(37, 99, 235, 0.18);
+}
+
+
+.add-btn:active {
+  transform: translateY(1px);
+}
+
+
+.add-btn:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   ADD ICON
+   ========================================================= */
+
+.add-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  flex: 0 0 16px;
+
+  font-size: 17px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   CHILD COMPONENTS
+   Prevent child content from forcing page width
+   ========================================================= */
+
+app-admission-search-filter,
+app-admission-table {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .page {
+    gap: 16px;
+  }
+
+
+  .page-header {
+    gap: 16px;
+  }
+
+
+  h1 {
+    font-size: 24px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .page {
+    gap: 15px;
+    padding-bottom: 20px;
+  }
+
+
+  .page-header {
+    min-height: auto;
+    align-items: center;
+  }
+
+
+  .add-btn {
+    min-height: 37px;
+    padding: 0 13px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .page {
+    gap: 14px;
+    padding: 0 0 18px;
+  }
+
+
+  .page-header {
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+    justify-content: flex-start;
+
+    gap: 12px;
+
+    min-height: auto;
+  }
+
+
+  .page-heading {
+    width: 100%;
+  }
+
+
+  .eyebrow {
+    margin-bottom: 4px;
+    font-size: 9px;
+  }
+
+
+  h1 {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+
+  .description {
+    margin-top: 5px;
+
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+
+  .add-btn {
+    width: 100%;
+
+    min-height: 40px;
+    min-width: 0;
+
+    padding: 0 14px;
+
+    font-size: 11px;
+  }
+
+
+  .add-icon {
+    width: 15px;
+    height: 15px;
+
+    flex-basis: 15px;
+
+    font-size: 16px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .page {
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+
+
+  h1 {
+    font-size: 21px;
+  }
+
+
+  .description {
+    font-size: 10.5px;
+  }
+
+
+  .add-btn {
+    min-height: 39px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .page {
+    gap: 11px;
+    padding-bottom: 14px;
+  }
+
+
+  .eyebrow {
+    font-size: 8.5px;
+    letter-spacing: 0.07em;
+  }
+
+
+  h1 {
+    font-size: 20px;
+  }
+
+
+  .description {
+    font-size: 10px;
+  }
+
+
+  .add-btn {
+    min-height: 38px;
+
+    font-size: 10.5px;
+  }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 340px) {
+
+  .page {
+    gap: 10px;
+  }
+
+
+  h1 {
+    font-size: 19px;
+  }
+
+
+  .add-btn {
+    min-height: 37px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .add-btn {
+    transition: none;
+  }
+
+}

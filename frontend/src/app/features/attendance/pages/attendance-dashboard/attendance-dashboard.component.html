@@ -1,0 +1,652 @@
+<main class="attendance-page">
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+
+  <header class="dashboard-header">
+
+    <div class="header-content">
+
+      <p class="eyebrow">
+        Attendance Management
+      </p>
+
+      <h1>
+        Attendance Dashboard
+      </h1>
+
+      <p class="subtitle">
+        Manage daily attendance, records, reports and
+        Excel uploads from one place.
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <!-- REFRESH -->
+
+      <button
+        type="button"
+        class="secondary-button"
+        (click)="refresh()"
+        [disabled]="dashboardLoading"
+      >
+        Refresh
+      </button>
+
+
+      <!-- BULK UPLOAD -->
+
+      <button
+        type="button"
+        class="secondary-button bulk-header-button"
+        routerLink="/dashboard/attendance/bulk-upload"
+        [disabled]="dashboardLoading"
+      >
+        Bulk Upload
+      </button>
+
+
+      <!-- TAKE ATTENDANCE -->
+
+      <button
+        type="button"
+        class="primary-button"
+        routerLink="/dashboard/attendance/classes"
+      >
+        Take Attendance
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ============================================================
+       TODAY
+  ============================================================ -->
+
+  <section class="today-bar">
+
+    <div>
+
+      <span class="today-label">
+        Today's Attendance
+      </span>
+
+      <strong>
+        {{ today }}
+      </strong>
+
+    </div>
+
+    <div class="today-records">
+
+      <span>
+        {{ totalRecordsToday }}
+      </span>
+
+      <small>
+        attendance records
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       SUMMARY
+  ============================================================ -->
+
+  <section class="summary-grid">
+
+    <!-- TOTAL STUDENTS -->
+
+    <article class="stat-card total">
+
+      <div class="stat-icon">
+        👥
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Total Students
+        </span>
+
+        @if (loadingStudents) {
+
+          <strong class="loading-number">
+            ...
+          </strong>
+
+        } @else {
+
+          <strong>
+            {{ totalStudents }}
+          </strong>
+
+        }
+
+      </div>
+
+    </article>
+
+
+    <!-- PRESENT -->
+
+    <article class="stat-card present">
+
+      <div class="stat-icon">
+        ✓
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Present
+        </span>
+
+        @if (loadingAttendance) {
+
+          <strong class="loading-number">
+            ...
+          </strong>
+
+        } @else {
+
+          <strong>
+            {{ present }}
+          </strong>
+
+        }
+
+      </div>
+
+    </article>
+
+
+    <!-- ABSENT -->
+
+    <article class="stat-card absent">
+
+      <div class="stat-icon">
+        !
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Absent
+        </span>
+
+        @if (loadingAttendance) {
+
+          <strong class="loading-number">
+            ...
+          </strong>
+
+        } @else {
+
+          <strong>
+            {{ absent }}
+          </strong>
+
+        }
+
+      </div>
+
+    </article>
+
+
+    <!-- LEAVE -->
+
+    <article class="stat-card leave">
+
+      <div class="stat-icon">
+        L
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Leave
+        </span>
+
+        @if (loadingAttendance) {
+
+          <strong class="loading-number">
+            ...
+          </strong>
+
+        } @else {
+
+          <strong>
+            {{ leave }}
+          </strong>
+
+        }
+
+      </div>
+
+    </article>
+
+
+    <!-- HALF DAY -->
+
+    <article class="stat-card half">
+
+      <div class="stat-icon">
+        ½
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Half Day
+        </span>
+
+        @if (loadingAttendance) {
+
+          <strong class="loading-number">
+            ...
+          </strong>
+
+        } @else {
+
+          <strong>
+            {{ halfDay }}
+          </strong>
+
+        }
+
+      </div>
+
+    </article>
+
+  </section>
+
+
+  <!-- ============================================================
+       QUICK ACTIONS
+  ============================================================ -->
+
+  <section class="section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow">
+          Quick Actions
+        </p>
+
+        <h2>
+          Attendance Operations
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div class="action-grid">
+
+      <!-- TAKE ATTENDANCE -->
+
+      <a
+        class="action-card primary-action"
+        routerLink="/dashboard/attendance/classes"
+      >
+
+        <span class="action-icon">
+          ✓
+        </span>
+
+        <div>
+
+          <strong>
+            Take Attendance
+          </strong>
+
+          <p>
+            Select a class and mark today's attendance.
+          </p>
+
+        </div>
+
+        <span class="arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- HISTORY -->
+
+      <a
+        class="action-card"
+        routerLink="/dashboard/attendance/history"
+      >
+
+        <span class="action-icon">
+          ↺
+        </span>
+
+        <div>
+
+          <strong>
+            Attendance History
+          </strong>
+
+          <p>
+            View, edit and delete attendance records.
+          </p>
+
+        </div>
+
+        <span class="arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- CLASSES -->
+
+      <a
+        class="action-card"
+        routerLink="/dashboard/attendance/classes"
+      >
+
+        <span class="action-icon">
+          ▦
+        </span>
+
+        <div>
+
+          <strong>
+            Classes
+          </strong>
+
+          <p>
+            Select faculty subject and class mapping.
+          </p>
+
+        </div>
+
+        <span class="arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- ========================================================
+           BULK EXCEL UPLOAD
+      ========================================================= -->
+
+      <a
+        class="action-card bulk-action"
+        routerLink="/dashboard/attendance/bulk-upload"
+      >
+
+        <span class="action-icon">
+          ↑
+        </span>
+
+        <div>
+
+          <strong>
+            Bulk Excel Upload
+          </strong>
+
+          <p>
+            Import large attendance datasets from Excel.
+          </p>
+
+        </div>
+
+        <span class="arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- REPORT -->
+
+      <a
+        class="action-card"
+        routerLink="/dashboard/attendance/report"
+      >
+
+        <span class="action-icon">
+          ▤
+        </span>
+
+        <div>
+
+          <strong>
+            Attendance Report
+          </strong>
+
+          <p>
+            Generate date-wise attendance reports.
+          </p>
+
+        </div>
+
+        <span class="arrow">
+          →
+        </span>
+
+      </a>
+
+
+      <!-- EXPORT -->
+
+      <a
+        class="action-card"
+        routerLink="/dashboard/attendance/export"
+      >
+
+        <span class="action-icon">
+          ↓
+        </span>
+
+        <div>
+
+          <strong>
+            Export Attendance
+          </strong>
+
+          <p>
+            Download attendance records as Excel.
+          </p>
+
+        </div>
+
+        <span class="arrow">
+          →
+        </span>
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       TODAY'S RECORDS
+  ============================================================ -->
+
+  <section class="panel records-panel">
+
+    <div class="panel-heading">
+
+      <div>
+
+        <p class="eyebrow">
+          Today
+        </p>
+
+        <h2>
+          Recent Attendance
+        </h2>
+
+      </div>
+
+      <button
+        type="button"
+        class="link-button"
+        routerLink="/dashboard/attendance/history"
+      >
+        View All
+      </button>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    @if (loadingAttendance) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          ...
+        </div>
+
+        <strong>
+          Loading attendance
+        </strong>
+
+        <p>
+          Please wait while today's records are loaded.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- RECORDS -->
+
+    @else if (todayRecords.length > 0) {
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Student</th>
+              <th>Faculty</th>
+              <th>Subject</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            @for (
+              record of todayRecords;
+              track record.id
+            ) {
+
+              <tr>
+
+                <td>
+                  <strong>
+                    {{ record.studentName || '—' }}
+                  </strong>
+                </td>
+
+                <td>
+                  {{ record.facultyName || '—' }}
+                </td>
+
+                <td>
+                  {{ record.subjectName || '—' }}
+                </td>
+
+                <td>
+                  {{ record.attendanceDate || '—' }}
+                </td>
+
+                <td>
+
+                  <span
+                    class="status"
+                    [class.present]="
+                      statusValue(record.attendanceStatus) === 'PRESENT'
+                    "
+                    [class.absent]="
+                      statusValue(record.attendanceStatus) === 'ABSENT'
+                    "
+                    [class.leave]="
+                      statusValue(record.attendanceStatus) === 'LEAVE'
+                    "
+                    [class.half-day]="
+                      statusValue(record.attendanceStatus) === 'HALF_DAY'
+                    "
+                  >
+                    {{ record.attendanceStatus || '—' }}
+                  </span>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+
+    <!-- EMPTY -->
+
+    @else {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          ✓
+        </div>
+
+        <strong>
+          No attendance records for today
+        </strong>
+
+        <p>
+          Start taking attendance to see today's records here.
+        </p>
+
+        <button
+          type="button"
+          class="primary-button"
+          routerLink="/dashboard/attendance/classes"
+        >
+          Take Attendance
+        </button>
+
+      </div>
+
+    }
+
+  </section>
+
+</main>

@@ -1,0 +1,778 @@
+<!-- ===================================================== -->
+<!-- FACULTY DETAILS -->
+<!-- ===================================================== -->
+
+<div class="faculty-details">
+
+    <!-- ================================================= -->
+    <!-- PAGE HEADER -->
+    <!-- ================================================= -->
+
+    <div class="page-header">
+
+        <button
+            mat-icon-button
+            type="button"
+            aria-label="Back to faculty list"
+            (click)="backToList()">
+
+            <mat-icon>
+                arrow_back
+            </mat-icon>
+
+        </button>
+
+        <div>
+
+            <h2>
+                Faculty Details
+            </h2>
+
+            <p>
+                View complete faculty information
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- LOADING -->
+    <!-- ================================================= -->
+
+    @if (loading()) {
+
+        <div class="loading-container">
+
+            <mat-spinner diameter="42"></mat-spinner>
+
+        </div>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- ERROR -->
+    <!-- ================================================= -->
+
+    @if (error()) {
+
+        <mat-card>
+
+            <mat-card-content>
+
+                <div class="error-message">
+
+                    <mat-icon>
+                        error
+                    </mat-icon>
+
+                    <span>
+                        {{ error() }}
+                    </span>
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- FACULTY -->
+    <!-- ================================================= -->
+
+    @if (faculty(); as f) {
+
+
+        <!-- ================================================= -->
+        <!-- PERSONAL INFORMATION -->
+        <!-- ================================================= -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Personal Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+
+                    <!-- EMPLOYEE CODE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Employee Code
+                        </span>
+
+                        <span class="value">
+                            {{ f.employeeCode || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Full Name
+                        </span>
+
+                        <span class="value">
+                            {{ f.fullName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- FIRST NAME -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            First Name
+                        </span>
+
+                        <span class="value">
+                            {{ f.firstName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- MIDDLE NAME -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Middle Name
+                        </span>
+
+                        <span class="value">
+                            {{ f.middleName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- LAST NAME -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Last Name
+                        </span>
+
+                        <span class="value">
+                            {{ f.lastName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- GENDER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Gender
+                        </span>
+
+                        <span class="value">
+                            {{ f.gender || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- DATE OF BIRTH -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Date Of Birth
+                        </span>
+
+                        <span class="value">
+
+                            {{ f.dateOfBirth
+                                ? (f.dateOfBirth | date:'dd MMM yyyy')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Email
+                        </span>
+
+                        <span class="value">
+                            {{ f.email || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- MOBILE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Mobile Number
+                        </span>
+
+                        <span class="value">
+                            {{ f.mobileNumber || '—' }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+        <!-- ================================================= -->
+        <!-- PROFESSIONAL INFORMATION -->
+        <!-- ================================================= -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Professional Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Department
+                        </span>
+
+                        <span class="value">
+                            {{ f.departmentName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- DESIGNATION -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Designation
+                        </span>
+
+                        <span class="value">
+                            {{ f.designation || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- QUALIFICATION -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Qualification
+                        </span>
+
+                        <span class="value">
+                            {{ f.qualification || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- SALARY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Salary
+                        </span>
+
+                        <span class="value">
+
+                            {{ f.salary !== null && f.salary !== undefined
+                                ? f.salary
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- JOINING DATE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Joining Date
+                        </span>
+
+                        <span class="value">
+
+                            {{ f.joiningDate
+                                ? (f.joiningDate | date:'dd MMM yyyy')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- FACULTY STATUS -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Faculty Status
+                        </span>
+
+                        <span class="badge active">
+                            {{ f.status || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- USER STATUS -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            User Status
+                        </span>
+
+                        <span class="value">
+                            {{ f.userStatus || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Role
+                        </span>
+
+                        <span class="value">
+                            {{ f.role || '—' }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+        <!-- ================================================= -->
+        <!-- ADDRESS INFORMATION -->
+        <!-- ================================================= -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Address Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+
+                    <!-- ADDRESS TYPE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Address Type
+                        </span>
+
+                        <span class="value">
+                            {{ f.addressType || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- HOUSE NUMBER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            House Number
+                        </span>
+
+                        <span class="value">
+                            {{ f.houseNumber || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- STREET -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Street
+                        </span>
+
+                        <span class="value">
+                            {{ f.street || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- LANDMARK -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Landmark
+                        </span>
+
+                        <span class="value">
+                            {{ f.landmark || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- VILLAGE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Village
+                        </span>
+
+                        <span class="value">
+                            {{ f.villageName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- TEHSIL -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Tehsil
+                        </span>
+
+                        <span class="value">
+                            {{ f.tehsilName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- DISTRICT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            District
+                        </span>
+
+                        <span class="value">
+                            {{ f.districtName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- STATE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            State
+                        </span>
+
+                        <span class="value">
+                            {{ f.stateName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- COUNTRY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Country
+                        </span>
+
+                        <span class="value">
+                            {{ f.countryName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- PINCODE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Pincode
+                        </span>
+
+                        <span class="value">
+                            {{ f.pincode || '—' }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+        <!-- ================================================= -->
+        <!-- DOCUMENTS & IMAGES -->
+        <!-- ================================================= -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Documents & Images
+                </mat-card-title>
+
+            </mat-card-header>
+
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+
+                    <!-- PROFILE IMAGE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Profile Image
+                        </span>
+
+                        <span class="value">
+                            {{ f.profileImage || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- SIGNATURE IMAGE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Signature Image
+                        </span>
+
+                        <span class="value">
+                            {{ f.signatureImage || '—' }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+        <!-- ================================================= -->
+        <!-- AUDIT INFORMATION -->
+        <!-- ================================================= -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Audit Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+
+                    <!-- CREATED BY USER ID -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Created By User ID
+                        </span>
+
+                        <span class="value">
+                            {{ f.createdByUserId || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- CREATED BY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Created By
+                        </span>
+
+                        <span class="value">
+                            {{ f.createdBy || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- CREATED AT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Created At
+                        </span>
+
+                        <span class="value">
+
+                            {{ f.createdAt
+                                ? (f.createdAt | date:'dd MMM yyyy hh:mm a')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- UPDATED BY USER ID -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Updated By User ID
+                        </span>
+
+                        <span class="value">
+                            {{ f.updatedByUserId || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- UPDATED BY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Updated By
+                        </span>
+
+                        <span class="value">
+                            {{ f.updatedBy || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- UPDATED AT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Updated At
+                        </span>
+
+                        <span class="value">
+
+                            {{ f.updatedAt
+                                ? (f.updatedAt | date:'dd MMM yyyy hh:mm a')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+    }
+
+</div>

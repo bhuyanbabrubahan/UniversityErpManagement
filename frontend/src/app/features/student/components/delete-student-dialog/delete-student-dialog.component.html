@@ -1,0 +1,33 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon>delete_forever</mat-icon>
+  Delete Student
+</h2>
+
+<mat-dialog-content>
+
+  <p class="message">
+    Are you sure you want to delete this student?
+  </p>
+
+  <div class="warning">
+    <mat-icon>warning</mat-icon>
+    <span>This action cannot be undone.</span>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button mat-stroked-button (click)="cancel()">
+    Cancel
+  </button>
+
+  <button mat-raised-button color="warn" (click)="confirm()">
+
+    <mat-icon>delete</mat-icon>
+
+    Delete
+
+  </button>
+
+</mat-dialog-actions>

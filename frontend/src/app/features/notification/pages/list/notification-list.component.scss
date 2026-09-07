@@ -1,0 +1,240 @@
+:host {
+  display: block;
+}
+.page {
+  width: 100%;
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 16px 20px 26px;
+  box-sizing: border-box;
+}
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 10px;
+  padding: 13px 15px;
+  background: #fff;
+  border: 1px solid #e1e6ed;
+  border-radius: 11px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+.eyebrow {
+  color: #4263eb;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.page h1 {
+  margin: 4px 0 0;
+  color: #172033;
+  font-size: 18px;
+  font-weight: 800;
+}
+.page-header p {
+  margin: 3px 0 0;
+  color: #7e8998;
+  font-size: 9px;
+}
+.header-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.secondary-btn {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  border: 1px solid #d8dee7;
+  border-radius: 7px;
+  background: #fff;
+  color: #596678;
+  text-decoration: none;
+  font-size: 9px;
+  font-weight: 750;
+}
+.secondary-btn:hover {
+  background: #f5f7fa;
+}
+.primary-btn {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 11px;
+  border-radius: 7px;
+  background: #4263eb;
+  color: #fff;
+  text-decoration: none;
+  font-size: 9px;
+  font-weight: 750;
+  box-shadow: 0 3px 8px rgba(66, 99, 235, 0.15);
+  transition: 0.15s;
+}
+.primary-btn:hover {
+  background: #3654d8;
+  transform: translateY(-1px);
+}
+.primary-btn span {
+  font-size: 14px;
+  line-height: 1;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.stat {
+  padding: 8px 11px;
+  background: #fff;
+  border: 1px solid #e4e8ee;
+  border-radius: 9px;
+}
+.stat span {
+  display: block;
+  color: #8993a2;
+  font-size: 7px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.stat strong {
+  display: block;
+  margin-top: 3px;
+  color: #2a374b;
+  font-size: 13px;
+  font-weight: 800;
+}
+.alert {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 9px;
+  padding: 8px 10px;
+  border: 1px solid #ffd8d8;
+  border-radius: 8px;
+  background: #fff6f6;
+  color: #9f4d4d;
+  font-size: 8px;
+}
+.alert strong {
+  font-size: 8px;
+}
+.alert span {
+  color: #b56767;
+}
+.loading-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  color: #748093;
+  font-size: 8px;
+}
+.spinner {
+  width: 11px;
+  height: 11px;
+  border: 2px solid #dce4ff;
+  border-top-color: #4263eb;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #e1e6ed;
+  border-radius: 9px;
+  color: #7b8697;
+  font-size: 8px;
+}
+.page-size {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.page-size select {
+  height: 25px;
+  border: 1px solid #d8dee7;
+  border-radius: 6px;
+  font-size: 8px;
+  color: #445166;
+  background: #fff;
+}
+.range {
+  margin-left: auto;
+}
+.page-buttons {
+  display: flex;
+  gap: 4px;
+}
+.page-buttons button {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #d8dee7;
+  border-radius: 6px;
+  background: #fff;
+  color: #526174;
+  cursor: pointer;
+}
+.page-buttons button:hover:not(:disabled) {
+  background: #f4f7fb;
+}
+.page-buttons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+@media (max-width: 650px) {
+  .page {
+    padding: 9px 8px 18px;
+  }
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+    padding: 10px;
+  }
+  .header-actions {
+    width: 100%;
+  }
+  .secondary-btn,
+  .primary-btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .page h1 {
+    font-size: 15px;
+  }
+  .stats {
+    gap: 5px;
+  }
+  .stat {
+    padding: 7px 8px;
+  }
+  .stat strong {
+    font-size: 11px;
+  }
+  .pagination {
+    flex-wrap: wrap;
+  }
+  .range {
+    margin-left: 0;
+  }
+  .page-size {
+    margin-right: auto;
+  }
+}

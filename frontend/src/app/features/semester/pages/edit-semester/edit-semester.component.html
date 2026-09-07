@@ -1,0 +1,118 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Edit Semester
+      </h1>
+
+      <p>
+        Update semester information and course assignment.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+
+      ← Back to Semesters
+
+    </button>
+
+  </div>
+
+
+  @if (successMessage) {
+
+    <div class="toast success-toast">
+
+      <span class="toast-icon">
+        ✓
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Success
+        </strong>
+
+        <span>
+          {{ successMessage }}
+        </span>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div class="toast error-toast">
+
+      <span class="toast-icon">
+        !
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Error
+        </strong>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  @if (loadingData) {
+
+    <div class="loading-card">
+      Loading semester...
+    </div>
+
+  }
+  @else if (semester) {
+
+    <section class="form-card">
+
+      <div class="card-heading">
+
+        <h2>
+          Semester Information
+        </h2>
+
+        <p>
+          Modify the details and save your changes.
+        </p>
+
+      </div>
+
+      <app-semester-form
+        [semester]="semester"
+        [loading]="loading"
+        submitLabel="Update Semester"
+        (formSubmit)="updateSemester($event)"
+        (cancel)="cancel()">
+      </app-semester-form>
+
+    </section>
+
+  }
+
+</div>

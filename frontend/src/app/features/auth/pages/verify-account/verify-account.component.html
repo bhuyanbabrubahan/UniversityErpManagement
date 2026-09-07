@@ -1,0 +1,854 @@
+<div class="verify-page">
+
+  <mat-card class="verify-card">
+
+    <!-- ======================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <header class="page-header">
+
+      <div class="header-icon">
+        <mat-icon>
+          {{ verificationComplete() ? 'verified' : 'verified_user' }}
+        </mat-icon>
+      </div>
+
+      <div class="header-content">
+
+        <div class="eyebrow">
+          ACCOUNT SECURITY
+        </div>
+
+        <h1>
+          @if (verificationComplete()) {
+            Account Verified Successfully
+          } @else {
+            Verify Your Account
+          }
+        </h1>
+
+        <p>
+          @if (verificationComplete()) {
+            Your email address and mobile number have been
+            successfully verified. Your account is now active.
+          } @else {
+            Complete both verification steps to activate your
+            University Management System account.
+          }
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <!-- ======================================================
+         CONTENT
+    ====================================================== -->
+
+    <mat-card-content>
+
+      <form [formGroup]="verifyForm">
+
+
+        <!-- ==================================================
+             EMAIL VERIFICATION
+        ================================================== -->
+
+        <section class="verification-section">
+
+          <!-- SECTION HEADER -->
+
+          <div class="section-header">
+
+            <div class="section-icon email-icon">
+              <mat-icon>
+                email
+              </mat-icon>
+            </div>
+
+            <div class="section-title">
+
+              <h2>
+                Email Verification
+              </h2>
+
+              <span>
+                Verify your registered email address
+              </span>
+
+            </div>
+
+            @if (emailVerified()) {
+
+              <div class="status-badge verified-badge">
+                Verified
+              </div>
+
+            } @else {
+
+              <div class="status-badge pending-badge">
+                Pending
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- =================================================
+               EMAIL VERIFIED
+          ================================================= -->
+
+          @if (emailVerified()) {
+
+            <div class="status-card verified">
+
+              <div class="status-icon">
+
+                <mat-icon>
+                  check_circle
+                </mat-icon>
+
+              </div>
+
+              <div class="status-content">
+
+                <strong>
+                  Email Verified
+                </strong>
+
+                <span>
+                  Your registered email address has been
+                  successfully verified.
+                </span>
+
+              </div>
+
+              <div class="completed-label">
+                <mat-icon>
+                  lock
+                </mat-icon>
+
+                Completed
+              </div>
+
+            </div>
+
+          }
+
+
+          <!-- =================================================
+               EMAIL NOT VERIFIED
+          ================================================= -->
+
+          @else {
+
+            <div class="verification-body">
+
+              <mat-form-field
+                appearance="outline"
+                class="full-width"
+              >
+
+                <mat-label>
+                  Email Address
+                </mat-label>
+
+                <input
+                  matInput
+                  type="email"
+                  formControlName="email"
+                  autocomplete="email"
+                >
+
+                <mat-icon matSuffix>
+                  email
+                </mat-icon>
+
+                @if (
+                  verifyForm.controls.email.hasError('required') &&
+                  verifyForm.controls.email.touched
+                ) {
+
+                  <mat-error>
+                    Email address is required.
+                  </mat-error>
+
+                }
+
+                @if (
+                  verifyForm.controls.email.hasError('email') &&
+                  verifyForm.controls.email.touched
+                ) {
+
+                  <mat-error>
+                    Please enter a valid email address.
+                  </mat-error>
+
+                }
+
+              </mat-form-field>
+
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="action-btn"
+                type="button"
+                [disabled]="loading()"
+                (click)="resendEmail()"
+              >
+
+                @if (loading()) {
+
+                  <mat-spinner diameter="18"></mat-spinner>
+
+                } @else {
+
+                  <mat-icon>
+                    send
+                  </mat-icon>
+
+                }
+
+                <span>
+                  {{
+                    loading()
+                      ? 'Sending...'
+                      : 'Resend Verification Email'
+                  }}
+                </span>
+
+              </button>
+
+
+              <div class="helper-message">
+
+                <mat-icon>
+                  info
+                </mat-icon>
+
+                <span>
+                  Verification email will be sent to your
+                  registered email address.
+                </span>
+
+              </div>
+
+            </div>
+
+          }
+
+        </section>
+
+
+        <!-- ==================================================
+             MOBILE VERIFICATION
+        ================================================== -->
+
+        <section class="verification-section">
+
+          <!-- SECTION HEADER -->
+
+          <div class="section-header">
+
+            <div class="section-icon mobile-icon">
+              <mat-icon>
+                phone_android
+              </mat-icon>
+            </div>
+
+            <div class="section-title">
+
+              <h2>
+                Mobile Verification
+              </h2>
+
+              <span>
+                Verify your mobile number using OTP
+              </span>
+
+            </div>
+
+            @if (mobileVerified()) {
+
+              <div class="status-badge verified-badge">
+                Verified
+              </div>
+
+            } @else {
+
+              <div class="status-badge pending-badge">
+                Pending
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- =================================================
+               MOBILE VERIFIED
+          ================================================= -->
+
+          @if (mobileVerified()) {
+
+            <div class="status-card verified">
+
+              <div class="status-icon">
+
+                <mat-icon>
+                  check_circle
+                </mat-icon>
+
+              </div>
+
+              <div class="status-content">
+
+                <strong>
+                  Mobile Verified
+                </strong>
+
+                <span>
+                  Your mobile number has been
+                  successfully verified.
+                </span>
+
+              </div>
+
+              <div class="completed-label">
+
+                <mat-icon>
+                  lock
+                </mat-icon>
+
+                Completed
+
+              </div>
+
+            </div>
+
+          }
+
+
+          <!-- =================================================
+               MOBILE NOT VERIFIED
+          ================================================= -->
+
+          @else {
+
+            <div class="verification-body">
+
+              <!-- MOBILE NUMBER -->
+
+              <mat-form-field
+                appearance="outline"
+                class="full-width"
+              >
+
+                <mat-label>
+                  Mobile Number
+                </mat-label>
+
+                <input
+                  matInput
+                  type="tel"
+                  maxlength="10"
+                  inputmode="numeric"
+                  autocomplete="tel"
+                  formControlName="mobile"
+                >
+
+                <mat-icon matSuffix>
+                  phone
+                </mat-icon>
+
+                @if (
+                  verifyForm.controls.mobile.hasError('required') &&
+                  verifyForm.controls.mobile.touched
+                ) {
+
+                  <mat-error>
+                    Mobile number is required.
+                  </mat-error>
+
+                }
+
+                @if (
+                  verifyForm.controls.mobile.hasError('pattern') &&
+                  verifyForm.controls.mobile.touched
+                ) {
+
+                  <mat-error>
+                    Enter a valid 10 digit mobile number.
+                  </mat-error>
+
+                }
+
+              </mat-form-field>
+
+
+              <!-- =================================================
+                   SEND OTP
+              ================================================= -->
+
+              @if (!otpSent()) {
+
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="action-btn"
+                  type="button"
+                  [disabled]="loading()"
+                  (click)="sendOtp()"
+                >
+
+                  @if (loading()) {
+
+                    <mat-spinner diameter="18"></mat-spinner>
+
+                  } @else {
+
+                    <mat-icon>
+                      sms
+                    </mat-icon>
+
+                  }
+
+                  <span>
+                    {{
+                      loading()
+                        ? 'Sending OTP...'
+                        : 'Send OTP'
+                    }}
+                  </span>
+
+                </button>
+
+
+                <div class="helper-message">
+
+                  <mat-icon>
+                    security
+                  </mat-icon>
+
+                  <span>
+                    A 6-digit OTP will be sent to your
+                    registered mobile number.
+                  </span>
+
+                </div>
+
+              }
+
+
+              <!-- =================================================
+                   OTP AREA
+              ================================================= -->
+
+              @if (otpSent()) {
+
+                <div class="otp-area">
+
+                  <!-- OTP HEADER -->
+
+                  <div class="otp-header">
+
+                    <div class="otp-header-icon">
+
+                      <mat-icon>
+                        sms
+                      </mat-icon>
+
+                    </div>
+
+                    <div>
+
+                      <strong>
+                        Enter Verification Code
+                      </strong>
+
+                      <span>
+                        Enter the 6-digit OTP sent to your mobile
+                      </span>
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- OTP INPUT -->
+
+                  <mat-form-field
+                    appearance="outline"
+                    class="full-width otp-field"
+                  >
+
+                    <mat-label>
+                      Verification Code
+                    </mat-label>
+
+                    <input
+                      #otpInput
+                      matInput
+                      type="text"
+                      maxlength="6"
+                      inputmode="numeric"
+                      autocomplete="one-time-code"
+                      formControlName="otp"
+                      placeholder="Enter 6 digit OTP"
+                      (input)="onOtpInput($event)"
+                    >
+
+                    <mat-icon matSuffix>
+                      lock
+                    </mat-icon>
+
+                    @if (
+                      verifyForm.controls.otp.hasError('required') &&
+                      verifyForm.controls.otp.touched
+                    ) {
+
+                      <mat-error>
+                        OTP is required.
+                      </mat-error>
+
+                    }
+
+                    @if (
+                      verifyForm.controls.otp.hasError('pattern') &&
+                      verifyForm.controls.otp.touched
+                    ) {
+
+                      <mat-error>
+                        Enter a valid 6 digit OTP.
+                      </mat-error>
+
+                    }
+
+                  </mat-form-field>
+
+
+                  <!-- TIMER -->
+
+                  @if (!timer.canResend()) {
+
+                    <div class="timer-box">
+
+                      <mat-icon>
+                        schedule
+                      </mat-icon>
+
+                      <div>
+
+                        <span>
+                          Resend OTP available in
+                        </span>
+
+                        <strong>
+                          {{ timer.seconds() }} seconds
+                        </strong>
+
+                      </div>
+
+                    </div>
+
+                  }
+
+
+                  <!-- OTP ACTIONS -->
+
+                  <div class="otp-actions">
+
+                    @if (timer.canResend()) {
+
+                      <button
+                        mat-stroked-button
+                        color="primary"
+                        class="resend-btn"
+                        type="button"
+                        [disabled]="loading()"
+                        (click)="resendOtp()"
+                      >
+
+                        @if (loading()) {
+
+                          <mat-spinner diameter="17"></mat-spinner>
+
+                        } @else {
+
+                          <mat-icon>
+                            refresh
+                          </mat-icon>
+
+                        }
+
+                        <span>
+                          {{
+                            loading()
+                              ? 'Sending...'
+                              : 'Resend OTP'
+                          }}
+                        </span>
+
+                      </button>
+
+                    }
+
+
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      class="verify-otp-btn"
+                      type="button"
+                      [disabled]="
+                        loading() ||
+                        verifyForm.controls.otp.invalid
+                      "
+                      (click)="verifyOtp()"
+                    >
+
+                      @if (loading()) {
+
+                        <mat-spinner diameter="17"></mat-spinner>
+
+                      } @else {
+
+                        <mat-icon>
+                          verified
+                        </mat-icon>
+
+                      }
+
+                      <span>
+                        {{
+                          loading()
+                            ? 'Verifying...'
+                            : 'Verify OTP'
+                        }}
+                      </span>
+
+                    </button>
+
+                  </div>
+
+
+                  <!-- SECURITY INFO -->
+
+                  <div class="otp-security">
+
+                    <mat-icon>
+                      security
+                    </mat-icon>
+
+                    <span>
+                      Never share your verification code with anyone.
+                    </span>
+
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+
+          }
+
+        </section>
+
+
+        <!-- ==================================================
+             LOADING
+        ================================================== -->
+
+        @if (loading()) {
+
+          <mat-progress-bar
+            mode="indeterminate"
+            class="loading-bar">
+          </mat-progress-bar>
+
+        }
+
+
+        <!-- ==================================================
+             SUCCESS STATE
+        ================================================== -->
+
+        @if (verificationComplete()) {
+
+          <section class="verification-success">
+
+            <!-- SUCCESS HEADER -->
+
+            <div class="success-header">
+
+              <div class="success-icon">
+
+                <mat-icon>
+                  verified
+                </mat-icon>
+
+              </div>
+
+              <div>
+
+                <div class="success-eyebrow">
+                  VERIFICATION COMPLETE
+                </div>
+
+                <h2>
+                  Account Verified Successfully
+                </h2>
+
+                <p>
+                  Your account has successfully completed
+                  all required verification steps.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <!-- VERIFIED ITEMS -->
+
+            <div class="success-status">
+
+              <!-- EMAIL -->
+
+              <div class="success-item">
+
+                <div class="success-item-icon">
+
+                  <mat-icon>
+                    check_circle
+                  </mat-icon>
+
+                </div>
+
+                <div class="success-item-content">
+
+                  <strong>
+                    Email Verified
+                  </strong>
+
+                  <span>
+                    Verification completed successfully
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- MOBILE -->
+
+              <div class="success-item">
+
+                <div class="success-item-icon">
+
+                  <mat-icon>
+                    check_circle
+                  </mat-icon>
+
+                </div>
+
+                <div class="success-item-content">
+
+                  <strong>
+                    Mobile Verified
+                  </strong>
+
+                  <span>
+                    Verification completed successfully
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- ACCOUNT ACTIVE -->
+
+            <div class="account-active">
+
+              <div class="account-active-icon">
+
+                <mat-icon>
+                  verified_user
+                </mat-icon>
+
+              </div>
+
+              <div class="account-active-content">
+
+                <strong>
+                  Account Active
+                </strong>
+
+                <span>
+                  Your account is fully verified and ready to use.
+                </span>
+
+              </div>
+
+              <div class="active-badge">
+                ACTIVE
+              </div>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-action">
+
+              <div class="login-text">
+
+                <strong>
+                  Ready to continue?
+                </strong>
+
+                <span>
+                  Sign in using your registered credentials.
+                </span>
+
+              </div>
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="login-btn"
+                type="button"
+                (click)="goToLogin()"
+              >
+
+                <mat-icon>
+                  login
+                </mat-icon>
+
+                <span>
+                  Go to Login
+                </span>
+
+              </button>
+
+            </div>
+
+          </section>
+
+        }
+
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>  

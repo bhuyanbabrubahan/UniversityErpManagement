@@ -1,0 +1,18 @@
+<select
+  [value]="selectedValue ?? ''"
+  [disabled]="disabled"
+  (change)="onStatusChange($event)"
+  aria-label="Attendance status"
+>
+
+  @for (status of statuses; track status) {
+
+    <option [value]="status">
+
+      {{ statusLabel(status) }}
+
+    </option>
+
+  }
+
+</select>

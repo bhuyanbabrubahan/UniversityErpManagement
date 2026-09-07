@@ -1,0 +1,326 @@
+<div class="login-page">
+
+  <!--================ Hero Section ================-->
+
+  <section class="hero-section">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+      <!-- Brand -->
+
+      <div class="brand">
+
+        <div class="brand-icon">
+
+          <mat-icon>school</mat-icon>
+
+        </div>
+
+        <div>
+
+          <h1>University Management System</h1>
+
+          <p>Smart ERP Platform</p>
+
+        </div>
+
+      </div>
+
+      <!-- Hero -->
+
+      <div class="hero-text">
+
+        <span class="badge">
+
+          <mat-icon>verified</mat-icon>
+
+          Trusted by Universities
+
+        </span>
+
+        <h2>
+
+          One Platform.
+          Complete University ERP.
+
+        </h2>
+
+        <p>
+
+          Manage Admissions, Students,
+          Academics, Finance,
+          Examinations, Attendance,
+          Reports and Administration
+          through one modern ERP.
+
+        </p>
+
+      </div>
+
+      <!-- Statistics -->
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <h3>25K+</h3>
+
+          <span>Students</span>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h3>99.9%</h3>
+
+          <span>Uptime</span>
+
+        </div>
+
+      </div>
+
+      <!-- Features -->
+
+      <div class="feature-grid">
+
+        <div class="feature">
+
+          <mat-icon>verified_user</mat-icon>
+
+          Enterprise Security
+
+        </div>
+
+        <div class="feature">
+
+          <mat-icon>insights</mat-icon>
+
+          Real-time Analytics
+
+        </div>
+
+        <div class="feature">
+
+          <mat-icon>cloud_done</mat-icon>
+
+          Cloud Infrastructure
+
+        </div>
+
+        <div class="feature">
+
+          <mat-icon>devices</mat-icon>
+
+          Mobile Friendly
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Floating Cards -->
+
+    <div class="float-card top">
+
+      <mat-icon>groups</mat-icon>
+
+      <div>
+
+        <strong>Students</strong>
+
+        <span>25,000+</span>
+
+      </div>
+
+    </div>
+
+    <div class="float-card bottom">
+
+      <mat-icon>security</mat-icon>
+
+      <div>
+
+        <strong>Enterprise</strong>
+
+        <span>Secure Login</span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!--================ Login Section ================-->
+
+  <section class="login-section">
+
+    <mat-card class="login-card">
+
+      <!-- Header -->
+
+      <div class="login-header">
+
+        <div class="login-icon">
+
+          <mat-icon>
+
+            account_circle
+
+          </mat-icon>
+
+        </div>
+
+        <h2>
+
+          Welcome Back
+
+        </h2>
+
+        <p>
+
+          Sign in to continue to your account.
+
+        </p>
+
+      </div>
+
+      <!-- Form -->
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <!-- Email -->
+
+        <mat-form-field appearance="outline" class="full-width">
+
+          <mat-label>
+
+            Email Address
+
+          </mat-label>
+
+          <input matInput type="email" formControlName="email" placeholder="Enter your email">
+
+          <mat-icon matSuffix>
+
+            mail
+
+          </mat-icon>
+
+          <mat-error *ngIf="email.hasError('required') && email.touched">
+
+            Email is required
+
+          </mat-error>
+
+          <mat-error *ngIf="email.hasError('email') && email.touched">
+
+            Enter valid email
+
+          </mat-error>
+
+        </mat-form-field>
+
+        <!-- Password -->
+
+        <mat-form-field appearance="outline" class="full-width">
+
+          <mat-label>
+
+            Password
+
+          </mat-label>
+
+          <input matInput [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+            placeholder="Enter password">
+
+          <button mat-icon-button matSuffix type="button" (click)="togglePassword()">
+
+            <mat-icon>
+
+              {{ showPassword() ? 'visibility_off' : 'visibility' }}
+
+            </mat-icon>
+
+          </button>
+
+          <mat-error *ngIf="password.hasError('required') && password.touched">
+
+            Password is required
+
+          </mat-error>
+
+          <mat-error *ngIf="password.hasError('minlength') && password.touched">
+
+            Minimum 6 characters required
+
+          </mat-error>
+
+        </mat-form-field>
+
+        <!-- Login -->
+
+        <button mat-raised-button color="primary" class="login-btn" type="submit"
+          [disabled]="loading() || loginForm.invalid">
+
+          @if(loading()){
+
+          <mat-spinner diameter="20"></mat-spinner>
+
+          }@else{
+
+          <mat-icon>
+
+            login
+
+          </mat-icon>
+
+          }
+
+          <span>
+
+            {{ loading() ? 'Signing In...' : 'Sign In' }}
+
+          </span>
+
+        </button>
+
+      </form>
+
+      <!-- Bottom -->
+
+      <div class="login-options">
+
+        <a routerLink="/forgot-password">
+
+          Forgot Password?
+
+        </a>
+
+      </div>
+
+      <div class="security-info">
+
+        <mat-icon>
+
+          shield
+
+        </mat-icon>
+
+        Protected with enterprise-grade security.
+
+      </div>
+
+      <div class="copyright">
+
+        © 2026 University Management System
+
+      </div>
+
+    </mat-card>
+
+  </section>
+
+</div>

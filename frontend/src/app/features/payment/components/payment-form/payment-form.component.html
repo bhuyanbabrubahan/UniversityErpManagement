@@ -1,0 +1,338 @@
+<section class="payment-form">
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+
+  <header class="form-header">
+
+    <div>
+
+      <h2>
+        {{ isEditMode ? 'Edit Fee Payment' : 'Create Fee Payment' }}
+      </h2>
+
+      <p>
+        {{
+          isEditMode
+            ? 'Update the payment details below.'
+            : 'Enter the student fee payment details below.'
+        }}
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- ===================================================== -->
+  <!-- FORM -->
+  <!-- ===================================================== -->
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    novalidate>
+
+    <div class="form-grid">
+
+      <!-- Student ID -->
+      <div class="form-field">
+
+        <label for="studentId">
+          Student ID <span>*</span>
+        </label>
+
+        <input
+          id="studentId"
+          type="number"
+          formControlName="studentId"
+          min="1"
+          placeholder="Enter student ID">
+
+        @if (f.studentId.touched && f.studentId.invalid) {
+
+          <small class="field-error">
+            Valid student ID is required.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- Admission ID -->
+      <div class="form-field">
+
+        <label for="admissionId">
+          Admission ID <span>*</span>
+        </label>
+
+        <input
+          id="admissionId"
+          type="number"
+          formControlName="admissionId"
+          min="1"
+          placeholder="Enter admission ID">
+
+        @if (f.admissionId.touched && f.admissionId.invalid) {
+
+          <small class="field-error">
+            Valid admission ID is required.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- Academic Year -->
+      <div class="form-field">
+
+        <label for="academicYear">
+          Academic Year <span>*</span>
+        </label>
+
+        <input
+          id="academicYear"
+          type="text"
+          formControlName="academicYear"
+          placeholder="2026-2027">
+
+        @if (
+          f.academicYear.touched &&
+          f.academicYear.invalid
+        ) {
+
+          <small class="field-error">
+            Academic year is required.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- Scholarship -->
+      <div class="form-field">
+
+        <label for="scholarshipId">
+          Scholarship ID
+        </label>
+
+        <input
+          id="scholarshipId"
+          type="number"
+          formControlName="scholarshipId"
+          min="1"
+          placeholder="Optional">
+
+      </div>
+
+
+      <!-- Paid Amount -->
+      <div class="form-field">
+
+        <label for="paidAmount">
+          Paid Amount <span>*</span>
+        </label>
+
+        <input
+          id="paidAmount"
+          type="number"
+          formControlName="paidAmount"
+          min="0"
+          step="0.01"
+          placeholder="Enter paid amount">
+
+        @if (
+          f.paidAmount.touched &&
+          f.paidAmount.invalid
+        ) {
+
+          <small class="field-error">
+            Paid amount cannot be negative.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- Payment Date -->
+      <div class="form-field">
+
+        <label for="paymentDate">
+          Payment Date
+        </label>
+
+        <input
+          id="paymentDate"
+          type="date"
+          formControlName="paymentDate">
+
+      </div>
+
+
+      <!-- Payment Mode -->
+      <div class="form-field">
+
+        <label for="paymentMode">
+          Payment Mode
+        </label>
+
+        <select
+          id="paymentMode"
+          formControlName="paymentMode">
+
+          <option [ngValue]="null">
+            Select payment mode
+          </option>
+
+          @for (mode of paymentModes; track mode) {
+
+            <option [ngValue]="mode">
+              {{ mode }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- Transaction Reference -->
+      <div class="form-field">
+
+        <label for="transactionReference">
+          Transaction Reference
+        </label>
+
+        <input
+          id="transactionReference"
+          type="text"
+          formControlName="transactionReference"
+          maxlength="100"
+          placeholder="Transaction reference">
+
+      </div>
+
+
+      <!-- Remarks -->
+      <div class="form-field full-width">
+
+        <label for="remarks">
+          Remarks
+        </label>
+
+        <textarea
+          id="remarks"
+          formControlName="remarks"
+          maxlength="500"
+          rows="4"
+          placeholder="Additional remarks">
+        </textarea>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- PAYMENT SUMMARY - EDIT MODE -->
+    <!-- ===================================================== -->
+
+    @if (payment) {
+
+      <div class="payment-summary">
+
+        <div class="summary-item">
+          <span>Total Fee</span>
+          <strong>
+            {{ payment.totalFee | number:'1.2-2' }}
+          </strong>
+        </div>
+
+
+        <div class="summary-item">
+          <span>Scholarship</span>
+          <strong>
+            {{ payment.scholarshipAmount | number:'1.2-2' }}
+          </strong>
+        </div>
+
+
+        <div class="summary-item">
+          <span>Final Payable</span>
+          <strong>
+            {{ payment.finalPayableAmount | number:'1.2-2' }}
+          </strong>
+        </div>
+
+
+        <div class="summary-item">
+          <span>Paid Amount</span>
+          <strong>
+            {{ payment.paidAmount | number:'1.2-2' }}
+          </strong>
+        </div>
+
+
+        <div class="summary-item">
+          <span>Due Amount</span>
+          <strong>
+            {{ payment.dueAmount | number:'1.2-2' }}
+          </strong>
+        </div>
+
+
+        <div class="summary-item">
+          <span>Status</span>
+          <strong>
+            {{ payment.paymentStatus }}
+          </strong>
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- ===================================================== -->
+    <!-- ACTIONS -->
+    <!-- ===================================================== -->
+
+    <footer class="form-actions">
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        [disabled]="loading"
+        (click)="cancel()">
+        Cancel
+      </button>
+
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="loading">
+
+        @if (loading) {
+
+          Saving...
+
+        } @else {
+
+          {{ isEditMode ? 'Update Payment' : 'Create Payment' }}
+
+        }
+
+      </button>
+
+    </footer>
+
+  </form>
+
+</section>

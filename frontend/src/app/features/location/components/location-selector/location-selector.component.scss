@@ -1,0 +1,311 @@
+/* Address selector — compact enterprise ERP styling */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px 14px;
+  width: 100%;
+}
+
+.address-grid mat-form-field {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 4px;
+}
+
+/* Material field */
+.address-grid ::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+.address-grid ::ng-deep .mat-mdc-text-field-wrapper {
+  height: 54px !important;
+  min-height: 54px !important;
+  padding: 0 !important;
+  background: #fff;
+  border-radius: 7px;
+  transition: background .15s ease, box-shadow .15s ease;
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field-flex,
+.address-grid ::ng-deep .mat-mdc-form-field-infix {
+  height: 54px !important;
+  min-height: 54px !important;
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Input value */
+.address-grid ::ng-deep .mat-mdc-input-element,
+.address-grid ::ng-deep .mat-mdc-select-value-text {
+  color: #172033 !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+}
+
+/* Input spacing — prevents value sticking to left edge */
+.address-grid ::ng-deep .mat-mdc-input-element {
+  padding: 0 !important;
+}
+
+/* Select spacing */
+.address-grid ::ng-deep .mat-mdc-select {
+  width: 100%;
+  padding-left: 0;
+  font-size: 12.5px !important;
+}
+
+.address-grid ::ng-deep .mat-mdc-select-trigger {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+}
+
+.address-grid ::ng-deep .mat-mdc-select-value {
+  padding-left: 2px;
+}
+
+.address-grid ::ng-deep .mat-mdc-select-value-text {
+  color: #172033 !important;
+}
+
+.address-grid ::ng-deep .mat-mdc-select-placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Prefix icons */
+.address-grid ::ng-deep .mat-mdc-form-field-icon-prefix {
+  padding-left: 10px !important;
+  padding-right: 8px !important;
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field-icon-prefix mat-icon {
+  width: 17px;
+  height: 17px;
+  color: #7b8798;
+  font-size: 17px;
+  line-height: 17px;
+  transition: color .15s ease;
+}
+
+/* Outline */
+.address-grid ::ng-deep .mdc-notched-outline {
+  border-radius: 7px;
+}
+
+.address-grid ::ng-deep .mdc-notched-outline__leading,
+.address-grid ::ng-deep .mdc-notched-outline__notch,
+.address-grid ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #cbd3df;
+  border-width: 1px;
+}
+
+/* Hover */
+.address-grid ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.address-grid ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.address-grid ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #94a3b8;
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field:hover .mat-mdc-text-field-wrapper {
+  background: #f8fbff;
+}
+
+/* Focus */
+.address-grid ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.address-grid ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.address-grid ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #315efb;
+  border-width: 1.5px;
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 2px rgba(49, 94, 251, .07);
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-icon-prefix mat-icon {
+  color: #315efb;
+}
+
+/* Labels */
+.address-grid ::ng-deep .mdc-floating-label {
+  color: #64748b;
+  font-size: 11.5px !important;
+  font-weight: 500;
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: #315efb;
+}
+
+.address-grid ::ng-deep .mdc-notched-outline__notch {
+  padding: 0 5px;
+}
+
+/* Select arrow */
+.address-grid ::ng-deep .mat-mdc-select-arrow {
+  color: #64748b;
+}
+
+.address-grid ::ng-deep .mat-mdc-select-arrow-wrapper {
+  width: 34px;
+  padding-right: 7px;
+}
+
+/* Dropdown panel */
+::ng-deep .cdk-overlay-pane .mat-mdc-select-panel {
+  max-height: 270px !important;
+  margin-top: 4px;
+  padding: 5px !important;
+  border: 1px solid #d9e2ef !important;
+  border-radius: 9px !important;
+  background: #fff !important;
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, .14),
+    0 3px 8px rgba(15, 23, 42, .07) !important;
+}
+
+/* Dropdown option */
+::ng-deep .mat-mdc-option {
+  min-height: 38px !important;
+  height: 38px !important;
+  padding: 0 12px !important;
+  border-radius: 6px;
+  color: #334155 !important;
+  font-size: 12.5px !important;
+  font-weight: 500;
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+  color: inherit !important;
+}
+
+/* Dropdown hover */
+::ng-deep .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background: #eef4ff !important;
+  color: #1d4ed8 !important;
+}
+
+/* Keyboard active option */
+::ng-deep .mat-mdc-option.mdc-list-item--activated {
+  background: #f3f7ff !important;
+  color: #1d4ed8 !important;
+}
+
+/* Selected option */
+::ng-deep .mat-mdc-option.mdc-list-item--selected {
+  background: #e8f0ff !important;
+  color: #1d4ed8 !important;
+  font-weight: 600;
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item--selected:hover {
+  background: #dce9ff !important;
+}
+
+/* Disabled */
+::ng-deep .mat-mdc-option.mdc-list-item--disabled {
+  color: #a0aec0 !important;
+}
+
+/* Readonly */
+.address-grid ::ng-deep input[readonly] {
+  color: #64748b;
+  background: #f8fafc;
+  cursor: not-allowed;
+}
+
+/* Error */
+.address-grid ::ng-deep .mat-mdc-form-field.mat-form-field-invalid
+.mdc-notched-outline__leading,
+.address-grid ::ng-deep .mat-mdc-form-field.mat-form-field-invalid
+.mdc-notched-outline__notch,
+.address-grid ::ng-deep .mat-mdc-form-field.mat-form-field-invalid
+.mdc-notched-outline__trailing {
+  border-color: #dc3545;
+}
+
+.address-grid ::ng-deep .mat-mdc-form-field-error {
+  padding-left: 2px;
+  font-size: 10px !important;
+  line-height: 1.2;
+  color: #dc3545;
+}
+
+/* Tablet */
+@media (max-width: 1200px) {
+  .address-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 13px;
+  }
+}
+
+/* Small tablet */
+@media (max-width: 900px) {
+  .address-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .address-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .address-grid mat-form-field {
+    margin-bottom: 4px;
+  }
+
+  .address-grid ::ng-deep .mat-mdc-text-field-wrapper,
+  .address-grid ::ng-deep .mat-mdc-form-field-flex,
+  .address-grid ::ng-deep .mat-mdc-form-field-infix {
+    height: 52px !important;
+    min-height: 52px !important;
+  }
+
+  .address-grid ::ng-deep .mat-mdc-select-trigger {
+    min-height: 52px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .address-grid ::ng-deep .mat-mdc-form-field-icon-prefix {
+    padding-left: 7px !important;
+    padding-right: 6px !important;
+  }
+
+  .address-grid ::ng-deep .mat-mdc-form-field-icon-prefix mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    line-height: 16px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .address-grid *,
+  .address-grid *::before,
+  .address-grid *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

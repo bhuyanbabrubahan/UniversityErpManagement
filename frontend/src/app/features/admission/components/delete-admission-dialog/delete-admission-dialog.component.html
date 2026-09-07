@@ -1,0 +1,45 @@
+@if (admission) {
+  <div class="backdrop" role="presentation" (click)="cancel()">
+    <section
+      class="dialog"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="delete-title"
+      (click)="$event.stopPropagation()">
+
+      <div class="dialog-icon">!</div>
+
+      <div class="dialog-content">
+        <h2 id="delete-title">Cancel admission?</h2>
+
+        <p>
+          This will cancel admission
+          <strong>{{ admission.admissionNumber }}</strong>.
+          Cancelled admissions are not shown in the normal admission list.
+        </p>
+      </div>
+
+      <div class="dialog-actions">
+        <button
+          type="button"
+          class="btn secondary"
+          [disabled]="busy"
+          (click)="cancel()">
+          Keep
+        </button>
+
+        <button
+          type="button"
+          class="btn danger"
+          [disabled]="busy"
+          (click)="confirm()">
+          @if (busy) {
+            Cancelling…
+          } @else {
+            Cancel Admission
+          }
+        </button>
+      </div>
+    </section>
+  </div>
+}

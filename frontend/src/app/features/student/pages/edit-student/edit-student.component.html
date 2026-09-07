@@ -1,0 +1,32 @@
+<div class="student-page-container">
+
+  <div class="student-page-header student-page-header--edit">
+
+    <div class="student-page-header-icon">
+      <mat-icon>edit</mat-icon>
+    </div>
+
+    <div class="student-page-header-content">
+
+      <h1>
+        Edit Student
+      </h1>
+
+      <p>
+        Update student account and academic information.
+      </p>
+
+    </div>
+
+  </div>
+
+  <app-student-form
+    [form]="studentForm"
+    [departments]="departments"
+    [isEditMode]="true"
+    [loading]="loading || saving"
+    (save)="updateStudent()"
+    (cancel)="cancel()">
+  </app-student-form>
+
+</div>

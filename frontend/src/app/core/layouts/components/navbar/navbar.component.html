@@ -1,0 +1,263 @@
+<mat-toolbar class="app-toolbar">
+  <!-- LEFT -->
+  <div class="toolbar-left">
+    <button
+      mat-icon-button
+      type="button"
+      class="menu-button"
+      aria-label="Toggle navigation"
+      (click)="onMenuClick()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div class="brand">
+      <div class="brand-mark">
+        <mat-icon>account_balance</mat-icon>
+      </div>
+
+      <div class="brand-copy">
+        <span class="brand-name">UMS</span>
+        <span class="brand-description"> University Management System </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER SEARCH -->
+  <div class="toolbar-center">
+    <div
+      class="global-search-wrap"
+      [class.search-active]="searchTerm.length > 0"
+    >
+      <mat-icon class="search-icon"> search </mat-icon>
+
+      <input
+        type="text"
+        aria-label="Global search"
+        autocomplete="off"
+        placeholder="Search modules, students, faculty..."
+        [value]="searchTerm"
+        (input)="onSearch($any($event.target).value)"
+        (focus)="onSearchFocus()"
+      />
+
+      @if (searchTerm) {
+        <button
+          type="button"
+          class="search-clear"
+          aria-label="Clear search"
+          (click)="clearSearch()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+
+      @if (searchResults.length) {
+        <div class="search-results">
+          <div class="search-results-header">
+            <span>Search results</span>
+            <small>{{ searchResults.length }}</small>
+          </div>
+
+          @for (item of searchResults; track item.route) {
+            <button
+              type="button"
+              class="search-result-item"
+              (click)="openResult(item)"
+            >
+              <span class="result-icon">
+                <mat-icon>
+                  {{ item.icon || "chevron_right" }}
+                </mat-icon>
+              </span>
+
+              <span class="result-content">
+                <strong>
+                  {{ item.label }}
+                </strong>
+
+                @if (item.route) {
+                  <small>
+                    {{ item.route }}
+                  </small>
+                }
+              </span>
+
+              <mat-icon class="result-arrow"> arrow_forward </mat-icon>
+            </button>
+          }
+        </div>
+      }
+
+      @if (searchTerm && !searchResults.length) {
+        <div class="search-empty">
+          <div class="search-empty-icon">
+            <mat-icon>search_off</mat-icon>
+          </div>
+
+          <div>
+            <strong>No results found</strong>
+            <span> Try another module or keyword </span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="toolbar-right">
+    <!-- DATE / TIME -->
+    <div class="system-time">
+      <span class="system-date">
+        {{ currentDate }}
+      </span>
+
+      <span class="system-clock">
+        {{ currentTime }}
+      </span>
+    </div>
+
+    <!-- NOTIFICATION -->
+    <button
+      mat-icon-button
+      type="button"
+      class="toolbar-icon notification-button"
+      aria-label="Notifications"
+      [matMenuTriggerFor]="notificationMenu"
+    >
+      <mat-icon> notifications_none </mat-icon>
+
+      @if (notificationCount > 0) {
+        <span class="notification-badge">
+          {{ notificationCount > 99 ? "99+" : notificationCount }}
+        </span>
+      }
+    </button>
+
+    <!-- PROFILE -->
+    <button
+      type="button"
+      class="profile-trigger"
+      [matMenuTriggerFor]="userMenu"
+      aria-label="Open user menu"
+    >
+      <span class="profile-avatar">
+        @if (profileImage) {
+          <img
+            [src]="profileImage"
+            alt="Profile"
+            (error)="onProfileImageError()"
+          />
+        } @else {
+          <span>
+            {{ userInitials }}
+          </span>
+        }
+      </span>
+
+      <span class="profile-copy">
+        <strong>
+          {{ displayName }}
+        </strong>
+
+        <small>
+          {{ displayRole }}
+        </small>
+      </span>
+
+      <mat-icon class="profile-arrow"> expand_more </mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<!-- NOTIFICATION MENU -->
+<mat-menu #notificationMenu="matMenu" class="enterprise-menu">
+  <div class="menu-heading" (click)="$event.stopPropagation()">
+    <div class="menu-heading-icon">
+      <mat-icon>notifications</mat-icon>
+    </div>
+
+    <div class="menu-heading-content">
+      <strong> Notifications </strong>
+
+      <span> Live workspace events </span>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    type="button"
+    (click)="router.navigateByUrl('/dashboard/notifications')"
+  >
+    <mat-icon> notifications </mat-icon>
+
+    <span> Open notification center </span>
+  </button>
+</mat-menu>
+
+<!-- USER MENU -->
+<mat-menu #userMenu="matMenu">
+  <div class="user-menu-header" (click)="$event.stopPropagation()">
+    <span class="profile-avatar large">
+      @if (profileImage) {
+        <img
+          [src]="profileImage"
+          alt="Profile"
+          (error)="onProfileImageError()"
+        />
+      } @else {
+        <span>
+          {{ userInitials }}
+        </span>
+      }
+    </span>
+
+    <div class="user-menu-info">
+      <strong>
+        {{ displayName }}
+      </strong>
+
+      <span>
+        {{ displayRole }}
+      </span>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    type="button"
+    (click)="router.navigateByUrl('/dashboard/profile')"
+  >
+    <mat-icon> account_circle </mat-icon>
+
+    <span> My Profile </span>
+  </button>
+
+  <button
+    mat-menu-item
+    type="button"
+    (click)="router.navigateByUrl('/dashboard/settings')"
+  >
+    <mat-icon> settings </mat-icon>
+
+    <span> Settings </span>
+  </button>
+
+  <button mat-menu-item type="button" (click)="openChangePasswordDialog()">
+    <mat-icon> lock </mat-icon>
+
+    <span> Change Password </span>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item type="button" class="logout-item" (click)="logout()">
+    <mat-icon> logout </mat-icon>
+
+    <span> Sign out </span>
+  </button>
+</mat-menu>

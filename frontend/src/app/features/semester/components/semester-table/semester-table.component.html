@@ -1,0 +1,454 @@
+<div class="table-card">
+
+  <!-- =====================================================
+       TABLE WRAPPER
+  ===================================================== -->
+
+  <div class="table-wrapper">
+
+    <table>
+
+      <!-- =================================================
+           HEADER
+      ================================================= -->
+
+      <thead>
+
+            <tr>
+
+                <!-- SEMESTER -->
+                <th
+                class="sortable"
+                [class.sorted]="isSorted('semesterName')"
+                (click)="onSort('semesterName')">
+
+                <span class="th-content">
+                    Semester
+
+                    <span class="sort-icon">
+                    {{ getSortIcon('semesterName') }}
+                    </span>
+                </span>
+
+                </th>
+
+
+                <!-- NUMBER -->
+                <th
+                class="sortable"
+                [class.sorted]="isSorted('semesterNumber')"
+                (click)="onSort('semesterNumber')">
+
+                <span class="th-content">
+                    Number
+
+                    <span class="sort-icon">
+                    {{ getSortIcon('semesterNumber') }}
+                    </span>
+                </span>
+
+                </th>
+
+
+                <!-- COURSE -->
+                <th
+                class="sortable"
+                [class.sorted]="isSorted('courseName')"
+                (click)="onSort('courseName')">
+
+                <span class="th-content">
+                    Course
+
+                    <span class="sort-icon">
+                    {{ getSortIcon('courseName') }}
+                    </span>
+                </span>
+
+                </th>
+
+
+                <!-- START DATE -->
+                <th
+                class="sortable"
+                [class.sorted]="isSorted('semesterStartDate')"
+                (click)="onSort('semesterStartDate')">
+
+                <span class="th-content">
+                    Duration
+
+                    <span class="sort-icon">
+                    {{ getSortIcon('semesterStartDate') }}
+                    </span>
+                </span>
+
+                </th>
+
+
+                <!-- WORKING DAYS -->
+                <th
+                class="sortable"
+                [class.sorted]="isSorted('totalWorkingDays')"
+                (click)="onSort('totalWorkingDays')">
+
+                <span class="th-content">
+                    Working Days
+
+                    <span class="sort-icon">
+                    {{ getSortIcon('totalWorkingDays') }}
+                    </span>
+                </span>
+
+                </th>
+
+
+                <!-- STATUS -->
+                <th
+                class="sortable"
+                [class.sorted]="isSorted('status')"
+                (click)="onSort('status')">
+
+                <span class="th-content">
+                    Status
+
+                    <span class="sort-icon">
+                    {{ getSortIcon('status') }}
+                    </span>
+                </span>
+
+                </th>
+
+
+                <!-- ACTIONS -->
+                <th class="actions-column">
+                Actions
+                </th>
+
+            </tr>
+
+            </thead>
+
+
+      <!-- =================================================
+           BODY
+      ================================================= -->
+
+      <tbody>
+
+        @if (loading) {
+
+          <tr>
+
+            <td
+              colspan="7"
+              class="table-state">
+
+              <span class="spinner"></span>
+
+              Loading semesters...
+
+            </td>
+
+          </tr>
+
+        }
+
+        @else if (semesters.length === 0) {
+
+          <tr>
+
+            <td
+              colspan="7"
+              class="table-state empty-state">
+
+              <div class="empty-icon">
+                📅
+              </div>
+
+              <strong>
+                No semesters found
+              </strong>
+
+              <span>
+                Try changing your search filters.
+              </span>
+
+            </td>
+
+          </tr>
+
+        }
+
+        @else {
+
+          @for (
+            semester of semesters;
+            track trackById($index, semester)
+          ) {
+
+            <tr>
+
+              <!-- =========================================
+                   SEMESTER
+              ========================================== -->
+
+              <td>
+
+                <div class="primary-text">
+                  {{ semester.semesterName }}
+                </div>
+
+                <div class="secondary-text">
+                  ID #{{ semester.id }}
+                </div>
+
+              </td>
+
+
+              <!-- =========================================
+                   NUMBER
+              ========================================== -->
+
+              <td>
+
+                <span class="number-badge">
+                  {{ semester.semesterNumber }}
+                </span>
+
+              </td>
+
+
+              <!-- =========================================
+                   COURSE
+              ========================================== -->
+
+              <td>
+
+                <div class="primary-text">
+                  {{ semester.courseName }}
+                </div>
+
+                <div class="secondary-text">
+                  {{ semester.courseCode }}
+                </div>
+
+              </td>
+
+
+              <!-- =========================================
+                   DURATION
+              ========================================== -->
+
+              <td>
+
+                <div class="date-range">
+
+                  <span>
+                    {{ semester.semesterStartDate }}
+                  </span>
+
+                  <span class="date-arrow">
+                    →
+                  </span>
+
+                  <span>
+                    {{ semester.semesterEndDate }}
+                  </span>
+
+                </div>
+
+              </td>
+
+
+              <!-- =========================================
+                   WORKING DAYS
+              ========================================== -->
+
+              <td>
+
+                <strong class="working-days">
+                  {{ semester.totalWorkingDays ?? 0 }}
+                </strong>
+
+                <span class="days-label">
+                  days
+                </span>
+
+              </td>
+
+
+              <!-- =========================================
+                   STATUS
+              ========================================== -->
+
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class.active]="
+                    semester.status === RecordStatus.ACTIVE
+                  "
+                  [class.inactive]="
+                    semester.status !== RecordStatus.ACTIVE
+                  ">
+
+                  {{ semester.status }}
+
+                </span>
+
+              </td>
+
+
+              <!-- =========================================
+                   ACTIONS
+              ========================================== -->
+
+              <td class="actions">
+
+                <!-- VIEW -->
+
+                <button
+                  type="button"
+                  class="action-btn view"
+                  title="View"
+                  (click)="onView(semester)">
+
+                  View
+
+                </button>
+
+
+                <!-- EDIT -->
+
+                @if (canEdit) {
+
+                  <button
+                    type="button"
+                    class="action-btn edit"
+                    title="Edit"
+                    (click)="onEdit(semester)">
+
+                    Edit
+
+                  </button>
+
+                }
+
+
+                <!-- DELETE -->
+
+                @if (canDelete) {
+
+                  <button
+                    type="button"
+                    class="action-btn delete"
+                    title="Delete"
+                    (click)="onDelete(semester)">
+
+                    Delete
+
+                  </button>
+
+                }
+
+              </td>
+
+            </tr>
+
+          }
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- =====================================================
+       PAGINATION
+  ===================================================== -->
+
+  @if (
+    !loading &&
+    totalPages > 1
+  ) {
+
+    <div class="pagination">
+
+      <!-- PREVIOUS -->
+
+      <button
+        type="button"
+        class="page-btn"
+        [disabled]="page === 0"
+        (click)="previousPage()">
+
+        ← Previous
+
+      </button>
+
+
+      <!-- PAGE NUMBERS -->
+
+      <div class="page-numbers">
+
+        @for (
+          pageNumber of pageNumbers;
+          track pageNumber
+        ) {
+
+          <button
+            type="button"
+            class="page-number"
+            [class.active]="pageNumber === page"
+            (click)="onPageChange(pageNumber)">
+
+            {{ pageNumber + 1 }}
+
+          </button>
+
+        }
+
+      </div>
+
+
+      <!-- NEXT -->
+
+      <button
+        type="button"
+        class="page-btn"
+        [disabled]="last"
+        (click)="nextPage()">
+
+        Next →
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       PAGINATION INFO
+  ===================================================== -->
+
+  @if (totalElements > 0) {
+
+    <div class="pagination-info">
+
+      Showing page
+      <strong>{{ page + 1 }}</strong>
+      of
+      <strong>{{ totalPages }}</strong>
+
+      —
+      <strong>{{ totalElements }}</strong>
+      semester(s)
+
+    </div>
+
+  }
+
+</div>

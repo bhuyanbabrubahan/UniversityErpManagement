@@ -1,0 +1,11 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { DashboardService } from '../../../auth/services/dashboard.service';
+import { AuthService } from '../../../auth/services/auth.service';
+@Component({selector:'app-notifications-page',standalone:true,imports:[CommonModule,MatButtonModule,MatCardModule,MatIconModule],template:`
+<section class="workspace-page"><header class="workspace-header"><div><span class="eyebrow">COMMUNICATION</span><h1>Notifications</h1><p>Role-aware operational alerts and recent system events.</p></div><button mat-stroked-button (click)="refresh()"><mat-icon>refresh</mat-icon>Refresh</button></header>
+<div class="notice-grid">@for(n of items;track n.title){<mat-card class="notice-card" [class.unread]="n.unread"><mat-card-content><div class="notice-icon"><mat-icon>{{n.icon}}</mat-icon></div><div class="notice-copy"><strong>{{n.title}}</strong><p>{{n.text}}</p><small>{{n.time}}</small></div><span class="notice-dot" *ngIf="n.unread"></span></mat-card-content></mat-card>}@empty{<mat-card><mat-card-content>No notifications are available.</mat-card-content></mat-card>}</div></section>`})
+export class NotificationsComponent{private readonly dashboard=inject(DashboardService);private readonly auth=inject(AuthService);items:any[]=[];ngOnInit(){this.refresh();}refresh(){this.dashboard.getDashboard().subscribe({next:r=>{const d=r?.data||{};const role=this.auth.getRole()||'USER';this.items=[{icon:'dashboard',title:'Workspace synchronized',text:`${role} dashboard data loaded from the server.`,time:'Just now',unread:true},{icon:'fact_check',title:'Attendance workspace',text:`Attendance summary: ${d.todayAttendance??d.studentAttendance??d.todayAttendanceByFaculty??0}.`,time:'Current session',unread:false},{icon:'payments',title:'Finance overview',text:`Pending fee: ₹${d.studentPendingFee??0}.`,time:'Current data',unread:false},{icon:'security',title:'Secure session active',text:'Your authenticated ERP session is active.',time:'Current session',unread:false}];},error:()=>{this.items=[];}})}}

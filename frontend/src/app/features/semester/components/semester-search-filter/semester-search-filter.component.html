@@ -1,0 +1,295 @@
+<section class="search-filter">
+
+  <div class="filter-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Search & Filter
+      </span>
+
+      <h2>
+        Find Semesters
+      </h2>
+
+      <p>
+        Filter semesters using semester, course, date and working-day criteria.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSearch()"
+    novalidate>
+
+    <div class="filter-grid">
+
+
+      <!-- Semester ID -->
+
+      <div class="form-field">
+
+        <label for="semesterId">
+          Semester ID
+        </label>
+
+        <input
+          id="semesterId"
+          type="number"
+          min="1"
+          formControlName="semesterId"
+          placeholder="Semester ID" />
+
+      </div>
+
+
+      <!-- Semester Name -->
+
+      <div class="form-field">
+
+        <label for="semesterName">
+          Semester Name
+        </label>
+
+        <input
+          id="semesterName"
+          type="text"
+          formControlName="semesterName"
+          placeholder="Semester 1" />
+
+      </div>
+
+
+      <!-- Semester Number -->
+
+      <div class="form-field">
+
+        <label for="semesterNumber">
+          Semester Number
+        </label>
+
+        <input
+          id="semesterNumber"
+          type="number"
+          min="1"
+          max="12"
+          formControlName="semesterNumber"
+          placeholder="1" />
+
+      </div>
+
+
+      <!-- Course ID -->
+
+      <div class="form-field">
+
+        <label for="courseId">
+          Course ID
+        </label>
+
+        <input
+          id="courseId"
+          type="number"
+          min="1"
+          formControlName="courseId"
+          placeholder="Course ID" />
+
+      </div>
+
+
+      <!-- Course Code -->
+
+      <div class="form-field">
+
+        <label for="courseCode">
+          Course Code
+        </label>
+
+        <input
+          id="courseCode"
+          type="text"
+          formControlName="courseCode"
+          placeholder="CSE101" />
+
+      </div>
+
+
+      <!-- Course Name -->
+
+      <div class="form-field">
+
+        <label for="courseName">
+          Course Name
+        </label>
+
+        <input
+          id="courseName"
+          type="text"
+          formControlName="courseName"
+          placeholder="Course name" />
+
+      </div>
+
+
+      <!-- Start Date From -->
+
+      <div class="form-field">
+
+        <label for="startDateFrom">
+          Start Date From
+        </label>
+
+        <input
+          id="startDateFrom"
+          type="date"
+          formControlName="startDateFrom" />
+
+      </div>
+
+
+      <!-- Start Date To -->
+
+      <div class="form-field">
+
+        <label for="startDateTo">
+          Start Date To
+        </label>
+
+        <input
+          id="startDateTo"
+          type="date"
+          formControlName="startDateTo" />
+
+      </div>
+
+
+      <!-- End Date From -->
+
+      <div class="form-field">
+
+        <label for="endDateFrom">
+          End Date From
+        </label>
+
+        <input
+          id="endDateFrom"
+          type="date"
+          formControlName="endDateFrom" />
+
+      </div>
+
+
+      <!-- End Date To -->
+
+      <div class="form-field">
+
+        <label for="endDateTo">
+          End Date To
+        </label>
+
+        <input
+          id="endDateTo"
+          type="date"
+          formControlName="endDateTo" />
+
+      </div>
+
+
+      <!-- Minimum Working Days -->
+
+      <div class="form-field">
+
+        <label for="minWorkingDays">
+          Minimum Working Days
+        </label>
+
+        <input
+          id="minWorkingDays"
+          type="number"
+          min="0"
+          formControlName="minWorkingDays"
+          placeholder="Minimum days" />
+
+      </div>
+
+
+      <!-- Maximum Working Days -->
+
+      <div class="form-field">
+
+        <label for="maxWorkingDays">
+          Maximum Working Days
+        </label>
+
+        <input
+          id="maxWorkingDays"
+          type="number"
+          min="0"
+          formControlName="maxWorkingDays"
+          placeholder="Maximum days" />
+
+      </div>
+
+
+      <!-- Status -->
+
+      <div class="form-field">
+
+        <label for="status">
+          Record Status
+        </label>
+
+        <select
+          id="status"
+          formControlName="status">
+
+          <option [ngValue]="null">
+            All record statuses
+          </option>
+
+          @for (
+            status of recordStatuses;
+            track status
+          ) {
+
+            <option [ngValue]="status">
+              {{ status }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <div class="filter-actions">
+
+      <button
+        type="button"
+        class="reset-btn"
+        (click)="onReset()">
+
+        Reset
+
+      </button>
+
+      <button
+        type="submit"
+        class="search-btn">
+
+        Search
+
+      </button>
+
+    </div>
+
+  </form>
+
+</section>

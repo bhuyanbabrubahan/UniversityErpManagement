@@ -1,0 +1,106 @@
+<section class="notification-page">
+  <header class="page-header">
+    <div class="header-main">
+      <div class="breadcrumb">
+        <span>Notifications</span>
+        <span class="separator">/</span>
+        <strong>Edit</strong>
+      </div>
+
+      <div class="title-row">
+        <div class="title-icon">
+          <mat-icon aria-hidden="true"> edit_note </mat-icon>
+        </div>
+
+        <div class="title-content">
+          <h1>Edit notification</h1>
+
+          <p>Update content, audience, delivery settings and status.</p>
+        </div>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="back-button"
+      [disabled]="busy()"
+      (click)="cancel()"
+    >
+      <mat-icon aria-hidden="true"> arrow_back </mat-icon>
+
+      <span>Back to details</span>
+    </button>
+  </header>
+
+  <!-- ERROR -->
+  <div class="error-alert" *ngIf="error()" role="alert">
+    <div class="error-icon">
+      <mat-icon aria-hidden="true"> error_outline </mat-icon>
+    </div>
+
+    <div class="error-content">
+      <strong>Something went wrong</strong>
+
+      <span>
+        {{ error() }}
+      </span>
+    </div>
+
+    <button
+      type="button"
+      class="error-close"
+      aria-label="Close error"
+      (click)="error.set('')"
+    >
+      <mat-icon aria-hidden="true"> close </mat-icon>
+    </button>
+  </div>
+
+  <!-- LOADING -->
+  <section class="state-card" *ngIf="loading()">
+    <span class="loading-spinner"></span>
+
+    <div class="state-content">
+      <strong>Loading notification</strong>
+
+      <span> Please wait while the notification details are loaded. </span>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-card" *ngIf="!loading()">
+    <header class="form-card-header">
+      <div class="form-icon">
+        <mat-icon aria-hidden="true"> notifications_active </mat-icon>
+      </div>
+
+      <div class="form-title">
+        <h2>Notification details</h2>
+
+        <p>Update the notification information below.</p>
+      </div>
+
+      <span class="edit-badge">
+        <span class="badge-dot"></span>
+        Editing
+      </span>
+    </header>
+
+    <div class="form-card-body">
+      <app-notification-form
+        [model]="model()"
+        submitLabel="Save changes"
+        [busy]="busy()"
+        (save)="save($event)"
+        (cancel)="cancel()"
+      ></app-notification-form>
+    </div>
+  </section>
+
+  <!-- SAVING -->
+  <div class="saving-indicator" *ngIf="busy()" aria-live="polite">
+    <span class="saving-spinner"></span>
+
+    <span>Saving changes...</span>
+  </div>
+</section>

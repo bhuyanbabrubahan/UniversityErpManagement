@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.page {
+  display: grid;
+  gap: 16px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 24px;
+}
+
+.page-header p:last-child {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.state {
+  padding: 50px;
+  text-align: center;
+  color: #64748b;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}

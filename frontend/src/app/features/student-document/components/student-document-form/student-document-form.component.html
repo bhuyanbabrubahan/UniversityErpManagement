@@ -1,0 +1,279 @@
+<form
+  class="document-form"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+
+  <div class="form-header">
+
+    <div>
+
+      <h2>
+        {{ editMode
+          ? 'Replace Document'
+          : 'Upload Document'
+        }}
+      </h2>
+
+      <p>
+        {{ editMode
+          ? 'Replace the existing student document.'
+          : 'Upload a student document securely.'
+        }}
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       FORM GRID
+  ============================================================ -->
+
+  <div class="form-grid">
+
+
+    <!-- ==========================================================
+         STUDENT ID
+    =========================================================== -->
+
+    <div class="form-field">
+
+      <label for="studentId">
+
+        Student ID
+
+        <span>*</span>
+
+      </label>
+
+
+      <input
+        id="studentId"
+        type="number"
+        formControlName="studentId"
+        placeholder="Enter student ID"
+        min="1"
+      />
+
+
+      <small
+        class="error"
+        *ngIf="
+          form.get('studentId')?.touched &&
+          form.get('studentId')?.hasError('required')
+        "
+      >
+        Student ID is required.
+      </small>
+
+
+      <small
+        class="error"
+        *ngIf="
+          form.get('studentId')?.touched &&
+          form.get('studentId')?.hasError('min')
+        "
+      >
+        Student ID must be greater than 0.
+      </small>
+
+    </div>
+
+
+
+    <!-- ==========================================================
+         DOCUMENT TYPE
+    =========================================================== -->
+
+    <div class="form-field">
+
+      <label for="documentType">
+
+        Document Type
+
+        <span>*</span>
+
+      </label>
+
+
+      <select
+        id="documentType"
+        formControlName="documentType"
+      >
+
+        <option
+          [ngValue]="null"
+        >
+          Select document type
+        </option>
+
+
+        <option
+          *ngFor="let type of documentTypes"
+          [value]="type"
+        >
+          {{ type.replace('_', ' ') }}
+        </option>
+
+      </select>
+
+
+      <small
+        class="error"
+        *ngIf="
+          form.get('documentType')?.touched &&
+          form.get('documentType')?.invalid
+        "
+      >
+        Document type is required.
+      </small>
+
+    </div>
+
+
+
+    <!-- ==========================================================
+         FILE
+    =========================================================== -->
+
+    <div class="form-field full-width">
+
+      <label for="documentFile">
+
+        {{ editMode
+          ? 'New File'
+          : 'Document File'
+        }}
+
+        <span>
+          *
+        </span>
+
+      </label>
+
+
+      <input
+        id="documentFile"
+        type="file"
+        accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
+        (change)="onFileSelected($event)"
+        [disabled]="loading"
+      />
+
+
+      <!-- Selected File -->
+
+      <div
+        class="selected-file"
+        *ngIf="selectedFile"
+      >
+
+        <div>
+
+          <strong>
+            {{ selectedFile.name }}
+          </strong>
+
+          <span>
+            {{ selectedFile.size / 1024 / 1024 | number:'1.2-2' }}
+            MB
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Existing file information during edit -->
+
+      <small
+        class="hint"
+        *ngIf="editMode && document"
+      >
+        Current document:
+        {{ document.originalFileName }}
+      </small>
+
+
+      <!-- File Hint -->
+
+      <small class="hint">
+
+        Supported: JPG, PNG, PDF · Maximum 5 MB
+
+      </small>
+
+
+      <!-- File Error -->
+
+      <small
+        class="error"
+        *ngIf="fileError"
+      >
+        {{ fileError }}
+      </small>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ============================================================
+       ACTIONS
+  ============================================================ -->
+
+  <div class="form-actions">
+
+
+    <!-- Cancel -->
+
+    <button
+      type="button"
+      class="btn-secondary"
+      [disabled]="loading"
+      (click)="cancel()"
+    >
+
+      Cancel
+
+    </button>
+
+
+
+    <!-- Submit -->
+
+    <button
+      type="submit"
+      class="btn-primary"
+      [disabled]="loading"
+    >
+
+      <ng-container *ngIf="!loading">
+
+        {{
+          editMode
+            ? 'Replace Document'
+            : 'Upload Document'
+        }}
+
+      </ng-container>
+
+
+      <ng-container *ngIf="loading">
+
+        Saving...
+
+      </ng-container>
+
+    </button>
+
+  </div>
+
+</form>

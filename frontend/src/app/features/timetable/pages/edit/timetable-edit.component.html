@@ -1,0 +1,45 @@
+<section class="page">
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow">University ERP Management</span>
+
+      <h1>Edit Timetable</h1>
+
+      <p>Update timetable information.</p>
+    </div>
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="cancel()"
+      aria-label="Go back"
+    >
+      <span class="back-icon">←</span>
+      <span>Back</span>
+    </button>
+  </header>
+
+  @if (pageLoading()) {
+    <div class="loading-card">
+      <span class="loading-spinner"></span>
+
+      <div>
+        <strong>Loading timetable...</strong>
+
+        <span>Please wait while timetable information is being loaded.</span>
+      </div>
+    </div>
+  }
+
+  @if (!pageLoading()) {
+    <div class="card">
+      <app-timetable-form
+        [model]="model()"
+        [loading]="loading()"
+        submitLabel="Update Timetable"
+        (save)="save($event)"
+        (cancel)="cancel()"
+      />
+    </div>
+  }
+</section>

@@ -1,0 +1,36 @@
+<section class="page">
+  <header>
+    <div><h1>Staff Details</h1></div>
+    <a routerLink="../edit/{{ item()?.id }}">Edit</a>
+  </header>
+  <div class="details">
+    <div>
+      <span>Code</span><strong>{{ item()?.code || "—" }}</strong>
+    </div>
+    <div>
+      <span>Employeecode</span
+      ><strong>{{ item()?.employeeCode || "—" }}</strong>
+    </div>
+    <div>
+      <span>Fullname</span><strong>{{ item()?.fullName || "—" }}</strong>
+    </div>
+    <div>
+      <span>Department</span><strong>{{ item()?.department || "—" }}</strong>
+    </div>
+    <div>
+      <span>Email</span><strong>{{ item()?.email || "—" }}</strong>
+    </div>
+    <div>
+      <span>Phone</span><strong>{{ item()?.phone || "—" }}</strong>
+    </div>
+    <div>
+      <span>Designation</span><strong>{{ item()?.designation || "—" }}</strong>
+    </div>
+    <div>
+      <span>Status</span><strong>{{ item()?.status || "—" }}</strong>
+    </div>
+    <div>
+      <span>Description</span><strong>{{ item()?.description || "—" }}</strong>
+    </div>
+  </div>
+</section>

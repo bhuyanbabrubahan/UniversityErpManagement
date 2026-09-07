@@ -1,0 +1,33 @@
+name: Deploy Production
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - run: mvn -B -DskipTests package
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - working-directory: frontend
+        run: npm install && npm run build:prod
+      - name: Package release
+        run: tar -czf university-erp-release.tar.gz target/*.jar frontend/dist docker docker-compose.yml
+      - name: Deploy over SSH
+        if: ${{ secrets.AWS_HOST != '' }}
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          source: university-erp-release.tar.gz
+          target: /opt/university-erp/releases
+      - name: Deployment note
+        run: echo "Configure the EC2 release script and rollback policy before enabling automatic production deployment."

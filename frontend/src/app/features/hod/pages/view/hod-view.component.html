@@ -1,0 +1,274 @@
+<section class="page">
+  <!-- =====================================================
+       PAGE HEADER
+       ===================================================== -->
+
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow">HOD Management</span>
+
+      <h1>HOD Details</h1>
+
+      <p>View complete HOD information and audit details.</p>
+    </div>
+
+    <div class="header-actions">
+      <a class="back-btn" routerLink="../">
+        <span>←</span>
+        Back
+      </a>
+
+      @if (item()?.id) {
+        <a class="edit-btn" [routerLink]="['../edit', item()!.id]"> Edit </a>
+      }
+    </div>
+  </header>
+
+  <!-- =====================================================
+       LOADING
+       ===================================================== -->
+
+  @if (loading()) {
+    <div class="loading-card">
+      <span class="spinner"></span>
+
+      <span>Loading HOD details...</span>
+    </div>
+  }
+
+  <!-- =====================================================
+       DETAILS
+       ===================================================== -->
+
+  @if (!loading() && item()) {
+    <div class="details-card">
+      <!-- =================================================
+           HOD HEADER
+           ================================================= -->
+
+      <div class="details-header">
+        <div class="code-block">
+          <span class="details-label"> HOD Code </span>
+
+          <h2>
+            {{ item()?.code || "—" }}
+          </h2>
+        </div>
+
+        <span
+          class="status-badge"
+          [class.active]="item()?.status === 'ACTIVE'"
+          [class.inactive]="item()?.status !== 'ACTIVE'"
+        >
+          {{ item()?.status || "UNKNOWN" }}
+        </span>
+      </div>
+
+      <!-- =================================================
+           HOD INFORMATION
+           ================================================= -->
+
+      <div class="section-title">HOD Information</div>
+
+      <div class="details-grid">
+        <!-- Employee Code -->
+
+        <div class="detail-item">
+          <span>Employee Code</span>
+
+          <strong>
+            {{ item()?.employeeCode || "—" }}
+          </strong>
+        </div>
+
+        <!-- Full Name -->
+
+        <div class="detail-item">
+          <span>Full Name</span>
+
+          <strong>
+            {{ item()?.fullName || "—" }}
+          </strong>
+        </div>
+
+        <!-- Department -->
+
+        <div class="detail-item">
+          <span>Department</span>
+
+          <strong>
+            {{ item()?.department || "—" }}
+          </strong>
+        </div>
+
+        <!-- Email -->
+
+        <div class="detail-item">
+          <span>Email</span>
+
+          <strong>
+            {{ item()?.email || "—" }}
+          </strong>
+        </div>
+
+        <!-- Phone -->
+
+        <div class="detail-item">
+          <span>Phone</span>
+
+          <strong>
+            {{ item()?.phone || "—" }}
+          </strong>
+        </div>
+
+        <!-- Designation -->
+
+        <div class="detail-item">
+          <span>Designation</span>
+
+          <strong>
+            {{ item()?.designation || "—" }}
+          </strong>
+        </div>
+
+        <!-- Status -->
+
+        <div class="detail-item">
+          <span>Status</span>
+
+          <strong>
+            {{ item()?.status || "—" }}
+          </strong>
+        </div>
+      </div>
+
+      <!-- =================================================
+           DESCRIPTION
+           ================================================= -->
+
+      <div class="section-title description-title">Description</div>
+
+      <div class="description-box">
+        {{ item()?.description || "—" }}
+      </div>
+
+      <!-- =================================================
+           AUDIT INFORMATION
+           ================================================= -->
+
+      <div class="section-title audit-title">Audit Information</div>
+
+      <div class="audit-grid">
+        <!-- Created By User ID -->
+
+        <div class="audit-item">
+          <span class="audit-icon created"> C </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Created By User ID </span>
+
+            <strong>
+              {{ item()?.createdByUserId ?? "—" }}
+            </strong>
+          </div>
+        </div>
+
+        <!-- Created By -->
+
+        <div class="audit-item">
+          <span class="audit-icon created"> + </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Created By </span>
+
+            <strong>
+              {{ item()?.createdBy || "—" }}
+            </strong>
+          </div>
+        </div>
+
+        <!-- Created At -->
+
+        <div class="audit-item">
+          <span class="audit-icon created"> + </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Created At </span>
+
+            <strong>
+              @if (item()?.createdAt) {
+                {{ item()!.createdAt | date: "dd MMM yyyy, hh:mm a" }}
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+        </div>
+
+        <!-- Updated By User ID -->
+
+        <div class="audit-item">
+          <span class="audit-icon updated"> U </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Updated By User ID </span>
+
+            <strong>
+              {{ item()?.updatedByUserId ?? "—" }}
+            </strong>
+          </div>
+        </div>
+
+        <!-- Updated By -->
+
+        <div class="audit-item">
+          <span class="audit-icon updated"> U </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Updated By </span>
+
+            <strong>
+              {{ item()?.updatedBy || "—" }}
+            </strong>
+          </div>
+        </div>
+
+        <!-- Updated At -->
+
+        <div class="audit-item">
+          <span class="audit-icon updated"> ↻ </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Updated At </span>
+
+            <strong>
+              @if (item()?.updatedAt) {
+                {{ item()!.updatedAt | date: "dd MMM yyyy, hh:mm a" }}
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- =====================================================
+       NOT FOUND
+       ===================================================== -->
+
+  @if (!loading() && !item()) {
+    <div class="empty-page">
+      <div class="empty-icon">!</div>
+
+      <h3>HOD record not found</h3>
+
+      <p>
+        The requested HOD record could not be found or may have been deleted.
+      </p>
+
+      <a class="empty-action" routerLink="../"> Back to HOD List </a>
+    </div>
+  }
+</section>

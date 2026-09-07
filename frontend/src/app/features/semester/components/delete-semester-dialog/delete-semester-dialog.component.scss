@@ -1,0 +1,349 @@
+// =====================================================
+// HOST
+// =====================================================
+
+:host {
+  display: contents;
+}
+
+
+// =====================================================
+// BACKDROP
+// =====================================================
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  padding: 20px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgb(15 23 42 / 55%);
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  box-sizing: border-box;
+
+  animation: backdrop-fade-in 160ms ease-out;
+}
+
+
+// =====================================================
+// DIALOG
+// =====================================================
+
+.dialog {
+  width: min(430px, 100%);
+
+  padding: 24px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 20px 50px rgb(15 23 42 / 20%),
+    0 4px 12px rgb(15 23 42 / 8%);
+
+  box-sizing: border-box;
+
+  animation: dialog-slide-in 180ms ease-out;
+}
+
+
+// =====================================================
+// DIALOG ICON
+// =====================================================
+
+.dialog-icon {
+  width: 44px;
+  height: 44px;
+
+  margin-bottom: 16px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid #fecaca;
+  border-radius: 50%;
+
+  background: #fef2f2;
+  color: #dc2626;
+
+  font-size: 19px;
+  font-weight: 850;
+
+  box-sizing: border-box;
+}
+
+
+// =====================================================
+// DIALOG CONTENT
+// =====================================================
+
+.dialog-content {
+  h2 {
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 800;
+  }
+
+
+  p {
+    margin: 9px 0 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+
+  strong {
+    color: #334155;
+    font-weight: 750;
+  }
+
+
+  .warning {
+    margin-top: 8px;
+
+    color: #b45309;
+
+    font-size: 11px;
+    font-weight: 600;
+  }
+}
+
+
+// =====================================================
+// ACTIONS
+// =====================================================
+
+.dialog-actions {
+  margin-top: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+}
+
+
+// =====================================================
+// COMMON BUTTON
+// =====================================================
+
+.cancel-btn,
+.delete-btn {
+  min-height: 38px;
+
+  padding: 0 15px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    transform 100ms ease,
+    opacity 140ms ease;
+
+  box-sizing: border-box;
+
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+
+  &:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+  }
+
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+}
+
+
+// =====================================================
+// CANCEL BUTTON
+// =====================================================
+
+.cancel-btn {
+  border: 1px solid #dbe3ef;
+
+  background: #ffffff;
+  color: #334155;
+
+
+  &:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+  }
+}
+
+
+// =====================================================
+// DELETE BUTTON
+// =====================================================
+
+.delete-btn {
+  border: 1px solid #dc2626;
+
+  background: #dc2626;
+  color: #ffffff;
+
+
+  &:hover:not(:disabled) {
+    background: #b91c1c;
+    border-color: #b91c1c;
+  }
+
+
+  &:focus-visible {
+    outline-color: #fca5a5;
+  }
+}
+
+
+// =====================================================
+// LOADING STATE
+// =====================================================
+
+.delete-btn:disabled {
+  background: #dc2626;
+}
+
+
+// =====================================================
+// ANIMATIONS
+// =====================================================
+
+@keyframes backdrop-fade-in {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+@keyframes dialog-slide-in {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+
+// =====================================================
+// TABLET / MOBILE
+// =====================================================
+
+@media (max-width: 520px) {
+
+  .dialog-backdrop {
+    padding: 14px;
+  }
+
+
+  .dialog {
+    width: 100%;
+
+    padding: 20px;
+
+    border-radius: 12px;
+  }
+
+
+  .dialog-icon {
+    width: 42px;
+    height: 42px;
+
+    margin-bottom: 14px;
+  }
+
+
+  .dialog-content {
+
+    h2 {
+      font-size: 17px;
+    }
+
+    p {
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+  }
+
+
+  .dialog-actions {
+    margin-top: 20px;
+  }
+
+
+  .cancel-btn,
+  .delete-btn {
+    min-height: 40px;
+  }
+
+}
+
+
+// =====================================================
+// SMALL MOBILE
+// =====================================================
+
+@media (max-width: 380px) {
+
+  .dialog {
+    padding: 18px;
+  }
+
+
+  .dialog-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+
+  .cancel-btn,
+  .delete-btn {
+    width: 100%;
+  }
+
+}

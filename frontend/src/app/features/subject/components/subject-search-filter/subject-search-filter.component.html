@@ -1,0 +1,241 @@
+<section class="subject-search-filter">
+
+
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <div class="filter-header">
+
+    <div>
+
+      <span class="filter-eyebrow">
+        Subject Management
+      </span>
+
+      <h3>
+        Search Subjects
+      </h3>
+
+      <p>
+        Filter subjects by code, name, semester, credits or status.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       FORM
+  ===================================================== -->
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSearch()"
+    novalidate>
+
+    <div class="filter-grid">
+
+
+      <!-- =================================================
+           SUBJECT NAME
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="subjectName">
+          Subject Name
+        </label>
+
+        <input
+          id="subjectName"
+          type="text"
+          formControlName="subjectName"
+          placeholder="Search by subject name"
+          autocomplete="off"
+        />
+
+      </div>
+
+
+      <!-- =================================================
+           SUBJECT CODE
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="subjectCode">
+          Subject Code
+        </label>
+
+        <input
+          id="subjectCode"
+          type="text"
+          formControlName="subjectCode"
+          placeholder="Search by subject code"
+          autocomplete="off"
+        />
+
+      </div>
+
+
+      <!-- =================================================
+           SEMESTER
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="semesterNumber">
+          Semester
+        </label>
+
+        <select
+          id="semesterNumber"
+          formControlName="semesterNumber">
+
+          <option [ngValue]="null">
+            All semesters
+          </option>
+
+
+          @if (semestersLoading) {
+
+            <option
+              disabled>
+
+              Loading semesters...
+
+            </option>
+
+          }
+
+
+          @for (
+            semester of semesters;
+            track semester.semesterNumber
+          ) {
+
+            <option
+              [ngValue]="semester.semesterNumber">
+
+              {{ semester.name }}
+
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =================================================
+           CREDITS
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="credits">
+          Credits
+        </label>
+
+        <input
+          id="credits"
+          type="number"
+          formControlName="credits"
+          min="1"
+          max="10"
+          step="1"
+          placeholder="e.g. 4"
+        />
+
+      </div>
+
+
+      <!-- =================================================
+           STATUS
+      ================================================= -->
+
+      <div class="form-field">
+
+        <label for="status">
+          Record Status
+        </label>
+
+        <select
+          id="status"
+          formControlName="status">
+
+          <option [ngValue]="null">
+            Active subjects
+          </option>
+
+
+          @for (
+            status of recordStatuses;
+            track status
+          ) {
+
+            <option
+              [ngValue]="status">
+
+              {{ status }}
+
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ACTIONS
+    ===================================================== -->
+
+    <div class="filter-actions">
+
+
+      <!-- =================================================
+           RESET
+      ================================================= -->
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onReset()">
+
+        <span class="material-symbol">
+          refresh
+        </span>
+
+        Reset
+
+      </button>
+
+
+      <!-- =================================================
+           SEARCH
+      ================================================= -->
+
+      <button
+        type="submit"
+        class="btn btn-primary">
+
+        <span class="material-symbol">
+          search
+        </span>
+
+        Search
+
+      </button>
+
+    </div>
+
+  </form>
+
+</section>

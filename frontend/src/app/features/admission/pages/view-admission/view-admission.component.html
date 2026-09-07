@@ -1,0 +1,191 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Admission Management</p>
+      <h1>Admission Details</h1>
+    </div>
+
+    <div class="header-actions">
+      <button type="button" class="secondary" (click)="back()">
+        Back
+      </button>
+
+      @if (admission) {
+        <button type="button" class="primary" (click)="edit()">
+          Edit
+        </button>
+      }
+    </div>
+  </header>
+
+  @if (loading) {
+    <div class="state">
+      Loading admission…
+    </div>
+  } @else if (admission) {
+
+    <!-- ================================================= -->
+    <!-- ADMISSION DETAILS -->
+    <!-- ================================================= -->
+
+    <article class="card">
+
+      <div class="identity">
+
+        <div class="identity-main">
+          <span class="label">Admission Number</span>
+          <h2>{{ admission.admissionNumber }}</h2>
+        </div>
+
+        <!-- STATUS -->
+        <div class="status-row">
+
+          <!-- Admission Status -->
+          <div class="status-group">
+            <span class="status-label">
+              Admission Status
+            </span>
+
+            <span
+              class="status-badge admission-status"
+              [class.active]="admission.admissionStatus === 'ACTIVE'"
+              [class.cancelled]="admission.admissionStatus === 'CANCELLED'"
+              [class.completed]="admission.admissionStatus === 'COMPLETED'">
+              {{ admission.admissionStatus }}
+            </span>
+          </div>
+
+          <!-- Record Status -->
+          <div class="status-group">
+            <span class="status-label">
+              Record Status
+            </span>
+
+            <span
+              class="status-badge record-status"
+              [class.active]="admission.status === 'ACTIVE'"
+              [class.deleted]="admission.status === 'DELETED'">
+              {{ admission.status }}
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================================================= -->
+      <!-- BASIC INFORMATION -->
+      <!-- ================================================= -->
+
+      <div class="grid">
+
+        <div class="item">
+          <span>Admission ID</span>
+          <strong>{{ admission.id }}</strong>
+        </div>
+
+        <div class="item">
+          <span>Student</span>
+          <strong>{{ admission.studentName }}</strong>
+          <small>
+            ID {{ admission.studentId }}
+            ·
+            {{ admission.studentRollNumber }}
+          </small>
+        </div>
+
+        <div class="item">
+          <span>Department</span>
+          <strong>{{ admission.departmentName }}</strong>
+          <small>
+            ID {{ admission.departmentId }}
+          </small>
+        </div>
+
+        <div class="item">
+          <span>Course</span>
+          <strong>{{ admission.courseName }}</strong>
+          <small>
+            ID {{ admission.courseId }}
+          </small>
+        </div>
+
+        <div class="item">
+          <span>Academic Year</span>
+          <strong>{{ admission.academicYear }}</strong>
+        </div>
+
+        <div class="item">
+          <span>Semester</span>
+          <strong>{{ admission.semesterName }}</strong>
+          <small>
+            ID {{ admission.semesterId }}
+          </small>
+        </div>
+
+        <div class="item">
+          <span>Admission Date</span>
+          <strong>
+            {{ formatDate(admission.admissionDate) }}
+          </strong>
+        </div>
+
+        <div class="item full">
+          <span>Remarks</span>
+          <strong>
+            {{ admission.remarks || '—' }}
+          </strong>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ================================================= -->
+    <!-- AUDIT INFORMATION -->
+    <!-- ================================================= -->
+
+    <article class="card audit">
+
+      <h2>Audit Information</h2>
+
+      <div class="grid">
+
+        <div class="item">
+          <span>Created By</span>
+          <strong>
+            {{ admission.createdBy || '—' }}
+          </strong>
+
+          <small>
+            {{ admission.createdByUserId ?? '—' }}
+          </small>
+        </div>
+
+        <div class="item">
+          <span>Created At</span>
+          <strong>
+            {{ admission.createdAt || '—' }}
+          </strong>
+        </div>
+
+        <div class="item">
+          <span>Updated By</span>
+          <strong>
+            {{ admission.updatedBy || '—' }}
+          </strong>
+
+          <small>
+            {{ admission.updatedByUserId ?? '—' }}
+          </small>
+        </div>
+
+        <div class="item">
+          <span>Updated At</span>
+          <strong>
+            {{ admission.updatedAt || '—' }}
+          </strong>
+        </div>
+
+      </div>
+    </article>
+  }
+</section>

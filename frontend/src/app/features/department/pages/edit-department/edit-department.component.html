@@ -1,0 +1,96 @@
+<div class="department-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+
+      <div class="breadcrumb">
+        Departments
+        <span>/</span>
+        Edit Department
+      </div>
+
+      <h1>
+        Edit Department
+      </h1>
+
+      <p>
+        Update department information and status.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="cancel()">
+
+      ← Back to Departments
+
+    </button>
+
+  </div>
+
+ 
+  <!-- LOADING -->
+
+  @if (loadingData) {
+
+    <div class="loading-card">
+
+      <div class="loader"></div>
+
+      <span>
+        Loading department information...
+      </span>
+
+    </div>
+
+  }
+
+
+  <!-- FORM -->
+
+  @else if (department) {
+
+    <app-department-form
+      [department]="department"
+      [loading]="loading"
+      submitLabel="Update Department"
+      (formSubmit)="submit($event)"
+      (cancel)="cancel()">
+    </app-department-form>
+
+  }
+
+
+  <!-- NOT FOUND -->
+
+  @else {
+
+    <div class="empty-card">
+
+      <h3>
+        Department not found
+      </h3>
+
+      <p>
+        The requested department could not be loaded.
+      </p>
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="cancel()">
+
+        Back to Departments
+
+      </button>
+
+    </div>
+
+  }
+
+</div>

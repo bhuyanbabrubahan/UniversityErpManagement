@@ -1,0 +1,23 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Admission Management</p>
+      <h1>Edit Admission</h1>
+      @if (admission) {
+        <p>Update {{ admission.admissionNumber }}.</p>
+      }
+    </div>
+  </header>
+
+  @if (loading) {
+    <div class="state">Loading admission…</div>
+  } @else if (admission) {
+    <app-admission-form
+      mode="edit"
+      [admission]="admission"
+      [submitting]="submitting"
+      (submitted)="submit($event)"
+      (cancelled)="cancel()">
+    </app-admission-form>
+  }
+</section>

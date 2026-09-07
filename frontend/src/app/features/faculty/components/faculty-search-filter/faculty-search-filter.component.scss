@@ -1,0 +1,711 @@
+// ============================================================
+// FACULTY SEARCH FILTER
+// Enterprise ERP Design
+// ============================================================
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+// ============================================================
+// SEARCH CARD
+// ============================================================
+
+.search-card {
+  width: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #dfe5ed;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 3%),
+    0 5px 18px rgb(15 23 42 / 4%);
+
+  position: relative;
+}
+
+
+// ============================================================
+// LEFT ACCENT
+// ============================================================
+
+.search-card::before {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: linear-gradient(
+    180deg,
+    #2563eb,
+    #4f46e5
+  );
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+
+// ============================================================
+// HEADER
+// ============================================================
+
+.search-header {
+  min-height: 68px;
+
+  padding: 11px 16px 11px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #fafcff
+    );
+}
+
+
+// ============================================================
+// SEARCH HEADING
+// ============================================================
+
+.search-heading {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+
+// ============================================================
+// SEARCH ICON
+// ============================================================
+
+.search-icon {
+  flex: 0 0 36px;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dce7ff;
+  border-radius: 9px;
+
+  background: #eef4ff;
+
+  color: #2563eb;
+}
+
+.search-icon mat-icon {
+  width: 19px;
+  height: 19px;
+
+  font-size: 19px;
+  line-height: 19px;
+}
+
+
+// ============================================================
+// TITLE
+// ============================================================
+
+.search-title {
+  min-width: 0;
+}
+
+.search-eyebrow {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #7b8798;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.search-title h2 {
+  margin: 0;
+
+  color: #263247;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  line-height: 1.25;
+}
+
+.search-title p {
+  margin: 2px 0 0;
+
+  color: #8994a5;
+
+  font-size: 10.5px;
+  line-height: 1.3;
+}
+
+
+// ============================================================
+// HEADER BUTTONS
+// ============================================================
+
+.header-buttons {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+// ============================================================
+// COMMON BUTTON
+// ============================================================
+
+.header-buttons button {
+  min-height: 35px;
+
+  padding: 0 12px;
+
+  border-radius: 7px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.header-buttons button mat-icon {
+  width: 16px;
+  height: 16px;
+
+  font-size: 16px;
+  line-height: 16px;
+}
+
+
+// ============================================================
+// RESET
+// ============================================================
+
+.reset-button {
+  border-color: #d5dce6 !important;
+
+  color: #475569 !important;
+
+  background: #ffffff;
+
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+.reset-button:hover:not(:disabled) {
+  border-color: #b8c2d0 !important;
+
+  background: #f8fafc;
+}
+
+
+// ============================================================
+// SEARCH BUTTON
+// ============================================================
+
+.search-button {
+  min-width: 88px;
+
+  box-shadow:
+    0 2px 6px rgb(37 99 235 / 16%);
+
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.search-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 11px rgb(37 99 235 / 22%);
+}
+
+
+// ============================================================
+// DIVIDER
+// ============================================================
+
+.search-card mat-divider {
+  border-color: #edf1f5;
+}
+
+
+// ============================================================
+// CONTENT
+// ============================================================
+
+.search-card mat-card-content {
+  padding: 14px 18px 7px !important;
+}
+
+
+// ============================================================
+// FORM GRID
+// ============================================================
+
+.search-form {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  column-gap: 12px;
+  row-gap: 0;
+
+  align-items: start;
+}
+
+
+// ============================================================
+// FORM FIELD
+// ============================================================
+
+.search-form mat-form-field {
+  width: 100%;
+  min-width: 0;
+
+  margin-bottom: 6px;
+}
+
+
+// ============================================================
+// MATERIAL FIELD
+// ============================================================
+
+.search-form ::ng-deep .mat-mdc-text-field-wrapper {
+  min-height: 50px !important;
+  height: 50px !important;
+
+  padding: 0 !important;
+
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  transition:
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field-flex,
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field-infix {
+  min-height: 50px !important;
+  height: 50px !important;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field-flex {
+  align-items: center;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field-infix {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+
+  display: flex;
+  align-items: center;
+}
+
+
+// ============================================================
+// INPUT
+// ============================================================
+
+.search-form
+  ::ng-deep
+  .mat-mdc-input-element {
+  padding: 0 !important;
+
+  color: #263247;
+
+  font-size: 12px !important;
+  font-weight: 500 !important;
+
+  line-height: 1.2;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-input-element::placeholder {
+  color: #a0aaba;
+
+  opacity: 1;
+}
+
+
+// ============================================================
+// OUTLINE
+// ============================================================
+
+.search-form
+  ::ng-deep
+  .mdc-notched-outline {
+  border-radius: 7px;
+}
+
+.search-form
+  ::ng-deep
+  .mdc-notched-outline__leading,
+.search-form
+  ::ng-deep
+  .mdc-notched-outline__notch,
+.search-form
+  ::ng-deep
+  .mdc-notched-outline__trailing {
+  border-color: #cbd4df;
+
+  border-width: 1px;
+}
+
+
+// ============================================================
+// HOVER
+// ============================================================
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field:hover
+  .mdc-notched-outline__leading,
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field:hover
+  .mdc-notched-outline__notch,
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field:hover
+  .mdc-notched-outline__trailing {
+  border-color: #9aa7b8;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field:hover
+  .mat-mdc-text-field-wrapper {
+  background: #fcfdff;
+}
+
+
+// ============================================================
+// FOCUS
+// ============================================================
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__leading,
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__notch,
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__trailing {
+  border-color: #2563eb;
+
+  border-width: 1.5px;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mat-mdc-text-field-wrapper {
+  box-shadow:
+    0 0 0 3px rgb(37 99 235 / 7%);
+}
+
+
+// ============================================================
+// LABEL
+// ============================================================
+
+.search-form
+  ::ng-deep
+  .mdc-floating-label {
+  color: #64748b;
+
+  font-size: 11px !important;
+  font-weight: 500;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-floating-label {
+  color: #2563eb;
+}
+
+.search-form
+  ::ng-deep
+  .mdc-notched-outline__notch {
+  padding: 0 4px;
+}
+
+
+// ============================================================
+// PREFIX ICON
+// ============================================================
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field-icon-prefix {
+  padding-left: 9px !important;
+  padding-right: 6px !important;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field-icon-prefix
+  mat-icon {
+  width: 16px;
+  height: 16px;
+
+  color: #7b8798;
+
+  font-size: 16px;
+  line-height: 16px;
+
+  transition: color 140ms ease;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mat-mdc-form-field-icon-prefix
+  mat-icon {
+  color: #2563eb;
+}
+
+
+// ============================================================
+// SELECT
+// ============================================================
+
+.search-form
+  ::ng-deep
+  .mat-mdc-select {
+  width: 100%;
+
+  color: #263247;
+
+  font-size: 12px !important;
+  font-weight: 500;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-select-value {
+  color: #263247;
+
+  font-size: 12px !important;
+  font-weight: 500;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-select-placeholder {
+  color: #a0aaba;
+
+  font-size: 11px !important;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-select-arrow {
+  color: #64748b;
+}
+
+.search-form
+  ::ng-deep
+  .mat-mdc-select-arrow-wrapper {
+  width: 32px;
+
+  padding-right: 5px;
+}
+
+
+// ============================================================
+// TABLET
+// ============================================================
+
+@media (max-width: 1200px) {
+
+  .search-form {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+// ============================================================
+// SMALL TABLET
+// ============================================================
+
+@media (max-width: 900px) {
+
+  .search-header {
+    align-items: flex-start;
+  }
+
+  .search-form {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+// ============================================================
+// MOBILE
+// ============================================================
+
+@media (max-width: 640px) {
+
+  .search-header {
+    padding: 11px 12px;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 11px;
+  }
+
+  .search-heading {
+    gap: 9px;
+  }
+
+  .search-icon {
+    flex-basis: 33px;
+
+    width: 33px;
+    height: 33px;
+  }
+
+  .search-icon mat-icon {
+    width: 17px;
+    height: 17px;
+
+    font-size: 17px;
+    line-height: 17px;
+  }
+
+  .search-title h2 {
+    font-size: 12px;
+  }
+
+  .search-title p {
+    font-size: 9.5px;
+  }
+
+  .header-buttons {
+    width: 100%;
+  }
+
+  .header-buttons button {
+    flex: 1;
+
+    min-height: 37px;
+  }
+
+  .search-card mat-card-content {
+    padding: 12px 10px 6px !important;
+  }
+
+  .search-form {
+    grid-template-columns: 1fr;
+
+    column-gap: 0;
+  }
+
+}
+
+
+// ============================================================
+// SMALL MOBILE
+// ============================================================
+
+@media (max-width: 380px) {
+
+  .search-header {
+    padding: 10px;
+  }
+
+  .search-card mat-card-content {
+    padding: 10px 9px 5px !important;
+  }
+
+}
+
+
+// ============================================================
+// ACCESSIBILITY
+// ============================================================
+
+@media (prefers-reduced-motion: reduce) {
+
+  .search-card *,
+  .search-card *::before,
+  .search-card *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+}

@@ -1,0 +1,631 @@
+@if (loading) {
+
+  <!-- =====================================================
+       LOADING
+  ===================================================== -->
+
+  <div class="loading-container">
+
+    <div class="loading-spinner"></div>
+
+    <span>
+      Loading faculties...
+    </span>
+
+  </div>
+
+} @else {
+
+  @if (faculties.length > 0) {
+
+    <!-- =====================================================
+         TABLE AREA
+    ===================================================== -->
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <!-- =================================================
+             TABLE HEADER
+        ================================================= -->
+
+        <thead>
+
+          <tr>
+
+            <!-- =================================================
+                 EMPLOYEE CODE
+            ================================================= -->
+
+            <th class="employee-code-column">
+
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('employeeCode')"
+                aria-label="Sort by employee code"
+              >
+
+                <span>
+                  Employee Code
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('employeeCode') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- =================================================
+                 FACULTY
+            ================================================= -->
+
+            <th class="faculty-column">
+
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('firstName')"
+                aria-label="Sort by faculty"
+              >
+
+                <span>
+                  Faculty
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('firstName') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- =================================================
+                 DEPARTMENT
+            ================================================= -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('departmentName')"
+                aria-label="Sort by department"
+              >
+
+                <span>
+                  Department
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('departmentName') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- =================================================
+                 DESIGNATION
+            ================================================= -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('designation')"
+                aria-label="Sort by designation"
+              >
+
+                <span>
+                  Designation
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('designation') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- =================================================
+                 QUALIFICATION
+            ================================================= -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('qualification')"
+                aria-label="Sort by qualification"
+              >
+
+                <span>
+                  Qualification
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('qualification') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- =================================================
+                 MOBILE
+            ================================================= -->
+
+            <th>
+              Mobile
+            </th>
+
+
+            <!-- =================================================
+                 STATUS
+            ================================================= -->
+
+            <th>
+
+              <button
+                type="button"
+                class="sort-button"
+                (click)="onSort('status')"
+                aria-label="Sort by status"
+              >
+
+                <span>
+                  Status
+                </span>
+
+                <span class="sort-icon">
+                  {{ getSortIcon('status') }}
+                </span>
+
+              </button>
+
+            </th>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================= -->
+
+            <th class="actions-column">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <!-- =====================================================
+             TABLE BODY
+        ===================================================== -->
+
+        <tbody>
+
+          @for (
+            faculty of faculties;
+            track faculty.id
+          ) {
+
+            <tr>
+
+              <!-- =================================================
+                   EMPLOYEE CODE
+              ================================================= -->
+
+              <td>
+
+                <span class="employee-code">
+                  {{ faculty.employeeCode || '-' }}
+                </span>
+
+              </td>
+
+
+              <!-- =================================================
+                   FACULTY
+              ================================================= -->
+
+              <td>
+
+                <div class="faculty-cell">
+
+                  <!-- =================================================
+                       PROFILE IMAGE
+                  ================================================= -->
+
+                  @if (faculty.profileImage) {
+
+                    <img
+                      class="faculty-image"
+                      [src]="getProfileImageUrl(faculty.profileImage)"
+                      [alt]="getFacultyName(faculty)"
+                      loading="lazy"
+                      (error)="onImageError($event)"
+                      (click)="openFacultyImage(faculty)"
+                    />
+
+                  } @else {
+
+                    <!-- =================================================
+                         FALLBACK AVATAR
+                    ================================================= -->
+
+                    <div
+                      class="faculty-avatar"
+                      role="button"
+                      tabindex="0"
+                      [attr.aria-label]="'Open profile image for ' + getFacultyName(faculty)"
+                      (click)="openFacultyImage(faculty)"
+                      (keydown.enter)="openFacultyImage(faculty)"
+                      (keydown.space)="openFacultyImage(faculty)"
+                    >
+
+                      {{ getFacultyInitial(faculty) }}
+
+                    </div>
+
+                  }
+
+
+                  <!-- =================================================
+                       FACULTY DETAILS
+                  ================================================= -->
+
+                  <div class="faculty-details">
+
+                    <strong
+                      class="faculty-name"
+                      [title]="getFacultyName(faculty)"
+                    >
+
+                      {{ getFacultyName(faculty) }}
+
+                    </strong>
+
+
+                    <span
+                      class="faculty-email"
+                      [title]="getFacultyEmail(faculty)"
+                    >
+
+                      {{ getFacultyEmail(faculty) }}
+
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- =================================================
+                   DEPARTMENT
+              ================================================= -->
+
+              <td>
+
+                <span
+                  class="department-name"
+                  [title]="getFacultyDepartment(faculty)"
+                >
+
+                  {{ getFacultyDepartment(faculty) }}
+
+                </span>
+
+              </td>
+
+
+              <!-- =================================================
+                   DESIGNATION
+              ================================================= -->
+
+              <td>
+
+                <span
+                  class="designation"
+                  [title]="getFacultyDesignation(faculty)"
+                >
+
+                  {{ getFacultyDesignation(faculty) }}
+
+                </span>
+
+              </td>
+
+
+              <!-- =================================================
+                   QUALIFICATION
+              ================================================= -->
+
+              <td>
+
+                <span
+                  class="qualification"
+                  [title]="getFacultyQualification(faculty)"
+                >
+
+                  {{ getFacultyQualification(faculty) }}
+
+                </span>
+
+              </td>
+
+
+              <!-- =================================================
+                   MOBILE
+              ================================================= -->
+
+              <td>
+
+                <span class="mobile-number">
+
+                  {{ getFacultyMobile(faculty) }}
+
+                </span>
+
+              </td>
+
+
+              <!-- =================================================
+                   STATUS
+              ================================================= -->
+
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class.status-active]="isActive(faculty)"
+                  [class.status-inactive]="!isActive(faculty)"
+                >
+
+                  <span class="status-dot"></span>
+
+                  {{ getFacultyStatusLabel(faculty) }}
+
+                </span>
+
+              </td>
+
+
+              <!-- =================================================
+                   ACTIONS
+              ================================================= -->
+
+              <td>
+
+                <div class="row-actions">
+
+                  <!-- =================================================
+                       VIEW
+                  ================================================= -->
+
+                  <button
+                    type="button"
+                    class="action-button view"
+                    title="View Faculty"
+                    aria-label="View Faculty"
+                    (click)="onView(faculty.id)"
+                  >
+
+                    <span class="action-icon">
+                      👁
+                    </span>
+
+                    <span>
+                      View
+                    </span>
+
+                  </button>
+
+
+                  <!-- =================================================
+                       EDIT
+                  ================================================= -->
+
+                  <button
+                    type="button"
+                    class="action-button edit"
+                    title="Edit Faculty"
+                    aria-label="Edit Faculty"
+                    (click)="onEdit(faculty.id)"
+                  >
+
+                    <span class="action-icon">
+                      ✎
+                    </span>
+
+                    <span>
+                      Edit
+                    </span>
+
+                  </button>
+
+
+                  <!-- =================================================
+                       DELETE
+                  ================================================= -->
+
+                  <button
+                    type="button"
+                    class="action-button delete"
+                    title="Delete Faculty"
+                    aria-label="Delete Faculty"
+                    [disabled]="deleting"
+                    (click)="onDelete(faculty.id)"
+                  >
+
+                    <span class="action-icon">
+                      🗑
+                    </span>
+
+                    <span>
+                      Delete
+                    </span>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAGINATION
+    ===================================================== -->
+
+    <div class="pagination">
+
+      <!-- =================================================
+           ROWS PER PAGE
+      ================================================= -->
+
+      <div class="pagination-left">
+
+        <label for="facultyPageSize">
+          Rows per page
+        </label>
+
+        <select
+          id="facultyPageSize"
+          [value]="pageSize"
+          (change)="onPageSizeChange($event)"
+        >
+
+          @for (size of pageSizeOptions; track size) {
+
+            <option [value]="size">
+              {{ size }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =================================================
+           PAGE INFORMATION
+      ================================================= -->
+
+      <div class="pagination-info">
+
+        <span>
+          Page
+        </span>
+
+        <strong>
+          {{ pageIndex + 1 }}
+        </strong>
+
+        <span>
+          of
+        </span>
+
+        <strong>
+          {{ getTotalPages() }}
+        </strong>
+
+      </div>
+
+
+      <!-- =================================================
+           PAGINATION ACTIONS
+      ================================================= -->
+
+      <div class="pagination-actions">
+
+        <button
+          type="button"
+          class="pagination-button"
+          [disabled]="pageIndex === 0"
+          (click)="previousPage()"
+        >
+
+          <span>
+            ←
+          </span>
+
+          <span>
+            Previous
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="pagination-button"
+          [disabled]="pageIndex >= getTotalPages() - 1"
+          (click)="nextPage()"
+        >
+
+          <span>
+            Next
+          </span>
+
+          <span>
+            →
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <!-- =====================================================
+         EMPTY STATE
+    ===================================================== -->
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        ◉
+      </div>
+
+      <h3>
+        No Faculties Found
+      </h3>
+
+      <p>
+        There are no faculty records matching your current
+        search criteria.
+      </p>
+
+    </div>
+
+  }
+
+}

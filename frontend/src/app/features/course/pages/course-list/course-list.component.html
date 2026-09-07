@@ -1,0 +1,737 @@
+<div class="course-page">
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="page-header">
+
+    <div>
+
+      <div class="eyebrow">
+        Academic Management
+      </div>
+
+      <h1>
+        Courses
+      </h1>
+
+      <p>
+        Manage courses, departments, duration and status.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="btn-primary"
+      (click)="addCourse()">
+
+      <span class="plus">
+        +
+      </span>
+
+      Add Course
+
+    </button>
+
+  </header>
+
+
+  <!-- =====================================================
+       SEARCH FILTER
+       ===================================================== -->
+
+  <section class="filter-card">
+
+    <div class="filter-heading">
+
+      <div>
+
+        <h2>
+          Course Search
+        </h2>
+
+        <p>
+          Filter courses using any available criteria.
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="clear-link"
+        [disabled]="loading"
+        (click)="clearSearch()">
+
+        Clear filters
+
+      </button>
+
+    </div>
+
+
+    <div class="filter-grid">
+
+
+      <!-- =================================================
+           COURSE NAME
+           ================================================= -->
+
+      <div class="field">
+
+        <label for="courseName">
+          Course Name
+        </label>
+
+        <input
+          id="courseName"
+          type="text"
+          [(ngModel)]="search.courseName"
+          placeholder="Search course name"
+          maxlength="100"
+          autocomplete="off"
+          (keyup.enter)="searchCourses()" />
+
+      </div>
+
+
+      <!-- =================================================
+           COURSE CODE
+           ================================================= -->
+
+      <div class="field">
+
+        <label for="courseCode">
+          Course Code
+        </label>
+
+        <input
+          id="courseCode"
+          type="text"
+          [(ngModel)]="search.courseCode"
+          placeholder="e.g. CSE101"
+          maxlength="20"
+          autocomplete="off"
+          (keyup.enter)="searchCourses()" />
+
+      </div>
+
+
+      <!-- =================================================
+           DEPARTMENT
+           ================================================= -->
+
+      <div class="field">
+
+        <label for="departmentId">
+          Department
+        </label>
+
+        <select
+          id="departmentId"
+          [(ngModel)]="search.departmentId"
+          [disabled]="departmentLoading">
+
+          <option [ngValue]="undefined">
+
+            @if (departmentLoading) {
+              Loading Departments...
+            } @else {
+              All Departments
+            }
+
+          </option>
+
+
+          @for (
+            department of departments;
+            track department.id
+          ) {
+
+            <option
+              [ngValue]="department.id">
+
+              {{ department.departmentName }}
+
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =================================================
+           STATUS
+           ================================================= -->
+
+      <div class="field">
+
+        <label for="status">
+          Status
+        </label>
+
+        <select
+          id="status"
+          [(ngModel)]="search.status">
+
+          <option [ngValue]="undefined">
+            All Status
+          </option>
+
+
+          @for (
+            status of statusOptions;
+            track status
+          ) {
+
+            <option
+              [ngValue]="status">
+
+              {{ status }}
+
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =================================================
+           MIN DURATION
+           ================================================= -->
+
+      <div class="field">
+
+        <label for="minDuration">
+          Min Duration (Years)
+        </label>
+
+        <input
+          id="minDuration"
+          type="number"
+          min="1"
+          [(ngModel)]="search.minDuration"
+          placeholder="Years"
+          (keyup.enter)="searchCourses()" />
+
+      </div>
+
+
+      <!-- =================================================
+           MAX DURATION
+           ================================================= -->
+
+      <div class="field">
+
+        <label for="maxDuration">
+          Max Duration (Years)
+        </label>
+
+        <input
+          id="maxDuration"
+          type="number"
+          min="1"
+          [(ngModel)]="search.maxDuration"
+          placeholder="Years"
+          (keyup.enter)="searchCourses()" />
+
+      </div>
+
+
+      <!-- =================================================
+           SEARCH BUTTON
+           ================================================= -->
+
+      <div class="filter-button">
+
+        <button
+          type="button"
+          class="btn-search"
+          [disabled]="loading"
+          (click)="searchCourses()">
+
+          @if (loading) {
+
+            Searching...
+
+          } @else {
+
+            Search Courses
+
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       COURSE TABLE
+       ===================================================== -->
+
+  <section class="table-card">
+
+
+    <!-- ===================================================
+         TOOLBAR
+         =================================================== -->
+
+    <div class="table-toolbar">
+
+      <div>
+
+        <h2>
+          Course Directory
+        </h2>
+
+        <span>
+          {{ totalElements }} course(s)
+        </span>
+
+      </div>
+
+
+      @if (loading) {
+
+        <div class="loading-indicator">
+          Loading...
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- ===================================================
+         TABLE
+         =================================================== -->
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+
+            <!-- ID -->
+
+            <th
+              (click)="sort('id')">
+
+              ID
+
+              <span class="sort-icon">
+                {{ getSortIcon('id') }}
+              </span>
+
+            </th>
+
+
+            <!-- CODE -->
+
+            <th
+              (click)="sort('courseCode')">
+
+              Code
+
+              <span class="sort-icon">
+                {{ getSortIcon('courseCode') }}
+              </span>
+
+            </th>
+
+
+            <!-- COURSE -->
+
+            <th
+              (click)="sort('courseName')">
+
+              Course
+
+              <span class="sort-icon">
+                {{ getSortIcon('courseName') }}
+              </span>
+
+            </th>
+
+
+            <!-- DEPARTMENT -->
+
+            <th>
+              Department
+            </th>
+
+
+            <!-- DURATION -->
+
+            <th>
+              Duration
+            </th>
+
+
+            <!-- STATUS -->
+
+            <th
+              (click)="sort('status')">
+
+              Status
+
+              <span class="sort-icon">
+                {{ getSortIcon('status') }}
+              </span>
+
+            </th>
+
+
+            <!-- ACTIONS -->
+
+            <th>
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+          <!-- =================================================
+               DATA
+               ================================================= -->
+
+          @if (!loading || courses.length > 0) {
+
+            @for (
+              course of courses;
+              track course.id
+            ) {
+
+              <tr>
+
+
+                <!-- ID -->
+
+                <td>
+
+                  <span class="id">
+                    #{{ course.id }}
+                  </span>
+
+                </td>
+
+
+                <!-- CODE -->
+
+                <td>
+
+                  <span class="course-code">
+                    {{ course.courseCode }}
+                  </span>
+
+                </td>
+
+
+                <!-- COURSE -->
+
+                <td>
+
+                  <div class="course-info">
+
+                    <strong>
+                      {{ course.courseName }}
+                    </strong>
+
+
+                    @if (course.description) {
+
+                      <small>
+                        {{ course.description }}
+                      </small>
+
+                    }
+
+                  </div>
+
+                </td>
+
+
+                <!-- DEPARTMENT -->
+
+                <td>
+
+                  {{ course.departmentName || '—' }}
+
+                </td>
+
+
+                <!-- DURATION -->
+
+                <td>
+
+                  {{
+                    durationLabel(
+                      course.durationInMonths
+                    )
+                  }}
+
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td>
+
+                  <span
+                    class="status"
+                    [class.active]="
+                      course.status === recordStatus.ACTIVE
+                    "
+                    [class.inactive]="
+                      course.status === recordStatus.INACTIVE
+                    "
+                    [class.deleted]="
+                      course.status === recordStatus.DELETED
+                    ">
+
+                    {{ course.status }}
+
+                  </span>
+
+                </td>
+
+
+                <!-- ACTIONS -->
+
+                <td>
+
+                  <div class="actions">
+
+
+                    <!-- VIEW -->
+
+                    <button
+                      type="button"
+                      class="action view"
+                      (click)="viewCourse(course.id)">
+
+                      View
+
+                    </button>
+
+
+                    <!-- EDIT -->
+
+                    <button
+                      type="button"
+                      class="action edit"
+                      (click)="editCourse(course.id)">
+
+                      Edit
+
+                    </button>
+
+
+                    <!-- DELETE -->
+
+                    <button
+                      type="button"
+                      class="action delete"
+                      [disabled]="deleting"
+                      (click)="deleteCourse(course.id)">
+
+                      Delete
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+
+            <!-- =================================================
+                 EMPTY
+                 ================================================= -->
+
+            @empty {
+
+              <tr>
+
+                <td
+                  colspan="7"
+                  class="empty">
+
+                  <div class="empty-icon">
+                    —
+                  </div>
+
+                  <strong>
+                    No courses found
+                  </strong>
+
+                  <span>
+                    Try changing your search filters.
+                  </span>
+
+                </td>
+
+              </tr>
+
+            }
+
+          }
+
+
+          <!-- =================================================
+               LOADING
+               ================================================= -->
+
+          @if (
+            loading &&
+            courses.length === 0
+          ) {
+
+            <tr>
+
+              <td
+                colspan="7"
+                class="empty">
+
+                <div class="empty-icon">
+                  ...
+                </div>
+
+                <strong>
+                  Loading courses
+                </strong>
+
+                <span>
+                  Please wait...
+                </span>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAGINATION
+         ===================================================== -->
+
+    <footer class="pagination">
+
+
+      <!-- ROW SIZE -->
+
+      <div class="records">
+
+        <span>
+          Rows
+        </span>
+
+        <select
+          [(ngModel)]="size"
+          [disabled]="loading"
+          (change)="onPageSizeChange()">
+
+          <option [ngValue]="10">
+            10
+          </option>
+
+          <option [ngValue]="20">
+            20
+          </option>
+
+          <option [ngValue]="50">
+            50
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- PAGE NUMBER -->
+
+      <div class="page-number">
+
+        Page
+        {{ page + 1 }}
+        of
+        {{ totalPages || 1 }}
+
+      </div>
+
+
+      <!-- PAGE BUTTONS -->
+
+      <div class="page-buttons">
+
+        <button
+          type="button"
+          [disabled]="
+            page === 0 ||
+            loading
+          "
+          (click)="previousPage()">
+
+          Previous
+
+        </button>
+
+
+        <button
+          type="button"
+          [disabled]="
+            last ||
+            loading
+          "
+          (click)="nextPage()">
+
+          Next
+
+        </button>
+
+      </div>
+
+    </footer>
+
+  </section>
+
+</div>
+
+
+<!-- =========================================================
+     DELETE COURSE DIALOG
+     ========================================================= -->
+
+<app-delete-course-dialog
+  [course]="selectedCourse"
+  [loading]="deleting"
+  (confirmed)="confirmDeleteCourse($event)"
+  (cancelled)="cancelDeleteCourse()">
+</app-delete-course-dialog>

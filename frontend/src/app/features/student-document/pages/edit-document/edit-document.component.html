@@ -1,0 +1,549 @@
+<div class="page-container">
+
+  <!-- ====================================================== -->
+  <!-- PAGE HEADER -->
+  <!-- ====================================================== -->
+
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <div class="breadcrumb">
+        Student Documents / Edit Document
+      </div>
+
+      <h1>
+        Edit Document
+      </h1>
+
+      <p>
+        Replace the existing uploaded document with a new file.
+      </p>
+
+    </div>
+
+
+    <button
+      mat-stroked-button
+      type="button"
+      [disabled]="saving"
+      (click)="cancel()"
+    >
+
+      <mat-icon>
+        arrow_back
+      </mat-icon>
+
+      <span>
+        Back
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- LOADING -->
+  <!-- ====================================================== -->
+
+  @if (loading) {
+
+    <div class="loading-state">
+
+      <mat-spinner
+        diameter="38"
+      />
+
+      <div class="loading-copy">
+
+        <strong>
+          Loading document...
+        </strong>
+
+        <span>
+          Please wait while the document details are loaded.
+        </span>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- ====================================================== -->
+  <!-- DOCUMENT -->
+  <!-- ====================================================== -->
+
+  @else if (document) {
+
+    <mat-card class="document-card">
+
+
+      <!-- ==================================================== -->
+      <!-- CARD HEADER -->
+      <!-- ==================================================== -->
+
+      <mat-card-header>
+
+        <div
+          mat-card-avatar
+          class="document-avatar"
+        >
+
+          <mat-icon>
+            description
+          </mat-icon>
+
+        </div>
+
+
+        <mat-card-title>
+
+          {{
+            document.originalFileName ||
+            'Student Document'
+          }}
+
+        </mat-card-title>
+
+
+        <mat-card-subtitle>
+
+          Document #{{ document.id }}
+
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <!-- ==================================================== -->
+      <!-- CARD CONTENT -->
+      <!-- ==================================================== -->
+
+      <mat-card-content>
+
+
+        <!-- ================================================ -->
+        <!-- CURRENT DOCUMENT INFO -->
+        <!-- ================================================ -->
+
+        <section class="document-info-section">
+
+          <div class="section-heading">
+
+            <div>
+
+              <h2>
+                Current Document
+              </h2>
+
+              <p>
+                Review the existing document information before
+                uploading a replacement.
+              </p>
+
+            </div>
+
+            <span class="status-badge">
+              {{ document.status || 'ACTIVE' }}
+            </span>
+
+          </div>
+
+
+          <div class="document-info">
+
+
+            <!-- STUDENT -->
+
+            <div class="info-item">
+
+              <span class="label">
+                Student
+              </span>
+
+              <strong>
+
+                {{
+                  document.studentName ||
+                  ('Student #' + document.studentId)
+                }}
+
+              </strong>
+
+              @if (document.studentCode) {
+
+                <small>
+                  {{ document.studentCode }}
+                </small>
+
+              }
+
+            </div>
+
+
+            <!-- DOCUMENT TYPE -->
+
+            <div class="info-item">
+
+              <span class="label">
+                Document Type
+              </span>
+
+              <strong>
+                {{
+                  formatDocumentType(
+                    document.documentType
+                  )
+                }}
+              </strong>
+
+            </div>
+
+
+            <!-- CURRENT FILE -->
+
+            <div class="info-item">
+
+              <span class="label">
+                Current File
+              </span>
+
+              <strong
+                class="truncate-value"
+                [title]="document.originalFileName"
+              >
+
+                {{
+                  document.originalFileName ||
+                  '—'
+                }}
+
+              </strong>
+
+            </div>
+
+
+            <!-- FILE SIZE -->
+
+            <div class="info-item">
+
+              <span class="label">
+                File Size
+              </span>
+
+              <strong>
+                {{
+                  formatFileSize(
+                    document.fileSize
+                  )
+                }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================ -->
+        <!-- REPLACE FILE -->
+        <!-- ================================================ -->
+
+        <section class="upload-section">
+
+
+          <div class="section-heading">
+
+            <div>
+
+              <h2>
+                Replace File
+              </h2>
+
+              <p>
+                Upload a new file to replace the current document.
+              </p>
+
+            </div>
+
+            <span class="file-limit">
+              Max 5 MB
+            </span>
+
+          </div>
+
+
+          <!-- ============================================== -->
+          <!-- FILE INPUT -->
+          <!-- ============================================== -->
+
+          <label
+            class="upload-box"
+            for="document-file"
+            [class.disabled]="saving"
+          >
+
+            <div class="upload-icon">
+
+              <mat-icon>
+                cloud_upload
+              </mat-icon>
+
+            </div>
+
+
+            <div class="upload-copy">
+
+              <strong>
+                Select replacement file
+              </strong>
+
+              <span>
+                Choose a new document from your device
+              </span>
+
+              <small>
+                PDF, JPG, JPEG or PNG • Maximum 5 MB
+              </small>
+
+            </div>
+
+
+            <div class="browse-button">
+              Browse File
+            </div>
+
+
+            <input
+              id="document-file"
+              type="file"
+              hidden
+              accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+              [disabled]="saving"
+              (change)="onFileSelected($event)"
+            />
+
+          </label>
+
+
+          <!-- ============================================== -->
+          <!-- SELECTED FILE -->
+          <!-- ============================================== -->
+
+          @if (selectedFile) {
+
+            <div class="selected-file">
+
+
+              <div class="selected-file-icon">
+
+                @if (
+                  selectedFile.type ===
+                  'application/pdf'
+                ) {
+
+                  <mat-icon>
+                    picture_as_pdf
+                  </mat-icon>
+
+                } @else {
+
+                  <mat-icon>
+                    image
+                  </mat-icon>
+
+                }
+
+              </div>
+
+
+              <div class="file-copy">
+
+                <strong
+                  [title]="selectedFile.name"
+                >
+
+                  {{ selectedFile.name }}
+
+                </strong>
+
+                <span>
+
+                  {{ formatFileSize(
+                    selectedFile.size
+                  ) }}
+
+                </span>
+
+              </div>
+
+
+              <button
+                mat-icon-button
+                type="button"
+                aria-label="Remove selected file"
+                matTooltip="Remove file"
+                [disabled]="saving"
+                (click)="removeSelectedFile()"
+              >
+
+                <mat-icon>
+                  close
+                </mat-icon>
+
+              </button>
+
+            </div>
+
+          }
+
+
+          <!-- ============================================== -->
+          <!-- VALIDATION -->
+          <!-- ============================================== -->
+
+          @if (
+            form.get('file')?.invalid &&
+            form.get('file')?.touched &&
+            !selectedFile
+          ) {
+
+            <div class="field-error">
+
+              <mat-icon>
+                error_outline
+              </mat-icon>
+
+              <span>
+                Please select a replacement file.
+              </span>
+
+            </div>
+
+          }
+
+
+          <!-- ============================================== -->
+          <!-- INFORMATION -->
+          <!-- ============================================== -->
+
+          <div class="info-box">
+
+            <div class="info-icon">
+
+              <mat-icon>
+                info
+              </mat-icon>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                Replacement Information
+              </strong>
+
+              <p>
+                Uploading a new file will replace the existing
+                document file while keeping the document record.
+              </p>
+
+              <p>
+                The document ID and existing document details
+                will remain unchanged.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </mat-card-content>
+
+
+      <!-- ==================================================== -->
+      <!-- ACTIONS -->
+      <!-- ==================================================== -->
+
+      <mat-card-actions class="card-actions">
+
+
+        <!-- CANCEL -->
+
+        <button
+          mat-button
+          type="button"
+          [disabled]="saving"
+          (click)="cancel()"
+        >
+
+          <mat-icon>
+            close
+          </mat-icon>
+
+          <span>
+            Cancel
+          </span>
+
+        </button>
+
+
+        <!-- UPDATE -->
+
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          [disabled]="
+            form.invalid ||
+            !selectedFile ||
+            saving
+          "
+          (click)="submit()"
+        >
+
+          @if (saving) {
+
+            <span class="button-content">
+
+              <mat-spinner
+                diameter="18"
+              />
+
+              <span>
+                Updating...
+              </span>
+
+            </span>
+
+          } @else {
+
+            <span class="button-content">
+
+              <mat-icon>
+                save
+              </mat-icon>
+
+              <span>
+                Update Document
+              </span>
+
+            </span>
+
+          }
+
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+  }
+
+</div>

@@ -1,0 +1,146 @@
+<div class="page">
+
+
+  <!-- =====================================================
+       PAGE HEADER
+  ===================================================== -->
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="eyebrow">
+        Academic Management
+      </span>
+
+      <h1>
+        Add Subject
+      </h1>
+
+      <p>
+        Create a new subject and assign it to a semester.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+
+      ← Back to Subjects
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       SUCCESS MESSAGE
+  ===================================================== -->
+
+  @if (successMessage) {
+
+    <div class="toast success-toast">
+
+      <span class="toast-icon">
+        ✓
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Success
+        </strong>
+
+        <span>
+          {{ successMessage }}
+        </span>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       ERROR MESSAGE
+  ===================================================== -->
+
+  @if (errorMessage) {
+
+    <div class="toast error-toast">
+
+      <span class="toast-icon">
+        !
+      </span>
+
+      <div class="toast-content">
+
+        <strong>
+          Error
+        </strong>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="toast-close"
+        (click)="closeErrorMessage()">
+
+        ×
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       FORM CARD
+  ===================================================== -->
+
+  <section class="form-card">
+
+    <div class="card-heading">
+
+      <h2>
+        Subject Information
+      </h2>
+
+      <p>
+        Enter the subject details below.
+      </p>
+
+    </div>
+
+
+    <!-- ===================================================
+         SUBJECT FORM
+    =================================================== -->
+
+    <app-subject-form
+
+      [semesters]="semesters"
+
+      [loading]="loading || loadingSemesters"
+
+      submitLabel="Create Subject"
+
+      (formSubmit)="create($event)"
+
+      (cancel)="cancel()">
+
+    </app-subject-form>
+
+
+  </section>
+
+</div>

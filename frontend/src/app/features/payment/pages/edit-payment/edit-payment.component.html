@@ -1,0 +1,113 @@
+<div class="edit-payment-page">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
+
+  <div class="page-header">
+
+    <div class="page-title">
+
+      <h1>
+        Edit Fee Payment
+      </h1>
+
+      <p>
+        Update the selected student fee payment details.
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="btn btn-outline"
+        (click)="cancel()"
+        [disabled]="submitting">
+
+        Back to Payments
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       LOADING STATE
+  ====================================================== -->
+
+  @if (loading) {
+
+    <div class="state-card loading-state">
+
+      <div class="spinner"></div>
+
+      <h3>
+        Loading payment
+      </h3>
+
+      <p>
+        Please wait while we fetch the payment details.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       PAYMENT FORM
+  ====================================================== -->
+
+  @if (!loading && payment) {
+
+    <div class="form-wrapper">
+
+      <app-payment-form
+        [payment]="payment"
+        [loading]="submitting"
+        (submitted)="updatePayment($event)"
+        (cancelled)="cancel()">
+      </app-payment-form>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       NO PAYMENT FOUND
+  ====================================================== -->
+
+  @if (
+    !loading &&
+    !payment
+  ) {
+
+    <div class="state-card empty-state">
+
+      <h3>
+        Payment not found
+      </h3>
+
+      <p>
+        The requested payment could not be found.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="cancel()">
+
+        Back to Payments
+
+      </button>
+
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,207 @@
+<section class="page">
+  <!-- =====================================================
+       PAGE HEADER
+       ===================================================== -->
+
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow">Curriculum Management</span>
+
+      <h1>Curriculum Details</h1>
+
+      <p>View complete curriculum information.</p>
+    </div>
+
+    <div class="header-actions">
+      <a class="back-btn" routerLink="../">
+        <span>←</span>
+        Back
+      </a>
+
+      @if (item()?.id) {
+        <a class="edit-btn" [routerLink]="['../edit', item()!.id]"> Edit </a>
+      }
+    </div>
+  </header>
+
+  <!-- =====================================================
+       LOADING
+       ===================================================== -->
+
+  @if (loading()) {
+    <div class="loading-card">
+      <span class="spinner"></span>
+
+      <span>Loading curriculum...</span>
+    </div>
+  }
+
+  <!-- =====================================================
+       DETAILS
+       ===================================================== -->
+
+  @if (!loading() && item()) {
+    <div class="details-card">
+      <!-- =================================================
+           CURRICULUM HEADER
+           ================================================= -->
+
+      <div class="details-header">
+        <div class="code-block">
+          <span class="details-label"> Curriculum Code </span>
+
+          <h2>
+            {{ item()?.code || "—" }}
+          </h2>
+        </div>
+
+        <span
+          class="status-badge"
+          [class.active]="item()?.status === 'ACTIVE'"
+          [class.inactive]="item()?.status !== 'ACTIVE'"
+        >
+          {{ item()?.status || "UNKNOWN" }}
+        </span>
+      </div>
+
+      <!-- =================================================
+           ACADEMIC INFORMATION
+           ================================================= -->
+
+      <div class="section-title">Academic Information</div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <span>Academic Year</span>
+          <strong>
+            {{ item()?.academicYear || "—" }}
+          </strong>
+        </div>
+
+        <div class="detail-item">
+          <span>Course</span>
+          <strong>
+            {{ item()?.course || "—" }}
+          </strong>
+        </div>
+
+        <div class="detail-item">
+          <span>Semester</span>
+          <strong>
+            {{ item()?.semester || "—" }}
+          </strong>
+        </div>
+
+        <div class="detail-item">
+          <span>Subject</span>
+          <strong>
+            {{ item()?.subject || "—" }}
+          </strong>
+        </div>
+
+        <div class="detail-item">
+          <span>Credits</span>
+          <strong>
+            {{ item()?.credits || "—" }}
+          </strong>
+        </div>
+
+        <div class="detail-item">
+          <span>Contact Hours</span>
+          <strong>
+            {{ item()?.contactHours || "—" }}
+          </strong>
+        </div>
+
+        <div class="detail-item">
+          <span>Status</span>
+          <strong>
+            {{ item()?.status || "—" }}
+          </strong>
+        </div>
+      </div>
+
+      <!-- =================================================
+           DESCRIPTION
+           ================================================= -->
+
+      <div class="section-title description-title">Description</div>
+
+      <div class="description-box">
+        {{ item()?.description || "—" }}
+      </div>
+
+      <!-- =================================================
+           AUDIT INFORMATION
+           ================================================= -->
+
+      <div class="section-title audit-title">Audit Information</div>
+
+      <div class="audit-grid">
+        <!-- Created By -->
+
+        <div class="audit-item">
+          <span class="audit-icon created"> C </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Created By </span>
+
+            <strong>
+              {{ item()?.createdBy || "—" }}
+            </strong>
+          </div>
+        </div>
+
+        <!-- Created At -->
+
+        <div class="audit-item">
+          <span class="audit-icon created"> + </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Created At </span>
+
+            <strong>
+              @if (item()?.createdAt) {
+                {{ item()!.createdAt | date: "dd MMM yyyy, hh:mm a" }}
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+        </div>
+
+        <!-- Updated By -->
+
+        <div class="audit-item">
+          <span class="audit-icon updated"> U </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Updated By </span>
+
+            <strong>
+              {{ item()?.updatedBy || "—" }}
+            </strong>
+          </div>
+        </div>
+
+        <!-- Updated At -->
+
+        <div class="audit-item">
+          <span class="audit-icon updated"> ↻ </span>
+
+          <div class="audit-content">
+            <span class="audit-label"> Updated At </span>
+
+            <strong>
+              @if (item()?.updatedAt) {
+                {{ item()!.updatedAt | date: "dd MMM yyyy, hh:mm a" }}
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</section>

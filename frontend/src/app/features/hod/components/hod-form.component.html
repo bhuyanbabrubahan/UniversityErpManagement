@@ -1,0 +1,267 @@
+<form class="form" #hodForm="ngForm" (ngSubmit)="onSubmit(hodForm)" novalidate>
+  <!-- ===================================================== FORM HEADER ===================================================== -->
+  <div class="form-header">
+    <div class="header-content">
+      <div class="header-icon"><span>♙</span></div>
+      <div class="header-text">
+        <h2>HOD Details</h2>
+        <p>Enter the Head of Department information.</p>
+      </div>
+    </div>
+  </div>
+  <!-- ===================================================== FORM GRID ===================================================== -->
+  <div class="form-grid">
+    <!-- Code -->
+    <div class="form-field">
+      <label for="code">
+        HOD Code
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="code"
+        name="code"
+        type="text"
+        [(ngModel)]="model.code"
+        #code="ngModel"
+        required
+        maxlength="100"
+        autocomplete="off"
+        placeholder="HOD-CSE-001"
+      />
+
+      @if (code.invalid && (code.touched || submitted)) {
+        <div class="field-error">HOD code is required.</div>
+      }
+    </div>
+
+    <!-- Employee Code -->
+    <div class="form-field">
+      <label for="employeeCode">
+        Employee Code
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="employeeCode"
+        name="employeeCode"
+        type="text"
+        [(ngModel)]="model.employeeCode"
+        #employeeCode="ngModel"
+        required
+        maxlength="100"
+        autocomplete="off"
+        placeholder="EMP-001"
+      />
+
+      @if (employeeCode.invalid && (employeeCode.touched || submitted)) {
+        <div class="field-error">Employee code is required.</div>
+      }
+    </div>
+
+    <!-- Full Name -->
+    <div class="form-field">
+      <label for="fullName">
+        Full Name
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="fullName"
+        name="fullName"
+        type="text"
+        [(ngModel)]="model.fullName"
+        #fullName="ngModel"
+        required
+        maxlength="150"
+        autocomplete="off"
+        placeholder="Dr. John Doe"
+      />
+
+      @if (fullName.invalid && (fullName.touched || submitted)) {
+        <div class="field-error">Full name is required.</div>
+      }
+    </div>
+
+    <!-- Department -->
+    <div class="form-field">
+      <label for="department">
+        Department
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="department"
+        name="department"
+        type="text"
+        [(ngModel)]="model.department"
+        #department="ngModel"
+        required
+        maxlength="150"
+        autocomplete="off"
+        placeholder="Computer Science & Engineering"
+      />
+
+      @if (department.invalid && (department.touched || submitted)) {
+        <div class="field-error">Department is required.</div>
+      }
+    </div>
+
+    <!-- Email -->
+    <div class="form-field">
+      <label for="email">
+        Email
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="model.email"
+        #email="ngModel"
+        required
+        maxlength="150"
+        autocomplete="off"
+        placeholder="hod.cse@university.edu"
+      />
+
+      @if (email.invalid && (email.touched || submitted)) {
+        <div class="field-error">
+          @if (email.errors?.["required"]) {
+            Email is required.
+          } @else if (email.errors?.["email"]) {
+            Please enter a valid email address.
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Phone -->
+    <div class="form-field">
+      <label for="phone">
+        Phone
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="phone"
+        name="phone"
+        type="text"
+        [(ngModel)]="model.phone"
+        #phone="ngModel"
+        required
+        maxlength="30"
+        autocomplete="off"
+        placeholder="+91 9876543210"
+      />
+
+      @if (phone.invalid && (phone.touched || submitted)) {
+        <div class="field-error">Phone is required.</div>
+      }
+    </div>
+
+    <!-- Designation -->
+    <div class="form-field">
+      <label for="designation">
+        Designation
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="designation"
+        name="designation"
+        type="text"
+        [(ngModel)]="model.designation"
+        #designation="ngModel"
+        required
+        maxlength="100"
+        autocomplete="off"
+        placeholder="Head of Department"
+      />
+
+      @if (designation.invalid && (designation.touched || submitted)) {
+        <div class="field-error">Designation is required.</div>
+      }
+    </div>
+
+    <!-- Status -->
+    <div class="form-field">
+      <label for="status">
+        Status
+        <span class="required">*</span>
+      </label>
+
+      <select
+        id="status"
+        name="status"
+        [(ngModel)]="model.status"
+        #status="ngModel"
+        required
+      >
+        <option value="" disabled>Select status</option>
+
+        @for (item of statuses; track item) {
+          <option [value]="item">
+            {{ item }}
+          </option>
+        }
+      </select>
+
+      @if (status.invalid && (status.touched || submitted)) {
+        <div class="field-error">Status is required.</div>
+      }
+    </div>
+
+    <!-- Description -->
+    <div class="form-field full-width">
+      <div class="label-row">
+        <label for="description">
+          Description
+          <span class="required">*</span>
+        </label>
+
+        <span class="character-count">
+          {{ model.description?.length || 0 }}/500
+        </span>
+      </div>
+
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="model.description"
+        #description="ngModel"
+        required
+        maxlength="500"
+        rows="5"
+        placeholder="Enter HOD description..."
+      ></textarea>
+
+      @if (description.invalid && (description.touched || submitted)) {
+        <div class="field-error">Description is required.</div>
+      }
+    </div>
+  </div>
+  <!-- ===================================================== ACTIONS ===================================================== -->
+  <div class="form-actions">
+    <div class="action-right">
+      <button
+        type="button"
+        class="ghost"
+        [disabled]="loading"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+
+      <button type="submit" class="submit" [disabled]="loading">
+        @if (loading) {
+          <span class="spinner"></span>
+          <span>Saving...</span>
+        } @else {
+          <span>{{ submitLabel }}</span>
+        }
+      </button>
+    </div>
+  </div>
+</form>

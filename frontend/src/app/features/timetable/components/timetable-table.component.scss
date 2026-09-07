@@ -1,0 +1,866 @@
+/* =====================================================
+   TABLE CARD
+   ===================================================== */
+
+.table-card {
+  width: 100%;
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+/* =====================================================
+   TABLE HEADER
+   ===================================================== */
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 22px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table-title {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.table-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  border-radius: 9px;
+
+  font-size: 18px;
+}
+
+.table-header h2 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.table-header p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.record-count {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 7px 11px;
+
+  background: #f8fafc;
+  color: #334155;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.record-count span {
+  color: #64748b;
+
+  font-weight: 500;
+}
+
+/* =====================================================
+   TABLE WRAPPER
+   ===================================================== */
+
+.table-wrap {
+  width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.table-wrap::-webkit-scrollbar {
+  height: 7px;
+}
+
+.table-wrap::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.table-wrap::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 999px;
+}
+
+.table-wrap::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =====================================================
+   TABLE
+   ===================================================== */
+
+table {
+  width: 100%;
+
+  /*
+   * Timetable has many columns.
+   * Horizontal scrolling is intentional.
+   */
+  min-width: 1500px;
+
+  border-collapse: collapse;
+
+  table-layout: auto;
+}
+
+/* =====================================================
+   TABLE HEADER CELLS
+   ===================================================== */
+
+thead th {
+  padding: 13px 15px;
+
+  background: #f8fafc;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  color: #475569;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* =====================================================
+   TABLE BODY CELLS
+   ===================================================== */
+
+tbody td {
+  padding: 15px;
+
+  border-bottom: 1px solid #eef2f7;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.data-row {
+  transition: background-color 0.15s ease;
+}
+
+.data-row:hover {
+  background: #f8fbff;
+}
+
+/* =====================================================
+   CODE
+   ===================================================== */
+
+.code {
+  display: inline-block;
+
+  max-width: 230px;
+
+  padding: 5px 8px;
+
+  overflow: hidden;
+
+  background: #f1f5f9;
+
+  border-radius: 6px;
+
+  color: #1e40af;
+
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   NORMAL VALUES
+   ===================================================== */
+
+.normal-value {
+  color: #475569;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   SECTION
+   ===================================================== */
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 28px;
+
+  padding: 4px 8px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+
+  color: #334155;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   SUBJECT
+   ===================================================== */
+
+.subject {
+  display: block;
+
+  max-width: 240px;
+
+  overflow: hidden;
+
+  color: #0f172a;
+
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   FACULTY
+   ===================================================== */
+
+.faculty {
+  display: block;
+
+  max-width: 190px;
+
+  overflow: hidden;
+
+  color: #475569;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   ROOM
+   ===================================================== */
+
+.room {
+  display: inline-block;
+
+  padding: 4px 7px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+
+  color: #334155;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   DAY
+   ===================================================== */
+
+.day {
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   TIME
+   ===================================================== */
+
+.time {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #0f172a;
+
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.time-separator {
+  color: #94a3b8;
+
+  font-weight: 400;
+}
+
+/* =====================================================
+   PERIOD
+   ===================================================== */
+
+.period {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 27px;
+  height: 27px;
+
+  padding: 0 6px;
+
+  background: #eff6ff;
+
+  border: 1px solid #dbeafe;
+  border-radius: 6px;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.status-badge.active {
+  background: #ecfdf3;
+
+  color: #15803d;
+}
+
+.status-badge.active .status-dot {
+  background: #22c55e;
+}
+
+.status-badge.inactive {
+  background: #fff7ed;
+
+  color: #c2410c;
+}
+
+.status-badge.inactive .status-dot {
+  background: #f97316;
+}
+
+/*
+ * Fallback styling for any future status
+ * without hard-coding the value in TypeScript.
+ */
+.status-badge:not(.active):not(.inactive) {
+  background: #f8fafc;
+
+  color: #64748b;
+
+  border: 1px solid #e2e8f0;
+}
+
+.status-badge:not(.active):not(.inactive) .status-dot {
+  background: #94a3b8;
+}
+
+/* =====================================================
+   ACTIONS
+   ===================================================== */
+
+.actions-column {
+  width: 190px;
+
+  min-width: 190px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  white-space: nowrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 52px;
+
+  padding: 7px 9px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+/* View */
+
+.action-btn.view {
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  border: 1px solid #dbeafe;
+}
+
+.action-btn.view:hover {
+  background: #dbeafe;
+
+  border-color: #bfdbfe;
+}
+
+/* Edit */
+
+.action-btn.edit {
+  background: #f0fdf4;
+
+  color: #15803d;
+
+  border: 1px solid #dcfce7;
+}
+
+.action-btn.edit:hover {
+  background: #dcfce7;
+
+  border-color: #bbf7d0;
+}
+
+/* Delete */
+
+.action-btn.delete {
+  background: #fff1f2;
+
+  color: #dc2626;
+
+  border: 1px solid #ffe4e6;
+}
+
+.action-btn.delete:hover:not(:disabled) {
+  background: #ffe4e6;
+
+  border-color: #fecdd3;
+}
+
+.action-btn:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+/* =====================================================
+   EMPTY
+   ===================================================== */
+
+.empty {
+  padding: 55px 20px !important;
+
+  text-align: center;
+}
+
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 7px;
+}
+
+.empty-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 6px;
+
+  background: #f8fafc;
+
+  color: #94a3b8;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  font-size: 20px;
+}
+
+.empty-content strong {
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.empty-content span {
+  max-width: 420px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1100px) {
+  .table-header {
+    padding: 18px;
+  }
+
+  thead th,
+  tbody td {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  table {
+    min-width: 1450px;
+  }
+}
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 760px) {
+  .table-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 16px;
+  }
+
+  .table-title {
+    width: 100%;
+  }
+
+  .table-header h2 {
+    font-size: 16px;
+  }
+
+  .table-header p {
+    font-size: 12px;
+  }
+
+  .record-count {
+    align-self: flex-start;
+
+    font-size: 12px;
+  }
+
+  .table-icon {
+    width: 38px;
+    height: 38px;
+
+    font-size: 17px;
+  }
+
+  table {
+    min-width: 1400px;
+  }
+
+  thead th {
+    padding: 12px;
+
+    font-size: 10px;
+  }
+
+  tbody td {
+    padding: 13px 12px;
+
+    font-size: 12px;
+  }
+
+  .code {
+    font-size: 10px;
+  }
+
+  .subject {
+    max-width: 210px;
+  }
+
+  .faculty {
+    max-width: 170px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 520px) {
+  .table-card {
+    border-radius: 11px;
+  }
+
+  .table-header {
+    padding: 14px;
+  }
+
+  .table-title {
+    gap: 9px;
+  }
+
+  .table-icon {
+    width: 35px;
+    height: 35px;
+
+    font-size: 16px;
+  }
+
+  .table-header h2 {
+    font-size: 15px;
+  }
+
+  .table-header p {
+    margin-top: 3px;
+
+    font-size: 11px;
+  }
+
+  .record-count {
+    padding: 6px 9px;
+
+    font-size: 11px;
+  }
+
+  /*
+   * Keep timetable as a horizontally scrollable
+   * data table on small screens.
+   */
+  table {
+    min-width: 1320px;
+  }
+
+  thead th {
+    padding: 11px 10px;
+
+    font-size: 9px;
+  }
+
+  tbody td {
+    padding: 12px 10px;
+
+    font-size: 11px;
+  }
+
+  .code {
+    max-width: 190px;
+
+    padding: 4px 7px;
+
+    font-size: 9px;
+  }
+
+  .subject {
+    max-width: 190px;
+  }
+
+  .faculty {
+    max-width: 150px;
+  }
+
+  .normal-value {
+    font-size: 11px;
+  }
+
+  .section-badge,
+  .room,
+  .period {
+    font-size: 10px;
+  }
+
+  .day {
+    font-size: 10px;
+  }
+
+  .time {
+    font-size: 10px;
+  }
+
+  .status-badge {
+    padding: 4px 8px;
+
+    font-size: 10px;
+  }
+
+  .action-btn {
+    min-width: 48px;
+
+    padding: 6px 8px;
+
+    font-size: 10px;
+  }
+
+  .empty {
+    padding: 45px 15px !important;
+  }
+
+  .empty-icon {
+    width: 46px;
+    height: 46px;
+
+    font-size: 18px;
+  }
+
+  .empty-content strong {
+    font-size: 13px;
+  }
+
+  .empty-content span {
+    font-size: 10px;
+  }
+}
+
+/* =====================================================
+   VERY SMALL MOBILE
+   ===================================================== */
+
+@media (max-width: 380px) {
+  .table-header {
+    padding: 12px;
+  }
+
+  .table-header h2 {
+    font-size: 14px;
+  }
+
+  .table-header p {
+    font-size: 10px;
+  }
+
+  .record-count {
+    font-size: 10px;
+  }
+
+  table {
+    min-width: 1250px;
+  }
+
+  thead th {
+    padding: 10px 9px;
+  }
+
+  tbody td {
+    padding: 11px 9px;
+  }
+}

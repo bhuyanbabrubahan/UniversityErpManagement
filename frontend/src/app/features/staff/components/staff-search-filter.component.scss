@@ -1,0 +1,28 @@
+.filter-card {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px;
+  background: #fff;
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+.filter-card input {
+  flex: 1;
+  min-width: 180px;
+  padding: 11px;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+}
+.filter-card button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+.filter-card .ghost {
+  background: #eef2f7;
+  color: #263247;
+}

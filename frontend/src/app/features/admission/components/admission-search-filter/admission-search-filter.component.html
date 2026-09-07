@@ -1,0 +1,60 @@
+<form class="filter-card" [formGroup]="form" (ngSubmit)="search()">
+  <div class="header">
+    <div>
+      <h3>Search Admissions</h3>
+      <p>Filter admissions using the fields supported by the backend search API.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="field">
+      <label for="admissionNumber">Admission Number</label>
+      <input id="admissionNumber" formControlName="admissionNumber" placeholder="Admission number" />
+    </div>
+
+    <div class="field">
+      <label for="studentId">Student ID</label>
+      <input id="studentId" type="number" min="1" formControlName="studentId" />
+    </div>
+
+    <div class="field">
+      <label for="studentName">Student Name</label>
+      <input id="studentName" formControlName="studentName" placeholder="Student name" />
+    </div>
+
+    <div class="field">
+      <label for="departmentId">Department ID</label>
+      <input id="departmentId" type="number" min="1" formControlName="departmentId" />
+    </div>
+
+    <div class="field">
+      <label for="courseId">Course ID</label>
+      <input id="courseId" type="number" min="1" formControlName="courseId" />
+    </div>
+
+    <div class="field">
+      <label for="academicYear">Academic Year</label>
+      <input id="academicYear" formControlName="academicYear" placeholder="2026-2027" />
+    </div>
+
+    <div class="field">
+      <label for="semesterId">Semester ID</label>
+      <input id="semesterId" type="number" min="1" max="8" formControlName="semesterId" />
+    </div>
+
+    <div class="field">
+      <label for="admissionStatus">Admission Status</label>
+      <select id="admissionStatus" formControlName="admissionStatus">
+        <option [ngValue]="null">All statuses</option>
+        @for (status of statuses; track status) {
+          <option [ngValue]="status">{{ status }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="clear" (click)="clear()">Clear</button>
+    <button type="submit" class="search">Search</button>
+  </div>
+</form>

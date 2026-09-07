@@ -1,0 +1,158 @@
+<section class="page">
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow"> University ERP Management </span>
+
+      <h1>HOD Management</h1>
+
+      <p>Manage Head of Department records with a reusable CRUD workflow.</p>
+    </div>
+
+    <a class="primary" routerLink="add">
+      <span class="primary-icon">+</span>
+
+      Add HOD
+    </a>
+  </header>
+
+  <!-- =====================================================
+       SEARCH FILTER
+       ===================================================== -->
+
+  <app-hod-search-filter (search)="load($event)" (reset)="load()" />
+
+  <!-- =====================================================
+       LOADING
+       ===================================================== -->
+
+  @if (loading()) {
+    <div class="loading-card">
+      <span class="loading-spinner"></span>
+
+      <div>
+        <strong> Loading HOD records... </strong>
+
+        <span> Please wait while records are being loaded. </span>
+      </div>
+    </div>
+  }
+
+  <!-- =====================================================
+       TABLE
+       ===================================================== -->
+
+  @if (!loading()) {
+    <app-hod-table [rows]="rows()" (remove)="remove($event)" />
+  }
+
+  <!-- =====================================================
+       PAGINATION
+       ===================================================== -->
+
+  @if (!loading() && totalElements() > 0) {
+    <div class="pagination-card">
+      <!-- RECORD INFORMATION -->
+
+      <div class="pagination-info">
+        Showing
+
+        <strong>
+          {{ startRecord }}
+        </strong>
+
+        -
+
+        <strong>
+          {{ endRecord }}
+        </strong>
+
+        of
+
+        <strong>
+          {{ totalElements() }}
+        </strong>
+
+        records
+      </div>
+
+      <!-- PAGE SIZE -->
+
+      <div class="page-size">
+        <label for="pageSize"> Rows per page </label>
+
+        <select id="pageSize" [value]="size()" (change)="changeSize($event)">
+          <option value="5">5</option>
+
+          <option value="10">10</option>
+
+          <option value="20">20</option>
+
+          <option value="50">50</option>
+
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <!-- PAGE NAVIGATION -->
+
+      <nav class="pagination" aria-label="HOD pagination">
+        <!-- PREVIOUS -->
+
+        <button
+          type="button"
+          class="page-btn arrow"
+          [disabled]="page() === 0"
+          (click)="previousPage()"
+          aria-label="Previous page"
+        >
+          ←
+        </button>
+
+        <!-- PAGE NUMBERS -->
+
+        @for (pageNumber of pageNumbers; track pageNumber) {
+          <button
+            type="button"
+            class="page-btn"
+            [class.active]="pageNumber === page()"
+            (click)="changePage(pageNumber)"
+          >
+            {{ pageNumber + 1 }}
+          </button>
+        }
+
+        <!-- NEXT -->
+
+        <button
+          type="button"
+          class="page-btn arrow"
+          [disabled]="page() >= totalPages() - 1"
+          (click)="nextPage()"
+          aria-label="Next page"
+        >
+          →
+        </button>
+      </nav>
+    </div>
+  }
+
+  <!-- =====================================================
+       EMPTY STATE
+       ===================================================== -->
+
+  @if (!loading() && totalElements() === 0) {
+    <div class="empty-page">
+      <div class="empty-icon">▦</div>
+
+      <h3>No HOD records found</h3>
+
+      <p>Try changing your search filters or add a new HOD record.</p>
+
+      <a class="empty-action" routerLink="add"> Add HOD </a>
+    </div>
+  }
+</section>

@@ -1,0 +1,309 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidebar {
+  width: 100%;
+  height: 100%;
+
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--erp-sidebar);
+  color: #d9e2ef;
+
+  overflow: hidden;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 15px;
+}
+
+.sidebar-brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: #1e3a8a;
+  color: #fff;
+}
+
+.sidebar-brand-mark mat-icon {
+  font-size: 20px;
+}
+
+.sidebar-brand-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand-copy strong {
+  font-size: 13px;
+}
+
+.sidebar-brand-copy span {
+  font-size: 9px;
+  color: #8e9bae;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.sidebar-divider {
+  height: 1px;
+  background: rgb(255 255 255 / 0.08);
+  margin: 0 14px 9px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.sidebar-navigation {
+  flex: 1 1 auto;
+
+  min-height: 0;
+  min-width: 0;
+
+  padding: 0 8px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Common menu styles */
+
+.root-menu-item,
+.menu-parent,
+.submenu-item,
+.nested-parent,
+.nested-submenu-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #b9c4d3;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 8px;
+  min-height: 38px;
+  padding: 0 9px;
+  font-size: 12px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+/* =========================
+   HOVER
+========================= */
+
+.root-menu-item:hover,
+.menu-parent:hover,
+.submenu-item:hover,
+.nested-parent:hover,
+.nested-submenu-item:hover {
+  background: rgb(255 255 255 / 0.06);
+  color: #fff;
+}
+
+/* =========================
+   ACTIVE MENU
+========================= */
+
+.root-menu-item.active-menu,
+.submenu-item.active-submenu,
+.nested-submenu-item.active-nested,
+.menu-parent.parent-active,
+.nested-parent.nested-active {
+  background: rgb(37 99 235 / 0.28) !important;
+  color: #fff !important;
+}
+
+/*
+ * Active item par mouse le jaane par bhi
+ * wahi active background maintain rahega.
+ */
+
+.root-menu-item.active-menu:hover,
+.submenu-item.active-submenu:hover,
+.nested-submenu-item.active-nested:hover,
+.menu-parent.parent-active:hover,
+.nested-parent.nested-active:hover {
+  background: rgb(37 99 235 / 0.36) !important;
+  color: #fff !important;
+}
+
+/* =========================
+   ROOT PARENT
+========================= */
+
+.menu-parent {
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.menu-parent-main,
+.nested-parent-main {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.menu-title,
+.submenu-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================
+   ICONS
+========================= */
+
+.menu-icon,
+.submenu-item mat-icon,
+.nested-parent mat-icon,
+.nested-submenu-item mat-icon,
+.root-menu-item mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.expand-icon,
+.nested-expand-icon {
+  font-size: 17px;
+  width: 17px;
+  height: 17px;
+  transition: transform 0.15s ease;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+/* =========================
+   SUBMENU
+========================= */
+
+.submenu {
+  padding: 3px 0 5px 12px;
+}
+
+.submenu-item {
+  min-height: 34px;
+  font-size: 11.5px;
+}
+
+.submenu-line {
+  width: 1px;
+  height: 17px;
+  background: #334155;
+}
+
+/* =========================
+   NESTED MENU
+========================= */
+
+.nested-menu {
+  padding-left: 7px;
+}
+
+.nested-parent {
+  min-height: 33px;
+  font-size: 11px;
+}
+
+.nested-submenu {
+  padding-left: 13px;
+}
+
+.nested-submenu-item {
+  min-height: 31px;
+  font-size: 10.5px;
+}
+
+.nested-dot {
+  width: 5px;
+  height: 5px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #64748b;
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.menu-badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.1);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.sidebar-footer {
+  padding: 11px;
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.security-status {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.04);
+}
+
+.security-status strong,
+.security-status span {
+  display: block;
+  font-size: 9px;
+}
+
+.security-status span {
+  color: #7f8da0;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgb(34 197 94 / 0.12);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-navigation {
+  padding: 18px;
+  color: #8290a4;
+  display: grid;
+  place-items: center;
+  gap: 7px;
+  font-size: 11px;
+}

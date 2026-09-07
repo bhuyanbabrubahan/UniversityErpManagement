@@ -1,0 +1,66 @@
+<section class="filter-card">
+  <div class="filter-header">
+    <div>
+      <h2>Search Timetable</h2>
+      <p>Filter timetable records by code, keyword or status.</p>
+    </div>
+  </div>
+
+  <div class="filter-grid">
+    <div class="field">
+      <label for="code">Code</label>
+
+      <input
+        id="code"
+        name="code"
+        type="text"
+        [(ngModel)]="code"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Search by code"
+        autocomplete="off"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <div class="field">
+      <label for="keyword">Keyword</label>
+
+      <input
+        id="keyword"
+        name="keyword"
+        type="text"
+        [(ngModel)]="keyword"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Subject, faculty, course..."
+        autocomplete="off"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <div class="field">
+      <label for="status">Status</label>
+
+      <select
+        id="status"
+        name="status"
+        [(ngModel)]="status"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="submit()"
+      >
+        <option value="">All Status</option>
+
+        @for (option of statusOptions; track option.value) {
+          <option [value]="option.value">
+            {{ option.label }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" class="primary" (click)="submit()">Search</button>
+
+      <button type="button" class="ghost" (click)="clear()">Reset</button>
+    </div>
+  </div>
+</section>

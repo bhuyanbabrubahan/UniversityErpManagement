@@ -1,0 +1,261 @@
+<aside class="sidebar">
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <div class="sidebar-header">
+    <div class="sidebar-brand-mark">
+      <mat-icon> account_balance </mat-icon>
+    </div>
+
+    <div class="sidebar-brand-copy">
+      <strong> UMS ERP </strong>
+
+      <span> Enterprise Portal </span>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       DIVIDER
+  ===================================================== -->
+
+  <div class="sidebar-divider"></div>
+
+  <!-- =====================================================
+       NAVIGATION
+  ===================================================== -->
+
+  <nav class="sidebar-navigation" aria-label="Main navigation">
+    @for (menu of menus; track trackMenu($index, menu)) {
+      <!-- =================================================
+           SIMPLE ROOT MENU
+      ================================================= -->
+
+      @if (!hasChildren(menu)) {
+        <a
+          mat-list-item
+          class="root-menu-item"
+          [routerLink]="menu.route"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{
+            exact: menu.route === '/dashboard',
+          }"
+          (click)="onNavigation()"
+        >
+          <mat-icon matListItemIcon>
+            {{ menu.icon }}
+          </mat-icon>
+
+          <span matListItemTitle>
+            {{ menu.label }}
+          </span>
+
+          @if (
+            menu.badge !== undefined && menu.badge !== null && menu.badge !== ""
+          ) {
+            <span class="menu-badge">
+              {{ menu.badge }}
+            </span>
+          }
+        </a>
+      }
+
+      <!-- =================================================
+           ROOT DROPDOWN
+      ================================================= -->
+
+      @else {
+        <section
+          class="navigation-section"
+          [class.section-expanded]="isExpanded(menu)"
+          [class.section-active]="hasActiveChild(menu)"
+        >
+          <!-- =============================================
+               PARENT
+          ============================================== -->
+
+          <button
+            type="button"
+            class="menu-parent"
+            [class.parent-active]="hasActiveChild(menu)"
+            [attr.aria-expanded]="isExpanded(menu)"
+            [attr.aria-label]="
+              (isExpanded(menu) ? 'Collapse ' : 'Expand ') + menu.label
+            "
+            (click)="onParentClick(menu)"
+          >
+            <span class="menu-parent-main">
+              <mat-icon class="menu-icon">
+                {{ menu.icon }}
+              </mat-icon>
+
+              <span class="menu-title">
+                {{ menu.label }}
+              </span>
+            </span>
+
+            @if (
+              menu.badge !== undefined &&
+              menu.badge !== null &&
+              menu.badge !== ""
+            ) {
+              <span class="menu-badge">
+                {{ menu.badge }}
+              </span>
+            }
+
+            <mat-icon class="expand-icon" [class.rotated]="isExpanded(menu)">
+              expand_more
+            </mat-icon>
+          </button>
+
+          <!-- =============================================
+               CHILDREN
+          ============================================== -->
+
+          @if (isExpanded(menu)) {
+            <div class="submenu">
+              @for (child of menu.children; track trackMenu($index, child)) {
+                <!-- =======================================
+                     CHILD WITHOUT CHILDREN
+                ======================================== -->
+
+                @if (!hasChildren(child)) {
+                  <a
+                    class="submenu-item"
+                    [routerLink]="child.route"
+                    routerLinkActive="active-submenu"
+                    [routerLinkActiveOptions]="{
+                      exact: child.route === '/dashboard',
+                    }"
+                    (click)="onNavigation()"
+                  >
+                    <span class="submenu-line"></span>
+
+                    <mat-icon>
+                      {{ child.icon }}
+                    </mat-icon>
+
+                    <span class="submenu-title">
+                      {{ child.label }}
+                    </span>
+
+                    @if (
+                      child.badge !== undefined &&
+                      child.badge !== null &&
+                      child.badge !== ""
+                    ) {
+                      <span class="menu-badge">
+                        {{ child.badge }}
+                      </span>
+                    }
+                  </a>
+                }
+
+                <!-- =======================================
+                     NESTED CHILD
+                ======================================== -->
+
+                @else {
+                  <div
+                    class="nested-menu"
+                    [class.nested-expanded]="isExpanded(child)"
+                  >
+                    <button
+                      type="button"
+                      class="nested-parent"
+                      [class.nested-active]="hasActiveChild(child)"
+                      [attr.aria-expanded]="isExpanded(child)"
+                      (click)="toggleMenu(child)"
+                    >
+                      <span class="nested-parent-main">
+                        <mat-icon>
+                          {{ child.icon }}
+                        </mat-icon>
+
+                        <span>
+                          {{ child.label }}
+                        </span>
+                      </span>
+
+                      <mat-icon
+                        class="nested-expand-icon"
+                        [class.rotated]="isExpanded(child)"
+                      >
+                        expand_more
+                      </mat-icon>
+                    </button>
+
+                    @if (isExpanded(child)) {
+                      <div class="nested-submenu">
+                        @for (
+                          nested of child.children;
+                          track trackMenu($index, nested)
+                        ) {
+                          <a
+                            class="nested-submenu-item"
+                            [routerLink]="nested.route"
+                            routerLinkActive="active-nested"
+                            (click)="onNavigation()"
+                          >
+                            <span class="nested-dot"></span>
+
+                            <mat-icon>
+                              {{ nested.icon }}
+                            </mat-icon>
+
+                            <span>
+                              {{ nested.label }}
+                            </span>
+
+                            @if (
+                              nested.badge !== undefined &&
+                              nested.badge !== null &&
+                              nested.badge !== ""
+                            ) {
+                              <span class="menu-badge">
+                                {{ nested.badge }}
+                              </span>
+                            }
+                          </a>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              }
+            </div>
+          }
+        </section>
+      }
+    }
+
+    <!-- ===================================================
+         EMPTY STATE
+    ==================================================== -->
+
+    @if (menus.length === 0) {
+      <div class="empty-navigation">
+        <mat-icon> menu_open </mat-icon>
+
+        <span> No navigation available </span>
+      </div>
+    }
+  </nav>
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+
+  <div class="sidebar-footer">
+    <div class="security-status">
+      <span class="status-dot"></span>
+
+      <div>
+        <strong> Secure session </strong>
+
+        <span> UMS ERP · v2.0 </span>
+      </div>
+    </div>
+  </div>
+</aside>

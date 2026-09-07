@@ -1,0 +1,42 @@
+<div class="filter-card">
+  <div class="filter-title">
+    <span class="eyebrow">Search</span>
+    <h3>Find Curriculum</h3>
+    <p>Filter curriculum records.</p>
+  </div>
+
+  <div class="filter-controls">
+    <div class="field">
+      <label for="keyword"> Keyword </label>
+
+      <input
+        id="keyword"
+        name="keyword"
+        type="text"
+        [(ngModel)]="keyword"
+        placeholder="Code, course, subject..."
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <div class="field">
+      <label for="status"> Status </label>
+
+      <select id="status" name="status" [(ngModel)]="status">
+        <option value="">All Status</option>
+
+        <option value="ACTIVE">Active</option>
+
+        <option value="INACTIVE">Inactive</option>
+      </select>
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" class="search-btn" (click)="submit()">
+        Search
+      </button>
+
+      <button type="button" class="reset-btn" (click)="clear()">Reset</button>
+    </div>
+  </div>
+</div>

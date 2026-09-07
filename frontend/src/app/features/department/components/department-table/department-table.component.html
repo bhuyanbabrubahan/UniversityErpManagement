@@ -1,0 +1,139 @@
+<div class="table-wrapper">
+
+  @if (loading) {
+
+    <div class="table-state">
+      <div class="spinner"></div>
+      <p>Loading departments...</p>
+    </div>
+
+  } @else if (departments.length === 0) {
+
+    <div class="table-state empty-state">
+
+      <div class="empty-icon">
+        —
+      </div>
+
+      <h3>No Departments Found</h3>
+
+      <p>
+        No department records match your search criteria.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <div class="responsive-table">
+
+      <table>
+
+        <thead>
+          <tr>
+
+            <th>ID</th>
+
+            <th>Department Name</th>
+
+            <th>Code</th>
+
+            <th>Status</th>
+
+            <th>Created At</th>
+
+            <th class="actions-column">
+              Actions
+            </th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (
+            department of departments;
+            track trackById($index, department)
+          ) {
+
+            <tr>
+
+              <td>
+                {{ department.id }}
+              </td>
+
+              <td>
+                <div class="department-name">
+                  {{ department.departmentName }}
+                </div>
+              </td>
+
+              <td>
+                <span class="code">
+                  {{ department.departmentCode }}
+                </span>
+              </td>
+
+              <td>
+
+                <span
+                  class="status"
+                  [class.active]="department.status === 'ACTIVE'"
+                  [class.inactive]="department.status === 'INACTIVE'"
+                  [class.deleted]="department.status === 'DELETED'">
+
+                  {{ department.status }}
+
+                </span>
+
+              </td>
+
+              <td>
+                {{ department.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+              </td>
+
+              <td class="actions-column">
+
+                <div class="actions">
+
+                  <button
+                    type="button"
+                    class="action-btn view"
+                    title="View department"
+                    (click)="onView(department)">
+                    View
+                  </button>
+
+                  <button
+                    type="button"
+                    class="action-btn edit"
+                    title="Edit department"
+                    (click)="onEdit(department)">
+                    Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    class="action-btn delete"
+                    title="Delete department"
+                    (click)="onDelete(department)">
+                    Delete
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+</div>

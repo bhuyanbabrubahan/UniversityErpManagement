@@ -1,0 +1,440 @@
+<div class="page-container">
+
+  <!-- PAGE HEADER -->
+
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <div class="eyebrow">
+        STUDENT MANAGEMENT
+      </div>
+
+      <h1>
+        Upload Student Document
+      </h1>
+
+      <p>
+        Add a new document to the student's profile.
+      </p>
+
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      class="back-button"
+      [disabled]="submitting"
+      (click)="cancel()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+
+      <span>Back</span>
+    </button>
+
+  </div>
+
+
+  <!-- MAIN CARD -->
+
+  <mat-card class="form-card">
+
+    <!-- CARD HEADER -->
+
+    <div class="card-header">
+
+      <div class="card-icon">
+        <mat-icon>cloud_upload</mat-icon>
+      </div>
+
+      <div class="card-title">
+
+        <h2>
+          Document Information
+        </h2>
+
+        <p>
+          Provide the student details and upload the required
+          document.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- FORM CONTENT -->
+
+    <mat-card-content>
+
+      <!-- STUDENT DETAILS -->
+
+      <div class="form-grid">
+
+        <mat-form-field
+          appearance="outline"
+          class="form-field"
+        >
+
+          <mat-label>
+            Student ID
+          </mat-label>
+
+          <mat-icon matPrefix>
+            person
+          </mat-icon>
+
+          <input
+            matInput
+            type="number"
+            min="1"
+            [(ngModel)]="studentId"
+            [disabled]="submitting"
+            placeholder="Enter student ID"
+          />
+
+          <mat-hint>
+            Enter the registered student ID.
+          </mat-hint>
+
+        </mat-form-field>
+
+
+        <mat-form-field
+          appearance="outline"
+          class="form-field"
+        >
+
+          <mat-label>
+            Document Type
+          </mat-label>
+
+          <mat-icon matPrefix>
+            description
+          </mat-icon>
+
+          <mat-select
+            [(ngModel)]="documentType"
+            [disabled]="submitting"
+          >
+
+            <mat-option [value]="null">
+              Select document type
+            </mat-option>
+
+            @for (type of documentTypes; track type) {
+
+              <mat-option [value]="type">
+                {{ type.replaceAll('_', ' ') }}
+              </mat-option>
+
+            }
+
+          </mat-select>
+
+          <mat-hint>
+            Select the type of document.
+          </mat-hint>
+
+        </mat-form-field>
+
+      </div>
+
+
+      <!-- FILE SECTION -->
+
+      <div class="file-section">
+
+        <div class="section-label">
+
+          <div class="label-title">
+
+            <mat-icon>
+              attach_file
+            </mat-icon>
+
+            <span>
+              Document File
+            </span>
+
+          </div>
+
+          <span class="label-info">
+            PDF, JPG, PNG • Maximum 5 MB
+          </span>
+
+        </div>
+
+
+        <!-- HIDDEN FILE INPUT -->
+
+        <input
+          #fileInput
+          type="file"
+          hidden
+          accept=".pdf,.jpg,.jpeg,.png"
+          [disabled]="submitting"
+          (change)="onFileSelected($event)"
+        />
+
+
+        <!-- EMPTY STATE -->
+
+        @if (!file) {
+
+          <div
+            class="upload-box"
+            [class.disabled]="submitting"
+          >
+
+            <div class="upload-icon">
+              <mat-icon>
+                cloud_upload
+              </mat-icon>
+            </div>
+
+            <div class="upload-content">
+
+              <h3>
+                Select document
+              </h3>
+
+              <p>
+                Choose a PDF, JPG or PNG file from your device.
+              </p>
+
+            </div>
+
+            <button
+              mat-stroked-button
+              color="primary"
+              type="button"
+              class="choose-button"
+              [disabled]="submitting"
+              (click)="openFilePicker()"
+            >
+
+              <mat-icon>
+                upload_file
+              </mat-icon>
+
+              <span>
+                Choose File
+              </span>
+
+            </button>
+
+          </div>
+
+        }
+
+
+        <!-- SELECTED FILE -->
+
+        @if (file) {
+
+          <div class="selected-file">
+
+            <div class="selected-file-icon">
+
+              <mat-icon>
+                {{ getFileIcon() }}
+              </mat-icon>
+
+            </div>
+
+
+            <div class="selected-file-info">
+
+              <strong [title]="file.name">
+                {{ file.name }}
+              </strong>
+
+              <span>
+                {{ getFileExtension() }}
+                <span class="separator">•</span>
+                {{ formatFileSize(file.size) }}
+              </span>
+
+            </div>
+
+
+            <!-- CHANGE FILE -->
+
+            <button
+              mat-icon-button
+              type="button"
+              class="change-file-button"
+              [disabled]="submitting"
+              (click)="openFilePicker()"
+              aria-label="Change file"
+              title="Change file"
+            >
+              <mat-icon>
+                edit
+              </mat-icon>
+            </button>
+
+
+            <!-- REMOVE FILE -->
+
+            <button
+              mat-icon-button
+              type="button"
+              class="remove-file-button"
+              [disabled]="submitting"
+              (click)="removeFile()"
+              aria-label="Remove file"
+              title="Remove file"
+            >
+              <mat-icon>
+                close
+              </mat-icon>
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- INFORMATION -->
+
+      <div class="info-box">
+
+        <div class="info-icon">
+          <mat-icon>
+            info
+          </mat-icon>
+        </div>
+
+        <div class="info-content">
+
+          <h3>
+            Upload Guidelines
+          </h3>
+
+          <ul>
+
+            <li>
+              Make sure the document is clear and readable.
+            </li>
+
+            <li>
+              The document must belong to the selected student.
+            </li>
+
+            <li>
+              Supported formats are PDF, JPG and PNG.
+            </li>
+
+            <li>
+              Maximum file size is 5 MB.
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+
+    <!-- LOADING -->
+
+    @if (submitting) {
+
+      <div class="loading-section">
+
+        <mat-progress-bar
+          mode="indeterminate"
+        ></mat-progress-bar>
+
+        <span>
+          Uploading document...
+        </span>
+
+      </div>
+
+    }
+
+
+    <!-- ACTIONS -->
+
+    <mat-card-actions class="card-actions">
+
+      <button
+        mat-button
+        type="button"
+        class="cancel-button"
+        [disabled]="submitting"
+        (click)="cancel()"
+      >
+
+        <mat-icon>
+          close
+        </mat-icon>
+
+        <span>
+          Cancel
+        </span>
+
+      </button>
+
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="upload-button"
+        [disabled]="
+          submitting ||
+          !studentId ||
+          studentId <= 0 ||
+          !documentType ||
+          !file
+        "
+        (click)="submit()"
+      >
+
+        <!-- IMPORTANT:
+             Single root element prevents Angular Material
+             content projection warning.
+        -->
+
+        <span class="button-content">
+
+          @if (submitting) {
+
+            <mat-progress-spinner
+              diameter="18"
+              mode="indeterminate"
+            ></mat-progress-spinner>
+
+            <span>
+              Uploading...
+            </span>
+
+          } @else {
+
+            <mat-icon>
+              cloud_upload
+            </mat-icon>
+
+            <span>
+              Upload Document
+            </span>
+
+          }
+
+        </span>
+
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>

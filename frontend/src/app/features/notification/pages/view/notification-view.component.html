@@ -1,0 +1,200 @@
+<section class="page">
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="page-header">
+    <div>
+      <div class="crumb">Notifications / Details</div>
+
+      <h1>Notification details</h1>
+
+      <p>Review notification content, audience and delivery settings.</p>
+    </div>
+
+    <div class="header-actions">
+      <a class="back" routerLink="../"> Back </a>
+
+      <a
+        class="primary"
+        *ngIf="item() as notification"
+        [routerLink]="['../edit', notification.id]"
+      >
+        Edit notification
+      </a>
+    </div>
+  </header>
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div class="alert" *ngIf="error()" role="alert">
+    <strong> Unable to load </strong>
+
+    <span>
+      {{ error() }}
+    </span>
+  </div>
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div class="loading" *ngIf="loading()" aria-live="polite">
+    <span class="spinner"></span>
+
+    <span> Loading notification... </span>
+  </div>
+
+  <!-- =====================================================
+       CONTENT
+  ====================================================== -->
+
+  <ng-container *ngIf="!loading() && item() as n">
+    <!-- ===================================================
+         HERO
+    ==================================================== -->
+
+    <section class="hero-card">
+      <div class="hero-icon">
+        {{ (n.title || "N").charAt(0).toUpperCase() }}
+      </div>
+
+      <div class="hero-copy">
+        <span class="notification-code">
+          {{ n.code || "NO CODE" }}
+        </span>
+
+        <h2>
+          {{ n.title || "Untitled notification" }}
+        </h2>
+
+        <p>
+          {{ n.message || "No message available." }}
+        </p>
+      </div>
+
+      <span
+        class="status"
+        [ngClass]="'status-' + (n.status || 'unknown').toLowerCase()"
+      >
+        {{ n.status || "UNKNOWN" }}
+      </span>
+    </section>
+
+    <!-- ===================================================
+         MAIN DETAILS
+    ==================================================== -->
+
+    <section class="details-card">
+      <div class="detail">
+        <span> Target role </span>
+
+        <strong>
+          {{ n.targetRole || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Channel </span>
+
+        <strong>
+          {{ n.channel || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Published at </span>
+
+        <strong>
+          {{ formatDate(n.publishedAt) }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Status </span>
+
+        <strong>
+          {{ n.status || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Code </span>
+
+        <strong>
+          {{ n.code || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Title </span>
+
+        <strong>
+          {{ n.title || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail full">
+        <span> Description </span>
+
+        <strong>
+          {{ n.description || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail full message">
+        <span> Message </span>
+
+        <strong>
+          {{ n.message || "—" }}
+        </strong>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         AUDIT INFORMATION
+    ==================================================== -->
+
+    <section class="details-card audit-card">
+      <div class="audit-heading">
+        <h2>Audit information</h2>
+
+        <p>Record creation and update details.</p>
+      </div>
+
+      <div class="detail">
+        <span> Created by </span>
+
+        <strong>
+          {{ n.createdBy || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Created at </span>
+
+        <strong>
+          {{ formatDate(n.createdAt) }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Updated by </span>
+
+        <strong>
+          {{ n.updatedBy || "—" }}
+        </strong>
+      </div>
+
+      <div class="detail">
+        <span> Updated at </span>
+
+        <strong>
+          {{ formatDate(n.updatedAt) }}
+        </strong>
+      </div>
+    </section>
+  </ng-container>
+</section>

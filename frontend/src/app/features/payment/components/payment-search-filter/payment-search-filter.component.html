@@ -1,0 +1,163 @@
+<section class="payment-search-filter">
+
+  <div class="filter-header">
+    <div class="header-content">
+      <span class="header-icon">🔎</span>
+
+  <div>
+    <h3>Search Payments</h3>
+    <p>Filter student fee payments using the available criteria.</p>
+  </div>
+</div>
+
+
+  </div>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSearch()"
+    novalidate>
+
+
+<div class="filter-grid">
+
+  <!-- Student ID -->
+  <div class="form-field">
+    <label for="studentId">Student ID</label>
+
+    <input
+      id="studentId"
+      type="number"
+      formControlName="studentId"
+      min="1"
+      placeholder="Enter student ID" />
+  </div>
+
+  <!-- Admission ID -->
+  <div class="form-field">
+    <label for="admissionId">Admission ID</label>
+
+    <input
+      id="admissionId"
+      type="number"
+      formControlName="admissionId"
+      min="1"
+      placeholder="Enter admission ID" />
+  </div>
+
+  <!-- Academic Year -->
+  <div class="form-field">
+    <label for="academicYear">Academic Year</label>
+
+    <input
+      id="academicYear"
+      type="text"
+      formControlName="academicYear"
+      maxlength="20"
+      placeholder="e.g. 2026-2027" />
+  </div>
+
+  <!-- Payment Status -->
+  <div class="form-field">
+    <label for="paymentStatus">Payment Status</label>
+
+    <select
+      id="paymentStatus"
+      formControlName="paymentStatus">
+
+      <option [ngValue]="null">All payment statuses</option>
+
+      @for (status of paymentStatuses; track status) {
+        <option [ngValue]="status">
+          {{ status }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- Payment Mode -->
+  <div class="form-field">
+    <label for="paymentMode">Payment Mode</label>
+
+    <select
+      id="paymentMode"
+      formControlName="paymentMode">
+
+      <option [ngValue]="null">All payment modes</option>
+
+      @for (mode of paymentModes; track mode) {
+        <option [ngValue]="mode">
+          {{ mode }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- Minimum Paid Amount -->
+  <div class="form-field">
+    <label for="minPaidAmount">Minimum Paid Amount</label>
+
+    <input
+      id="minPaidAmount"
+      type="number"
+      formControlName="minPaidAmount"
+      min="0"
+      step="0.01"
+      placeholder="e.g. 10000" />
+  </div>
+
+  <!-- Maximum Paid Amount -->
+  <div class="form-field">
+    <label for="maxPaidAmount">Maximum Paid Amount</label>
+
+    <input
+      id="maxPaidAmount"
+      type="number"
+      formControlName="maxPaidAmount"
+      min="0"
+      step="0.01"
+      placeholder="e.g. 50000" />
+  </div>
+
+  <!-- Record Status -->
+  <div class="form-field">
+    <label for="status">Record Status</label>
+
+    <select
+      id="status"
+      formControlName="status">
+
+      <option [ngValue]="null">All record statuses</option>
+
+      @for (recordStatus of recordStatuses; track recordStatus) {
+        <option [ngValue]="recordStatus">
+          {{ recordStatus }}
+        </option>
+      }
+    </select>
+  </div>
+
+</div>
+
+<div class="filter-actions">
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="onReset()">
+    Reset
+  </button>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="form.invalid">
+    Search
+  </button>
+
+</div>
+
+
+  </form>
+
+</section>

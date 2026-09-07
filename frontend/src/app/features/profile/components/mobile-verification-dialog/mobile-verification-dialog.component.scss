@@ -1,0 +1,634 @@
+/* Component-specific styles are intentionally minimal; shared ERP visual rules live in src/styles.scss. */
+/* ============================================================
+   MOBILE VERIFICATION DIALOG
+   Professional / Enterprise / Responsive
+   ============================================================ */
+
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   DIALOG TITLE
+   ============================================================ */
+
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0;
+  padding: 22px 24px 18px;
+
+  color: #172033;
+
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+
+  border-bottom: 1px solid #edf1f5;
+
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   TITLE ICON
+   ============================================================ */
+
+.title-icon {
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+
+  color: #2563eb;
+
+  mat-icon {
+    width: 21px;
+    height: 21px;
+
+    font-size: 21px;
+    line-height: 21px;
+  }
+}
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+
+.dialog-content {
+  padding: 22px 24px 18px !important;
+
+  margin: 0 !important;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   VERIFICATION INFO
+   ============================================================ */
+
+.verification-info {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 13px 14px;
+
+  margin-bottom: 20px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff 0%,
+      #eff6ff 100%
+    );
+}
+
+/* ============================================================
+   INFO ICON
+   ============================================================ */
+
+.info-icon {
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #dbeafe;
+
+  color: #2563eb;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+
+    font-size: 18px;
+    line-height: 18px;
+  }
+}
+
+/* ============================================================
+   INFO TEXT
+   ============================================================ */
+
+.info-text {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  strong {
+    color: #334155;
+
+    font-size: 12px;
+    line-height: 1.35;
+
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 11.5px;
+    line-height: 1.5;
+
+    font-weight: 400;
+
+    word-break: break-word;
+
+    strong {
+      color: #1e40af;
+
+      font-size: inherit;
+      font-weight: 700;
+    }
+  }
+}
+
+/* ============================================================
+   FORM
+   ============================================================ */
+
+.otp-form {
+  width: 100%;
+
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   OTP FIELD
+   ============================================================ */
+
+.otp-field {
+  width: 100%;
+
+  margin: 0;
+
+  .mat-mdc-form-field-flex {
+    min-height: 52px;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background: #ffffff;
+  }
+
+  input {
+    color: #172033;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+
+    text-align: center;
+  }
+
+  input::placeholder {
+    color: #94a3b8;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    letter-spacing: 0;
+  }
+
+  mat-label {
+    color: #64748b;
+  }
+
+  mat-icon[matPrefix] {
+    margin-right: 8px;
+
+    color: #64748b;
+
+    width: 20px;
+    height: 20px;
+
+    font-size: 20px;
+
+    transition: color 150ms ease;
+  }
+}
+
+/* Focus color */
+
+.otp-field.mat-focused {
+
+  mat-icon[matPrefix] {
+    color: #2563eb;
+  }
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+
+.dialog-actions {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 14px 24px 20px !important;
+
+  margin: 0 !important;
+
+  box-sizing: border-box;
+
+  border-top: 1px solid #edf1f5;
+}
+
+/* ============================================================
+   CANCEL BUTTON
+   ============================================================ */
+
+.cancel-btn {
+  min-width: 90px;
+
+  height: 40px;
+
+  padding: 0 16px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* ============================================================
+   VERIFY BUTTON
+   ============================================================ */
+
+.verify-btn {
+  min-width: 125px;
+
+  height: 40px;
+
+  padding: 0 17px;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 7px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  mat-icon {
+    width: 18px !important;
+    height: 18px !important;
+
+    min-width: 18px;
+    min-height: 18px;
+
+    margin: 0 !important;
+
+    font-size: 18px !important;
+    line-height: 18px !important;
+
+    flex: 0 0 18px;
+  }
+
+  span {
+    display: inline-block;
+
+    margin: 0;
+    padding: 0;
+
+    line-height: 18px;
+
+    white-space: nowrap;
+  }
+}
+
+/* ============================================================
+   DISABLED
+   ============================================================ */
+
+.verify-btn:disabled {
+  opacity: 0.55;
+}
+
+/* ============================================================
+   MATERIAL ERROR
+   ============================================================ */
+
+.mat-mdc-form-field-error {
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .dialog-title {
+    padding: 19px 20px 16px;
+
+    font-size: 18px;
+  }
+
+  .title-icon {
+    width: 37px;
+    height: 37px;
+
+    flex-basis: 37px;
+
+    mat-icon {
+      width: 19px;
+      height: 19px;
+
+      font-size: 19px;
+      line-height: 19px;
+    }
+  }
+
+  .dialog-content {
+    padding: 18px 20px 16px !important;
+  }
+
+  .dialog-actions {
+    padding: 12px 20px 18px !important;
+  }
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+  .dialog-title {
+    gap: 10px;
+
+    padding: 17px 17px 14px;
+
+    font-size: 17px;
+  }
+
+  .title-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-basis: 34px;
+
+    border-radius: 8px;
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+
+  .dialog-content {
+    padding: 16px 17px 14px !important;
+  }
+
+  .verification-info {
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 17px;
+
+    border-radius: 9px;
+  }
+
+  .info-icon {
+    width: 31px;
+    height: 31px;
+
+    flex-basis: 31px;
+
+    border-radius: 7px;
+
+    mat-icon {
+      width: 17px;
+      height: 17px;
+
+      font-size: 17px;
+    }
+  }
+
+  .info-text {
+
+    strong {
+      font-size: 11px;
+    }
+
+    p {
+      font-size: 10.5px;
+      line-height: 1.45;
+    }
+  }
+
+  .otp-field {
+
+    .mat-mdc-form-field-flex {
+      min-height: 50px;
+    }
+
+    input {
+      font-size: 15px;
+
+      letter-spacing: 0.16em;
+    }
+  }
+
+  .dialog-actions {
+    padding: 11px 17px 16px !important;
+
+    gap: 8px;
+  }
+
+  .cancel-btn,
+  .verify-btn {
+    height: 38px;
+
+    min-width: 0;
+
+    font-size: 11.5px;
+  }
+
+  .cancel-btn {
+    padding: 0 13px;
+  }
+
+  .verify-btn {
+    padding: 0 14px;
+
+    gap: 6px;
+
+    mat-icon {
+      width: 17px !important;
+      height: 17px !important;
+
+      min-width: 17px;
+      min-height: 17px;
+
+      font-size: 17px !important;
+      line-height: 17px !important;
+    }
+  }
+}
+
+/* ============================================================
+   VERY SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 360px) {
+
+  .dialog-title {
+    padding: 15px 14px 13px;
+
+    font-size: 16px;
+  }
+
+  .title-icon {
+    width: 31px;
+    height: 31px;
+
+    flex-basis: 31px;
+
+    mat-icon {
+      width: 17px;
+      height: 17px;
+
+      font-size: 17px;
+      line-height: 17px;
+    }
+  }
+
+  .dialog-content {
+    padding: 14px 14px 12px !important;
+  }
+
+  .verification-info {
+    padding: 9px 10px;
+
+    margin-bottom: 14px;
+  }
+
+  .info-icon {
+    width: 29px;
+    height: 29px;
+
+    flex-basis: 29px;
+
+    mat-icon {
+      width: 15px;
+      height: 15px;
+
+      font-size: 15px;
+    }
+  }
+
+  .info-text {
+
+    strong {
+      font-size: 10.5px;
+    }
+
+    p {
+      font-size: 10px;
+    }
+  }
+
+  .otp-field {
+
+    input {
+      font-size: 14px;
+    }
+  }
+
+  .dialog-actions {
+    padding: 10px 14px 14px !important;
+  }
+
+  .cancel-btn,
+  .verify-btn {
+    height: 36px;
+
+    font-size: 11px;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+.cancel-btn:focus-visible,
+.verify-btn:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.2);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

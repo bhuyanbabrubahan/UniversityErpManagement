@@ -1,0 +1,50 @@
+<section class="page">
+  <header class="page-header">
+    <div class="page-heading">
+      <div class="title-icon edit-icon">
+        <span>✎</span>
+      </div>
+
+      <div class="page-title">
+        <span class="eyebrow">University ERP Management</span>
+
+        <h1>Edit HOD</h1>
+
+        <p>Update the Head of Department record.</p>
+      </div>
+    </div>
+
+    <button type="button" class="back-button" (click)="cancel()">
+      <span class="back-icon">←</span>
+      <span>Back to HOD</span>
+    </button>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-card">
+      <div class="loading-icon">
+        <span class="loading-spinner"></span>
+      </div>
+
+      <div class="loading-content">
+        <strong>Loading HOD</strong>
+
+        <span> Please wait while the record is being loaded. </span>
+      </div>
+    </div>
+  }
+
+  @if (!loading()) {
+    <div class="card">
+      <div class="card-accent edit-accent"></div>
+
+      <app-hod-form
+        [model]="model()"
+        submitLabel="Update HOD"
+        [loading]="saving()"
+        (save)="save($event)"
+        (cancel)="cancel()"
+      />
+    </div>
+  }
+</section>

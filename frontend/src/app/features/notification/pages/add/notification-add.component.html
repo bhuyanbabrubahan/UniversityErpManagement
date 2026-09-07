@@ -1,0 +1,99 @@
+<section class="notification-page">
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="header-main">
+      <div class="breadcrumb">
+        <span>Notifications</span>
+
+        <span class="separator">/</span>
+
+        <strong>Create</strong>
+      </div>
+
+      <div class="title-row">
+        <div class="title-icon">
+          <mat-icon aria-hidden="true"> add_alert </mat-icon>
+        </div>
+
+        <div class="title-content">
+          <h1>Create notification</h1>
+
+          <p>Create and publish a notification for your selected audience.</p>
+        </div>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="back-button"
+      [disabled]="busy()"
+      (click)="cancel()"
+    >
+      <mat-icon aria-hidden="true"> arrow_back </mat-icon>
+
+      <span> Back to notifications </span>
+    </button>
+  </header>
+
+  <!-- ERROR -->
+  <div class="error-alert" *ngIf="error()" role="alert">
+    <div class="error-icon">
+      <mat-icon aria-hidden="true"> error_outline </mat-icon>
+    </div>
+
+    <div class="error-content">
+      <strong> Unable to create notification </strong>
+
+      <span>
+        {{ error() }}
+      </span>
+    </div>
+
+    <button
+      type="button"
+      class="error-close"
+      aria-label="Close error"
+      (click)="error.set('')"
+    >
+      <mat-icon aria-hidden="true"> close </mat-icon>
+    </button>
+  </div>
+
+  <!-- FORM CARD -->
+  <section class="form-card">
+    <header class="form-card-header">
+      <div class="form-icon">
+        <mat-icon aria-hidden="true"> notifications_active </mat-icon>
+      </div>
+
+      <div class="form-title">
+        <h2>Notification details</h2>
+
+        <p>Enter the content, audience and delivery settings.</p>
+      </div>
+
+      <span class="create-badge">
+        <span class="badge-dot"></span>
+
+        New
+      </span>
+    </header>
+
+    <div class="form-card-body">
+      <app-notification-form
+        submitLabel="Create notification"
+        [busy]="busy()"
+        (save)="save($event)"
+        (cancel)="cancel()"
+      >
+      </app-notification-form>
+    </div>
+  </section>
+
+  <!-- SAVING -->
+  <div class="saving-indicator" *ngIf="busy()" aria-live="polite">
+    <span class="saving-spinner"></span>
+
+    <span> Creating notification... </span>
+  </div>
+</section>

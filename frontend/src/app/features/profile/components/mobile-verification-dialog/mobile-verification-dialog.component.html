@@ -1,0 +1,96 @@
+<h2 mat-dialog-title class="dialog-title">
+  <span class="title-icon" aria-hidden="true">
+    <mat-icon>verified_user</mat-icon>
+  </span>
+
+  <span>Verify Mobile Number</span>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+
+  <div class="verification-info">
+
+    <div class="info-icon" aria-hidden="true">
+      <mat-icon>sms</mat-icon>
+    </div>
+
+    <div class="info-text">
+      <strong>OTP Verification</strong>
+
+      <p>
+        A 6-digit OTP has been sent to
+        <strong>{{ data.mobileNumber }}</strong>
+      </p>
+    </div>
+
+  </div>
+
+  <form
+    class="otp-form"
+    [formGroup]="otpForm"
+    (ngSubmit)="verify()"
+    autocomplete="one-time-code"
+  >
+
+    <mat-form-field
+      appearance="outline"
+      class="otp-field"
+      subscriptSizing="dynamic"
+    >
+
+      <mat-label>Enter OTP</mat-label>
+
+      <mat-icon
+        matPrefix
+        aria-hidden="true"
+      >
+        pin
+      </mat-icon>
+
+      <input
+        matInput
+        type="text"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        maxlength="6"
+        formControlName="otp"
+        placeholder="Enter 6 digit OTP"
+        aria-label="6 digit OTP"
+      />
+
+      @if (otpForm.get('otp')?.touched && otpForm.get('otp')?.invalid) {
+        <mat-error>
+          Enter a valid 6 digit OTP.
+        </mat-error>
+      }
+
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+
+  <button
+    mat-stroked-button
+    type="button"
+    class="cancel-btn"
+    (click)="cancel()"
+  >
+    Cancel
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    class="verify-btn"
+    [disabled]="otpForm.invalid"
+    (click)="verify()"
+  >
+    <mat-icon aria-hidden="true">check_circle</mat-icon>
+    <span>Verify OTP</span>
+  </button>
+
+</mat-dialog-actions>

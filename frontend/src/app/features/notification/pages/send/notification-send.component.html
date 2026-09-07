@@ -1,0 +1,59 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <div class="crumb">Notifications / Send</div>
+      <h1>Send notification</h1>
+      <p>Deliver a direct email or SMS using the notification gateway.</p>
+    </div>
+    <a class="back" routerLink="../">Back to notifications</a>
+  </header>
+  <div class="alert success" *ngIf="success()">
+    <strong>Notification accepted</strong
+    ><span>The message was handed to the delivery service.</span>
+  </div>
+  <div class="alert error" *ngIf="error()">
+    <strong>Unable to send</strong><span>{{ error() }}</span>
+  </div>
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="card-head">
+      <div class="icon">S</div>
+      <div>
+        <h2>Delivery details</h2>
+        <p>Provide the recipient and message content.</p>
+      </div>
+    </div>
+    <div class="body">
+      <label
+        ><span>Recipient *</span
+        ><input
+          formControlName="recipient"
+          placeholder="Email address or mobile number" /></label
+      ><label
+        ><span>Channel *</span
+        ><select formControlName="channel">
+          <option value="EMAIL">Email</option>
+          <option value="SMS">SMS</option>
+        </select></label
+      ><label class="full"
+        ><span>Subject *</span
+        ><input
+          formControlName="subject"
+          placeholder="Message subject" /></label
+      ><label class="full"
+        ><span>Message *</span
+        ><textarea
+          formControlName="message"
+          rows="7"
+          placeholder="Write your message..."
+        ></textarea>
+      </label>
+    </div>
+    <div class="actions">
+      <a class="cancel" routerLink="../">Cancel</a
+      ><button type="submit" [disabled]="busy() || form.invalid">
+        <span class="spinner" *ngIf="busy()"></span
+        >{{ busy() ? "Sending..." : "Send notification" }}
+      </button>
+    </div>
+  </form>
+</section>

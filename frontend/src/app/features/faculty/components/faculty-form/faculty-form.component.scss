@@ -1,0 +1,887 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// ============================================================
+// MAIN FORM
+// ============================================================
+
+.faculty-form {
+  width: 100%;
+  max-width: 1500px;
+
+  margin: 0 auto;
+  padding: 0 0 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  color: #172033;
+}
+
+// ============================================================
+// TOP BAR
+// ============================================================
+
+.form-topbar {
+  min-height: 86px;
+
+  padding: 16px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 4%),
+    0 5px 18px rgb(15 23 42 / 5%);
+}
+
+.form-title-area {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.form-title-icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.form-title-icon mat-icon {
+  width: 23px;
+  height: 23px;
+
+  font-size: 23px;
+  line-height: 23px;
+}
+
+.form-kicker {
+  margin-bottom: 3px;
+
+  color: #64748b;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.form-topbar h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 19px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.form-topbar p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+.form-status {
+  flex: 0 0 auto;
+
+  min-height: 30px;
+
+  padding: 0 11px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+
+  background: #f8fbff;
+
+  color: #475569;
+
+  font-size: 10.5px;
+  font-weight: 650;
+}
+
+.status-indicator {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow: 0 0 0 3px rgb(34 197 94 / 12%);
+}
+
+// ============================================================
+// SECTION
+// ============================================================
+
+.form-section {
+  overflow: hidden;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 3%),
+    0 4px 14px rgb(15 23 42 / 4%);
+
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.form-section:hover {
+  border-color: #d7e0ec;
+
+  box-shadow:
+    0 2px 4px rgb(15 23 42 / 4%),
+    0 7px 20px rgb(15 23 42 / 5%);
+}
+
+// ============================================================
+// SECTION HEADER
+// ============================================================
+
+.section-header {
+  min-height: 64px;
+
+  padding: 10px 17px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  border-bottom: 1px solid #edf1f5;
+
+  background: linear-gradient(180deg, #ffffff, #fafcff);
+}
+
+.section-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.section-icon mat-icon {
+  width: 18px;
+  height: 18px;
+
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.section-heading {
+  min-width: 0;
+}
+
+.section-heading h3 {
+  margin: 0;
+
+  color: #1e293b;
+
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.section-heading p {
+  margin: 3px 0 0;
+
+  color: #7b8798;
+
+  font-size: 10.5px;
+  line-height: 1.25;
+}
+
+.section-number {
+  margin-left: auto;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+// ============================================================
+// SECTION BODY
+// ============================================================
+
+.section-body {
+  padding: 17px;
+}
+
+.address-section {
+  padding-bottom: 20px;
+}
+
+// ============================================================
+// GRID
+// ============================================================
+
+.field-grid {
+  width: 100%;
+
+  display: grid;
+
+  align-items: start;
+
+  gap: 4px 12px;
+}
+
+.field-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.field-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+// ============================================================
+// MATERIAL FORM FIELD
+// ============================================================
+
+.faculty-form mat-form-field {
+  width: 100%;
+  min-width: 0;
+
+  margin-bottom: 5px;
+}
+
+.faculty-form ::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+.faculty-form ::ng-deep .mat-mdc-text-field-wrapper {
+  min-height: 48px !important;
+  height: 48px !important;
+
+  padding: 0 !important;
+
+  border-radius: 7px;
+
+  background: #ffffff;
+}
+
+.faculty-form ::ng-deep .mat-mdc-form-field-flex {
+  height: 48px !important;
+  min-height: 48px !important;
+
+  align-items: center;
+}
+
+.faculty-form ::ng-deep .mat-mdc-form-field-infix {
+  min-height: 48px !important;
+  height: 48px !important;
+
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+
+  display: flex;
+  align-items: center;
+}
+
+// ============================================================
+// LABEL
+// ============================================================
+
+.faculty-form ::ng-deep .mdc-floating-label {
+  color: #64748b;
+
+  font-size: 11px !important;
+  font-weight: 500;
+}
+
+.faculty-form ::ng-deep .mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: #2563eb;
+}
+
+// ============================================================
+// INPUT
+// ============================================================
+
+.faculty-form ::ng-deep .mat-mdc-input-element {
+  height: auto !important;
+
+  padding: 0 !important;
+
+  color: #172033;
+
+  font-size: 12px !important;
+  font-weight: 500 !important;
+
+  caret-color: #2563eb;
+}
+
+.faculty-form ::ng-deep .mat-mdc-input-element::placeholder {
+  color: #94a3b8;
+}
+
+// ============================================================
+// DATE INPUT
+// ============================================================
+
+.faculty-form ::ng-deep input[matInput][matDatepicker] {
+  cursor: pointer;
+
+  color: #172033;
+
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.faculty-form ::ng-deep input[matInput][matDatepicker]::placeholder {
+  color: #94a3b8;
+}
+
+// ============================================================
+// DATEPICKER TOGGLE
+// ============================================================
+
+.faculty-form ::ng-deep .mat-datepicker-toggle {
+  width: 42px;
+  height: 42px;
+
+  margin-right: 2px;
+}
+
+.faculty-form ::ng-deep .mat-datepicker-toggle .mat-mdc-icon-button {
+  width: 40px;
+  height: 40px;
+
+  padding: 8px;
+
+  color: #64748b;
+}
+
+.faculty-form ::ng-deep .mat-datepicker-toggle .mat-mdc-icon-button:hover {
+  color: #2563eb;
+
+  background: #eff6ff;
+}
+
+// ============================================================
+// DATEPICKER POPUP
+// ============================================================
+
+::ng-deep .mat-datepicker-content {
+  border-radius: 12px !important;
+
+  box-shadow:
+    0 10px 30px rgb(15 23 42 / 15%),
+    0 2px 8px rgb(15 23 42 / 8%) !important;
+}
+
+::ng-deep .mat-calendar {
+  width: 300px !important;
+  height: auto !important;
+
+  background: #ffffff;
+
+  border-radius: 12px;
+}
+
+::ng-deep .mat-calendar-header {
+  padding: 8px 8px 0;
+}
+
+::ng-deep .mat-calendar-controls {
+  margin: 0 0 8px;
+}
+
+::ng-deep .mat-calendar-period-button {
+  color: #172033 !important;
+
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+::ng-deep .mat-calendar-previous-button,
+::ng-deep .mat-calendar-next-button {
+  color: #475569 !important;
+}
+
+::ng-deep .mat-calendar-table-header {
+  color: #64748b;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+::ng-deep .mat-calendar-body-cell-content {
+  color: #334155;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  color: #ffffff !important;
+
+  background: #2563eb !important;
+
+  border-radius: 50%;
+}
+
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: #2563eb !important;
+
+  color: #2563eb !important;
+}
+
+::ng-deep .mat-calendar-body-cell:hover .mat-calendar-body-cell-content {
+  background: #eff6ff !important;
+
+  border-radius: 50%;
+}
+
+// ============================================================
+// YEAR / MONTH SELECTION
+// ============================================================
+
+::ng-deep .mat-calendar-period-button {
+  min-width: 110px;
+}
+
+::ng-deep .mat-calendar-body-label {
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+::ng-deep .mat-calendar-body-cell {
+  font-size: 11px;
+}
+
+::ng-deep .mat-calendar-body-cell-content.mat-focus-indicator {
+  font-size: 11px;
+}
+
+// ============================================================
+// OUTLINE
+// ============================================================
+
+.faculty-form ::ng-deep .mdc-notched-outline {
+  border-radius: 7px;
+}
+
+.faculty-form ::ng-deep .mdc-notched-outline__leading,
+.faculty-form ::ng-deep .mdc-notched-outline__notch,
+.faculty-form ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #cbd5e1;
+  border-width: 1px;
+}
+
+.faculty-form ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.faculty-form ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field:hover
+  .mdc-notched-outline__trailing {
+  border-color: #94a3b8;
+}
+
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__leading,
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__notch,
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__trailing {
+  border-color: #2563eb;
+  border-width: 1.5px;
+}
+
+// ============================================================
+// PREFIX ICON
+// ============================================================
+
+.faculty-form ::ng-deep .mat-mdc-form-field-icon-prefix {
+  padding-left: 10px !important;
+  padding-right: 7px !important;
+}
+
+.faculty-form ::ng-deep .mat-mdc-form-field-icon-prefix mat-icon {
+  width: 16px;
+  height: 16px;
+
+  color: #7c8a9d;
+
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mat-mdc-form-field-icon-prefix
+  mat-icon {
+  color: #2563eb;
+}
+
+// ============================================================
+// SELECT
+// ============================================================
+
+.faculty-form ::ng-deep .mat-mdc-select {
+  font-size: 12px !important;
+  font-weight: 500;
+}
+
+.faculty-form ::ng-deep .mat-mdc-select-value {
+  color: #172033;
+
+  font-size: 12px !important;
+  font-weight: 500;
+}
+
+.faculty-form ::ng-deep .mat-mdc-select-placeholder {
+  color: #94a3b8;
+
+  font-size: 12px !important;
+}
+
+.faculty-form ::ng-deep .mat-mdc-select-arrow {
+  color: #64748b;
+}
+
+// ============================================================
+// READONLY
+// ============================================================
+
+.faculty-form ::ng-deep input[readonly] {
+  color: #64748b;
+
+  background: #f8fafc;
+
+  cursor: not-allowed;
+}
+
+// ============================================================
+// ERROR
+// ============================================================
+
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-form-field-invalid
+  .mdc-notched-outline__leading,
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-form-field-invalid
+  .mdc-notched-outline__notch,
+.faculty-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-form-field-invalid
+  .mdc-notched-outline__trailing {
+  border-color: #dc3545;
+}
+
+.faculty-form ::ng-deep .mat-mdc-form-field-error {
+  padding-left: 2px;
+
+  color: #dc3545;
+
+  font-size: 9.5px !important;
+}
+
+// ============================================================
+// NUMBER
+// ============================================================
+
+.faculty-form ::ng-deep input[type="number"] {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+
+  appearance: textfield;
+}
+
+.faculty-form ::ng-deep input[type="number"]::-webkit-inner-spin-button,
+.faculty-form ::ng-deep input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+
+  -webkit-appearance: none;
+}
+
+// ============================================================
+// RUPEE
+// ============================================================
+
+.faculty-form ::ng-deep .mat-mdc-form-field-text-prefix {
+  padding-left: 9px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+// ============================================================
+// ACTION BAR
+// ============================================================
+
+.form-actions {
+  position: sticky;
+  bottom: 12px;
+  z-index: 20;
+
+  min-height: 58px;
+
+  padding: 9px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  border: 1px solid #dce3ec;
+  border-radius: 10px;
+
+  background: rgb(255 255 255 / 96%);
+
+  box-shadow:
+    0 -3px 12px rgb(15 23 42 / 6%),
+    0 4px 16px rgb(15 23 42 / 5%);
+
+  backdrop-filter: blur(10px);
+}
+
+.action-message {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #64748b;
+
+  font-size: 10.5px;
+}
+
+.action-message mat-icon {
+  width: 16px;
+  height: 16px;
+
+  color: #64748b;
+
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.action-buttons {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-buttons button {
+  min-height: 36px;
+
+  padding: 0 14px;
+
+  border-radius: 7px;
+
+  font-size: 11.5px;
+  font-weight: 650;
+}
+
+.action-buttons mat-icon {
+  width: 16px;
+  height: 16px;
+
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.action-buttons button[color="primary"] {
+  min-width: 140px;
+
+  box-shadow: 0 3px 8px rgb(37 99 235 / 20%);
+}
+
+.button-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+// ============================================================
+// RESPONSIVE
+// ============================================================
+
+@media (max-width: 1200px) {
+  .field-grid-4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .field-grid-3,
+  .field-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form-topbar {
+    padding: 14px 16px;
+  }
+
+  .section-body {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .faculty-form {
+    gap: 10px;
+
+    padding-bottom: 12px;
+  }
+
+  .form-topbar {
+    min-height: auto;
+
+    padding: 13px;
+
+    align-items: flex-start;
+  }
+
+  .form-title-icon {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+  }
+
+  .form-topbar h2 {
+    font-size: 16px;
+  }
+
+  .form-topbar p {
+    font-size: 10px;
+  }
+
+  .form-status {
+    display: none;
+  }
+
+  .field-grid-3,
+  .field-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    min-height: 57px;
+
+    padding: 9px 12px;
+  }
+
+  .section-body {
+    padding: 12px;
+  }
+
+  .section-number {
+    font-size: 9px;
+  }
+
+  .form-actions {
+    position: static;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 10px;
+  }
+
+  .action-message {
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .action-buttons {
+    width: 100%;
+  }
+
+  .action-buttons button {
+    flex: 1;
+  }
+
+  ::ng-deep .mat-calendar {
+    width: 290px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .form-title-area {
+    gap: 10px;
+  }
+
+  .form-title-icon {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+  .section-heading h3 {
+    font-size: 12px;
+  }
+
+  .section-heading p {
+    font-size: 9px;
+  }
+}

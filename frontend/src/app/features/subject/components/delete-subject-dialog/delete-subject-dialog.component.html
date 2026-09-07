@@ -1,0 +1,125 @@
+<div class="page">
+
+  <div class="dialog-overlay">
+
+    <section
+      class="delete-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-title">
+
+      @if (loadingData) {
+
+        <div class="loading-state">
+          Loading subject...
+        </div>
+
+      } @else {
+
+        <div class="dialog-icon">
+          !
+        </div>
+
+        <div class="dialog-heading">
+
+          <h1 id="delete-title">
+            Delete Subject?
+          </h1>
+
+          <p>
+            This action will soft-delete the subject.
+            The record will no longer appear in the active subject list.
+          </p>
+
+        </div>
+
+
+        @if (subject) {
+
+          <div class="subject-preview">
+
+            <div>
+
+              <span>
+                Subject
+              </span>
+
+              <strong>
+                {{ subject.subjectName }}
+              </strong>
+
+            </div>
+
+            <div>
+
+              <span>
+                Code
+              </span>
+
+              <strong>
+                {{ subject.subjectCode }}
+              </strong>
+
+            </div>
+
+            <div>
+
+              <span>
+                Semester
+              </span>
+
+              <strong>
+                {{ subject.semesterName }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        }
+
+
+        @if (errorMessage) {
+
+          <div class="error-message">
+            {{ errorMessage }}
+          </div>
+
+        }
+
+
+        <div class="dialog-actions">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            [disabled]="deleting"
+            (click)="cancel()">
+
+            Cancel
+
+          </button>
+
+          <button
+            type="button"
+            class="delete-btn"
+            [disabled]="deleting || !subject"
+            (click)="confirmDelete()">
+
+            @if (deleting) {
+              Deleting...
+            } @else {
+              Delete Subject
+            }
+
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+  </div>
+
+</div>

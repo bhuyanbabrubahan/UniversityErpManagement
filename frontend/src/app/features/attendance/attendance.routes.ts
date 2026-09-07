@@ -1,0 +1,36 @@
+import { Routes } from '@angular/router';
+import { AttendanceDashboardComponent } from './pages/attendance-dashboard/attendance-dashboard.component';
+import { AttendanceClassesComponent } from './pages/attendance-classes/attendance-classes.component';
+import { MarkAttendanceComponent } from './pages/mark-attendance/mark-attendance.component';
+import { AttendancePreviewComponent } from './pages/attendance-preview/attendance-preview.component';
+import { AttendanceSuccessComponent } from './pages/attendance-success/attendance-success.component';
+import { AttendanceHistoryComponent } from './pages/attendance-history/attendance-history.component';
+import { AttendanceViewComponent } from './pages/attendance-view/attendance-view.component';
+import { AttendanceEditComponent } from './pages/attendance-edit/attendance-edit.component';
+import { AttendanceBulkUploadComponent } from './pages/attendance-bulk-upload/attendance-bulk-upload.component';
+import { AttendanceBulkPreviewComponent } from './pages/attendance-bulk-preview/attendance-bulk-preview.component';
+import { AttendanceReportComponent } from './pages/attendance-report/attendance-report.component';
+import { AttendanceReportDetailComponent } from './pages/attendance-report-detail/attendance-report-detail.component';
+import { AttendanceExportComponent } from './pages/attendance-export/attendance-export.component';
+import { StudentAttendanceComponent } from './pages/student-attendance/student-attendance.component';
+import { SubjectAttendanceComponent } from './pages/subject-attendance/subject-attendance.component';
+import { AttendanceSessionHistoryComponent } from './pages/attendance-session-history/attendance-session-history.component';
+
+export const ATTENDANCE_ROUTES: Routes = [
+  { path: '', component: AttendanceDashboardComponent },
+  { path: 'classes', component: AttendanceClassesComponent },
+  { path: 'mark', component: MarkAttendanceComponent },
+  { path: 'preview', component: AttendancePreviewComponent },
+  { path: 'success', component: AttendanceSuccessComponent },
+  { path: 'history', component: AttendanceHistoryComponent },
+  { path: 'sessions', component: AttendanceSessionHistoryComponent },
+  { path: 'view', component: AttendanceViewComponent },
+  { path: 'edit', component: AttendanceEditComponent },
+  { path: 'bulk-upload', component: AttendanceBulkUploadComponent },
+  { path: 'bulk-preview', component: AttendanceBulkPreviewComponent },
+  { path: 'report', component: AttendanceReportComponent },
+  { path: 'report-detail', component: AttendanceReportDetailComponent },
+  { path: 'export', component: AttendanceExportComponent },
+  { path: 'student', component: StudentAttendanceComponent },
+  { path: 'subject', component: SubjectAttendanceComponent }
+];

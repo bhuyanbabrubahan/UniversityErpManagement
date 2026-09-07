@@ -1,0 +1,162 @@
+<section class="page">
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow">University ERP Management</span>
+
+      <h1>Timetable Details</h1>
+
+      <p>View complete timetable information.</p>
+    </div>
+
+    <div class="header-actions">
+      <button type="button" class="back-btn" (click)="back()">
+        <span aria-hidden="true">←</span>
+        Back
+      </button>
+
+      @if (item(); as timetable) {
+        <a class="primary" [routerLink]="['../edit', timetable.id]">
+          Edit Timetable
+        </a>
+      }
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-card">
+      <span class="spinner" aria-hidden="true"></span>
+
+      <div>
+        <strong>Loading timetable...</strong>
+        <span>Please wait while the record is being loaded.</span>
+      </div>
+    </div>
+  }
+
+  @if (!loading() && item(); as timetable) {
+    <div class="details-card">
+      <div class="detail">
+        <span>Code</span>
+        <strong>{{ timetable.code || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Academic Year</span>
+        <strong>{{ timetable.academicYear || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Semester</span>
+        <strong>{{ timetable.semester || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Course</span>
+        <strong>{{ timetable.course || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Section</span>
+        <strong>{{ timetable.section || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Subject</span>
+        <strong>{{ timetable.subject || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Faculty</span>
+        <strong>{{ timetable.faculty || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Room</span>
+        <strong>{{ timetable.room || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Day</span>
+        <strong>{{ timetable.dayOfWeek || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Start Time</span>
+        <strong>{{ timetable.startTime || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>End Time</span>
+        <strong>{{ timetable.endTime || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Period</span>
+        <strong>{{ timetable.period || "—" }}</strong>
+      </div>
+
+      <div class="detail">
+        <span>Status</span>
+
+        <span
+          class="status"
+          [class.active]="timetable.status === 'ACTIVE'"
+          [class.inactive]="timetable.status === 'INACTIVE'"
+        >
+          <span class="status-dot"></span>
+          {{ timetable.status || "UNKNOWN" }}
+        </span>
+      </div>
+
+      <div class="detail detail-full">
+        <span>Description</span>
+
+        <strong>
+          {{ timetable.description || "—" }}
+        </strong>
+      </div>
+
+      <!-- =====================================================
+           AUDIT INFORMATION
+           ===================================================== -->
+
+      <div class="audit-divider detail-full">
+        <span>Audit Information</span>
+      </div>
+
+      <div class="detail audit-detail">
+        <span>Created By</span>
+        <strong>{{ timetable.createdBy || "—" }}</strong>
+      </div>
+
+      <div class="detail audit-detail">
+        <span>Updated By</span>
+        <strong>{{ timetable.updatedBy || "—" }}</strong>
+      </div>
+
+      <div class="detail audit-detail">
+        <span>Created At</span>
+        <strong>{{ formatDate(timetable.createdAt) }}</strong>
+      </div>
+
+      <div class="detail audit-detail">
+        <span>Updated At</span>
+        <strong>{{ formatDate(timetable.updatedAt) }}</strong>
+      </div>
+    </div>
+  }
+
+  @if (!loading() && !item()) {
+    <div class="empty-page">
+      <div class="empty-icon">▦</div>
+
+      <h3>Timetable not found</h3>
+
+      <p>The requested timetable record could not be found.</p>
+
+      <button type="button" class="empty-action" (click)="back()">
+        Go Back
+      </button>
+    </div>
+  }
+</section>

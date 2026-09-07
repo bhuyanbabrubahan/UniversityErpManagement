@@ -1,0 +1,181 @@
+/* Component-specific styles are intentionally minimal; shared ERP visual rules live in src/styles.scss. */
+:host {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.app-footer {
+  width: 100%;
+  min-height: 52px;
+  background: var(--ums-surface, #ffffff);
+  border-top: 1px solid var(--ums-border, #e2e8f0);
+  color: var(--ums-text-secondary, #64748b);
+  box-sizing: border-box;
+}
+
+.footer-container {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.footer-brand {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-brand-icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #2563eb;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px;
+  }
+}
+
+.footer-brand-text {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-title {
+  color: var(--ums-text-primary, #334155);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.footer-copyright {
+  color: var(--ums-text-secondary, #94a3b8);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.footer-meta {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.environment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 3px #dcfce7;
+}
+
+.footer-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--ums-border, #e2e8f0);
+}
+
+.version {
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .footer-container {
+    padding: 0 18px;
+  }
+
+  .footer-copyright {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .app-footer {
+    min-height: 48px;
+  }
+
+  .footer-container {
+    min-height: 48px;
+    padding: 0 14px;
+    gap: 12px;
+  }
+
+  .footer-brand-icon {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+    border-radius: 7px;
+
+    mat-icon {
+      font-size: 17px;
+      width: 17px;
+      height: 17px;
+    }
+  }
+
+  .footer-title {
+    font-size: 11px;
+  }
+
+  .footer-meta {
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .footer-divider {
+    height: 14px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 420px) {
+  .environment {
+    .status-dot {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  .environment {
+    font-size: 0;
+  }
+
+  .environment .status-dot {
+    margin: 0;
+  }
+
+  .footer-title {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

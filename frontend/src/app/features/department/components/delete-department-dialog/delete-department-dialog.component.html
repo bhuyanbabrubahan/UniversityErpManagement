@@ -1,0 +1,51 @@
+@if (visible) {
+  <div class="dialog-backdrop" (click)="onCancel()">
+
+    <div class="dialog-card" (click)="$event.stopPropagation()">
+
+      <div class="dialog-icon">
+        <span>!</span>
+      </div>
+
+      <h2>Delete Department</h2>
+
+      <p>
+        Are you sure you want to delete
+        <strong>{{ departmentName }}</strong>?
+      </p>
+
+      <p class="warning">
+        This action will soft delete the department record.
+      </p>
+
+      <div class="dialog-actions">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [disabled]="loading"
+          (click)="onCancel()">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          [disabled]="loading"
+          (click)="onConfirm()">
+
+          @if (loading) {
+            <span class="spinner"></span>
+            Deleting...
+          } @else {
+            Delete
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+}

@@ -1,0 +1,196 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page {
+  min-height: 100%;
+  padding: 24px;
+
+  box-sizing: border-box;
+}
+
+.dialog-overlay {
+  min-height: calc(100vh - 48px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-dialog {
+  width: min(460px, 100%);
+
+  padding: 26px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  box-shadow:
+    0 20px 50px rgb(15 23 42 / 14%);
+}
+
+.dialog-icon {
+  width: 42px;
+  height: 42px;
+
+  margin-bottom: 16px;
+
+  display: grid;
+  place-items: center;
+
+  color: #b91c1c;
+  background: #fee2e2;
+
+  border-radius: 50%;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.dialog-heading {
+
+  h1 {
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 19px;
+    font-weight: 750;
+  }
+
+  p {
+    margin: 7px 0 0;
+
+    color: #64748b;
+
+    font-size: 11px;
+    line-height: 1.6;
+  }
+}
+
+.subject-preview {
+  margin-top: 18px;
+  padding: 14px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  span {
+    display: block;
+    margin-bottom: 4px;
+
+    color: #64748b;
+
+    font-size: 9px;
+    font-weight: 600;
+  }
+
+  strong {
+    color: #0f172a;
+
+    font-size: 11px;
+  }
+}
+
+.error-message {
+  margin-top: 15px;
+  padding: 10px 12px;
+
+  color: #991b1b;
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+
+  font-size: 11px;
+}
+
+.dialog-actions {
+  margin-top: 22px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cancel-btn,
+.delete-btn {
+  min-height: 38px;
+  padding: 0 14px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.cancel-btn {
+  color: #475569;
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+
+  &:hover:not(:disabled) {
+    background: #f8fafc;
+  }
+}
+
+.delete-btn {
+  color: #ffffff;
+  background: #dc2626;
+
+  border: 1px solid #dc2626;
+
+  &:hover:not(:disabled) {
+    background: #b91c1c;
+  }
+}
+
+.loading-state {
+  padding: 30px;
+
+  color: #64748b;
+
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+
+  .page {
+    padding: 12px;
+  }
+
+  .delete-dialog {
+    padding: 20px;
+  }
+
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-btn,
+  .delete-btn {
+    width: 100%;
+  }
+}

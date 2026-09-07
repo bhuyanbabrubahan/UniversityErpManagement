@@ -1,0 +1,925 @@
+<div class="student-details">
+
+    <!-- ==================== PAGE HEADER ==================== -->
+
+    <div class="page-header">
+
+        <div class="header-content">
+
+            <button
+                mat-icon-button
+                type="button"
+                aria-label="Back to student list"
+                (click)="backToList()">
+
+                <mat-icon>arrow_back</mat-icon>
+
+            </button>
+
+            <div class="header-text">
+
+                <h2>Student Details</h2>
+
+                <p>View complete student information</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================== LOADING ==================== -->
+
+    <div
+        class="loading-container"
+        *ngIf="loading()">
+
+        <mat-spinner diameter="42"></mat-spinner>
+
+    </div>
+
+
+    <!-- ==================== ERROR ==================== -->
+
+    <mat-card
+        class="error-card"
+        *ngIf="error()">
+
+        <mat-card-content>
+
+            <div class="error-message">
+
+                <mat-icon>error</mat-icon>
+
+                <span>
+                    {{ error() }}
+                </span>
+
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+
+
+    <!-- ==================== STUDENT DETAILS ==================== -->
+
+    <ng-container *ngIf="student() as s">
+
+        <!-- ================================================== -->
+        <!-- PERSONAL INFORMATION -->
+        <!-- ================================================== -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Personal Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+                    <!-- FULL NAME -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Full Name
+                        </span>
+
+                        <span class="value">
+                            {{ s.fullName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- ROLL NUMBER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Roll Number
+                        </span>
+
+                        <span class="value">
+                            {{ s.rollNumber || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Email
+                        </span>
+
+                        <div class="value verified-group">
+
+                            <span class="masked-value">
+
+                                <ng-container *ngIf="s.user.email; else noEmail">
+
+                                    {{ s.user.email.charAt(0) }}***&#64;{{ s.user.email.split('@')[1] }}
+
+                                </ng-container>
+
+                                <ng-template #noEmail>
+                                    —
+                                </ng-template>
+
+                            </span>
+
+                            <span
+                                class="badge success"
+                                *ngIf="s.user.emailVerified">
+
+                                <mat-icon>
+                                    check_circle
+                                </mat-icon>
+
+                                Verified
+
+                            </span>
+
+                            <span
+                                class="badge danger"
+                                *ngIf="!s.user.emailVerified">
+
+                                <mat-icon>
+                                    cancel
+                                </mat-icon>
+
+                                Pending
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MOBILE NUMBER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Mobile Number
+                        </span>
+
+                        <div class="value verified-group">
+
+                            <span class="masked-value">
+
+                                <ng-container
+                                    *ngIf="s.user.mobileNumber; else noMobile">
+
+                                    ******{{ s.user.mobileNumber.slice(-4) }}
+
+                                </ng-container>
+
+                                <ng-template #noMobile>
+                                    —
+                                </ng-template>
+
+                            </span>
+
+                            <span
+                                class="badge success"
+                                *ngIf="s.user.mobileVerified">
+
+                                <mat-icon>
+                                    check_circle
+                                </mat-icon>
+
+                                Verified
+
+                            </span>
+
+                            <span
+                                class="badge danger"
+                                *ngIf="!s.user.mobileVerified">
+
+                                <mat-icon>
+                                    cancel
+                                </mat-icon>
+
+                                Pending
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ALTERNATE MOBILE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Alternate Mobile
+                        </span>
+
+                        <span class="value masked-value">
+
+                            <ng-container
+                                *ngIf="s.alternateMobile; else noAlternateMobile">
+
+                                ******{{ s.alternateMobile.slice(-4) }}
+
+                            </ng-container>
+
+                            <ng-template #noAlternateMobile>
+                                —
+                            </ng-template>
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- ALTERNATE EMAIL -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Alternate Email
+                        </span>
+
+                        <span class="value masked-value">
+
+                            <ng-container
+                                *ngIf="s.alternateEmail; else noAlternateEmail">
+
+                                {{ s.alternateEmail.charAt(0) }}***&#64;{{ s.alternateEmail.split('@')[1] }}
+
+                            </ng-container>
+
+                            <ng-template #noAlternateEmail>
+                                —
+                            </ng-template>
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- GENDER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Gender
+                        </span>
+
+                        <span class="value">
+                            {{ s.gender || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- DATE OF BIRTH -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Date Of Birth
+                        </span>
+
+                        <span class="value">
+
+                            {{ s.dateOfBirth
+                                ? (s.dateOfBirth | date:'dd MMM yyyy')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- BLOOD GROUP -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Blood Group
+                        </span>
+
+                        <span class="value">
+                            {{ s.bloodGroup || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Category
+                        </span>
+
+                        <span class="value">
+                            {{ s.category || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- RELIGION -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Religion
+                        </span>
+
+                        <span class="value">
+                            {{ s.religion || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- NATIONALITY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Nationality
+                        </span>
+
+                        <span class="value">
+                            {{ s.nationality || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- AADHAAR -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Aadhaar Number
+                        </span>
+
+                        <span class="value masked-value">
+
+                            <ng-container
+                                *ngIf="s.aadhaarNumber; else noAadhaar">
+
+                                XXXX XXXX {{ s.aadhaarNumber.slice(-4) }}
+
+                            </ng-container>
+
+                            <ng-template #noAadhaar>
+                                —
+                            </ng-template>
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- PAN -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            PAN Number
+                        </span>
+
+                        <span class="value masked-value">
+
+                            <ng-container
+                                *ngIf="s.panNumber; else noPan">
+
+                                {{ s.panNumber.slice(0, 2) }}***{{ s.panNumber.slice(-5) }}
+
+                            </ng-container>
+
+                            <ng-template #noPan>
+                                —
+                            </ng-template>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+        <!-- ================================================== -->
+        <!-- ACADEMIC INFORMATION -->
+        <!-- ================================================== -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Academic Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Department
+                        </span>
+
+                        <span class="value">
+                            {{ s.department.departmentName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- ADMISSION NUMBER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Admission Number
+                        </span>
+
+                        <span class="value">
+                            {{ s.admissionNumber || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- COURSE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Course
+                        </span>
+
+                        <span class="value">
+                            {{ s.course?.courseName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- SEMESTER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Semester
+                        </span>
+
+                        <span class="value">
+                            {{ s.currentSemester?.semesterName || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- ACADEMIC YEAR -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Academic Year
+                        </span>
+
+                        <span class="value">
+                            {{ s.academicYear || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- BATCH -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Batch
+                        </span>
+
+                        <span class="value">
+                            {{ s.batch || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- SECTION -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Section
+                        </span>
+
+                        <span class="value">
+                            {{ s.section || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- CURRENT YEAR -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Current Year
+                        </span>
+
+                        <span class="value">
+
+                            {{ s.currentYear !== null && s.currentYear !== undefined
+                                ? s.currentYear
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- STUDENT TYPE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Student Type
+                        </span>
+
+                        <span class="value">
+                            {{ s.studentType || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- STUDENT STATUS -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Student Status
+                        </span>
+
+                        <span class="value">
+                            {{ s.studentStatus || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- ADMISSION DATE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Admission Date
+                        </span>
+
+                        <span class="value">
+
+                            {{ s.admissionDate
+                                ? (s.admissionDate | date:'dd MMM yyyy')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Status
+                        </span>
+
+                        <span
+                            class="badge active"
+                            *ngIf="s.status">
+
+                            {{ s.status }}
+
+                        </span>
+
+                        <span
+                            class="value"
+                            *ngIf="!s.status">
+
+                            —
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+        <!-- ================================================== -->
+        <!-- ADDRESS INFORMATION -->
+        <!-- ================================================== -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Address Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+                    <!-- ADDRESS TYPE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Address Type
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.addressType || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- HOUSE NUMBER -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            House Number
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.houseNumber || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- STREET -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Street
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.street || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- LANDMARK -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Landmark
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.landmark || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- VILLAGE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Village
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.village || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- TEHSIL -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Tehsil
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.tehsil || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- DISTRICT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            District
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.district || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- STATE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            State
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.state || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- COUNTRY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Country
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.country || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- PINCODE -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Pincode
+                        </span>
+
+                        <span class="value">
+                            {{ s.address?.pincode || '—' }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+        <!-- ================================================== -->
+        <!-- AUDIT INFORMATION -->
+        <!-- ================================================== -->
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Audit Information
+                </mat-card-title>
+
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+                    <!-- CREATED BY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Created By
+                        </span>
+
+                        <span class="value">
+                            {{ s.createdBy || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- CREATED AT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Created At
+                        </span>
+
+                        <span class="value">
+
+                            {{ s.createdAt
+                                ? (s.createdAt | date:'dd MMM yyyy hh:mm a')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- UPDATED BY -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Updated By
+                        </span>
+
+                        <span class="value">
+                            {{ s.updatedBy || '—' }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- UPDATED AT -->
+
+                    <div class="info-item">
+
+                        <span class="label">
+                            Updated At
+                        </span>
+
+                        <span class="value">
+
+                            {{ s.updatedAt
+                                ? (s.updatedAt | date:'dd MMM yyyy hh:mm a')
+                                : '—'
+                            }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </mat-card-content>
+
+        </mat-card>
+
+    </ng-container>
+
+</div>

@@ -1,0 +1,114 @@
+<section class="page">
+  <header class="page-header">
+    <div class="page-title">
+      <span class="eyebrow"> University ERP Management </span>
+
+      <h1>Timetable</h1>
+
+      <p>Manage timetable records with a reusable CRUD workflow.</p>
+    </div>
+
+    <a class="primary" routerLink="add">
+      <span class="primary-icon"> + </span>
+
+      Add Timetable
+    </a>
+  </header>
+
+  <app-timetable-search-filter (search)="load($event)" (reset)="load()" />
+
+  @if (loading()) {
+    <div class="loading-card">
+      <span class="loading-spinner"></span>
+
+      <div>
+        <strong> Loading timetable... </strong>
+
+        <span> Please wait while records are being loaded. </span>
+      </div>
+    </div>
+  }
+
+  @if (!loading()) {
+    <app-timetable-table
+      [rows]="rows()"
+      [loading]="loading()"
+      (remove)="remove($event)"
+    />
+  }
+
+  @if (!loading() && totalElements() > 0) {
+    <div class="pagination-card">
+      <div class="pagination-info">
+        Showing
+        <strong>
+          {{ startRecord }}
+        </strong>
+        -
+        <strong>
+          {{ endRecord }}
+        </strong>
+        of
+        <strong>
+          {{ totalElements() }}
+        </strong>
+        records
+      </div>
+
+      <div class="page-size">
+        <label for="pageSize"> Rows per page </label>
+
+        <select id="pageSize" [value]="size()" (change)="changeSize($event)">
+          @for (option of pageSizeOptions; track option) {
+            <option [value]="option">
+              {{ option }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <nav class="pagination" aria-label="Timetable pagination">
+        <button
+          type="button"
+          class="page-btn arrow"
+          [disabled]="page() === 0"
+          (click)="previousPage()"
+        >
+          ←
+        </button>
+
+        @for (pageNumber of pageNumbers; track pageNumber) {
+          <button
+            type="button"
+            class="page-btn"
+            [class.active]="pageNumber === page()"
+            (click)="changePage(pageNumber)"
+          >
+            {{ pageNumber + 1 }}
+          </button>
+        }
+
+        <button
+          type="button"
+          class="page-btn arrow"
+          [disabled]="page() >= totalPages() - 1"
+          (click)="nextPage()"
+        >
+          →
+        </button>
+      </nav>
+    </div>
+  }
+
+  @if (!loading() && totalElements() === 0) {
+    <div class="empty-page">
+      <div class="empty-icon">▦</div>
+
+      <h3>No timetable records found</h3>
+
+      <p>Try changing your search filters or add a new timetable record.</p>
+
+      <a class="empty-action" routerLink="add"> Add Timetable </a>
+    </div>
+  }
+</section>

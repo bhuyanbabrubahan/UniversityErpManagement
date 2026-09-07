@@ -1,0 +1,33 @@
+<section class="page">
+  <header class="page-header">
+    <div class="page-heading">
+      <div class="title-icon">
+        <span>+</span>
+      </div>
+
+      <div class="page-title">
+        <span class="eyebrow">University ERP Management</span>
+
+        <h1>Add HOD</h1>
+
+        <p>Create a new Head of Department record.</p>
+      </div>
+    </div>
+
+    <button type="button" class="back-button" (click)="cancel()">
+      <span class="back-icon">←</span>
+      <span>Back to HOD</span>
+    </button>
+  </header>
+
+  <div class="card">
+    <div class="card-accent"></div>
+
+    <app-hod-form
+      [model]="model()"
+      submitLabel="Create HOD"
+      (save)="save($event)"
+      (cancel)="cancel()"
+    />
+  </div>
+</section>

@@ -1,0 +1,1426 @@
+/* =====================================================
+   PAYMENT DETAILS PAGE
+===================================================== */
+
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 28px;
+  box-sizing: border-box;
+
+  background: #f6f8fb;
+  color: #0f172a;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-bottom: 24px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.back-button {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    color: #2563eb;
+    transform: translateX(-2px);
+  }
+}
+
+.back-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.title-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 46px;
+
+  border-radius: 12px;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.title-section h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.title-section p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   HEADER ACTIONS
+===================================================== */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 9px 16px;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.btn-primary {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.18);
+
+  &:hover:not(:disabled) {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.24);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #bfdbfe;
+    outline-offset: 2px;
+  }
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #475569;
+
+  &:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #e2e8f0;
+    outline-offset: 2px;
+  }
+}
+
+
+/* =====================================================
+   PAYMENT CONTENT
+===================================================== */
+
+.payment-content {
+  width: 100%;
+}
+
+
+/* =====================================================
+   PAYMENT HERO
+===================================================== */
+
+.payment-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 20px;
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf1;
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.045);
+}
+
+.hero-main {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-avatar {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 58px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5
+  );
+
+  color: #ffffff;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  box-shadow:
+    0 6px 18px rgba(37, 99, 235, 0.20);
+}
+
+.hero-info {
+  min-width: 0;
+}
+
+.hero-label {
+  margin-bottom: 4px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.hero-info h2 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  overflow-wrap: anywhere;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: 7px;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.meta-dot {
+  color: #cbd5e1;
+}
+
+.hero-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  gap: 7px;
+
+  flex-shrink: 0;
+}
+
+.status-label {
+  color: #94a3b8;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+
+/* =====================================================
+   SUMMARY GRID
+===================================================== */
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.035);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    border-color: #dbe3ed;
+
+    box-shadow:
+      0 8px 20px rgba(15, 23, 42, 0.07);
+  }
+}
+
+.summary-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 42px;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.summary-icon.blue {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.summary-icon.green {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.summary-icon.orange {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.summary-icon.purple {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.summary-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.summary-label {
+  color: #64748b;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.summary-content strong {
+  color: #0f172a;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  overflow-wrap: anywhere;
+}
+
+.summary-content strong.due-value {
+  color: #c2410c;
+}
+
+
+/* =====================================================
+   MAIN DETAILS GRID
+
+   IMPORTANT:
+   align-items: stretch makes cards in the same
+   grid row equal height automatically.
+===================================================== */
+
+.details-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+
+  /*
+   * DO NOT use align-items: start here.
+   * stretch makes both cards in a row equal height.
+   */
+  align-items: stretch;
+}
+
+
+/* =====================================================
+   DETAIL CARD
+
+   height: 100% + grid stretch ensures both cards
+   inside the same row occupy equal height.
+===================================================== */
+
+.detail-card {
+  width: 100%;
+  min-width: 0;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf1;
+  border-radius: 14px;
+
+  box-shadow:
+    0 3px 14px rgba(15, 23, 42, 0.035);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: #dbe3ed;
+
+    box-shadow:
+      0 6px 20px rgba(15, 23, 42, 0.055);
+  }
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 18px;
+}
+
+.card-title-wrap {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+.card-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 38px;
+
+  border-radius: 9px;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.blue-icon {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.purple-icon {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.green-icon {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.orange-icon {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.gray-icon {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.card-header h2 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  line-height: 1.35;
+}
+
+.card-header p {
+  margin: 3px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   DETAIL LIST
+
+   flex: 1 allows equal-height cards to distribute
+   their content nicely.
+===================================================== */
+
+.detail-list {
+  width: 100%;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-row {
+  min-height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 10px 0;
+
+  box-sizing: border-box;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  > span:first-child {
+    flex: 0 0 auto;
+
+    color: #64748b;
+
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  > strong {
+    min-width: 0;
+
+    color: #1e293b;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-align: right;
+
+    overflow-wrap: anywhere;
+  }
+}
+
+.reference-value {
+  color: #475569 !important;
+
+  font-family: monospace;
+
+  font-size: 12px !important;
+}
+
+.active-text {
+  color: #059669 !important;
+}
+
+
+/* =====================================================
+   STATUS BADGES
+===================================================== */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  min-width: 70px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  white-space: nowrap;
+}
+
+.status-paid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-partial {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-pending {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* =====================================================
+   PAYMENT MODE
+===================================================== */
+
+.payment-mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  min-width: 70px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.mode-cash {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.mode-online {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.mode-card {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.mode-upi {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.mode-cheque {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+
+/* =====================================================
+   FEE SUMMARY
+
+   Full width row.
+===================================================== */
+
+.fee-card {
+  grid-column: 1 / -1;
+
+  height: auto;
+}
+
+.fee-details {
+  width: 100%;
+}
+
+.fee-row {
+  min-height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 9px 0;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.fee-row span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.fee-row strong {
+  color: #1e293b;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-align: right;
+}
+
+.scholarship-value {
+  color: #059669 !important;
+}
+
+
+/* =====================================================
+   FINAL PAYABLE
+===================================================== */
+
+.final-payable {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin: 14px 0;
+  padding: 16px 18px;
+
+  background: #f8fafc;
+
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+}
+
+.final-payable div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.final-payable span {
+  color: #334155;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.final-payable small {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.final-payable strong {
+  color: #2563eb;
+
+  font-size: 20px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   PAID / DUE
+===================================================== */
+
+.paid-row strong {
+  color: #059669 !important;
+}
+
+.due-row {
+  border-bottom: 0;
+}
+
+.due-row span {
+  color: #b45309;
+
+  font-weight: 600;
+}
+
+.due-row strong {
+  color: #c2410c !important;
+
+  font-size: 15px;
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-section {
+  margin-top: 18px;
+  padding-top: 18px;
+
+  border-top: 1px solid #e2e8f0;
+}
+
+.progress-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 10px;
+}
+
+.progress-header div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.progress-header span {
+  color: #334155;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.progress-header small {
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+.progress-header > strong {
+  color: #2563eb;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.progress-track {
+  width: 100%;
+  height: 9px;
+
+  overflow: hidden;
+
+  background: #e2e8f0;
+
+  border-radius: 999px;
+}
+
+.progress-fill {
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #60a5fa
+  );
+
+  border-radius: inherit;
+
+  transition: width 0.5s ease;
+}
+
+
+/* =====================================================
+   REMARKS
+
+   Card uses flex so it fills the same row height
+   as Audit Information.
+===================================================== */
+
+.remarks-card,
+.audit-card {
+  min-height: 220px;
+}
+
+.remarks-box {
+  flex: 1;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  padding: 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+}
+
+.remarks-quote {
+  flex: 0 0 auto;
+
+  color: #cbd5e1;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  line-height: 0.8;
+}
+
+.remarks-box p {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 13px;
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   AUDIT
+===================================================== */
+
+.audit-card .detail-list {
+  flex: 1;
+}
+
+.active-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 9px;
+
+  background: #ecfdf5;
+  color: #047857;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   LOADING / ERROR
+===================================================== */
+
+.state-card {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf1;
+  border-radius: 14px;
+
+  text-align: center;
+
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.state-card h3 {
+  margin: 4px 0 0;
+
+  color: #0f172a;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.state-card p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.error-state {
+  background: #fffafa;
+  border-color: #fecaca;
+}
+
+.error-state h3 {
+  color: #991b1b;
+}
+
+.state-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fee2e2;
+  color: #dc2626;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   LOADER
+===================================================== */
+
+.loader {
+  width: 34px;
+  height: 34px;
+
+  border: 3px solid #e2e8f0;
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =====================================================
+   LARGE TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .details-grid {
+    grid-template-columns: 1fr;
+
+    /*
+     * One column means there is no left/right
+     * equal-height requirement.
+     */
+    align-items: stretch;
+  }
+
+  .fee-card {
+    grid-column: auto;
+  }
+
+  .payment-hero {
+    align-items: flex-start;
+  }
+
+  .detail-card {
+    height: auto;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .page-container {
+    padding: 18px;
+  }
+
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+
+    gap: 16px;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .header-actions .btn {
+    flex: 1;
+  }
+
+  .title-section h1 {
+    font-size: 22px;
+  }
+
+  .payment-hero {
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 18px;
+  }
+
+  .hero-status {
+    align-items: flex-start;
+
+    padding-top: 14px;
+
+    border-top: 1px solid #eef2f7;
+  }
+
+  .summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+  .summary-card {
+    padding: 14px;
+  }
+
+  .summary-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+  .summary-content strong {
+    font-size: 15px;
+  }
+
+  .details-grid {
+    gap: 14px;
+  }
+
+  .detail-card {
+    padding: 18px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .page-container {
+    padding: 12px;
+  }
+
+  .title-section {
+    align-items: flex-start;
+  }
+
+  .title-icon {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+
+    border-radius: 10px;
+  }
+
+  .title-section h1 {
+    font-size: 20px;
+  }
+
+  .title-section p {
+    font-size: 12px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+  }
+
+  .header-actions .btn {
+    width: 100%;
+  }
+
+  .payment-hero {
+    padding: 16px;
+  }
+
+  .hero-main {
+    align-items: flex-start;
+  }
+
+  .hero-avatar {
+    width: 48px;
+    height: 48px;
+
+    flex-basis: 48px;
+
+    border-radius: 13px;
+
+    font-size: 18px;
+  }
+
+  .hero-info h2 {
+    font-size: 18px;
+  }
+
+  .hero-meta {
+    font-size: 11px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    padding: 15px;
+  }
+
+  .detail-card {
+    height: auto;
+
+    padding: 15px;
+
+    border-radius: 12px;
+  }
+
+  .card-header {
+    margin-bottom: 14px;
+  }
+
+  .card-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-basis: 34px;
+  }
+
+  .card-header h2 {
+    font-size: 15px;
+  }
+
+  /*
+   * On mobile labels and values stack.
+   * This prevents overflow and keeps the card clean.
+   */
+  .detail-row {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .detail-row > span:first-child {
+    max-width: 100%;
+  }
+
+  .detail-row > strong {
+    width: 100%;
+    max-width: 100%;
+
+    text-align: left;
+  }
+
+  .status,
+  .payment-mode {
+    align-self: flex-start;
+  }
+
+  .fee-row {
+    align-items: flex-start;
+  }
+
+  .final-payable {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 9px;
+  }
+
+  .final-payable strong {
+    font-size: 19px;
+  }
+
+  .progress-header {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .remarks-card,
+  .audit-card {
+    min-height: auto;
+  }
+
+  .remarks-box {
+    flex: initial;
+  }
+
+}

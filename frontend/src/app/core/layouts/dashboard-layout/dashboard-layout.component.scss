@@ -1,0 +1,136 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+// =========================================================
+// MAIN LAYOUT
+// =========================================================
+
+.layout-wrapper {
+  width: 100%;
+  height: calc(100dvh - 72px);
+
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #f1f5f9;
+}
+
+// =========================================================
+// SIDENAV CONTAINER
+// =========================================================
+
+.layout-container {
+  width: 100%;
+
+  flex: 1 1 auto;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+
+  background: #f1f5f9;
+}
+
+// =========================================================
+// SIDEBAR
+// =========================================================
+
+.app-sidenav {
+  width: 248px;
+  min-width: 248px;
+  max-width: 248px;
+
+  height: 100%;
+
+  border: 0;
+
+  background: #0f172a;
+
+  overflow: hidden;
+}
+
+// =========================================================
+// MAIN CONTENT
+// =========================================================
+
+.main-content {
+  min-width: 0;
+  min-height: 0;
+
+  height: 100%;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: #f1f5f9;
+}
+
+// =========================================================
+// PAGE CONTENT
+// =========================================================
+
+.dashboard-content {
+  width: 100%;
+  min-width: 0;
+
+  min-height: 100%;
+
+  padding: 24px 28px;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+}
+
+// =========================================================
+// FOOTER
+// =========================================================
+
+app-footer {
+  display: block;
+
+  width: 100%;
+
+  flex: 0 0 auto;
+}
+
+// =========================================================
+// MOBILE
+// =========================================================
+
+@media (max-width: 768px) {
+  .layout-wrapper {
+    height: calc(100dvh - 64px);
+  }
+
+  .app-sidenav {
+    width: min(280px, 86vw);
+    min-width: min(280px, 86vw);
+    max-width: min(280px, 86vw);
+  }
+
+  .dashboard-content {
+    padding: 16px;
+  }
+}
+
+// =========================================================
+// TABLET
+// =========================================================
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .dashboard-content {
+    padding: 20px;
+  }
+}

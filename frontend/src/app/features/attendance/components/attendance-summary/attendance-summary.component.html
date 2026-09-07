@@ -1,0 +1,88 @@
+<section
+  class="summary-grid"
+  aria-label="Attendance summary">
+
+  <!-- TOTAL -->
+
+  <article class="summary-card total">
+
+    <div class="summary-icon">
+      #
+    </div>
+
+    <div class="summary-content">
+      <span>Total</span>
+      <strong>{{ total }}</strong>
+    </div>
+
+  </article>
+
+
+  <!-- PRESENT -->
+
+  <article class="summary-card present">
+
+    <div class="summary-icon">
+      ✓
+    </div>
+
+    <div class="summary-content">
+      <span>Present</span>
+      <strong>{{ present }}</strong>
+    </div>
+
+  </article>
+
+
+  <!-- ABSENT -->
+
+  <article class="summary-card absent">
+
+    <div class="summary-icon">
+      !
+    </div>
+
+    <div class="summary-content">
+      <span>Absent</span>
+      <strong>{{ absent }}</strong>
+    </div>
+
+  </article>
+
+
+  <!-- LEAVE -->
+
+  <article class="summary-card leave">
+
+    <div class="summary-icon">
+      L
+    </div>
+
+    <div class="summary-content">
+      <span>Leave</span>
+      <strong>{{ leave }}</strong>
+    </div>
+
+  </article>
+
+
+  <!-- HALF DAY -->
+
+  @if (halfDay > 0) {
+
+    <article class="summary-card half">
+
+      <div class="summary-icon">
+        ½
+      </div>
+
+      <div class="summary-content">
+        <span>Half Day</span>
+        <strong>{{ halfDay }}</strong>
+      </div>
+
+    </article>
+
+  }
+
+</section>

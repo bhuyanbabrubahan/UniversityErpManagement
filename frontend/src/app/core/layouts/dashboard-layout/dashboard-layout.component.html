@@ -1,0 +1,42 @@
+<!-- =========================================================
+     TOP NAVBAR
+     ========================================================= -->
+
+<app-navbar (menuClick)="toggleSidebar()"> </app-navbar>
+
+<!-- =========================================================
+     MAIN LAYOUT
+     SIDEBAR + CONTENT
+     ========================================================= -->
+
+<div class="layout-wrapper">
+  <mat-sidenav-container class="layout-container">
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <mat-sidenav
+      class="app-sidenav"
+      [mode]="isMobile() ? 'over' : 'side'"
+      [opened]="sidebarOpened()"
+    >
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <mat-sidenav-content class="main-content">
+      <main class="dashboard-content">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <app-footer></app-footer>
+</div>

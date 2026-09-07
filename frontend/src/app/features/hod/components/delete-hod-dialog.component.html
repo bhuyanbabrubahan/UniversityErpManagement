@@ -1,0 +1,68 @@
+<h2 mat-dialog-title class="dialog-title">
+  <span class="title-icon">
+    <mat-icon>delete_forever</mat-icon>
+  </span>
+
+  <span>Delete HOD</span>
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="message">Are you sure you want to delete this HOD record?</p>
+
+  @if (data.code || data.fullName || data.department) {
+    <div class="record-preview">
+      @if (data.code) {
+        <div class="preview-item">
+          <span>Code</span>
+          <strong>{{ data.code }}</strong>
+        </div>
+      }
+
+      @if (data.fullName) {
+        <div class="preview-item">
+          <span>Full Name</span>
+          <strong>{{ data.fullName }}</strong>
+        </div>
+      }
+
+      @if (data.department) {
+        <div class="preview-item">
+          <span>Department</span>
+          <strong>{{ data.department }}</strong>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="warning">
+    <mat-icon>warning_amber</mat-icon>
+
+    <div>
+      <strong>This record will be marked as deleted.</strong>
+
+      <span> The HOD record will no longer appear in the active records. </span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button
+    type="button"
+    mat-stroked-button
+    class="cancel-btn"
+    (click)="cancel()"
+  >
+    Cancel
+  </button>
+
+  <button
+    type="button"
+    mat-raised-button
+    color="warn"
+    class="delete-btn"
+    (click)="confirm()"
+  >
+    <mat-icon>delete</mat-icon>
+    Delete
+  </button>
+</mat-dialog-actions>

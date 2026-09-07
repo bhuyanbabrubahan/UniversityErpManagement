@@ -1,0 +1,182 @@
+<section class="search-card">
+
+  <div class="search-header">
+
+    <div>
+      <h2>Search Courses</h2>
+
+      <p>
+        Filter courses by name, code, department, status and duration.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="search-grid">
+
+    <!-- Course Name -->
+    <div class="field">
+
+      <label for="courseName">
+        Course Name
+      </label>
+
+      <input
+        id="courseName"
+        type="text"
+        [(ngModel)]="search.courseName"
+        placeholder="e.g. Java Full Stack"
+        maxlength="100"
+        autocomplete="off"
+        (keyup.enter)="onEnter()" />
+
+    </div>
+
+
+    <!-- Course Code -->
+    <div class="field">
+
+      <label for="courseCode">
+        Course Code
+      </label>
+
+      <input
+        id="courseCode"
+        type="text"
+        [(ngModel)]="search.courseCode"
+        placeholder="e.g. CSE101"
+        maxlength="20"
+        autocomplete="off"
+        (keyup.enter)="onEnter()" />
+
+    </div>
+
+
+    <!-- Department -->
+    <div class="field">
+
+      <label for="departmentId">
+        Department
+      </label>
+
+      <select
+        id="departmentId"
+        [(ngModel)]="search.departmentId">
+
+        <option [ngValue]="undefined">
+          All Departments
+        </option>
+
+        @for (department of departments; track department.id) {
+
+          <option [ngValue]="department.id">
+            {{ department.departmentName }}
+          </option>
+
+        }
+
+      </select>
+
+    </div>
+
+
+    <!-- Status -->
+    <div class="field">
+
+      <label for="status">
+        Status
+      </label>
+
+      <select
+        id="status"
+        [(ngModel)]="search.status">
+
+        <option [ngValue]="undefined">
+          All Status
+        </option>
+
+        <option value="ACTIVE">
+          Active
+        </option>
+
+        <option value="INACTIVE">
+          Inactive
+        </option>
+
+        <option value="DELETED">
+          Deleted
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- Minimum Duration -->
+    <div class="field">
+
+      <label for="minDuration">
+        Min Duration (Years)
+      </label>
+
+      <input
+        id="minDuration"
+        type="number"
+        [(ngModel)]="search.minDuration"
+        placeholder="Years" 
+        min="1"
+        (keyup.enter)="onEnter()" />
+
+    </div>
+
+
+    <!-- Maximum Duration -->
+    <div class="field">
+
+      <label for="maxDuration">
+        Max Duration (Years)
+      </label>
+
+      <input
+        id="maxDuration"
+        type="number"
+        [(ngModel)]="search.maxDuration"
+        placeholder="Years"
+        min="1"
+        (keyup.enter)="onEnter()" />
+
+    </div>
+
+    <!-- Actions -->
+    <div class="search-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="loading"
+        (click)="onSearch()">
+
+        @if (loading) {
+          <span class="spinner"></span>
+          Searching...
+        } @else {
+          Search
+        }
+
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        [disabled]="loading"
+        (click)="onClear()">
+
+        Clear
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>

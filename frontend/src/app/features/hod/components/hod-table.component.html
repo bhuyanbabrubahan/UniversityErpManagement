@@ -1,0 +1,65 @@
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Employee Code</th>
+        <th>Full Name</th>
+        <th>Department</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (row of rows; track row.id) {
+        <tr>
+          <td>{{ row.code }}</td>
+
+          <td>{{ row.employeeCode }}</td>
+
+          <td>{{ row.fullName }}</td>
+
+          <td>{{ row.department }}</td>
+
+          <td>{{ row.email }}</td>
+
+          <td>{{ row.phone }}</td>
+
+          <td>
+            <span
+              class="status"
+              [class.active]="row.status === 'ACTIVE'"
+              [class.inactive]="row.status === 'INACTIVE'"
+            >
+              {{ row.status }}
+            </span>
+          </td>
+
+          <td class="actions">
+            <a [routerLink]="['./', row.id]" class="view"> View </a>
+
+            <a [routerLink]="['./edit', row.id]" class="edit"> Edit </a>
+
+            <button
+              type="button"
+              class="delete"
+              [disabled]="deletingId === row.id"
+              (click)="remove.emit(row.id)"
+            >
+              {{ deletingId === row.id ? "Deleting..." : "Delete" }}
+            </button>
+          </td>
+        </tr>
+      }
+
+      @if (!rows.length) {
+        <tr>
+          <td colspan="8" class="empty">No records found.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
