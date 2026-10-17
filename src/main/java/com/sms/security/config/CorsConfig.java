@@ -21,7 +21,8 @@ public class CorsConfig {
 
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:4200")
+                List.of("http://localhost:4200",
+                "https://universityerpmanagement-production.up.railway.app")
         );
 
 
