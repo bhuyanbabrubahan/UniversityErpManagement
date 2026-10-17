@@ -95,15 +95,15 @@ public class SecurityConfig {
             // =====================================================
             .authorizeHttpRequests(auth -> auth
 
-            		 .requestMatchers(
-                     	    "/",
-                     	    "/index.html",
-                     	    "/favicon.ico",
-                     	    "/favicon.svg",
-                     	    "/*.js",
-                     	    "/*.css",
-                     	    "/images/**"
-                     	).permitAll()
+            		.requestMatchers(
+            			    "/",
+            			    "/index.html",
+            			    "/favicon.ico",
+            			    "/favicon.svg",
+            			    "/*.js",
+            			    "/*.css",
+            			    "/images/**"
+            			).permitAll()
                 // =================================================
                 // PUBLIC AUTHENTICATION APIs
                 // =================================================
