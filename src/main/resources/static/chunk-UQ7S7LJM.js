@@ -1,0 +1,1 @@
+var R=(function(E){return E.MALE="MALE",E.FEMALE="FEMALE",E.OTHER="OTHER",E})(R||{});var t=(function(E){return E.PERMANENT="PERMANENT",E.CURRENT="CURRENT",E.OFFICE="OFFICE",E.OTHER="OTHER",E})(t||{});export{R as a,t as b};

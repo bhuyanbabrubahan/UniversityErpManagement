@@ -1,0 +1,1 @@
+function n(t){if(!t)return"\u2014";let i=new Date(t);return Number.isNaN(i.getTime())?t:new Intl.DateTimeFormat("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(i)}export{n as a};
