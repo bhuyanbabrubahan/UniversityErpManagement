@@ -31,7 +31,6 @@ public class ProfileMapper {
         // =================================================
 
         dto.setStudentId(student.getId());
-        dto.setStudentCode(student.getStudentCode());
         dto.setRollNumber(student.getRollNumber());
         dto.setRegistrationNumber(student.getRegistrationNumber());
         dto.setAdmissionNumber(student.getAdmissionNumber());

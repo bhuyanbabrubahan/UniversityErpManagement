@@ -90,11 +90,6 @@ export interface StudentRequest {
   studentType?: StudentType | null;
   studentStatus?: StudentStatus | null;
 
-  // =====================================================
-  // FEES
-  // =====================================================
-
-  fees?: number | null;
 
   // =====================================================
   // ADDRESS

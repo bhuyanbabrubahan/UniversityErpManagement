@@ -443,7 +443,6 @@ public class AttendanceServiceImpl implements AttendanceService {
     private AttendanceStudentDto toStudentDto(Student student, Attendance attendance) {
         AttendanceStudentDto dto = new AttendanceStudentDto();
         dto.setStudentId(student.getId());
-        dto.setStudentCode(student.getStudentCode());
         dto.setRollNumber(student.getRollNumber());
         dto.setStudentName(student.getFullName());
         if (student.getDepartment() != null) {

@@ -153,8 +153,8 @@ public class EmailServiceImpl implements EmailService {
     public void sendVerificationEmail(String email, String token) {
 
         String verificationLink =
-        		"http://localhost:4200/verify-email?token=" + token;
-
+        		//"http://localhost:4200/verify-email?token=" + token;
+        		"https://universityerpmanagement-production.up.railway.app/api/auth/verify-email?token=" + token;
         String subject = "Verify Your Email";
 
         String body = """

@@ -45,7 +45,6 @@ public interface StudentMapper {
     // Generated fields
     // ------------------------------------------
 
-    @Mapping(target = "studentCode", ignore = true)
     @Mapping(target = "rollNumber", ignore = true)
 
     // ------------------------------------------
@@ -91,7 +90,6 @@ public interface StudentMapper {
     @Mapping(target = "user", ignore = true)
 
     // Generated
-    @Mapping(target = "studentCode", ignore = true)
     @Mapping(target = "rollNumber", ignore = true)
 
     // System fields
@@ -158,7 +156,6 @@ public interface StudentMapper {
     // Generated fields
     // ------------------------------------------
 
-    @Mapping(target = "studentCode", ignore = true)
     @Mapping(target = "rollNumber", ignore = true)
 
     // ------------------------------------------

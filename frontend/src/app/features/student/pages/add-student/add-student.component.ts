@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 
 import {
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators
+	NonNullableFormBuilder,
+	ReactiveFormsModule,
+	Validators
 } from '@angular/forms';
 
 import { Router } from '@angular/router';
@@ -29,626 +29,615 @@ import { ToastService } from '@app/shared/services/toast.service';
 
 
 @Component({
-  selector: 'app-add-student',
+	selector: 'app-add-student',
 
-  standalone: true,
+	standalone: true,
 
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ...MATERIAL_MODULES,
-    StudentFormComponent
-  ],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		...MATERIAL_MODULES,
+		StudentFormComponent
+	],
 
-  templateUrl: './add-student.component.html',
+	templateUrl: './add-student.component.html',
 
-  styleUrl: './add-student.component.scss'
+	styleUrl: './add-student.component.scss'
 })
 export class AddStudentComponent implements OnInit {
 
-  // =====================================================
-  // SERVICES
-  // =====================================================
+	// =====================================================
+	// SERVICES
+	// =====================================================
 
-  private readonly fb =
-    inject(NonNullableFormBuilder);
+	private readonly fb =
+		inject(NonNullableFormBuilder);
 
-  private readonly router =
-    inject(Router);
+	private readonly router =
+		inject(Router);
 
-  private readonly departmentService =
-    inject(DepartmentService);
+	private readonly departmentService =
+		inject(DepartmentService);
 
-  private readonly studentService =
-    inject(StudentService);
+	private readonly studentService =
+		inject(StudentService);
 
-  private readonly toast =
-    inject(ToastService);
+	private readonly toast =
+		inject(ToastService);
 
 
-  // =====================================================
-  // STATE
-  // =====================================================
+	// =====================================================
+	// STATE
+	// =====================================================
 
-  loading = false;
+	loading = false;
 
-  departments: any[] = [];
+	departments: any[] = [];
 
 
-  // =====================================================
-  // ENUM OPTIONS
-  // =====================================================
+	// =====================================================
+	// ENUM OPTIONS
+	// =====================================================
 
-  readonly genders =
-    Object.values(Gender);
+	readonly genders =
+		Object.values(Gender);
 
-  readonly categories =
-    Object.values(StudentCategory);
+	readonly categories =
+		Object.values(StudentCategory);
 
-  readonly bloodGroups =
-    Object.values(BloodGroup);
+	readonly bloodGroups =
+		Object.values(BloodGroup);
 
-  readonly studentTypes =
-    Object.values(StudentType);
+	readonly studentTypes =
+		Object.values(StudentType);
 
-  readonly studentStatuses =
-    Object.values(StudentStatus);
+	readonly studentStatuses =
+		Object.values(StudentStatus);
 
-  readonly addressTypes =
-    Object.values(AddressType);
+	readonly addressTypes =
+		Object.values(AddressType);
 
 
-  // =====================================================
-  // STUDENT FORM
-  // =====================================================
+	// =====================================================
+	// STUDENT FORM
+	// =====================================================
 
-  studentForm = this.fb.group({
+	studentForm = this.fb.group({
 
-    // ===================================================
-    // ACCOUNT INFORMATION
-    // ===================================================
+		// ===================================================
+		// ACCOUNT INFORMATION
+		// ===================================================
 
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.email
-      ]
-    ],
+		email: [
+			'',
+			[
+				Validators.required,
+				Validators.email
+			]
+		],
 
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(8)
-      ]
-    ],
+		password: [
+			'',
+			[
+				Validators.required,
+				Validators.minLength(8)
+			]
+		],
 
-    mobileNumber: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^[6-9]\d{9}$/)
-      ]
-    ],
+		mobileNumber: [
+			'',
+			[
+				Validators.required,
+				Validators.pattern(/^[6-9]\d{9}$/)
+			]
+		],
 
-    alternateMobile: [
-      '',
-      Validators.pattern(
-        /^$|^[6-9]\d{9}$/
-      )
-    ],
+		alternateMobile: [
+			'',
+			Validators.pattern(
+				/^$|^[6-9]\d{9}$/
+			)
+		],
 
-    alternateEmail: [
-      '',
-      Validators.email
-    ],
+		alternateEmail: [
+			'',
+			Validators.email
+		],
 
 
-    // ===================================================
-    // PERSONAL INFORMATION
-    // ===================================================
-
-    firstName: [
-      '',
-      Validators.required
-    ],
-
-    middleName: [
-      ''
-    ],
-
-    lastName: [
-      '',
-      Validators.required
-    ],
-
-    gender: [
-      Gender.MALE,
-      Validators.required
-    ],
-
-    dateOfBirth: [
-      '',
-      Validators.required
-    ],
-
-    bloodGroup: [
-      null as BloodGroup | null
-    ],
-
-    category: [
-      null as StudentCategory | null
-    ],
-
-    religion: [
-      ''
-    ],
-
-    nationality: [
-      'Indian'
-    ],
-
-
-    // ===================================================
-    // STUDENT ACADEMIC INFORMATION
-    // ===================================================
-
-    admissionDate: [
-      '',
-      Validators.required
-    ],
-
-    academicYear: [
-      '',
-      Validators.required
-    ],
-
-    departmentId: [
-      0,
-      Validators.required
-    ],
-
-    courseId: [
-      0
-    ],
-
-    currentSemesterId: [
-      0
-    ],
-
-    section: [
-      ''
-    ],
-
-    batch: [
-      ''
-    ],
-
-    currentYear: [
-      null as number | null
-    ],
-
-    studentType: [
-      null as StudentType | null
-    ],
-
-    studentStatus: [
-      null as StudentStatus | null
-    ],
-
-    fees: [
-      0,
-      [
-        Validators.required,
-        Validators.min(0)
-      ]
-    ],
-
-
-    // ===================================================
-    // DOCUMENT INFORMATION
-    // ===================================================
+		// ===================================================
+		// PERSONAL INFORMATION
+		// ===================================================
+
+		firstName: [
+			'',
+			Validators.required
+		],
+
+		middleName: [
+			''
+		],
+
+		lastName: [
+			'',
+			Validators.required
+		],
+
+		gender: [
+			Gender.MALE,
+			Validators.required
+		],
+
+		dateOfBirth: [
+			'',
+			Validators.required
+		],
+
+		bloodGroup: [
+			null as BloodGroup | null
+		],
 
-    aadhaarNumber: [
-      '',
-      Validators.pattern(
-        /^$|^\d{12}$/
-      )
-    ],
+		category: [
+			null as StudentCategory | null
+		],
+
+		religion: [
+			''
+		],
+
+		nationality: [
+			'Indian'
+		],
+
+
+		// ===================================================
+		// STUDENT ACADEMIC INFORMATION
+		// ===================================================
+
+		admissionDate: [
+			'',
+			Validators.required
+		],
+
+		academicYear: [
+			'',
+			Validators.required
+		],
+
+		departmentId: [
+			0,
+			Validators.required
+		],
+
+		courseId: [
+			0
+		],
+
+		currentSemesterId: [
+			0
+		],
+
+		section: [
+			''
+		],
+
+		batch: [
+			''
+		],
+
+		currentYear: [
+			null as number | null
+		],
+
+		studentType: [
+			null as StudentType | null
+		],
+
+		studentStatus: [
+			null as StudentStatus | null
+		],
 
-    panNumber: [
-      '',
-      Validators.pattern(
-        /^$|^[A-Z]{5}[0-9]{4}[A-Z]$/
-      )
-    ],
 
+		// ===================================================
+		// DOCUMENT INFORMATION
+		// ===================================================
 
-    // ===================================================
-    // FILE / IMAGE INFORMATION
-    // ===================================================
+		aadhaarNumber: [
+			'',
+			Validators.pattern(
+				/^$|^\d{12}$/
+			)
+		],
 
-    profileImage: [
-      ''
-    ],
+		panNumber: [
+			'',
+			Validators.pattern(
+				/^$|^[A-Z]{5}[0-9]{4}[A-Z]$/
+			)
+		],
 
-    signatureImage: [
-      ''
-    ],
 
+		// ===================================================
+		// FILE / IMAGE INFORMATION
+		// ===================================================
 
-    // ===================================================
-    // ADDRESS INFORMATION
-    // ===================================================
+		profileImage: [
+			''
+		],
 
-    address: this.fb.group({
+		signatureImage: [
+			''
+		],
 
-      countryId: [
-        0,
-        Validators.required
-      ],
 
-      stateId: [
-        0,
-        Validators.required
-      ],
+		// ===================================================
+		// ADDRESS INFORMATION
+		// ===================================================
 
-      districtId: [
-        0,
-        Validators.required
-      ],
+		address: this.fb.group({
 
-      tehsilId: [
-        0,
-        Validators.required
-      ],
+			countryId: [
+				0,
+				Validators.required
+			],
 
-      villageId: [
-        0,
-        Validators.required
-      ],
+			stateId: [
+				0,
+				Validators.required
+			],
 
-      pincode: this.fb.control({
-        value: '',
-        disabled: true
-      }),
+			districtId: [
+				0,
+				Validators.required
+			],
 
-      houseNumber: [
-        '',
-        Validators.required
-      ],
+			tehsilId: [
+				0,
+				Validators.required
+			],
 
-      street: [
-        '',
-        Validators.required
-      ],
+			villageId: [
+				0,
+				Validators.required
+			],
 
-      landmark: [
-        ''
-      ],
+			pincode: this.fb.control({
+				value: '',
+				disabled: true
+			}),
 
-      addressType: [
-        AddressType.PERMANENT,
-        Validators.required
-      ]
+			houseNumber: [
+				'',
+				Validators.required
+			],
 
-    })
+			street: [
+				'',
+				Validators.required
+			],
 
-  });
+			landmark: [
+				''
+			],
 
+			addressType: [
+				AddressType.PERMANENT,
+				Validators.required
+			]
 
-  // =====================================================
-  // INIT
-  // =====================================================
+		})
 
-  ngOnInit(): void {
+	});
 
-    this.loadDepartments();
 
-  }
+	// =====================================================
+	// INIT
+	// =====================================================
 
+	ngOnInit(): void {
 
-  // =====================================================
-  // LOAD DEPARTMENTS
-  // =====================================================
+		this.loadDepartments();
 
-  loadDepartments(): void {
+	}
 
-    this.departmentService
-      .getAllDepartments()
-      .subscribe({
 
-        next: (response) => {
+	// =====================================================
+	// LOAD DEPARTMENTS
+	// =====================================================
 
-          this.departments =
-            response.data?.content ??
-            response.data ??
-            [];
+	loadDepartments(): void {
 
-        },
+		this.departmentService
+			.getAllDepartments()
+			.subscribe({
 
-        error: (error) => {
+				next: (response) => {
 
-          console.error(
-            'Department Load Failed',
-            error
-          );
+					this.departments =
+						response.data?.content ??
+						response.data ??
+						[];
 
-          this.departments = [];
+				},
 
-          this.toast.error(
-            'Unable to load departments.'
-          );
+				error: (error) => {
 
-        }
+					console.error(
+						'Department Load Failed',
+						error
+					);
 
-      });
+					this.departments = [];
 
-  }
+					this.toast.error(
+						'Unable to load departments.'
+					);
 
+				}
 
-  // =====================================================
-  // SAVE STUDENT
-  // =====================================================
+			});
 
-  saveStudent(): void {
+	}
 
-    // ---------------------------------------------------
-    // VALIDATION
-    // ---------------------------------------------------
 
-    if (this.studentForm.invalid) {
+	// =====================================================
+	// SAVE STUDENT
+	// =====================================================
 
-      this.studentForm.markAllAsTouched();
+	saveStudent(): void {
 
-      this.toast.warning(
-        'Please complete all required fields.'
-      );
+		// ---------------------------------------------------
+		// VALIDATION
+		// ---------------------------------------------------
 
-      return;
-    }
+		if (this.studentForm.invalid) {
 
+			this.studentForm.markAllAsTouched();
 
-    // ---------------------------------------------------
-    // LOADING
-    // ---------------------------------------------------
+			this.toast.warning(
+				'Please complete all required fields.'
+			);
 
-    this.loading = true;
+			return;
+		}
 
 
-    // ---------------------------------------------------
-    // FORM VALUE
-    // ---------------------------------------------------
+		// ---------------------------------------------------
+		// LOADING
+		// ---------------------------------------------------
 
-    const form =
-      this.studentForm.getRawValue();
+		this.loading = true;
 
 
-    // ---------------------------------------------------
-    // REQUEST
-    // ---------------------------------------------------
+		// ---------------------------------------------------
+		// FORM VALUE
+		// ---------------------------------------------------
 
-    const request: StudentRequest = {
+		const form =
+			this.studentForm.getRawValue();
 
-      // =================================================
-      // ACCOUNT
-      // =================================================
 
-      email:
-        form.email.trim(),
+		// ---------------------------------------------------
+		// REQUEST
+		// ---------------------------------------------------
 
-      password:
-        form.password,
+		const request: StudentRequest = {
 
-      mobileNumber:
-        form.mobileNumber,
+			// =================================================
+			// ACCOUNT
+			// =================================================
 
-      alternateMobile:
-        form.alternateMobile ||
-        undefined,
+			email:
+				form.email.trim(),
 
-      alternateEmail:
-        form.alternateEmail ||
-        undefined,
+			password:
+				form.password,
 
+			mobileNumber:
+				form.mobileNumber,
 
-      // =================================================
-      // PERSONAL
-      // =================================================
+			alternateMobile:
+				form.alternateMobile ||
+				undefined,
 
-      firstName:
-        form.firstName.trim(),
+			alternateEmail:
+				form.alternateEmail ||
+				undefined,
 
-      middleName:
-        form.middleName ||
-        undefined,
 
-      lastName:
-        form.lastName.trim(),
+			// =================================================
+			// PERSONAL
+			// =================================================
 
-      gender:
-        form.gender,
+			firstName:
+				form.firstName.trim(),
 
-      category:
-        form.category ||
-        undefined,
+			middleName:
+				form.middleName ||
+				undefined,
 
-      bloodGroup:
-        form.bloodGroup ||
-        undefined,
+			lastName:
+				form.lastName.trim(),
 
-      religion:
-        form.religion ||
-        undefined,
+			gender:
+				form.gender,
 
-      nationality:
-        form.nationality ||
-        undefined,
+			category:
+				form.category ||
+				undefined,
 
-      dateOfBirth:
-        form.dateOfBirth,
+			bloodGroup:
+				form.bloodGroup ||
+				undefined,
 
+			religion:
+				form.religion ||
+				undefined,
 
-      // =================================================
-      // ACADEMIC
-      // =================================================
+			nationality:
+				form.nationality ||
+				undefined,
 
-      admissionDate:
-        form.admissionDate,
+			dateOfBirth:
+				form.dateOfBirth,
 
-      academicYear:
-        form.academicYear,
 
-      departmentId:
-        form.departmentId,
+			// =================================================
+			// ACADEMIC
+			// =================================================
 
-      courseId:
-        form.courseId ||
-        undefined,
+			admissionDate:
+				form.admissionDate,
 
-      semesterId:
-        form.currentSemesterId ||
-        undefined,
+			academicYear:
+				form.academicYear,
 
-      section:
-        form.section ||
-        undefined,
+			departmentId:
+				form.departmentId,
 
-      batch:
-        form.batch ||
-        undefined,
+			courseId:
+				form.courseId ||
+				undefined,
 
-      currentYear:
-        form.currentYear ??
-        undefined,
+			semesterId:
+				form.currentSemesterId ||
+				undefined,
 
-      studentType:
-        form.studentType ||
-        undefined,
+			section:
+				form.section ||
+				undefined,
 
-      studentStatus:
-        form.studentStatus ||
-        undefined,
+			batch:
+				form.batch ||
+				undefined,
 
-      fees:
-        form.fees,
+			currentYear:
+				form.currentYear ??
+				undefined,
 
+			studentType:
+				form.studentType ||
+				undefined,
 
-      // =================================================
-      // DOCUMENTS
-      // =================================================
+			studentStatus:
+				form.studentStatus ||
+				undefined,
 
-      profileImage:
-        form.profileImage ||
-        null,
 
-      signatureImage:
-        form.signatureImage ||
-        null,
+			// =================================================
+			// DOCUMENTS
+			// =================================================
 
-      aadhaarNumber:
-        form.aadhaarNumber ||
-        undefined,
+			profileImage:
+				form.profileImage ||
+				null,
 
-      panNumber:
-        form.panNumber ||
-        undefined,
+			signatureImage:
+				form.signatureImage ||
+				null,
 
+			aadhaarNumber:
+				form.aadhaarNumber ||
+				undefined,
 
-      // =================================================
-      // ADDRESS
-      // =================================================
+			panNumber:
+				form.panNumber ||
+				undefined,
 
-      address: {
 
-        houseNumber:
-          form.address.houseNumber,
+			// =================================================
+			// ADDRESS
+			// =================================================
 
-        street:
-          form.address.street,
+			address: {
 
-        landmark:
-          form.address.landmark ||
-          undefined,
+				houseNumber:
+					form.address.houseNumber,
 
-        addressType:
-          form.address.addressType,
+				street:
+					form.address.street,
 
-        villageId:
-          form.address.villageId
+				landmark:
+					form.address.landmark ||
+					undefined,
 
-      }
+				addressType:
+					form.address.addressType,
 
-    };
+				villageId:
+					form.address.villageId
 
+			}
 
-    // ===================================================
-    // CREATE STUDENT
-    // ===================================================
+		};
 
-    this.studentService
-      .createStudent(request)
-      .subscribe({
 
-        // ------------------------------------------------
-        // SUCCESS
-        // ------------------------------------------------
+		// ===================================================
+		// CREATE STUDENT
+		// ===================================================
 
-        next: (response) => {
+		this.studentService
+			.createStudent(request)
+			.subscribe({
 
-          this.loading = false;
+				// ------------------------------------------------
+				// SUCCESS
+				// ------------------------------------------------
 
-          this.toast.success(
-            response.message ??
-            'Student created successfully.'
-          );
+				next: (response) => {
 
-          this.router.navigate([
-            '/dashboard/students'
-          ]);
+					this.loading = false;
 
-        },
+					this.toast.success(
+						response.message ??
+						'Student created successfully.'
+					);
 
+					this.router.navigate([
+						'/dashboard/students'
+					]);
 
-        // ------------------------------------------------
-        // ERROR
-        // ------------------------------------------------
+				},
 
-        error: (error) => {
 
-          this.loading = false;
+				// ------------------------------------------------
+				// ERROR
+				// ------------------------------------------------
 
-          console.error(
-            'Student Create Failed',
-            error
-          );
+				error: (error) => {
 
-          const message =
-            error?.error?.message ??
-            'Unable to save student.';
+					this.loading = false;
 
-          this.toast.error(
-            message
-          );
+					console.error(
+						'Student Create Failed',
+						error
+					);
 
-        }
+					const message =
+						error?.error?.message ??
+						'Unable to save student.';
 
-      });
+					this.toast.error(
+						message
+					);
 
-  }
+				}
 
+			});
 
-  // =====================================================
-  // CANCEL
-  // =====================================================
+	}
 
-  cancel(): void {
 
-    this.router.navigate([
-      '/dashboard/students'
-    ]);
+	// =====================================================
+	// CANCEL
+	// =====================================================
 
-  }
+	cancel(): void {
+
+		this.router.navigate([
+			'/dashboard/students'
+		]);
+
+	}
 
 }
