@@ -95,6 +95,19 @@ public class SecurityConfig {
             // =====================================================
             .authorizeHttpRequests(auth -> auth
 
+                // Angular SPA routes must be reachable without a server-side JWT.
+                // Angular's authGuard protects the client route after index.html loads.
+                .requestMatchers(
+                    "/dashboard",
+                    "/dashboard/**",
+                    "/login",
+                    "/forgot-password",
+                    "/verify-forgot-password-otp",
+                    "/reset-password",
+                    "/verify-account",
+                    "/verify-email"
+                ).permitAll()
+
             		.requestMatchers(
             			    "/",
             			    "/index.html",
