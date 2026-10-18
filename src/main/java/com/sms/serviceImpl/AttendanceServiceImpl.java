@@ -108,6 +108,13 @@ public class AttendanceServiceImpl implements AttendanceService {
                 .orElseThrow(() -> new ResourceNotFoundException("Attendance not found with id : " + id));
 
         assertFacultyCanAccess(attendance.getAttendanceSession());
+        if ("STUDENT".equals(SecurityUtils.getCurrentRole())) {
+            Student student = getCurrentStudent();
+            if (!student.getId().equals(attendance.getStudent().getId())) {
+                throw new org.springframework.security.access.AccessDeniedException(
+                        "You cannot access another student's attendance.");
+            }
+        }
         return mapper.toDto(attendance);
     }
 
@@ -118,15 +125,19 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         Pageable pageable = PageRequest.of(
                 Math.max(page, 0),
-                Math.max(size, 1),
+                Math.max(1, Math.min(size, 100)),
                 buildSort(sortBy, direction));
 
         Specification<Attendance> spec =
-                AttendanceSpecification.statusNot(RecordStatus.DELETED);
+                AttendanceSpecification.statusNot(RecordStatus.DELETED)
+                        .and(AttendanceSpecification.hasExistingStudent());
 
         if ("FACULTY".equals(SecurityUtils.getCurrentRole())) {
             Faculty faculty = getCurrentFaculty();
             spec = spec.and(AttendanceSpecification.hasFaculty(faculty.getId()));
+        } else if ("STUDENT".equals(SecurityUtils.getCurrentRole())) {
+            Student student = getCurrentStudent();
+            spec = spec.and(AttendanceSpecification.hasStudent(student.getId()));
         }
 
         Page<Attendance> result = repository.findAll(spec, pageable);
@@ -188,11 +199,15 @@ public class AttendanceServiceImpl implements AttendanceService {
             String sortBy,
             String direction) {
 
-        Specification<Attendance> spec = Specification.where(null);
+        Specification<Attendance> spec =
+                AttendanceSpecification.hasExistingStudent();
 
         if ("FACULTY".equals(SecurityUtils.getCurrentRole())) {
             Faculty faculty = getCurrentFaculty();
             spec = spec.and(AttendanceSpecification.hasFaculty(faculty.getId()));
+        } else if ("STUDENT".equals(SecurityUtils.getCurrentRole())) {
+            Student student = getCurrentStudent();
+            spec = spec.and(AttendanceSpecification.hasStudent(student.getId()));
         }
 
         spec = spec.and(request.getStatus() != null
@@ -225,7 +240,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
 
         Pageable pageable = PageRequest.of(
-                Math.max(page, 0), Math.max(size, 1), buildSort(sortBy, direction));
+                Math.max(page, 0), Math.max(1, Math.min(size, 100)), buildSort(sortBy, direction));
 
         return toPageResponse(repository.findAll(spec, pageable));
     }
@@ -351,6 +366,15 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         assertFacultyCanAccess(session);
         return session;
+    }
+
+    private Student getCurrentStudent() {
+        com.sms.security.entity.User user = SecurityUtils.getCurrentUser();
+        if (user == null || user.getStudent() == null || user.getStudent().getId() == null) {
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "The authenticated account is not linked to a student profile.");
+        }
+        return user.getStudent();
     }
 
     private Faculty getCurrentFaculty() {

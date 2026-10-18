@@ -1,356 +1,436 @@
 <form class="student-form" [formGroup]="form" (ngSubmit)="submit()">
-	<!-- ACCOUNT -->
-	<mat-card>
-		<mat-card-header>
-			<mat-card-title>
-				<mat-icon>manage_accounts</mat-icon>
-				Account Information
-			</mat-card-title>
-		</mat-card-header>
+  <!-- ACCOUNT -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>manage_accounts</mat-icon>
+        Account Information
+      </mat-card-title>
+    </mat-card-header>
 
-		<mat-card-content>
-			<div class="form-grid form-grid-4">
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>email</mat-icon>
-					<mat-label>Email</mat-label>
-					<input matInput type="email" formControlName="email" [readonly]="isEditMode" />
+    <mat-card-content>
+      <div class="form-grid form-grid-4">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            [readonly]="isEditMode"
+          />
 
-					@if (form.get("email")?.hasError("required")) {
-					<mat-error>Email is required.</mat-error>
-					}
-					@if (form.get("email")?.hasError("email")) {
-					<mat-error>Enter a valid email address.</mat-error>
-					}
-				</mat-form-field>
+          @if (form.get("email")?.hasError("required")) {
+            <mat-error>Email is required.</mat-error>
+          }
+          @if (form.get("email")?.hasError("email")) {
+            <mat-error>Enter a valid email address.</mat-error>
+          }
+        </mat-form-field>
 
-				@if (!isEditMode) {
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>lock</mat-icon>
-					<mat-label>Password</mat-label>
-					<input matInput type="password" formControlName="password" />
+        @if (!isEditMode) {
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>lock</mat-icon>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" />
 
-					@if (form.get("password")?.hasError("required")) {
-					<mat-error>Password is required.</mat-error>
-					}
-					@if (form.get("password")?.hasError("minlength")) {
-					<mat-error>Minimum 8 characters required.</mat-error>
-					}
-				</mat-form-field>
-				}
+            @if (form.get("password")?.hasError("required")) {
+              <mat-error>Password is required.</mat-error>
+            }
+            @if (form.get("password")?.hasError("minlength")) {
+              <mat-error>Minimum 8 characters required.</mat-error>
+            }
+          </mat-form-field>
+        }
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>phone</mat-icon>
-					<mat-label>Mobile Number</mat-label>
-					<input matInput type="tel" maxlength="10" formControlName="mobileNumber" [readonly]="isEditMode" />
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>phone</mat-icon>
+          <mat-label>Mobile Number</mat-label>
+          <input
+            matInput
+            type="tel"
+            maxlength="10"
+            formControlName="mobileNumber"
+            [readonly]="isEditMode"
+          />
 
-					@if (form.get("mobileNumber")?.hasError("required")) {
-					<mat-error>Mobile number is required.</mat-error>
-					}
-					@if (form.get("mobileNumber")?.hasError("pattern")) {
-					<mat-error>Enter a valid 10-digit mobile number.</mat-error>
-					}
-				</mat-form-field>
+          @if (form.get("mobileNumber")?.hasError("required")) {
+            <mat-error>Mobile number is required.</mat-error>
+          }
+          @if (form.get("mobileNumber")?.hasError("pattern")) {
+            <mat-error>Enter a valid 10-digit mobile number.</mat-error>
+          }
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>phone_in_talk</mat-icon>
-					<mat-label>Alternate Mobile</mat-label>
-					<input matInput type="tel" maxlength="10" formControlName="alternateMobile" />
-				</mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>phone_in_talk</mat-icon>
+          <mat-label>Alternate Mobile</mat-label>
+          <input
+            matInput
+            type="tel"
+            maxlength="10"
+            formControlName="alternateMobile"
+          />
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>alternate_email</mat-icon>
-					<mat-label>Alternate Email</mat-label>
-					<input matInput type="email" formControlName="alternateEmail" />
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>alternate_email</mat-icon>
+          <mat-label>Alternate Email</mat-label>
+          <input matInput type="email" formControlName="alternateEmail" />
 
-					@if (form.get("alternateEmail")?.hasError("email")) {
-					<mat-error>Enter a valid email address.</mat-error>
-					}
-				</mat-form-field>
-			</div>
-		</mat-card-content>
-	</mat-card>
+          @if (form.get("alternateEmail")?.hasError("email")) {
+            <mat-error>Enter a valid email address.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-	<!-- STUDENT INFORMATION -->
-	<mat-card>
-		<mat-card-header>
-			<mat-card-title>
-				<mat-icon>person</mat-icon>
-				Student Information
-			</mat-card-title>
-		</mat-card-header>
+  <!-- STUDENT INFORMATION -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>person</mat-icon>
+        Student Information
+      </mat-card-title>
+    </mat-card-header>
 
-		<mat-card-content>
-			<div class="form-grid form-grid-4">
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>person</mat-icon>
-					<mat-label>First Name</mat-label>
-					<input matInput formControlName="firstName" />
+    <mat-card-content>
+      <div class="form-grid form-grid-4">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" />
 
-					@if (form.get("firstName")?.hasError("required")) {
-					<mat-error>First name is required.</mat-error>
-					}
-				</mat-form-field>
+          @if (form.get("firstName")?.hasError("required")) {
+            <mat-error>First name is required.</mat-error>
+          }
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>person_outline</mat-icon>
-					<mat-label>Middle Name</mat-label>
-					<input matInput formControlName="middleName" />
-				</mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>person_outline</mat-icon>
+          <mat-label>Middle Name</mat-label>
+          <input matInput formControlName="middleName" />
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>person</mat-icon>
-					<mat-label>Last Name</mat-label>
-					<input matInput formControlName="lastName" />
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" />
 
-					@if (form.get("lastName")?.hasError("required")) {
-					<mat-error>Last name is required.</mat-error>
-					}
-				</mat-form-field>
+          @if (form.get("lastName")?.hasError("required")) {
+            <mat-error>Last name is required.</mat-error>
+          }
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>wc</mat-icon>
-					<mat-label>Gender</mat-label>
-					<mat-select formControlName="gender" panelClass="student-select-panel">
-						<mat-option [value]="null">Select Gender</mat-option>
-						@for (gender of genders; track gender) {
-						<mat-option [value]="gender">{{ gender }}</mat-option>
-						}
-					</mat-select>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>wc</mat-icon>
+          <mat-label>Gender</mat-label>
+          <mat-select
+            formControlName="gender"
+            panelClass="student-select-panel"
+          >
+            <mat-option [value]="null">Select Gender</mat-option>
+            @for (gender of genders; track gender) {
+              <mat-option [value]="gender">{{ gender }}</mat-option>
+            }
+          </mat-select>
 
-					@if (form.get("gender")?.hasError("required")) {
-					<mat-error>Gender is required.</mat-error>
-					}
-				</mat-form-field>
+          @if (form.get("gender")?.hasError("required")) {
+            <mat-error>Gender is required.</mat-error>
+          }
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>cake</mat-icon>
-					<mat-label>Date of Birth</mat-label>
-					<input matInput type="date" formControlName="dateOfBirth" />
+        <mat-form-field appearance="outline" class="student-field date-field">
+          <mat-icon matPrefix>cake</mat-icon>
+          <mat-label>Date of Birth</mat-label>
 
-					@if (form.get("dateOfBirth")?.hasError("required")) {
-					<mat-error>Date of birth is required.</mat-error>
-					}
-				</mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="dobPicker"
+            formControlName="dateOfBirth"
+            placeholder="DD/MM/YYYY"
+            readonly
+            (click)="dobPicker.open()"
+          />
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>bloodtype</mat-icon>
-					<mat-label>Blood Group</mat-label>
-					<mat-select formControlName="bloodGroup" panelClass="student-select-panel">
-						<mat-option [value]="null">Select Blood Group</mat-option>
-						@for (bloodGroup of bloodGroups; track bloodGroup) {
-						<mat-option [value]="bloodGroup">{{ bloodGroup }}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
+          <mat-datepicker-toggle matIconSuffix [for]="dobPicker">
+          </mat-datepicker-toggle>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>category</mat-icon>
-					<mat-label>Category</mat-label>
-					<mat-select formControlName="category" panelClass="student-select-panel">
-						<mat-option [value]="null">Select Category</mat-option>
-						@for (category of studentCategories; track category) {
-						<mat-option [value]="category">{{ category }}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
+          <mat-datepicker #dobPicker panelClass="student-datepicker-panel">
+          </mat-datepicker>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>diversity_3</mat-icon>
-					<mat-label>Religion</mat-label>
-					<input matInput formControlName="religion" />
-				</mat-form-field>
+          @if (form.get("dateOfBirth")?.hasError("required")) {
+            <mat-error>Date of birth is required.</mat-error>
+          }
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>public</mat-icon>
-					<mat-label>Nationality</mat-label>
-					<input matInput formControlName="nationality" />
-				</mat-form-field>
-			</div>
-		</mat-card-content>
-	</mat-card>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>bloodtype</mat-icon>
+          <mat-label>Blood Group</mat-label>
+          <mat-select
+            formControlName="bloodGroup"
+            panelClass="student-select-panel"
+          >
+            <mat-option [value]="null">Select Blood Group</mat-option>
+            @for (bloodGroup of bloodGroups; track bloodGroup) {
+              <mat-option [value]="bloodGroup">{{ bloodGroup }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-	<!-- ACADEMIC INFORMATION -->
-	<mat-card>
-		<mat-card-header>
-			<mat-card-title>
-				<mat-icon>school</mat-icon>
-				Academic Information
-			</mat-card-title>
-		</mat-card-header>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>category</mat-icon>
+          <mat-label>Category</mat-label>
+          <mat-select
+            formControlName="category"
+            panelClass="student-select-panel"
+          >
+            <mat-option [value]="null">Select Category</mat-option>
+            @for (category of studentCategories; track category) {
+              <mat-option [value]="category">{{ category }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-		<mat-card-content>
-			<div class="form-grid form-grid-4">
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>event</mat-icon>
-					<mat-label>Admission Date</mat-label>
-					<input matInput type="date" formControlName="admissionDate" />
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>diversity_3</mat-icon>
+          <mat-label>Religion</mat-label>
+          <input matInput formControlName="religion" />
+        </mat-form-field>
 
-					@if (form.get("admissionDate")?.hasError("required")) {
-					<mat-error>Admission date is required.</mat-error>
-					}
-				</mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>public</mat-icon>
+          <mat-label>Nationality</mat-label>
+          <input matInput formControlName="nationality" />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>calendar_month</mat-icon>
-					<mat-label>Academic Year</mat-label>
-					<input matInput formControlName="academicYear" />
-				</mat-form-field>
+  <!-- ACADEMIC INFORMATION -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>school</mat-icon>
+        Academic Information
+      </mat-card-title>
+    </mat-card-header>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>account_balance</mat-icon>
-					<mat-label>Department</mat-label>
-					<mat-select formControlName="departmentId" panelClass="student-select-panel">
-						<mat-option [value]="0">Select Department</mat-option>
-						@for (dept of departments; track dept.id) {
-						<mat-option [value]="dept.id">{{
-							dept.departmentName
-							}}</mat-option>
-						}
-					</mat-select>
+    <mat-card-content>
+      <div class="form-grid form-grid-4">
+        <mat-form-field appearance="outline" class="student-field date-field">
+          <mat-icon matPrefix>event</mat-icon>
+          <mat-label>Admission Date</mat-label>
 
-					@if (form.get("departmentId")?.hasError("required")) {
-					<mat-error>Department is required.</mat-error>
-					}
-				</mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="admissionPicker"
+            formControlName="admissionDate"
+            placeholder="DD/MM/YYYY"
+            readonly
+            (click)="admissionPicker.open()"
+          />
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>menu_book</mat-icon>
-					<mat-label>Course ID</mat-label>
-					<input matInput type="number" formControlName="courseId" />
-				</mat-form-field>
+          <mat-datepicker-toggle matIconSuffix [for]="admissionPicker">
+          </mat-datepicker-toggle>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>format_list_numbered</mat-icon>
-					<mat-label>Current Semester ID</mat-label>
-					<input matInput type="number" formControlName="currentSemesterId" />
-				</mat-form-field>
+          <mat-datepicker
+            #admissionPicker
+            panelClass="student-datepicker-panel"
+          >
+          </mat-datepicker>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>view_week</mat-icon>
-					<mat-label>Section</mat-label>
-					<input matInput formControlName="section" />
-				</mat-form-field>
+          @if (form.get("admissionDate")?.hasError("required")) {
+            <mat-error>Admission date is required.</mat-error>
+          }
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>groups</mat-icon>
-					<mat-label>Batch</mat-label>
-					<input matInput formControlName="batch" />
-				</mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>calendar_month</mat-icon>
+          <mat-label>Academic Year</mat-label>
+          <input matInput formControlName="academicYear" />
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>school</mat-icon>
-					<mat-label>Current Year</mat-label>
-					<input matInput type="number" formControlName="currentYear" />
-				</mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>account_balance</mat-icon>
+          <mat-label>Department</mat-label>
+          <mat-select
+            formControlName="departmentId"
+            panelClass="student-select-panel"
+          >
+            <mat-option [value]="0">Select Department</mat-option>
+            @for (dept of departments; track dept.id) {
+              <mat-option [value]="dept.id">{{
+                dept.departmentName
+              }}</mat-option>
+            }
+          </mat-select>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>badge</mat-icon>
-					<mat-label>Student Type</mat-label>
-					<mat-select formControlName="studentType" panelClass="student-select-panel">
-						<mat-option [value]="null">Select Student Type</mat-option>
-						@for (studentType of studentTypes; track studentType) {
-						<mat-option [value]="studentType">{{ studentType }}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
+          @if (form.get("departmentId")?.hasError("required")) {
+            <mat-error>Department is required.</mat-error>
+          }
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>verified</mat-icon>
-					<mat-label>Student Status</mat-label>
-					<mat-select formControlName="studentStatus" panelClass="student-select-panel">
-						<mat-option [value]="null">Select Student Status</mat-option>
-						@for (studentStatus of studentStatuses; track studentStatus) {
-						<mat-option [value]="studentStatus">{{
-							studentStatus
-							}}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>menu_book</mat-icon>
+          <mat-label>Course ID</mat-label>
+          <input matInput type="number" formControlName="courseId" />
+        </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>format_list_numbered</mat-icon>
+          <mat-label>Current Semester ID</mat-label>
+          <input matInput type="number" formControlName="currentSemesterId" />
+        </mat-form-field>
 
-			</div>
-		</mat-card-content>
-	</mat-card>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>view_week</mat-icon>
+          <mat-label>Section</mat-label>
+          <input matInput formControlName="section" />
+        </mat-form-field>
 
-	<!-- DOCUMENT INFORMATION -->
-	<mat-card>
-		<mat-card-header>
-			<mat-card-title>
-				<mat-icon>description</mat-icon>
-				Document Information
-			</mat-card-title>
-		</mat-card-header>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>groups</mat-icon>
+          <mat-label>Batch</mat-label>
+          <input matInput formControlName="batch" />
+        </mat-form-field>
 
-		<mat-card-content>
-			<div class="form-grid form-grid-4">
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>fingerprint</mat-icon>
-					<mat-label>Aadhaar Number</mat-label>
-					<input matInput maxlength="12" formControlName="aadhaarNumber" />
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>school</mat-icon>
+          <mat-label>Current Year</mat-label>
+          <input matInput type="number" formControlName="currentYear" />
+        </mat-form-field>
 
-					@if (form.get("aadhaarNumber")?.hasError("pattern")) {
-					<mat-error>Aadhaar must contain 12 digits.</mat-error>
-					}
-				</mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>badge</mat-icon>
+          <mat-label>Student Type</mat-label>
+          <mat-select
+            formControlName="studentType"
+            panelClass="student-select-panel"
+          >
+            <mat-option [value]="null">Select Student Type</mat-option>
+            @for (studentType of studentTypes; track studentType) {
+              <mat-option [value]="studentType">{{ studentType }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>credit_card</mat-icon>
-					<mat-label>PAN Number</mat-label>
-					<input matInput maxlength="10" formControlName="panNumber" style="text-transform: uppercase" />
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>verified</mat-icon>
+          <mat-label>Student Status</mat-label>
+          <mat-select
+            formControlName="studentStatus"
+            panelClass="student-select-panel"
+          >
+            <mat-option [value]="null">Select Student Status</mat-option>
+            @for (studentStatus of studentStatuses; track studentStatus) {
+              <mat-option [value]="studentStatus">{{
+                studentStatus
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-					@if (form.get("panNumber")?.hasError("pattern")) {
-					<mat-error>Enter a valid PAN number.</mat-error>
-					}
-				</mat-form-field>
+  <!-- DOCUMENT INFORMATION -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>description</mat-icon>
+        Document Information
+      </mat-card-title>
+    </mat-card-header>
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>image</mat-icon>
-					<mat-label>Profile Image</mat-label>
-					<input matInput formControlName="profileImage" />
-				</mat-form-field>
+    <mat-card-content>
+      <div class="form-grid form-grid-4">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>fingerprint</mat-icon>
+          <mat-label>Aadhaar Number</mat-label>
+          <input matInput maxlength="12" formControlName="aadhaarNumber" />
 
-				<mat-form-field appearance="outline">
-					<mat-icon matPrefix>draw</mat-icon>
-					<mat-label>Signature Image</mat-label>
-					<input matInput formControlName="signatureImage" />
-				</mat-form-field>
-			</div>
-		</mat-card-content>
-	</mat-card>
+          @if (form.get("aadhaarNumber")?.hasError("pattern")) {
+            <mat-error>Aadhaar must contain 12 digits.</mat-error>
+          }
+        </mat-form-field>
 
-	<!-- ADDRESS INFORMATION -->
-	<mat-card>
-		<mat-card-header>
-			<mat-card-title>
-				<mat-icon>location_on</mat-icon>
-				Address Information
-			</mat-card-title>
-		</mat-card-header>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>credit_card</mat-icon>
+          <mat-label>PAN Number</mat-label>
+          <input
+            matInput
+            maxlength="10"
+            formControlName="panNumber"
+            style="text-transform: uppercase"
+          />
 
-		<mat-card-content>
-			<app-location-selector [form]="$any(form.get('address'))"></app-location-selector>
-		</mat-card-content>
-	</mat-card>
+          @if (form.get("panNumber")?.hasError("pattern")) {
+            <mat-error>Enter a valid PAN number.</mat-error>
+          }
+        </mat-form-field>
 
-	<!-- ACTIONS -->
-	<div class="actions">
-		<button mat-button type="button" [disabled]="loading" (click)="cancel.emit()">
-			<mat-icon>close</mat-icon>
-			Cancel
-		</button>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>image</mat-icon>
+          <mat-label>Profile Image</mat-label>
+          <input matInput formControlName="profileImage" />
+        </mat-form-field>
 
-		<button mat-raised-button color="primary" type="submit" [disabled]="loading">
-			@if (loading) {
-			<span class="button-content">
-				<mat-spinner diameter="16"></mat-spinner>
-				Saving...
-			</span>
-			} @else {
-			<span class="button-content">
-				<mat-icon>{{ isEditMode ? "save_as" : "person_add" }}</mat-icon>
-				{{ isEditMode ? "Update Student" : "Save Student" }}
-			</span>
-			}
-		</button>
-	</div>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>draw</mat-icon>
+          <mat-label>Signature Image</mat-label>
+          <input matInput formControlName="signatureImage" />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ADDRESS INFORMATION -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>location_on</mat-icon>
+        Address Information
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <app-location-selector
+        [form]="$any(form.get('address'))"
+      ></app-location-selector>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button
+      mat-button
+      type="button"
+      [disabled]="loading"
+      (click)="cancel.emit()"
+    >
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loading"
+    >
+      @if (loading) {
+        <span class="button-content">
+          <mat-spinner diameter="16"></mat-spinner>
+          Saving...
+        </span>
+      } @else {
+        <span class="button-content">
+          <mat-icon>{{ isEditMode ? "save_as" : "person_add" }}</mat-icon>
+          {{ isEditMode ? "Update Student" : "Save Student" }}
+        </span>
+      }
+    </button>
+  </div>
 </form>

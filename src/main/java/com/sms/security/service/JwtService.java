@@ -31,16 +31,14 @@ public class JwtService {
     private static final String REFRESH_TOKEN_TYPE = "REFRESH";
 
     /*
-     * Access token = 15 minutes
+     * Keep token lifetimes configurable so local and Railway deployments
+     * use the same explicit properties instead of hidden hard-coded values.
      */
-    private static final long ACCESS_TOKEN_EXPIRATION =
-            1000L * 60 * 15;
+    @Value("${jwt.access-token-expiration:900000}")
+    private long accessTokenExpiration;
 
-    /*
-     * Refresh token = 7 days
-     */
-    private static final long REFRESH_TOKEN_EXPIRATION =
-            1000L * 60 * 60 * 24 * 7;
+    @Value("${jwt.refresh-token-expiration:604800000}")
+    private long refreshTokenExpiration;
 
 
     /*
@@ -92,7 +90,7 @@ public class JwtService {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                        + ACCESS_TOKEN_EXPIRATION
+                                        + accessTokenExpiration
                         )
                 )
 
@@ -123,7 +121,7 @@ public class JwtService {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                        + REFRESH_TOKEN_EXPIRATION
+                                        + refreshTokenExpiration
                         )
                 )
 
@@ -139,7 +137,7 @@ public class JwtService {
 
     public long getAccessTokenExpirationInSeconds() {
 
-        return ACCESS_TOKEN_EXPIRATION / 1000;
+        return accessTokenExpiration / 1000;
     }
 
 
@@ -149,7 +147,7 @@ public class JwtService {
 
     public long getRefreshTokenExpirationInSeconds() {
 
-        return REFRESH_TOKEN_EXPIRATION / 1000;
+        return refreshTokenExpiration / 1000;
     }
 
 

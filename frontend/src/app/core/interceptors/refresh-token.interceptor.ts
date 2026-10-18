@@ -1,9 +1,6 @@
-import {
-  HttpErrorResponse,
-  HttpInterceptorFn
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
 
-import { inject } from '@angular/core';
+import { inject } from "@angular/core";
 
 import {
   BehaviorSubject,
@@ -11,173 +8,135 @@ import {
   filter,
   switchMap,
   take,
-  throwError
-} from 'rxjs';
+  throwError,
+} from "rxjs";
 
-import { AuthService } from '../../features/auth/services/auth.service';
-import { StorageService } from '../services/storage.service';
+import { AuthService } from "../../features/auth/services/auth.service";
+import { StorageService } from "../services/storage.service";
 
 let isRefreshing = false;
 
-const refreshTokenSubject =
-  new BehaviorSubject<string | null>(null);
+const refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
-export const refreshTokenInterceptor: HttpInterceptorFn =
-  (req, next) => {
+export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
+  const storage = inject(StorageService);
 
-    const authService = inject(AuthService);
-    const storage = inject(StorageService);
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      // ---------------------------------------------------
+      // Only handle 401
+      // ---------------------------------------------------
 
-    return next(req).pipe(
+      if (error.status !== 401) {
+        return throwError(() => error);
+      }
 
-      catchError((error: HttpErrorResponse) => {
+      // ---------------------------------------------------
+      // NEVER refresh login / refresh API itself
+      // ---------------------------------------------------
 
-        // ---------------------------------------------------
-        // Only handle 401
-        // ---------------------------------------------------
+      if (
+        req.url.includes("/api/auth/") ||
+        req.url.includes("/api/login") ||
+        req.url.includes("/api/otp/")
+      ) {
+        return throwError(() => error);
+      }
 
-        if (error.status !== 401) {
-          return throwError(() => error);
-        }
+      const refreshToken = storage.getRefreshToken();
 
-        // ---------------------------------------------------
-        // NEVER refresh login / refresh API itself
-        // ---------------------------------------------------
+      if (!refreshToken) {
+        console.error("[REFRESH] No refresh token available");
 
-        if (
-          req.url.includes('/api/login') ||
-          req.url.includes('/api/auth/refresh-token')
-        ) {
-          return throwError(() => error);
-        }
+        return throwError(() => error);
+      }
 
-        const refreshToken =
-          storage.getRefreshToken();
+      // ---------------------------------------------------
+      // Another refresh already running
+      // ---------------------------------------------------
 
-        if (!refreshToken) {
+      if (isRefreshing) {
+        return refreshTokenSubject.pipe(
+          filter((token) => token !== null),
 
-          console.error(
-            '[REFRESH] No refresh token available'
-          );
+          take(1),
 
-          return throwError(() => error);
-        }
+          switchMap((token) => {
+            const retryRequest = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
 
-        // ---------------------------------------------------
-        // Another refresh already running
-        // ---------------------------------------------------
-
-        if (isRefreshing) {
-
-          return refreshTokenSubject.pipe(
-
-            filter(token => token !== null),
-
-            take(1),
-
-            switchMap(token => {
-
-              const retryRequest =
-                req.clone({
-                  setHeaders: {
-                    Authorization:
-                      `Bearer ${token}`
-                  }
-                });
-
-              return next(retryRequest);
-            })
-          );
-        }
-
-        // ---------------------------------------------------
-        // START REFRESH
-        // ---------------------------------------------------
-
-        isRefreshing = true;
-
-        refreshTokenSubject.next(null);
-
-        console.log(
-          '[REFRESH] Access token expired. Refreshing...'
+            return next(retryRequest);
+          }),
         );
+      }
 
-        return authService
-          .refreshToken(refreshToken)
-          .pipe(
+      // ---------------------------------------------------
+      // START REFRESH
+      // ---------------------------------------------------
 
-            switchMap(response => {
+      isRefreshing = true;
 
-              const data =
-                response?.data;
+      refreshTokenSubject.next(null);
 
-              const newAccessToken =
-                data?.accessToken;
+      console.log("[REFRESH] Access token expired. Refreshing...");
 
-              const newRefreshToken =
-                data?.refreshToken;
+      return authService.refreshToken(refreshToken).pipe(
+        switchMap((response) => {
+          const data = response?.data;
 
-              if (!newAccessToken) {
+          const newAccessToken = data?.accessToken;
 
-                throw new Error(
-                  'Refresh API did not return accessToken.'
-                );
-              }
+          const newRefreshToken = data?.refreshToken;
 
-              // Save new access token
-              storage.saveAccessToken(
-                newAccessToken
-              );
+          if (!newAccessToken) {
+            throw new Error("Refresh API did not return accessToken.");
+          }
 
-              // Save refresh token if backend returns one
-              if (newRefreshToken) {
+          // Save new access token
+          storage.saveAccessToken(newAccessToken);
 
-                storage.saveRefreshToken(
-                  newRefreshToken
-                );
-              }
+          // Save refresh token if backend returns one
+          if (newRefreshToken) {
+            storage.saveRefreshToken(newRefreshToken);
+          }
 
-              isRefreshing = false;
+          isRefreshing = false;
 
-              refreshTokenSubject.next(
-                newAccessToken
-              );
+          refreshTokenSubject.next(newAccessToken);
 
-              console.log(
-                '[REFRESH] Token refreshed successfully'
-              );
+          console.log("[REFRESH] Token refreshed successfully");
 
-              const retryRequest =
-                req.clone({
-                  setHeaders: {
-                    Authorization:
-                      `Bearer ${newAccessToken}`
-                  }
-                });
+          const retryRequest = req.clone({
+            setHeaders: {
+              Authorization: `Bearer ${newAccessToken}`,
+            },
+          });
 
-              return next(retryRequest);
-            }),
+          return next(retryRequest);
+        }),
 
-            catchError(refreshError => {
+        catchError((refreshError) => {
+          isRefreshing = false;
 
-              isRefreshing = false;
+          refreshTokenSubject.next(null);
 
-              refreshTokenSubject.next(null);
+          const status =
+            refreshError instanceof HttpErrorResponse ? refreshError.status : 0;
 
-              console.error(
-                '[REFRESH] Refresh failed:',
-                refreshError
-              );
+          // A rejected/expired/revoked refresh token cannot recover the
+          // session. Clear stale credentials only for definitive auth
+          // failures; retain them for temporary network/server failures.
+          if ([400, 401, 403, 404].includes(status)) {
+            authService.logout();
+          }
 
-              // IMPORTANT:
-              // Do not call logout here blindly.
-              // Let auth guard / application decide.
-
-              return throwError(
-                () => refreshError
-              );
-            })
-          );
-      })
-    );
-  };
+          return throwError(() => refreshError);
+        }),
+      );
+    }),
+  );
+};

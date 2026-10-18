@@ -1,209 +1,209 @@
-/* STUDENT FORM — COMPACT ENTERPRISE ERP */
+/* =====================================================
+   STUDENT FORM - ENTERPRISE ERP
+   ===================================================== */
 
 :host {
   display: block;
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/* FORM */
 .student-form {
-  width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 4px 0 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
+  width: 100%;
+  max-width: 1600px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 4px 0 24px;
+  color: #172033;
 }
 
-/* SECTION CARDS */
+/* =====================================================
+   SECTION CARDS
+   ===================================================== */
+
 .student-form > mat-card {
   position: relative;
   width: 100%;
-  overflow: hidden;
-  border: 1px solid #dfe5ed;
-  border-radius: 11px;
+  min-width: 0;
+  overflow: visible;
+  border: 1px solid #dce3ed;
+  border-radius: 12px;
   background: #fff;
-  box-shadow:
-    0 1px 2px rgb(15 23 42 / 4%),
-    0 4px 14px rgb(15 23 42 / 4%);
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
   transition:
     border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+    box-shadow 160ms ease;
 }
 
 .student-form > mat-card:hover {
-  border-color: #d4dce8;
-  box-shadow:
-    0 2px 4px rgb(15 23 42 / 4%),
-    0 8px 22px rgb(15 23 42 / 6%);
+  border-color: #cbd7e8;
+  box-shadow: 0 5px 16px rgb(15 23 42 / 6%);
 }
 
-/* BLUE ACCENT */
 .student-form > mat-card::before {
-  content: '';
+  content: "";
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: linear-gradient(180deg, #2563eb, #4f46e5);
+  top: 0;
+  bottom: 0;
+  left: 0;
   z-index: 1;
+  width: 3px;
+  border-radius: 12px 0 0 12px;
+  background: linear-gradient(180deg, #2563eb, #6366f1);
+  pointer-events: none;
 }
 
-/* CARD HEADER */
+/* =====================================================
+   SECTION HEADER
+   ===================================================== */
+
 .student-form mat-card-header {
+  display: flex;
+  align-items: center;
   min-height: 54px;
   padding: 10px 18px;
-  display: flex;
-  align-items: center;
-  background: linear-gradient(180deg, #fff, #f8faff);
-  border-bottom: 1px solid #edf1f5;
+  border-bottom: 1px solid #edf1f7;
+  border-radius: 12px 12px 0 0;
+  background: #f8faff;
 }
 
-/* CARD TITLE */
 .student-form mat-card-title {
-  margin: 0 !important;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
+  margin: 0 !important;
   color: #172033;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
-/* CARD ICON */
 .student-form mat-card-title mat-icon {
-  width: 28px;
-  height: 28px;
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border: 1px solid #dce8ff;
-  border-radius: 7px;
-  background: #eef4ff;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #dbe7ff;
+  border-radius: 8px;
+  background: #edf4ff;
   color: #2563eb;
-  font-size: 17px;
-  line-height: 28px;
+  font-size: 18px;
+  line-height: 30px;
 }
 
-/* CARD CONTENT */
+/* =====================================================
+   CARD CONTENT
+   ===================================================== */
+
 .student-form mat-card-content {
-  padding: 15px 18px !important;
+  min-width: 0;
+  padding: 20px 18px 12px !important;
 }
 
-/* GRID */
-.form-grid {
-  width: 100%;
+/* =====================================================
+   RESPONSIVE GRID
+   ===================================================== */
+
+.form-grid,
+.form-grid-4 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
-  column-gap: 14px;
-  row-gap: 0;
-}
-
-/* FORM FIELD */
-.student-form mat-form-field {
+  gap: 8px 16px;
   width: 100%;
   min-width: 0;
-  margin-bottom: 5px;
 }
 
+/* =====================================================
+   MATERIAL FORM FIELDS
+   IMPORTANT: Do not force a fixed height on infix.
+   ===================================================== */
+
+.student-form mat-form-field,
 .student-form ::ng-deep .mat-mdc-form-field {
+  display: block;
   width: 100%;
+  min-width: 0;
+  margin: 0 0 5px;
 }
 
-/* MATERIAL FIELD */
 .student-form ::ng-deep .mat-mdc-text-field-wrapper {
-  min-height: 54px !important;
-  height: 54px !important;
+  min-height: 56px;
+  height: auto !important;
   padding: 0 !important;
+  overflow: visible;
+  border-radius: 8px;
   background: #fff;
-  border-radius: 7px;
-  transition:
-    background-color 140ms ease,
-    box-shadow 140ms ease;
-}
-
-.student-form ::ng-deep .mat-mdc-form-field-flex,
-.student-form ::ng-deep .mat-mdc-form-field-infix {
-  height: 54px !important;
-  min-height: 54px !important;
+  transition: background-color 150ms ease;
 }
 
 .student-form ::ng-deep .mat-mdc-form-field-flex {
-  align-items: center;
+  min-height: 56px;
+  height: auto !important;
+  align-items: center !important;
 }
 
 .student-form ::ng-deep .mat-mdc-form-field-infix {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  display: flex;
-  align-items: center;
+  width: auto;
+  min-width: 0;
+  min-height: 56px;
+  height: auto !important;
+  padding-top: 17px !important;
+  padding-bottom: 9px !important;
+  box-sizing: border-box;
 }
 
-/* INPUT */
-.student-form ::ng-deep .mat-mdc-input-element {
-  height: auto !important;
-  padding: 0 !important;
+/* =====================================================
+   INPUT TEXT
+   ===================================================== */
+
+.student-form ::ng-deep input.mat-mdc-input-element,
+.student-form ::ng-deep textarea.mat-mdc-input-element {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   color: #172033;
   font-family: inherit;
-  font-size: 12.5px !important;
-  font-weight: 500 !important;
-  line-height: 1.2;
+  font-size: 13px !important;
+  font-weight: 500;
+  line-height: 22px;
   caret-color: #2563eb;
+  box-sizing: border-box;
 }
 
-.student-form ::ng-deep .mat-mdc-input-element::placeholder {
+.student-form ::ng-deep input.mat-mdc-input-element {
+  height: 24px;
+}
+
+.student-form ::ng-deep input.mat-mdc-input-element::placeholder,
+.student-form ::ng-deep textarea.mat-mdc-input-element::placeholder {
   color: #94a3b8;
   opacity: 1;
   font-size: 12px;
+  font-weight: 400;
 }
 
-/* OUTLINE */
-.student-form ::ng-deep .mdc-notched-outline {
-  border-radius: 7px;
-}
+/* =====================================================
+   FLOATING LABELS
+   ===================================================== */
 
-.student-form ::ng-deep .mdc-notched-outline__leading,
-.student-form ::ng-deep .mdc-notched-outline__notch,
-.student-form ::ng-deep .mdc-notched-outline__trailing {
-  border-color: #cbd3df;
-  border-width: 1px;
-}
-
-/* FIELD HOVER */
-.student-form ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__leading,
-.student-form ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__notch,
-.student-form ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
-  border-color: #94a3b8;
-}
-
-.student-form ::ng-deep .mat-mdc-form-field:hover .mat-mdc-text-field-wrapper {
-  background: #fbfdff;
-}
-
-/* FIELD FOCUS */
-.student-form ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
-.student-form ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
-.student-form ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
-  border-color: #2563eb;
-  border-width: 1.5px;
-}
-
-.student-form ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
-  box-shadow: 0 0 0 3px rgb(37 99 235 / 8%);
-}
-
-/* LABEL */
 .student-form ::ng-deep .mdc-floating-label {
   color: #64748b;
-  font-size: 11.5px !important;
+  font-size: 12px !important;
   font-weight: 500;
 }
 
@@ -211,45 +211,144 @@
   color: #2563eb;
 }
 
-.student-form ::ng-deep .mdc-notched-outline__notch {
-  padding: 0 5px;
+.student-form ::ng-deep .mdc-notched-outline {
+  border-radius: 8px;
 }
 
-/* PREFIX ICON */
+.student-form ::ng-deep .mdc-notched-outline__leading,
+.student-form ::ng-deep .mdc-notched-outline__notch,
+.student-form ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #cbd5e1;
+  border-width: 1px;
+  transition: border-color 150ms ease;
+}
+
+.student-form ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.student-form ::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field:hover
+  .mdc-notched-outline__trailing {
+  border-color: #94a3b8;
+}
+
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__leading,
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__notch,
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__trailing {
+  border-color: #2563eb;
+  border-width: 1.5px;
+}
+
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mat-mdc-text-field-wrapper {
+  background: #fff;
+}
+
+/* =====================================================
+   PREFIX ICONS
+   ===================================================== */
+
 .student-form ::ng-deep .mat-mdc-form-field-icon-prefix {
-  padding-left: 10px !important;
-  padding-right: 7px !important;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 12px !important;
+  padding-right: 9px !important;
+  color: #475569;
 }
 
 .student-form ::ng-deep .mat-mdc-form-field-icon-prefix mat-icon {
-  width: 17px;
-  height: 17px;
-  color: #7b8798;
-  font-size: 17px;
-  line-height: 17px;
-  transition: color 140ms ease;
+  width: 19px;
+  height: 19px;
+  color: #475569;
+  font-size: 19px;
+  line-height: 19px;
 }
 
-.student-form ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-icon-prefix mat-icon {
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mat-mdc-form-field-icon-prefix,
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-focused
+  .mat-mdc-form-field-icon-prefix
+  mat-icon {
   color: #2563eb;
 }
 
-/* SELECT */
+/* =====================================================
+   DATEPICKER TOGGLE
+   ===================================================== */
+
+.student-form ::ng-deep .mat-mdc-form-field-icon-suffix {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding-right: 5px !important;
+}
+
+.student-form ::ng-deep .mat-datepicker-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 44px;
+}
+
+.student-form ::ng-deep .mat-datepicker-toggle .mat-mdc-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  color: #64748b;
+}
+
+.student-form ::ng-deep .mat-datepicker-toggle .mat-mdc-icon-button:hover {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.student-form ::ng-deep .mat-datepicker-toggle mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+/* =====================================================
+   SELECT
+   ===================================================== */
+
 .student-form ::ng-deep .mat-mdc-select {
   width: 100%;
-  font-size: 12.5px !important;
+  min-width: 0;
+  color: #172033;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .student-form ::ng-deep .mat-mdc-select-value {
   color: #172033;
-  font-size: 12.5px !important;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .student-form ::ng-deep .mat-mdc-select-placeholder {
   color: #94a3b8;
-  font-size: 12px !important;
+  font-size: 12px;
 }
 
 .student-form ::ng-deep .mat-mdc-select-arrow {
@@ -257,155 +356,155 @@
 }
 
 .student-form ::ng-deep .mat-mdc-select-arrow-wrapper {
-  width: 34px;
-  padding-right: 7px;
+  padding-right: 5px;
 }
 
-/* DATE / NUMBER */
-.student-form ::ng-deep input[type='date'],
-.student-form ::ng-deep input[type='number'] {
-  font-size: 12.5px !important;
-  font-weight: 500 !important;
-}
+/* =====================================================
+   NUMBER INPUT
+   ===================================================== */
 
-.student-form ::ng-deep input[type='date']::-webkit-calendar-picker-indicator {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
-  opacity: .55;
-  cursor: pointer;
-}
-
-.student-form ::ng-deep input[type='number']::-webkit-inner-spin-button,
-.student-form ::ng-deep input[type='number']::-webkit-outer-spin-button {
+.student-form ::ng-deep input[type="number"]::-webkit-inner-spin-button,
+.student-form ::ng-deep input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
   -webkit-appearance: none;
 }
 
-.student-form ::ng-deep input[type='number'] {
+.student-form ::ng-deep input[type="number"] {
   appearance: textfield;
 }
 
-/* ERROR */
-.student-form ::ng-deep .mat-mdc-form-field.mat-form-field-invalid .mdc-notched-outline__leading,
-.student-form ::ng-deep .mat-mdc-form-field.mat-form-field-invalid .mdc-notched-outline__notch,
-.student-form ::ng-deep .mat-mdc-form-field.mat-form-field-invalid .mdc-notched-outline__trailing {
-  border-color: #dc3545;
+/* =====================================================
+   READONLY / DISABLED
+   ===================================================== */
+
+.student-form ::ng-deep input[readonly] {
+  color: #334155;
+  cursor: pointer;
+  background: transparent;
+}
+
+.student-form ::ng-deep .mat-mdc-form-field.mat-form-field-disabled {
+  opacity: 0.7;
+}
+
+/* =====================================================
+   VALIDATION ERRORS
+   ===================================================== */
+
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-form-field-invalid
+  .mdc-notched-outline__leading,
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-form-field-invalid
+  .mdc-notched-outline__notch,
+.student-form
+  ::ng-deep
+  .mat-mdc-form-field.mat-form-field-invalid
+  .mdc-notched-outline__trailing {
+  border-color: #dc2626;
 }
 
 .student-form ::ng-deep .mat-mdc-form-field-error {
-  padding-left: 2px;
-  color: #dc3545;
-  font-size: 10px !important;
-  line-height: 1.2;
+  color: #dc2626;
+  font-size: 11px;
+  line-height: 1.4;
 }
 
-/* READONLY */
-.student-form ::ng-deep input[readonly] {
-  color: #64748b;
-  background: #f8fafc;
-  cursor: not-allowed;
+.student-form ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  position: relative;
+  min-height: 18px;
+  overflow: visible;
 }
 
-/* DISABLED */
-.student-form ::ng-deep .mat-mdc-form-field.mat-form-field-disabled {
-  opacity: .72;
-}
+/* =====================================================
+   ACTION BAR
+   ===================================================== */
 
-/* RUPEE */
-.student-form ::ng-deep .mat-mdc-form-field-text-prefix {
-  padding-left: 10px;
-  color: #64748b;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* ACTION BAR */
-.actions {
+.student-form .actions {
   position: sticky;
   bottom: 0;
-  z-index: 10;
-  width: 100%;
-  min-height: 58px;
-  padding: 9px 14px;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
-  border: 1px solid #dfe5ed;
-  border-radius: 9px;
-  background: rgb(255 255 255 / 96%);
-  box-shadow: 0 -4px 14px rgb(15 23 42 / 6%);
+  gap: 10px;
+  width: 100%;
+  min-height: 62px;
+  padding: 10px 14px;
+  border: 1px solid #dce3ed;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 97%);
+  box-shadow: 0 -4px 16px rgb(15 23 42 / 6%);
   backdrop-filter: blur(10px);
 }
 
-/* BUTTONS */
-.actions button {
-  min-height: 36px;
-  padding: 0 14px;
+.student-form .actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 16px;
   border-radius: 7px;
   font-size: 12px;
   font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
 }
 
-.actions button mat-icon {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  line-height: 16px;
+.student-form .actions button mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
 }
 
-.actions button[mat-button] {
+.student-form .actions button[mat-button] {
   color: #475569;
 }
 
-.actions button[mat-button]:hover:not(:disabled) {
-  background: #f1f5f9;
-}
-
-.actions button[mat-raised-button] {
-  min-width: 135px;
+.student-form .actions button[mat-raised-button] {
+  min-width: 145px;
   box-shadow: 0 2px 6px rgb(37 99 235 / 18%);
 }
 
-.actions button[mat-raised-button]:hover:not(:disabled) {
-  box-shadow: 0 5px 12px rgb(37 99 235 / 24%);
+.student-form .actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
-.button-content {
+.student-form .button-content {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 7px;
 }
 
-/* TABLET */
-@media (max-width: 1200px) {
-  .student-form {
-    gap: 12px;
-  }
+/* =====================================================
+   TABLET
+   ===================================================== */
 
-  .form-grid {
+@media (max-width: 1200px) {
+  .form-grid,
+  .form-grid-4 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 12px;
   }
 
   .student-form mat-card-content {
-    padding: 14px 16px !important;
+    padding: 17px 16px 10px !important;
   }
 }
 
-/* SMALL TABLET */
 @media (max-width: 900px) {
-  .form-grid {
+  .form-grid,
+  .form-grid-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
   }
 
   .student-form {
-    gap: 11px;
+    gap: 12px;
   }
 
   .student-form mat-card-header {
@@ -414,19 +513,24 @@
   }
 
   .student-form mat-card-content {
-    padding: 13px !important;
+    padding: 15px 13px 9px !important;
   }
 }
 
-/* MOBILE */
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
 @media (max-width: 640px) {
   .student-form {
-    padding-bottom: 18px;
-    gap: 10px;
+    gap: 11px;
+    padding-bottom: 16px;
   }
 
-  .form-grid {
-    grid-template-columns: 1fr;
+  .form-grid,
+  .form-grid-4 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
   }
 
   .student-form > mat-card {
@@ -439,64 +543,45 @@
   }
 
   .student-form mat-card-title {
-    font-size: 12px;
-    gap: 7px;
+    gap: 8px;
+    font-size: 13px;
   }
 
   .student-form mat-card-content {
-    padding: 12px !important;
+    padding: 14px 12px 8px !important;
   }
 
-  .student-form mat-form-field {
-    margin-bottom: 4px;
-  }
-
-  .student-form ::ng-deep .mat-mdc-text-field-wrapper,
-  .student-form ::ng-deep .mat-mdc-form-field-flex,
-  .student-form ::ng-deep .mat-mdc-form-field-infix {
-    height: 52px !important;
-    min-height: 52px !important;
-  }
-
-  .actions {
+  .student-form .actions {
     position: static;
-    padding: 9px;
     flex-direction: column-reverse;
     align-items: stretch;
+    padding: 10px;
   }
 
-  .actions button,
-  .actions button[mat-raised-button] {
+  .student-form .actions button,
+  .student-form .actions button[mat-raised-button] {
     width: 100%;
     min-width: 0;
-    min-height: 40px;
+    min-height: 42px;
   }
 }
 
-/* SMALL MOBILE */
 @media (max-width: 380px) {
   .student-form mat-card-content {
-    padding: 11px 10px !important;
-  }
-
-  .student-form mat-card-header {
-    padding: 8px 11px;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
   }
 
   .student-form ::ng-deep .mat-mdc-form-field-icon-prefix {
-    padding-left: 7px !important;
-    padding-right: 5px !important;
-  }
-
-  .student-form ::ng-deep .mat-mdc-form-field-icon-prefix mat-icon {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
-    line-height: 16px;
+    padding-right: 6px !important;
+    padding-left: 8px !important;
   }
 }
 
-/* ACCESSIBILITY */
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .student-form *,
   .student-form *::before,

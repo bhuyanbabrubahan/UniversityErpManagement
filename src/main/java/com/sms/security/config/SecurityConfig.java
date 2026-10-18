@@ -568,6 +568,7 @@ public class SecurityConfig {
                 ).hasAnyRole(
                     "SUPER_ADMIN",
                     "ADMIN",
+                    "HOD",
                     "FACULTY"
                 )
 

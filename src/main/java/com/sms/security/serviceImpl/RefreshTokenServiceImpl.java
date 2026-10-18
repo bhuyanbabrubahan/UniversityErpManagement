@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sms.exception.BusinessException;
@@ -27,8 +28,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     private static final Logger log =
             LoggerFactory.getLogger(RefreshTokenServiceImpl.class);
 
-    // REFRESH TOKEN CONFIGURATION
-    private static final long REFRESH_TOKEN_DAYS = 7;
+    // Database-backed refresh token expiry follows the same property as JWT config.
+    @Value("${jwt.refresh-token-expiration:604800000}")
+    private long refreshTokenExpirationMillis;
 
     // CREATE REFRESH TOKEN
     @SuppressWarnings("null")
@@ -43,7 +45,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         RefreshToken refreshToken = RefreshToken.builder()
                 .token(UUID.randomUUID().toString())
                 .user(user)
-                .expiryDate(now.plusDays(REFRESH_TOKEN_DAYS))
+                .expiryDate(now.plusNanos(refreshTokenExpirationMillis * 1_000_000L))
                 .revoked(false)
                 .createdAt(now)
                 .updatedAt(now)

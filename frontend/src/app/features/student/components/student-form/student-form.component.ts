@@ -3,6 +3,9 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 import { MATERIAL_MODULES } from "../../../../shared/material/material";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
+
 import { LocationSelectorComponent } from "../../../location/components/location-selector/location-selector.component";
 import { Gender } from "../../../../shared/enums/gender.enum";
 import { StudentCategory } from "../../../../shared/enums/student-category.enum";
@@ -20,6 +23,8 @@ import { Qualification } from "../../../../shared/enums/qualification.enum";
     CommonModule,
     ReactiveFormsModule,
     ...MATERIAL_MODULES,
+    MatDatepickerModule,
+    MatNativeDateModule,
     LocationSelectorComponent,
   ],
   templateUrl: "./student-form.component.html",
@@ -60,7 +65,6 @@ export class StudentFormComponent {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-
       return;
     }
 

@@ -1,0 +1,137 @@
+/* =====================================================
+   ADD STUDENT PAGE
+   ===================================================== */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.student-page-container {
+  width: 100%;
+  max-width: 1800px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 18px 20px 24px;
+}
+
+/* PAGE HEADER */
+
+.student-page-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+  border: 1px solid #e0e7f0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+
+.student-page-header-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #dbe7ff;
+  border-radius: 11px;
+  background: #edf4ff;
+  color: #2563eb;
+}
+
+.student-page-header-icon mat-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.student-page-header-content {
+  min-width: 0;
+}
+
+.student-page-header-content h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.student-page-header-content p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* FORM WRAPPER */
+
+.student-form-wrapper {
+  width: 100%;
+  min-width: 0;
+  margin: 0 auto;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .student-page-container {
+    padding: 14px;
+  }
+
+  .student-page-header {
+    margin-bottom: 14px;
+    padding: 14px;
+  }
+
+  .student-page-header-content h1 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 640px) {
+  .student-page-container {
+    padding: 10px 8px 16px;
+  }
+
+  .student-page-header {
+    align-items: flex-start;
+    gap: 11px;
+    padding: 12px;
+    border-radius: 9px;
+  }
+
+  .student-page-header-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+  }
+
+  .student-page-header-icon mat-icon {
+    width: 21px;
+    height: 21px;
+    font-size: 21px;
+    line-height: 21px;
+  }
+
+  .student-page-header-content h1 {
+    font-size: 17px;
+  }
+
+  .student-page-header-content p {
+    font-size: 12px;
+  }
+}

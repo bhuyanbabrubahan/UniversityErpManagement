@@ -14,6 +14,8 @@ import com.sms.erp.notification.mapper.NotificationMapper;
 import com.sms.erp.notification.repository.NotificationRepository;
 import com.sms.erp.notification.service.NotificationService;
 import com.sms.erp.notification.specification.NotificationSpecification;
+import com.sms.security.util.SecurityUtils;
+import com.sms.exception.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,12 +33,15 @@ public class NotificationServiceImpl implements NotificationService {
             int page,
             int size) {
 
+        PageRequest pageable = PageRequest.of(
+                Math.max(0, page), Math.max(1, Math.min(size, 100)),
+                Sort.by("id").descending());
+        if (isAdministrator()) {
+            return repository.findAll(pageable).map(mapper::toResponse);
+        }
         return repository.findAll(
-                PageRequest.of(
-                        page,
-                        size,
-                        Sort.by("id").descending()
-                )
+                NotificationSpecification.visibleToRole(SecurityUtils.getCurrentRole()),
+                pageable
         ).map(mapper::toResponse);
     }
 
@@ -47,13 +52,18 @@ public class NotificationServiceImpl implements NotificationService {
             int page,
             int size) {
 
+        PageRequest pageable = PageRequest.of(
+                Math.max(0, page), Math.max(1, Math.min(size, 100)),
+                Sort.by("id").descending());
+        if (isAdministrator()) {
+            return repository.findAll(
+                    NotificationSpecification.bySearch(search), pageable)
+                    .map(mapper::toResponse);
+        }
         return repository.findAll(
-                NotificationSpecification.bySearch(search),
-                PageRequest.of(
-                        page,
-                        size,
-                        Sort.by("id").descending()
-                )
+                NotificationSpecification.bySearch(search)
+                        .and(NotificationSpecification.visibleToRole(SecurityUtils.getCurrentRole())),
+                pageable
         ).map(mapper::toResponse);
     }
 
@@ -63,11 +73,11 @@ public class NotificationServiceImpl implements NotificationService {
 
         Notification notification = repository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Notification not found: " + id
-                        )
-                );
+                        new ResourceNotFoundException("Notification not found: " + id));
 
+        if (!isAdministrator() && !isVisibleToCurrentRole(notification)) {
+            throw new ResourceNotFoundException("Notification not found: " + id);
+        }
         return mapper.toResponse(notification);
     }
 
@@ -112,4 +122,26 @@ public class NotificationServiceImpl implements NotificationService {
 
         repository.deleteById(id);
     }
+
+    private boolean isAdministrator() {
+        String role = SecurityUtils.getCurrentRole();
+        return "SUPER_ADMIN".equals(role) || "ADMIN".equals(role)
+                || "REGISTRAR".equals(role);
+    }
+
+    private boolean isVisibleToCurrentRole(Notification notification) {
+        String role = SecurityUtils.getCurrentRole();
+        String targetRole = notification.getTargetRole();
+        boolean targetMatches = targetRole == null || targetRole.isBlank()
+                || "ALL".equalsIgnoreCase(targetRole)
+                || (role != null && role.equalsIgnoreCase(targetRole));
+        String status = notification.getStatus();
+        boolean published = status != null
+                && ("PUBLISHED".equalsIgnoreCase(status)
+                    || "ACTIVE".equalsIgnoreCase(status));
+        boolean timeReached = notification.getPublishedAt() == null
+                || !notification.getPublishedAt().isAfter(java.time.LocalDateTime.now());
+        return targetMatches && published && timeReached;
+    }
+
 }

@@ -1,40 +1,35 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  inject
-} from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+  inject,
+} from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 
-import { ToastService } from '@app/shared/services/toast.service';
-import { AttendanceStatus } from '@app/shared/enums/attendance-status.enum';
+import { ToastService } from "@app/shared/services/toast.service";
+import { AttendanceStatus } from "@app/shared/enums/attendance-status.enum";
 
-import { AttendanceService } from '../../services/attendance.service';
-import { AttendanceRecord } from '../../models/attendance.model';
+import { AttendanceService } from "../../services/attendance.service";
+import { AttendanceRecord } from "../../models/attendance.model";
 
 @Component({
-  selector: 'app-attendance-report',
+  selector: "app-attendance-report",
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule
-  ],
-  templateUrl: './attendance-report.component.html',
-  styleUrl: './attendance-report.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [CommonModule, RouterModule, FormsModule],
+  templateUrl: "./attendance-report.component.html",
+  styleUrl: "./attendance-report.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AttendanceReportComponent {
-
   private readonly service = inject(AttendanceService);
   private readonly toast = inject(ToastService);
   private readonly cdr = inject(ChangeDetectorRef);
 
   records: AttendanceRecord[] = [];
 
-  date = '';
+  date = "";
 
   loading = false;
   hasGenerated = false;
@@ -70,11 +65,9 @@ export class AttendanceReportComponent {
   // ============================================================
 
   run(): void {
-
     this.pageIndex = 0;
 
     this.loadReport();
-
   }
 
   // ============================================================
@@ -82,69 +75,61 @@ export class AttendanceReportComponent {
   // ============================================================
 
   private loadReport(): void {
-
     this.loading = true;
 
     this.hasGenerated = false;
 
     this.cdr.markForCheck();
 
-    this.service.search(
-      {
-        attendanceDate: this.date || null
-      },
-      this.pageIndex,
-      this.pageSize,
-      'attendanceDate',
-      'desc'
-    ).subscribe({
+    this.service
+      .search(
+        {
+          attendanceDate: this.date || null,
+        },
+        this.pageIndex,
+        this.pageSize,
+        "attendanceDate",
+        "desc",
+      )
+      .subscribe({
+        next: (page) => {
+          this.records = page?.content ?? [];
 
-      next: page => {
+          this.totalElements = page?.totalElements ?? 0;
 
-        this.records = page?.content ?? [];
+          this.totalPages = page?.totalPages ?? 0;
 
-        this.totalElements = page?.totalElements ?? 0;
+          this.calculateSummary();
 
-        this.totalPages = page?.totalPages ?? 0;
+          this.loading = false;
 
-        this.calculateSummary();
+          this.hasGenerated = true;
 
-        this.loading = false;
+          this.cdr.markForCheck();
+        },
 
-        this.hasGenerated = true;
+        error: (error) => {
+          console.error("[AttendanceReport] Load error:", error);
 
-        this.cdr.markForCheck();
-      },
+          this.records = [];
 
-      error: error => {
+          this.resetSummary();
 
-        console.error(
-          '[AttendanceReport] Load error:',
-          error
-        );
+          this.totalElements = 0;
 
-        this.records = [];
+          this.totalPages = 0;
 
-        this.resetSummary();
+          this.loading = false;
 
-        this.totalElements = 0;
+          this.hasGenerated = true;
 
-        this.totalPages = 0;
+          this.toast.error(
+            error?.error?.message ?? "Unable to generate attendance report.",
+          );
 
-        this.loading = false;
-
-        this.hasGenerated = true;
-
-        this.toast.error(
-          error?.error?.message ??
-          'Unable to generate attendance report.'
-        );
-
-        this.cdr.markForCheck();
-      }
-
-    });
-
+          this.cdr.markForCheck();
+        },
+      });
   }
 
   // ============================================================
@@ -152,11 +137,9 @@ export class AttendanceReportComponent {
   // ============================================================
 
   changePageSize(): void {
-
     this.pageIndex = 0;
 
     this.loadReport();
-
   }
 
   // ============================================================
@@ -164,18 +147,13 @@ export class AttendanceReportComponent {
   // ============================================================
 
   previousPage(): void {
-
-    if (
-      this.loading ||
-      this.pageIndex <= 0
-    ) {
+    if (this.loading || this.pageIndex <= 0) {
       return;
     }
 
     this.pageIndex--;
 
     this.loadReport();
-
   }
 
   // ============================================================
@@ -183,18 +161,13 @@ export class AttendanceReportComponent {
   // ============================================================
 
   nextPage(): void {
-
-    if (
-      this.loading ||
-      this.pageIndex >= this.totalPages - 1
-    ) {
+    if (this.loading || this.pageIndex >= this.totalPages - 1) {
       return;
     }
 
     this.pageIndex++;
 
     this.loadReport();
-
   }
 
   // ============================================================
@@ -202,11 +175,7 @@ export class AttendanceReportComponent {
   // ============================================================
 
   get currentPage(): number {
-
-    return this.totalPages > 0
-      ? this.pageIndex + 1
-      : 0;
-
+    return this.totalPages > 0 ? this.pageIndex + 1 : 0;
   }
 
   // ============================================================
@@ -214,56 +183,34 @@ export class AttendanceReportComponent {
   // ============================================================
 
   private calculateSummary(): void {
-
     this.total = this.totalElements;
 
     this.present = this.records.filter(
-      record =>
-        this.statusValue(
-          record.attendanceStatus
-        ) === 'PRESENT'
+      (record) => this.statusValue(record.attendanceStatus) === "PRESENT",
     ).length;
 
     this.absent = this.records.filter(
-      record =>
-        this.statusValue(
-          record.attendanceStatus
-        ) === 'ABSENT'
+      (record) => this.statusValue(record.attendanceStatus) === "ABSENT",
     ).length;
 
     this.leave = this.records.filter(
-      record =>
-        this.statusValue(
-          record.attendanceStatus
-        ) === 'LEAVE'
+      (record) => this.statusValue(record.attendanceStatus) === "LEAVE",
     ).length;
 
     this.halfDay = this.records.filter(
-      record =>
-        this.statusValue(
-          record.attendanceStatus
-        ) === 'HALF_DAY'
+      (record) => this.statusValue(record.attendanceStatus) === "HALF_DAY",
     ).length;
-
   }
 
   // ============================================================
   // NORMALIZE STATUS
   // ============================================================
 
-  statusValue(
-    status:
-      AttendanceStatus |
-      string |
-      null |
-      undefined
-  ): string {
-
-    return String(status ?? '')
+  statusValue(status: AttendanceStatus | string | null | undefined): string {
+    return String(status ?? "")
       .trim()
       .toUpperCase()
-      .replace(/[\s-]+/g, '_');
-
+      .replace(/[\s-]+/g, "_");
   }
 
   // ============================================================
@@ -271,13 +218,11 @@ export class AttendanceReportComponent {
   // ============================================================
 
   private resetSummary(): void {
-
     this.total = 0;
     this.present = 0;
     this.absent = 0;
     this.leave = 0;
     this.halfDay = 0;
-
   }
 
   // ============================================================
@@ -285,8 +230,7 @@ export class AttendanceReportComponent {
   // ============================================================
 
   clear(): void {
-
-    this.date = '';
+    this.date = "";
 
     this.records = [];
 
@@ -301,7 +245,5 @@ export class AttendanceReportComponent {
     this.hasGenerated = false;
 
     this.cdr.markForCheck();
-
   }
-
 }

@@ -72,7 +72,16 @@ export const routes: Routes = [
         path: "students",
 
         canActivate: [
-          roleGuard([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.HOD, ROLES.FACULTY, ROLES.DEAN, ROLES.REGISTRAR, ROLES.EXAM_CONTROLLER, ROLES.ADMISSION_OFFICER]),
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.DEAN,
+            ROLES.REGISTRAR,
+            ROLES.EXAM_CONTROLLER,
+            ROLES.ADMISSION_OFFICER,
+          ]),
         ],
 
         loadChildren: () =>
@@ -122,7 +131,17 @@ export const routes: Routes = [
         path: "course",
 
         canActivate: [
-          roleGuard([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.VC, ROLES.REGISTRAR, ROLES.PRINCIPAL, ROLES.DEAN, ROLES.HOD, ROLES.FACULTY, ROLES.STUDENT]),
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.VC,
+            ROLES.REGISTRAR,
+            ROLES.PRINCIPAL,
+            ROLES.DEAN,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.STUDENT,
+          ]),
         ],
 
         loadChildren: () =>
@@ -140,7 +159,17 @@ export const routes: Routes = [
         path: "semester",
 
         canActivate: [
-          roleGuard([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.VC, ROLES.REGISTRAR, ROLES.PRINCIPAL, ROLES.DEAN, ROLES.HOD, ROLES.FACULTY, ROLES.STUDENT]),
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.VC,
+            ROLES.REGISTRAR,
+            ROLES.PRINCIPAL,
+            ROLES.DEAN,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.STUDENT,
+          ]),
         ],
 
         loadChildren: () =>
@@ -194,7 +223,13 @@ export const routes: Routes = [
         path: "student-documents",
 
         canActivate: [
-          roleGuard([ROLES.SUPER_ADMIN,ROLES.ADMIN,ROLES.HOD,ROLES.FACULTY,ROLES.STUDENT]),
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.STUDENT,
+          ]),
         ],
 
         loadChildren: () =>
@@ -211,7 +246,13 @@ export const routes: Routes = [
         path: "examination",
 
         canActivate: [
-          roleGuard([ROLES.SUPER_ADMIN,ROLES.ADMIN,ROLES.HOD,ROLES.FACULTY,ROLES.STUDENT]),
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.STUDENT,
+          ]),
         ],
 
         loadComponent: () =>
@@ -244,9 +285,22 @@ export const routes: Routes = [
       {
         path: "reports",
 
-        canActivate: [roleGuard([ROLES.SUPER_ADMIN,ROLES.ADMIN,ROLES.VC,ROLES.REGISTRAR,ROLES.PRINCIPAL,ROLES.DEAN,ROLES.HOD,ROLES.FACULTY,ROLES.ACCOUNTANT,ROLES.EXAM_CONTROLLER,ROLES.LIBRARIAN,ROLES.HR])],
-
-        
+        canActivate: [
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.VC,
+            ROLES.REGISTRAR,
+            ROLES.PRINCIPAL,
+            ROLES.DEAN,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.ACCOUNTANT,
+            ROLES.EXAM_CONTROLLER,
+            ROLES.LIBRARIAN,
+            ROLES.HR,
+          ]),
+        ],
 
         loadComponent: () =>
           import("./features/workspace/pages/reports/reports.component").then(
@@ -276,9 +330,7 @@ export const routes: Routes = [
       {
         path: "notifications",
 
-        canActivate: [
-          roleGuard(Object.values(ROLES)),
-        ],
+        canActivate: [roleGuard(Object.values(ROLES))],
 
         loadChildren: () =>
           import("./features/notification/notification.routes").then(
@@ -398,7 +450,14 @@ export const routes: Routes = [
         path: "marks",
 
         canActivate: [
-          roleGuard([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.EXAM_CONTROLLER, ROLES.HOD, ROLES.FACULTY, ROLES.STUDENT]),
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.EXAM_CONTROLLER,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.STUDENT,
+          ]),
         ],
 
         loadChildren: () =>
@@ -434,7 +493,9 @@ export const routes: Routes = [
 
       {
         path: "refund",
-        canActivate: [roleGuard([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.ACCOUNTANT])],
+        canActivate: [
+          roleGuard([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.ACCOUNTANT]),
+        ],
         loadComponent: () =>
           import("./features/workspace/pages/refund/refund.component").then(
             (m) => m.RefundComponent,
@@ -583,17 +644,7 @@ export const routes: Routes = [
       {
         path: "notification",
 
-        canActivate: [
-          roleGuard([
-            ROLES.SUPER_ADMIN,
-            ROLES.ADMIN,
-            ROLES.FACULTY,
-            ROLES.STAFF,
-            ROLES.STUDENT,
-            ROLES.PARENT,
-            ROLES.ALUMNI,
-          ]),
-        ],
+        canActivate: [roleGuard(Object.values(ROLES))],
 
         loadChildren: () =>
           import("./features/notification/notification.routes").then(
@@ -628,9 +679,7 @@ export const routes: Routes = [
       {
         path: "grievance",
 
-        canActivate: [
-          roleGuard(Object.values(ROLES)),
-        ],
+        canActivate: [roleGuard(Object.values(ROLES))],
 
         loadChildren: () =>
           import("./features/grievance/grievance.routes").then(
@@ -646,7 +695,14 @@ export const routes: Routes = [
       {
         path: "admission",
 
-        canActivate: [roleGuard([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.REGISTRAR, ROLES.ADMISSION_OFFICER])],
+        canActivate: [
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.REGISTRAR,
+            ROLES.ADMISSION_OFFICER,
+          ]),
+        ],
 
         loadChildren: () =>
           import("./features/admission/admission.routes").then(
@@ -662,7 +718,13 @@ export const routes: Routes = [
         path: "attendance",
 
         canActivate: [
-          roleGuard([ROLES.SUPER_ADMIN,ROLES.ADMIN,ROLES.HOD,ROLES.FACULTY,ROLES.STUDENT]),
+          roleGuard([
+            ROLES.SUPER_ADMIN,
+            ROLES.ADMIN,
+            ROLES.HOD,
+            ROLES.FACULTY,
+            ROLES.STUDENT,
+          ]),
         ],
 
         loadChildren: () =>

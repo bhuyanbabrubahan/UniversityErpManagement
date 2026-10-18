@@ -762,14 +762,268 @@ html[data-theme="classic"] {
   --erp-sidebar: #252a31;
   --erp-sidebar-2: #303640;
 }
-html[data-font-scale="small"] body{font-size:12px!important}
-html[data-font-scale="normal"] body{font-size:13px!important}
-html[data-font-scale="large"] body{font-size:15px!important}
-body{line-height:1.35}
-.mat-mdc-button,.mat-mdc-outlined-button,.mat-mdc-unelevated-button,.mat-mdc-raised-button{min-height:34px!important;height:34px!important;padding:0 12px!important;font-size:12px!important;border-radius:7px!important}
-.mat-mdc-icon-button{width:34px!important;height:34px!important;padding:5px!important}
-.mat-icon{font-size:19px!important;width:19px!important;height:19px!important}
-.mat-mdc-form-field{font-size:12px!important}.mat-mdc-text-field-wrapper{min-height:40px!important}.mat-mdc-form-field-infix{min-height:40px!important;padding-top:9px!important;padding-bottom:7px!important}
-.mat-mdc-table{font-size:12px!important}.mat-mdc-header-cell{font-size:11px!important;font-weight:700!important}.mat-mdc-cell,.mat-mdc-header-cell{padding:0 9px!important}.mat-mdc-row{height:40px!important}.mat-mdc-paginator{font-size:11px!important;min-height:48px!important}
-.mat-mdc-card{border-radius:8px!important}.mat-mdc-card-content{padding:12px!important}
-.erp-page,.dashboard-page,.workspace-page{max-width:100%;padding:0!important}.page-header{min-height:52px!important;margin-bottom:10px!important}.page-header h1,.workspace-header h1{font-size:19px!important;margin:0 0 2px!important}.page-header p,.workspace-header p{font-size:11px!important;margin:0!important}
+html[data-font-scale="small"] body {
+  font-size: 12px !important;
+}
+html[data-font-scale="normal"] body {
+  font-size: 13px !important;
+}
+html[data-font-scale="large"] body {
+  font-size: 15px !important;
+}
+body {
+  line-height: 1.35;
+}
+.mat-mdc-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button {
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  font-size: 12px !important;
+  border-radius: 7px !important;
+}
+.mat-mdc-icon-button {
+  width: 34px !important;
+  height: 34px !important;
+  padding: 5px !important;
+}
+.mat-icon {
+  font-size: 19px !important;
+  width: 19px !important;
+  height: 19px !important;
+}
+.mat-mdc-form-field {
+  font-size: 12px !important;
+}
+.mat-mdc-text-field-wrapper {
+  min-height: 40px !important;
+}
+.mat-mdc-form-field-infix {
+  min-height: 40px !important;
+  padding-top: 9px !important;
+  padding-bottom: 7px !important;
+}
+.mat-mdc-table {
+  font-size: 12px !important;
+}
+.mat-mdc-header-cell {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  padding: 0 9px !important;
+}
+.mat-mdc-row {
+  height: 40px !important;
+}
+.mat-mdc-paginator {
+  font-size: 11px !important;
+  min-height: 48px !important;
+}
+.mat-mdc-card {
+  border-radius: 8px !important;
+}
+.mat-mdc-card-content {
+  padding: 12px !important;
+}
+.erp-page,
+.dashboard-page,
+.workspace-page {
+  max-width: 100%;
+  padding: 0 !important;
+}
+.page-header {
+  min-height: 52px !important;
+  margin-bottom: 10px !important;
+}
+.page-header h1,
+.workspace-header h1 {
+  font-size: 19px !important;
+  margin: 0 0 2px !important;
+}
+.page-header p,
+.workspace-header p {
+  font-size: 11px !important;
+  margin: 0 !important;
+}
+
+/* =====================================================
+   STUDENT FORM - GLOBAL STYLE CONFLICT FIX
+   Add at the VERY END of src/styles.scss
+   ===================================================== */
+
+/* Restore the intended field height */
+.student-form .mat-mdc-text-field-wrapper {
+  min-height: 56px !important;
+  height: auto !important;
+}
+
+.student-form .mat-mdc-form-field-flex {
+  min-height: 56px !important;
+  height: auto !important;
+  align-items: center !important;
+}
+
+.student-form .mat-mdc-form-field-infix {
+  min-height: 56px !important;
+  height: auto !important;
+  padding-top: 17px !important;
+  padding-bottom: 9px !important;
+}
+
+/* Prevent global input styles from changing Material inputs */
+.student-form input.mat-mdc-input-element,
+.student-form textarea.mat-mdc-input-element {
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Keep card content spacing consistent */
+.student-form > .mat-mdc-card > .mat-mdc-card-content {
+  padding: 20px 18px 12px !important;
+}
+
+/* Datepicker overlay: keep the calendar properly sized */
+.student-datepicker-panel .mat-calendar {
+  width: 296px;
+  max-width: calc(100vw - 32px);
+  background: #fff;
+}
+
+.student-datepicker-panel .mat-calendar-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+@media (max-width: 640px) {
+  .student-form .mat-mdc-text-field-wrapper,
+  .student-form .mat-mdc-form-field-flex,
+  .student-form .mat-mdc-form-field-infix {
+    min-height: 52px !important;
+  }
+
+  .student-form > .mat-mdc-card > .mat-mdc-card-content {
+    padding: 14px 12px 8px !important;
+  }
+}
+/* ===================================================== ERP CALENDAR THEME — BLUE + GREEN Add at the END of global style.scss ===================================================== */
+
+/* Calendar popup / datepicker panel */
+.mat-datepicker-content {
+  background: var(--erp-surface, #ffffff) !important;
+  border: 1px solid var(--erp-border, #dbe2ea) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 12px 30px rgb(15 23 42 / 14%) !important;
+}
+
+/* Calendar body */
+.mat-calendar {
+  background: var(--erp-surface, #ffffff) !important;
+  color: var(--erp-text, #172033) !important;
+}
+
+/* Calendar header — blue */
+.mat-calendar-header {
+  background: #1d4ed8 !important;
+  color: #ffffff !important;
+  padding-top: 12px !important;
+}
+
+.mat-calendar-controls {
+  margin-top: 0 !important;
+  color: #ffffff !important;
+}
+
+/* Month and year label */
+.mat-calendar-period-button {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* Previous / next month buttons */
+.mat-calendar-previous-button,
+.mat-calendar-next-button {
+  color: #ffffff !important;
+}
+
+/* Weekday labels */
+.mat-calendar-table-header th {
+  color: #0f766e !important;
+  font-weight: 700 !important;
+}
+
+/* Calendar dates */
+.mat-calendar-body-cell-content {
+  color: var(--erp-text, #172033) !important;
+  border-radius: 8px !important;
+  border-color: transparent !important;
+}
+
+/* Hover and keyboard focus — light blue */
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover
+  .mat-calendar-body-cell-content,
+.mat-calendar-body-cell.cdk-keyboard-focused .mat-calendar-body-cell-content {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+}
+
+/* Selected date — green */
+.mat-calendar-body-selected {
+  background: #16a34a !important;
+  color: #ffffff !important;
+  border-color: #16a34a !important;
+  font-weight: 700 !important;
+}
+
+/* Today's date — blue outline */
+.mat-calendar-body-today:not(.mat-calendar-body-selected)
+  .mat-calendar-body-cell-content {
+  border: 2px solid #2563eb !important;
+  font-weight: 700 !important;
+}
+
+/* Date range selection */
+.mat-calendar-body-in-range::before {
+  background: #dcfce7 !important;
+}
+
+/* Date range start and end */
+.mat-calendar-body-range-start,
+.mat-calendar-body-range-end {
+  background: #16a34a !important;
+  color: #ffffff !important;
+}
+
+/* Disabled dates */
+.mat-calendar-body-disabled .mat-calendar-body-cell-content {
+  color: #a1aab8 !important;
+  opacity: 0.55;
+}
+
+/* Calendar action buttons */
+.mat-datepicker-actions button {
+  color: #1d4ed8 !important;
+  font-weight: 600 !important;
+}
+
+/* Dark theme support */
+html[data-theme="dark-classic"] .mat-datepicker-content,
+html[data-theme="dark-classic"] .mat-calendar {
+  background: var(--erp-surface) !important;
+  color: var(--erp-text) !important;
+}
+
+html[data-theme="dark-classic"] .mat-calendar-body-cell-content {
+  color: var(--erp-text) !important;
+}
+
+html[data-theme="dark-classic"] .mat-calendar-table-header th {
+  color: #34d399 !important;
+}

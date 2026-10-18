@@ -1,22 +1,20 @@
 package com.sms.audit.controller;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 
 import com.sms.audit.dto.AuditLogResponseDto;
 import com.sms.audit.dto.AuditLogSearchRequestDto;
@@ -24,178 +22,121 @@ import com.sms.audit.service.AuditLogService;
 import com.sms.payload.ApiResponseDto;
 import com.sms.util.ResponseBuilder;
 
-
-
 @RestController
 @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
 @RequestMapping("/api/audit-logs")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(
-        name = "Audit Log Management",
-        description = "APIs for tracking system activities"
-)
+@Tag(name = "Audit Log Management", description = "APIs for tracking system activities")
 public class AuditLogController {
 
+	private final AuditLogService auditLogService;
 
-    private final AuditLogService auditLogService;
+	// =====================================
+	// GET BY ID
+	// =====================================
 
+	@GetMapping("/{id}")
+	@Operation(summary = "Get audit log by id")
+	public ResponseEntity<ApiResponseDto<AuditLogResponseDto>> getById(
 
+			@Parameter(description = "Audit Log ID") @PathVariable Long id
 
-    // =====================================
-    // GET BY ID
-    // =====================================
+	) {
 
-    @GetMapping("/{id}")
-    @Operation(
-            summary = "Get audit log by id"
-    )
-    public ResponseEntity<ApiResponseDto<AuditLogResponseDto>> getById(
+		log.info("Fetching audit log with id : {}", id);
 
-            @Parameter(
-                    description = "Audit Log ID"
-            )
-            @PathVariable Long id
+		AuditLogResponseDto response = auditLogService.getAuditLogById(id);
 
-    ){
+		return ResponseBuilder.success(response, "Audit log fetched successfully", HttpStatus.OK);
 
+	}
 
-        log.info(
-                "Fetching audit log with id : {}",
-                id
-        );
+	// =====================================
+	// GET ALL
+	// =====================================
 
+	@GetMapping
+	@Operation(summary = "Get all audit logs")
+	public ResponseEntity<ApiResponseDto<Page<AuditLogResponseDto>>> getAll(
 
-        AuditLogResponseDto response =
-                auditLogService.getAuditLogById(id);
+			Pageable pageable
 
+	) {
 
+		log.info("Fetching all audit logs");
 
-        return ResponseBuilder.success(
-                response,
-                "Audit log fetched successfully",
-                HttpStatus.OK
-        );
+		Page<AuditLogResponseDto> response = auditLogService.getAllAuditLogs(normalizePageable(pageable));
 
-    }
+		return ResponseBuilder.success(response, "Audit logs fetched successfully", HttpStatus.OK);
 
+	}
 
+	// =====================================
+	// SEARCH
+	// =====================================
 
+	@PostMapping("/search")
+	@Operation(summary = "Search audit logs dynamically")
+	public ResponseEntity<ApiResponseDto<Page<AuditLogResponseDto>>> search(
 
+			@RequestBody AuditLogSearchRequestDto request,
 
-    // =====================================
-    // GET ALL
-    // =====================================
+			Pageable pageable
 
+	) {
 
-    @GetMapping
-    @Operation(
-            summary = "Get all audit logs"
-    )
-    public ResponseEntity<ApiResponseDto<Page<AuditLogResponseDto>>> getAll(
+		log.info("Searching audit logs");
 
-            Pageable pageable
+		Page<AuditLogResponseDto> response = auditLogService.searchAuditLogs(request, normalizePageable(pageable));
 
-    ){
+		return ResponseBuilder.success(response, "Audit logs search completed", HttpStatus.OK);
 
+	}
 
-        log.info(
-                "Fetching all audit logs"
-        );
+	// =====================================
+	// COUNT
+	// =====================================
 
+	@GetMapping("/count")
+	@Operation(summary = "Count active audit logs")
+	public ResponseEntity<ApiResponseDto<Long>> count() {
 
-        Page<AuditLogResponseDto> response =
-                auditLogService.getAllAuditLogs(pageable);
+		log.info("Counting audit logs");
 
+		long count = auditLogService.countAuditLogs();
 
+		return ResponseBuilder.success(count, "Audit log count fetched", HttpStatus.OK);
 
-        return ResponseBuilder.success(
-                response,
-                "Audit logs fetched successfully",
-                HttpStatus.OK
-        );
+	}
 
-    }
+	/**
+	 * Public UI historically requests createdAt, but AuditLog's real JPA property
+	 * is timestamp. Translate aliases and whitelist sortable fields so malformed
+	 * client sort values cannot produce a Hibernate 500.
+	 */
+	private Pageable normalizePageable(Pageable pageable) {
+		int page = Math.max(0, pageable.getPageNumber());
+		int size = Math.max(1, Math.min(pageable.getPageSize(), 200));
 
-
-
-
-
-    // =====================================
-    // SEARCH
-    // =====================================
-
-
-    @PostMapping("/search")
-    @Operation(
-            summary = "Search audit logs dynamically"
-    )
-    public ResponseEntity<ApiResponseDto<Page<AuditLogResponseDto>>> search(
-
-
-            @RequestBody AuditLogSearchRequestDto request,
-
-            Pageable pageable
-
-    ){
-
-
-        log.info(
-                "Searching audit logs"
-        );
-
-
-
-        Page<AuditLogResponseDto> response =
-                auditLogService.searchAuditLogs(
-                        request,
-                        pageable
-                );
-
-
-
-        return ResponseBuilder.success(
-                response,
-                "Audit logs search completed",
-                HttpStatus.OK
-        );
-
-    }
-
-
-
-
-
-    // =====================================
-    // COUNT
-    // =====================================
-
-
-    @GetMapping("/count")
-    @Operation(
-            summary = "Count active audit logs"
-    )
-    public ResponseEntity<ApiResponseDto<Long>> count(){
-
-
-        log.info(
-                "Counting audit logs"
-        );
-
-
-        long count =
-                auditLogService.countAuditLogs();
-
-
-
-        return ResponseBuilder.success(
-                count,
-                "Audit log count fetched",
-                HttpStatus.OK
-        );
-
-    }
-
-
+		Sort sort = Sort.by(Sort.Order.desc("timestamp"));
+		if (pageable.getSort().isSorted()) {
+			java.util.List<Sort.Order> orders = new java.util.ArrayList<>();
+			pageable.getSort().forEach(order -> {
+				String property = order.getProperty();
+				if ("createdAt".equals(property) || "createdDate".equals(property)) {
+					property = "timestamp";
+				}
+				if (java.util.Set.of("id", "timestamp", "action", "moduleName", "performedBy", "role", "status")
+						.contains(property)) {
+					orders.add(new Sort.Order(order.getDirection(), property));
+				}
+			});
+			if (!orders.isEmpty()) {
+				sort = Sort.by(orders);
+			}
+		}
+		return PageRequest.of(page, size, sort);
+	}
 
 }

@@ -3,6 +3,7 @@ package com.sms.specification;
 import java.time.LocalDate;
 
 import org.springframework.data.jpa.domain.Specification;
+import jakarta.persistence.criteria.JoinType;
 
 import com.sms.entity.Attendance;
 import com.sms.enums.AttendanceSessionStatus;
@@ -12,6 +13,20 @@ import com.sms.enums.RecordStatus;
 public final class AttendanceSpecification {
 
     private AttendanceSpecification() {
+    }
+
+
+    /**
+     * Excludes legacy attendance rows whose student_id points to a missing
+     * students row. Such orphaned rows otherwise fail later when the mapper
+     * dereferences the lazy Student proxy (EntityNotFoundException).
+     * This is a safe read-path guard; it does not delete or rewrite data.
+     */
+    public static Specification<Attendance> hasExistingStudent() {
+        return (root, query, cb) -> {
+            root.join("student", JoinType.INNER);
+            return cb.conjunction();
+        };
     }
 
     public static Specification<Attendance> hasSession(Long sessionId) {
