@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,7 @@ import com.sms.util.ResponseBuilder;
 
 
 @RestController
+@PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
 @RequestMapping("/api/audit-logs")
 @RequiredArgsConstructor
 @Slf4j

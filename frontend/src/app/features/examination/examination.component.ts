@@ -1,16 +1,249 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthService } from '../auth/services/auth.service';
-import { Role } from '../../shared/enums/role.enum';
-@Component({selector:'app-examination-workspace',standalone:true,imports:[CommonModule,FormsModule,MatButtonModule,MatCardModule,MatIconModule,MatSnackBarModule],template:`
-<section class="workspace-page"><header class="workspace-header"><div><span class="eyebrow">ACADEMICS</span><h1>Examination & Results</h1><p>{{isStudent?'View your examination schedule and results.':'Schedule exams and mark student results with server-side validation.'}}</p></div><button mat-stroked-button (click)="load()"><mat-icon>refresh</mat-icon>Refresh</button></header>
-<div class="exam-grid"><mat-card><mat-card-content><div class="section-title"><div><span class="eyebrow">EXAM SCHEDULE</span><h2>Upcoming / active exams</h2></div></div><div class="table-wrap"><table><thead><tr><th>Exam</th><th>Subject</th><th>Semester</th><th>Date</th><th>Time</th><th>Marks</th></tr></thead><tbody>@for(e of exams;track e.id){<tr><td>{{e.examName}}</td><td>{{e.subjectName}}</td><td>{{e.semesterName}}</td><td>{{e.examDate}}</td><td>{{e.startTime}} - {{e.endTime}}</td><td>{{e.maximumMarks}}</td></tr>}@empty{<tr><td colspan="6" class="empty">No exams available.</td></tr>}</tbody></table></div></mat-card-content></mat-card>
-@if(!isStudent){<mat-card><mat-card-content><div class="section-title"><div><span class="eyebrow">RESULT ENTRY</span><h2>Mark Result</h2></div><mat-icon>grading</mat-icon></div><div class="result-form"><input type="number" placeholder="Student ID" [(ngModel)]="form.studentId"><select [(ngModel)]="form.examId"><option [ngValue]="null">Select exam</option>@for(e of exams;track e.id){<option [ngValue]="e.id">{{e.examName}} · {{e.subjectName}}</option>}</select><input type="number" placeholder="Obtained marks" [(ngModel)]="form.obtainedMarks"><input placeholder="Teacher remarks" [(ngModel)]="form.remarks"><button mat-flat-button (click)="saveResult()"><mat-icon>save</mat-icon>Save Result</button></div></mat-card-content></mat-card>}
-<mat-card><mat-card-content><div class="section-title"><div><span class="eyebrow">RESULTS</span><h2>{{isStudent?'My Results':'Recent Results'}}</h2></div></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Exam</th><th>Subject</th><th>Marks</th><th>%</th><th>Grade</th><th>Status</th></tr></thead><tbody>@for(r of results;track r.id){<tr><td>{{r.studentName||r.rollNumber}}</td><td>{{r.examName}}</td><td>{{r.subjectName}}</td><td>{{r.obtainedMarks}} / {{r.maximumMarks}}</td><td>{{r.percentage}}</td><td>{{r.grade}}</td><td><span class="status-chip">{{r.resultStatus}}</span></td></tr>}@empty{<tr><td colspan="7" class="empty">No result records available.</td></tr>}</tbody></table></div></mat-card-content></mat-card></div></section>`})
-export class ExaminationComponent implements OnInit{private readonly http=inject(HttpClient);private readonly auth=inject(AuthService);private readonly snack=inject(MatSnackBar);exams:any[]=[];results:any[]=[];form:any={studentId:null,examId:null,obtainedMarks:null,remarks:''};get isStudent(){return this.auth.getRole()===Role.STUDENT;}ngOnInit(){this.load();}load(){this.http.get<any>('/api/exams?page=0&size=100&sortBy=examDate&direction=asc').subscribe({next:r=>{this.exams=r?.data?.content??r?.data??[];}});this.http.get<any>('/api/results?page=0&size=100&sortBy=id&direction=desc').subscribe({next:r=>{this.results=r?.data?.content??r?.data??[];}});}saveResult(){if(!this.form.studentId||!this.form.examId||this.form.obtainedMarks===null){this.snack.open('Student, exam and obtained marks are required.','Close',{duration:3000});return;}this.http.post<any>('/api/results',this.form).subscribe({next:()=>{this.snack.open('Result saved successfully.','Close',{duration:2500});this.form={studentId:null,examId:null,obtainedMarks:null,remarks:''};this.load();},error:e=>this.snack.open(e?.error?.message||'Result could not be saved.','Close',{duration:3500})});}}
+import { Component, inject, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import { AuthService } from "../auth/services/auth.service";
+import { Role } from "../../shared/enums/role.enum";
+@Component({
+  selector: "app-examination-workspace",
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatSnackBarModule,
+  ],
+  template: ` <section class="workspace-page">
+    <header class="workspace-header">
+      <div>
+        <span class="eyebrow">ACADEMICS</span>
+        <h1>Examination & Results</h1>
+        <p>
+          {{
+            isStudent
+              ? "View your examination schedule and results."
+              : "Schedule exams and mark student results with server-side validation."
+          }}
+        </p>
+      </div>
+      <button mat-stroked-button (click)="load()">
+        <mat-icon>refresh</mat-icon>Refresh
+      </button>
+    </header>
+    <div class="exam-grid">
+      <mat-card
+        ><mat-card-content
+          ><div class="section-title">
+            <div>
+              <span class="eyebrow">EXAM SCHEDULE</span>
+              <h2>Upcoming / active exams</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Exam</th>
+                  <th>Subject</th>
+                  <th>Semester</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Marks</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (e of exams; track e.id) {
+                  <tr>
+                    <td>{{ e.examName }}</td>
+                    <td>{{ e.subjectName }}</td>
+                    <td>{{ e.semesterName }}</td>
+                    <td>{{ e.examDate }}</td>
+                    <td>{{ e.startTime }} - {{ e.endTime }}</td>
+                    <td>{{ e.maximumMarks }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="6" class="empty">No exams available.</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div></mat-card-content
+        ></mat-card
+      >
+      @if (!isStudent) {
+        <mat-card
+          ><mat-card-content
+            ><div class="section-title">
+              <div>
+                <span class="eyebrow">RESULT ENTRY</span>
+                <h2>Mark Result</h2>
+              </div>
+              <mat-icon>grading</mat-icon>
+            </div>
+            <div class="result-form">
+              <input
+                type="number"
+                placeholder="Student ID"
+                [(ngModel)]="form.studentId"
+              /><select [(ngModel)]="form.examId">
+                <option [ngValue]="null">Select exam</option>
+                @for (e of exams; track e.id) {
+                  <option [ngValue]="e.id">
+                    {{ e.examName }} · {{ e.subjectName }}
+                  </option>
+                }</select
+              ><input
+                type="number"
+                placeholder="Obtained marks"
+                [(ngModel)]="form.obtainedMarks"
+              /><input
+                placeholder="Teacher remarks"
+                [(ngModel)]="form.remarks"
+              /><button mat-flat-button (click)="saveResult()">
+                <mat-icon>save</mat-icon>Save Result
+              </button>
+            </div></mat-card-content
+          ></mat-card
+        >
+      }
+      <mat-card
+        ><mat-card-content
+          ><div class="section-title">
+            <div>
+              <span class="eyebrow">RESULTS</span>
+              <h2>{{ isStudent ? "My Results" : "Recent Results" }}</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Exam</th>
+                  <th>Subject</th>
+                  <th>Marks</th>
+                  <th>%</th>
+                  <th>Grade</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (r of results; track r.id) {
+                  <tr>
+                    <td>{{ r.studentName || r.rollNumber }}</td>
+                    <td>{{ r.examName }}</td>
+                    <td>{{ r.subjectName }}</td>
+                    <td>{{ r.obtainedMarks }} / {{ r.maximumMarks }}</td>
+                    <td>{{ r.percentage }}</td>
+                    <td>{{ r.grade }}</td>
+                    <td>
+                      <span class="status-chip">{{ r.resultStatus }}</span>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="7" class="empty">
+                      No result records available.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div></mat-card-content
+        ></mat-card
+      >
+    </div>
+  </section>`,
+})
+export class ExaminationComponent implements OnInit {
+  private readonly http = inject(HttpClient);
+  private readonly auth = inject(AuthService);
+  private readonly snack = inject(MatSnackBar);
+  exams: any[] = [];
+  results: any[] = [];
+  form: any = {
+    studentId: null,
+    examId: null,
+    obtainedMarks: null,
+    remarks: "",
+  };
+  get isStudent() {
+    return this.auth.getRole() === Role.STUDENT;
+  }
+  ngOnInit() {
+    this.load();
+  }
+  load() {
+    this.http
+      .get<any>("/api/exams?page=0&size=100&sortBy=examDate&direction=asc")
+      .subscribe({
+        next: (r) => {
+          const d = r?.data ?? r?.result ?? r;
+          this.exams = Array.isArray(d) ? d : (d?.content ?? d?.items ?? []);
+        },
+        error: (e) =>
+          this.snack.open(
+            e?.error?.message ??
+              "Exam schedule could not be loaded. Check API access and server logs.",
+            "Close",
+            { duration: 4000 },
+          ),
+      });
+    this.http
+      .get<any>("/api/results?page=0&size=100&sortBy=id&direction=desc")
+      .subscribe({
+        next: (r) => {
+          const d = r?.data ?? r?.result ?? r;
+          this.results = Array.isArray(d) ? d : (d?.content ?? d?.items ?? []);
+        },
+        error: (e) =>
+          this.snack.open(
+            e?.error?.message ??
+              "Results could not be loaded. Check API access and server logs.",
+            "Close",
+            { duration: 4000 },
+          ),
+      });
+  }
+  saveResult() {
+    if (
+      !this.form.studentId ||
+      !this.form.examId ||
+      this.form.obtainedMarks === null
+    ) {
+      this.snack.open(
+        "Student, exam and obtained marks are required.",
+        "Close",
+        { duration: 3000 },
+      );
+      return;
+    }
+    this.http.post<any>("/api/results", this.form).subscribe({
+      next: () => {
+        this.snack.open("Result saved successfully.", "Close", {
+          duration: 2500,
+        });
+        this.form = {
+          studentId: null,
+          examId: null,
+          obtainedMarks: null,
+          remarks: "",
+        };
+        this.load();
+      },
+      error: (e) =>
+        this.snack.open(
+          e?.error?.message || "Result could not be saved.",
+          "Close",
+          { duration: 3500 },
+        ),
+    });
+  }
+}
