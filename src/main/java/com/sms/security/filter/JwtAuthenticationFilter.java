@@ -1,3 +1,4 @@
+
 package com.sms.security.filter;
 
 import java.io.IOException;
@@ -36,10 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtBlacklistService jwtBlacklistService;
 
     /**
-     * Skip JWT authentication for the public email verification endpoint.
-     *
-     * This prevents an old or expired Bearer token from blocking
-     * email verification requests.
+     * Skip JWT processing for public email verification links.
      */
     @Override
     protected boolean shouldNotFilter(
@@ -47,8 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return HttpMethod.GET.matches(request.getMethod())
                 && "/api/auth/verify-email".equals(
-                        request.getServletPath()
-                );
+                        request.getServletPath());
     }
 
     @Override
@@ -58,190 +55,154 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
+        // -------------------------------------------------
+        // 1. Read Authorization header
+        // -------------------------------------------------
+
+        String authHeader = request.getHeader("Authorization");
+
+        /*
+         * No Bearer token:
+         * Continue the filter chain without JWT processing.
+         *
+         * IMPORTANT: This call is outside the JWT try-catch
+         * so controller/service exceptions are not swallowed.
+         */
+        if (authHeader == null
+                || !authHeader.startsWith("Bearer ")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // -------------------------------------------------
+        // 2. Extract token
+        // -------------------------------------------------
+
+        String token = authHeader.substring(7).trim();
+
+        if (token.isEmpty()) {
+
+            log.warn("Empty Bearer token received for {} {}",
+                    request.getMethod(),
+                    request.getRequestURI());
+
+            SecurityResponseWriter.sendError(
+                    response,
+                    "Invalid authentication token");
+
+            return;
+        }
+
+        // -------------------------------------------------
+        // 3. Validate JWT and establish authentication
+        // -------------------------------------------------
+
         try {
 
-            // ==========================================
-            // 1. Read Authorization Header
-            // ==========================================
-
-            String authHeader = request.getHeader("Authorization");
-
-            /*
-             * No Authorization header or request is not
-             * using the Bearer authentication scheme.
-             *
-             * Let Spring Security continue processing.
-             */
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-
-                filterChain.doFilter(request, response);
-                return;
-            }
-
-            // ==========================================
-            // 2. Extract JWT Token
-            // ==========================================
-
-            String token = authHeader.substring(7).trim();
-
-            /*
-             * Prevent processing an empty Bearer token.
-             */
-            if (token.isEmpty()) {
-
-                log.warn("Empty JWT token received");
-
-                SecurityResponseWriter.sendError(
-                        response,
-                        "Invalid authentication token"
-                );
-
-                return;
-            }
-
-            log.debug("JWT token received");
-
-            // ==========================================
-            // 3. Check Blacklisted Token
-            // ==========================================
-
+            // Check token blacklist
             if (jwtBlacklistService.isBlacklisted(token)) {
 
-                log.warn("Blocked blacklisted JWT token");
+                log.warn("Blacklisted JWT token rejected");
 
                 SecurityResponseWriter.sendError(
                         response,
-                        "Token expired or logged out"
-                );
+                        "Token expired or logged out");
 
                 return;
             }
 
-            // ==========================================
-            // 4. Extract Username
-            // ==========================================
-
+            // Extract username from JWT
             String username = jwtService.extractUsername(token);
 
             if (username == null || username.isBlank()) {
 
-                log.warn("Username not found in JWT token");
+                log.warn("JWT does not contain a valid username");
 
                 SecurityResponseWriter.sendError(
                         response,
-                        "Invalid authentication token"
-                );
+                        "Invalid authentication token");
 
                 return;
             }
 
-            log.debug("JWT username extracted: {}", username);
+            // Avoid replacing an existing authentication
+            if (SecurityContextHolder.getContext()
+                    .getAuthentication() == null) {
 
-            // ==========================================
-            // 5. Check Existing Authentication
-            // ==========================================
+                // Load user details
+                UserDetails userDetails =
+                        userDetailsService.loadUserByUsername(username);
 
-            if (SecurityContextHolder
-                    .getContext()
-                    .getAuthentication() != null) {
+                // Validate token against the loaded user
+                if (!jwtService.isTokenValid(
+                        token,
+                        userDetails.getUsername())) {
 
-                filterChain.doFilter(request, response);
-                return;
+                    log.warn("Invalid or expired JWT rejected");
+
+                    SecurityResponseWriter.sendError(
+                            response,
+                            "Invalid or expired token");
+
+                    return;
+                }
+
+                // Create authenticated principal
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities());
+
+                // Set authentication in Spring Security context
+                SecurityContextHolder.getContext()
+                        .setAuthentication(authentication);
+
+                log.debug("JWT authentication successful");
             }
-
-            // ==========================================
-            // 6. Load User Details
-            // ==========================================
-
-            UserDetails userDetails =
-                    userDetailsService.loadUserByUsername(username);
-
-            // ==========================================
-            // 7. Validate JWT
-            // ==========================================
-
-            if (!jwtService.isTokenValid(
-                    token,
-                    userDetails.getUsername())) {
-
-                log.warn(
-                        "Invalid JWT token for user: {}",
-                        username
-                );
-
-                SecurityResponseWriter.sendError(
-                        response,
-                        "Invalid or expired token"
-                );
-
-                return;
-            }
-
-            // ==========================================
-            // 8. Create Authentication
-            // ==========================================
-
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
-
-            // ==========================================
-            // 9. Set Authentication in SecurityContext
-            // ==========================================
-
-            SecurityContextHolder
-                    .getContext()
-                    .setAuthentication(authentication);
-
-            log.debug(
-                    "JWT authentication successful for user: {}",
-                    username
-            );
 
         } catch (JwtException e) {
 
-            /*
-             * JWT parsing, signature or expiration related errors.
-             *
-             * Do not expose internal JWT exception details
-             * to the client.
-             */
-            log.warn(
-                    "JWT validation failed: {}",
-                    e.getMessage()
-            );
+            // JWT parsing, signature or expiration failure
+            log.warn("JWT validation failed: {}",
+                    e.getClass().getSimpleName());
+
+            SecurityContextHolder.clearContext();
 
             SecurityResponseWriter.sendError(
                     response,
-                    "Invalid or expired token"
-            );
+                    "Invalid or expired token");
 
             return;
 
         } catch (Exception e) {
 
             /*
-             * Unexpected server-side error.
+             * Errors within JWT processing only.
+             * The downstream filter chain is not called here,
+             * so controller/service exceptions cannot be
+             * mistaken for JWT processing errors.
              */
-            log.error(
-                    "Unexpected error during JWT authentication",
-                    e
-            );
+            log.error("JWT authentication processing failed. "
+                            + "Request: {} {}. Exception: {}",
+                    request.getMethod(),
+                    request.getRequestURI(),
+                    e.getClass().getSimpleName(),
+                    e);
+
+            SecurityContextHolder.clearContext();
 
             SecurityResponseWriter.sendError(
                     response,
-                    "Authentication failed"
-            );
+                    "Authentication failed");
 
             return;
         }
 
-        // ==========================================
-        // 10. Continue Filter Chain
-        // ==========================================
+        // -------------------------------------------------
+        // 4. Continue the filter chain OUTSIDE the try-catch
+        // -------------------------------------------------
 
         filterChain.doFilter(request, response);
     }
