@@ -57,9 +57,9 @@ public class EmailServiceImpl implements EmailService {
         log.info("========== PASSWORD RESET EMAIL ==========");
 
 
-        log.info("Receiver Email : {}", toEmail);
+        log.info("Receiver Email : {}", toEmail);  //bad me hatana he
 
-        log.info("Token Generated : {}", token);
+        log.info("Token Generated : {}", token); // bad me hatana he
 
 
 
@@ -228,14 +228,43 @@ public class EmailServiceImpl implements EmailService {
             String subject,
             String body
     ) {
+        if (to == null || to.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Recipient email must not be blank."
+            );
+        }
 
-        SimpleMailMessage message =
-                new SimpleMailMessage();
+        if (fromEmail == null || fromEmail.isBlank()) {
+            throw new IllegalStateException(
+                    "MAIL_FROM is not configured."
+            );
+        }
 
-        message.setTo(to);
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom(fromEmail.trim());
+        message.setTo(to.trim());
         message.setSubject(subject);
         message.setText(body);
 
-        mailSender.send(message);
+        try {
+            mailSender.send(message);
+
+            log.info(
+                    "Email sent successfully. Type: {}, recipient: {}",
+                    subject,
+                    to
+            );
+
+        } catch (MailException exception) {
+            log.error(
+                    "Email delivery failed. Type: {}, recipient: {}",
+                    subject,
+                    to,
+                    exception
+            );
+
+            throw exception;
+        }
     }
 }
