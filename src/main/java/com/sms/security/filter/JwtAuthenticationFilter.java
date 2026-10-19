@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +34,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final CustomUserDetailsService userDetailsService;
     private final JwtBlacklistService jwtBlacklistService;
+
+    /**
+     * Skip JWT authentication for the public email verification endpoint.
+     *
+     * This prevents an old or expired Bearer token from blocking
+     * email verification requests.
+     */
+    @Override
+    protected boolean shouldNotFilter(
+            HttpServletRequest request) {
+
+        return HttpMethod.GET.matches(request.getMethod())
+                && "/api/auth/verify-email".equals(
+                        request.getServletPath()
+                );
+    }
 
     @Override
     protected void doFilterInternal(

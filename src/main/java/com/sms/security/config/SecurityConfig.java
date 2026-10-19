@@ -122,13 +122,14 @@ public class SecurityConfig {
                 // =================================================
 
                 .requestMatchers(
-                    "/api/auth/register",
-                    "/api/auth/login",
-                    "/api/auth/forgot-password",
-                    "/api/auth/verify-forgot-password-otp",
-                    "/api/auth/reset-password",
-                    "/api/auth/resend-verification",
-                    "/api/auth/refresh-token"
+                		"/api/auth/register",
+                	    "/api/auth/login",
+                	    "/api/auth/forgot-password",
+                	    "/api/auth/verify-forgot-password-otp",
+                	    "/api/auth/reset-password",
+                	    "/api/auth/resend-verification",
+                	    "/api/auth/refresh-token",
+                	    "/api/auth/verification-status"
                 ).permitAll()
 
 
@@ -138,7 +139,8 @@ public class SecurityConfig {
 
                 .requestMatchers(
                     HttpMethod.GET,
-                    "/api/auth/verify-email"
+                    "/api/auth/verify-email",
+                    "/api/auth/verify-email/**"
                 ).permitAll()
 
 

@@ -243,13 +243,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 		try {
 		    emailService.sendVerificationEmail(
-		        user.getEmail(),
-		        token
+		            user.getEmail(),
+		            token
 		    );
-		} catch (org.springframework.mail.MailException e) {
+		} catch (Exception e) {
 		    log.error(
-		        "Verification email failed for registered user",
-		        e
+		            "Verification email failed for user: {}",
+		            user.getEmail(),
+		            e
 		    );
 		}
 

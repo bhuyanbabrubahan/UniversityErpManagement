@@ -1,26 +1,30 @@
+
 package com.sms.email.serviceImpl;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sms.email.service.EmailService;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class EmailServiceImpl implements EmailService {
 
-
-    private final JavaMailSender mailSender;
-
+    @Value("${resend.api.key}")
+    private String apiKey;
 
     @Value("${app.mail.from}")
     private String fromEmail;
@@ -28,71 +32,23 @@ public class EmailServiceImpl implements EmailService {
     @Value("${app.mail.reset-password-url}")
     private String resetPasswordUrl;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // SMTP Debug purpose
-
-    @Value("${spring.mail.host}")
-    private String host;
-
-
-    @Value("${spring.mail.port}")
-    private String port;
-
-
-    @Value("${spring.mail.username}")
-    private String username;
-
-
-    @Value("${spring.mail.password}")
-    private String password;
-
-
+    private final HttpClient httpClient = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(10))
+            .build();
 
     @Override
-    public void sendPasswordResetEmail(
-            String toEmail,
-            String token) {
-
-
-        log.info("========== PASSWORD RESET EMAIL ==========");
-
-
-        log.info("Receiver Email : {}", toEmail);  //bad me hatana he
-
-        log.info("Token Generated : {}", token); // bad me hatana he
-
-
+    public void sendPasswordResetEmail(String toEmail, String token) {
 
         String resetLink = resetPasswordUrl + token;
 
-
-        log.info("Reset Link : {}", resetLink);
-
-
-
-        SimpleMailMessage message =
-                new SimpleMailMessage();
-
-
-
-        message.setFrom(fromEmail);
-
-        message.setTo(toEmail);
-
-
-        message.setSubject(
-                "Password Reset Request - University Management System"
-        );
-
-
-
-        message.setText("""
-                
+        String body = """
                 Hello,
 
                 We received a request to reset your password.
 
-                Please click the link below to reset your password:
+                Please use this link to reset your password:
 
                 %s
 
@@ -103,86 +59,42 @@ public class EmailServiceImpl implements EmailService {
 
                 Regards,
                 University Management System
-                
-                """.formatted(resetLink));
+                """.formatted(resetLink);
 
-
-
-        try {
-
-
-            log.info("Sending email through SMTP server...");
-
-
-            mailSender.send(message);
-
-
-
-            log.info(
-                "Password reset email sent successfully to {}",
-                toEmail
-            );
-
-
-        }
-        catch (MailException exception) {
-
-
-            log.error(
-                "Email sending failed for {}",
-                toEmail
-            );
-
-
-            log.error(
-                "Mail Error : {}",
-                exception.getMessage()
-            );
-
-
-            throw exception;
-        }
-
-
-        log.info("==========================================");
+        sendEmail(
+                toEmail,
+                "Password Reset Request - University Management System",
+                body
+        );
     }
-
-
 
     @Override
     public void sendVerificationEmail(String email, String token) {
 
         String verificationLink =
-        		//"http://localhost:4200/verify-email?token=" + token;
-        		"https://universityerpmanagement-production.up.railway.app/api/auth/verify-email?token=" + token;
-        String subject = "Verify Your Email";
+                "https://universityerpmanagement-production.up.railway.app"
+                + "/api/auth/verify-email?token=" + token;
 
         String body = """
                 Dear User,
 
                 Thank you for registering.
 
-                Please click the link below to verify your email.
+                Please click the link below to verify your email:
 
                 %s
 
                 This link will expire in 24 hours.
 
-                If you did not register, please ignore this email.
-
                 Regards,
                 Student Management System
                 """.formatted(verificationLink);
 
-        sendEmail(email, subject, body);
+        sendEmail(email, "Verify Your Email", body);
     }
-
-
 
     @Override
     public void sendWelcomeEmail(String email, String fullName) {
-
-        String subject = "Welcome to Student Management System";
 
         String body = """
                 Dear %s,
@@ -197,32 +109,31 @@ public class EmailServiceImpl implements EmailService {
                 Student Management System
                 """.formatted(fullName);
 
-        sendEmail(email, subject, body);
+        sendEmail(
+                email,
+                "Welcome to Student Management System",
+                body
+        );
     }
-
-
 
     @Override
     public void sendPasswordChangedEmail(String email) {
-
-        String subject = "Password Changed Successfully";
 
         String body = """
                 Dear User,
 
                 Your account password has been changed successfully.
 
-                If you did not perform this action, please contact the administrator immediately.
+                If you did not perform this action,
+                please contact the administrator immediately.
 
                 Regards,
                 Student Management System
                 """;
 
-        sendEmail(email, subject, body);
+        sendEmail(email, "Password Changed Successfully", body);
     }
 
-    
-    //Helper method 
     private void sendEmail(
             String to,
             String subject,
@@ -234,37 +145,81 @@ public class EmailServiceImpl implements EmailService {
             );
         }
 
+        if (apiKey == null || apiKey.isBlank()) {
+            throw new IllegalStateException(
+                    "RESEND_API_KEY is not configured."
+            );
+        }
+
         if (fromEmail == null || fromEmail.isBlank()) {
             throw new IllegalStateException(
                     "MAIL_FROM is not configured."
             );
         }
 
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setFrom(fromEmail.trim());
-        message.setTo(to.trim());
-        message.setSubject(subject);
-        message.setText(body);
-
         try {
-            mailSender.send(message);
+            ObjectNode payload = objectMapper.createObjectNode();
+
+            payload.put("from", fromEmail.trim());
+            payload.put("subject", subject);
+            payload.put("text", body);
+
+            ArrayNode recipients = payload.putArray("to");
+            recipients.add(to.trim());
+
+            String json = objectMapper.writeValueAsString(payload);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.resend.com/emails"))
+                    .timeout(Duration.ofSeconds(20))
+                    .header("Authorization", "Bearer " + apiKey)
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(
+                            json, StandardCharsets.UTF_8))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(
+                    request,
+                    HttpResponse.BodyHandlers.ofString()
+            );
+
+            if (response.statusCode() < 200
+                    || response.statusCode() >= 300) {
+
+                // API key, email body aur reset token log nahi karte.
+                log.error(
+                        "Email API failed. HTTP status: {}, response: {}",
+                        response.statusCode(),
+                        response.body()
+                );
+
+                throw new IllegalStateException(
+                        "Email delivery request failed with HTTP status "
+                                + response.statusCode()
+                );
+            }
 
             log.info(
-                    "Email sent successfully. Type: {}, recipient: {}",
+                    "Email API accepted request. Type: {}, HTTP status: {}",
                     subject,
-                    to
+                    response.statusCode()
             );
 
-        } catch (MailException exception) {
-            log.error(
-                    "Email delivery failed. Type: {}, recipient: {}",
-                    subject,
-                    to,
-                    exception
+        } catch (IOException e) {
+
+            log.error("Could not communicate with email API.", e);
+
+            throw new IllegalStateException(
+                    "Unable to communicate with email service.", e
             );
 
-            throw exception;
+        } catch (InterruptedException e) {
+
+            Thread.currentThread().interrupt();
+
+            throw new IllegalStateException(
+                    "Email request was interrupted.", e
+            );
         }
     }
 }
