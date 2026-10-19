@@ -233,7 +233,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		verificationToken.setToken(token);
 		verificationToken.setUser(user);
 		verificationToken.setExpiryDate(
-		        LocalDateTime.now().plusMinutes(24)
+		        LocalDateTime.now().plusHours(24)
 		);
 		verificationToken.setVerified(false);
 
@@ -242,21 +242,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		);
 
 		try {
-
 		    emailService.sendVerificationEmail(
-		            user.getEmail(),
-		            token
+		        user.getEmail(),
+		        token
 		    );
-
-		}
-		catch(Exception e){
-
+		} catch (org.springframework.mail.MailException e) {
 		    log.error(
-		        "Verification email failed : {}",
-		        user.getEmail()
+		        "Verification email failed for registered user",
+		        e
 		    );
-
 		}
+
 		
 		// 6. Response
 
