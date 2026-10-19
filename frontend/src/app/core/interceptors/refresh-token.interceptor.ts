@@ -1,142 +1,184 @@
-import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
+import {
+	HttpErrorResponse,
+	HttpInterceptorFn
+} from '@angular/common/http';
 
-import { inject } from "@angular/core";
+import { inject } from '@angular/core';
 
 import {
-  BehaviorSubject,
-  catchError,
-  filter,
-  switchMap,
-  take,
-  throwError,
-} from "rxjs";
+	BehaviorSubject,
+	catchError,
+	filter,
+	switchMap,
+	take,
+	throwError
+} from 'rxjs';
 
-import { AuthService } from "../../features/auth/services/auth.service";
-import { StorageService } from "../services/storage.service";
+import { AuthService } from '../../features/auth/services/auth.service';
+import { StorageService } from '../services/storage.service';
 
 let isRefreshing = false;
 
-const refreshTokenSubject = new BehaviorSubject<string | null>(null);
+const refreshTokenSubject =
+	new BehaviorSubject<string | null>(null);
 
-export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  const storage = inject(StorageService);
+export const refreshTokenInterceptor: HttpInterceptorFn =
+	(req, next) => {
 
-  return next(req).pipe(
-    catchError((error: HttpErrorResponse) => {
-      // ---------------------------------------------------
-      // Only handle 401
-      // ---------------------------------------------------
+		const authService = inject(AuthService);
+		const storage = inject(StorageService);
 
-      if (error.status !== 401) {
-        return throwError(() => error);
-      }
+		return next(req).pipe(
 
-      // ---------------------------------------------------
-      // NEVER refresh login / refresh API itself
-      // ---------------------------------------------------
+			catchError((error: HttpErrorResponse) => {
 
-      if (
-        req.url.includes("/api/auth/") ||
-        req.url.includes("/api/login") ||
-        req.url.includes("/api/otp/")
-      ) {
-        return throwError(() => error);
-      }
+				// ---------------------------------------------------
+				// Only handle 401
+				// ---------------------------------------------------
 
-      const refreshToken = storage.getRefreshToken();
+				if (error.status !== 401) {
+					return throwError(() => error);
+				}
 
-      if (!refreshToken) {
-        console.error("[REFRESH] No refresh token available");
+				// ---------------------------------------------------
+				// NEVER refresh login / refresh API itself
+				// ---------------------------------------------------
 
-        return throwError(() => error);
-      }
+				if (
+					req.url.includes('/api/auth/') ||
+					req.url.includes('/api/login') ||
+					req.url.includes('/api/otp/')
+				) {
+					return throwError(() => error);
+				}
 
-      // ---------------------------------------------------
-      // Another refresh already running
-      // ---------------------------------------------------
+				const refreshToken =
+					storage.getRefreshToken();
 
-      if (isRefreshing) {
-        return refreshTokenSubject.pipe(
-          filter((token) => token !== null),
+				if (!refreshToken) {
 
-          take(1),
+					console.error(
+						'[REFRESH] No refresh token available'
+					);
 
-          switchMap((token) => {
-            const retryRequest = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
+					return throwError(() => error);
+				}
 
-            return next(retryRequest);
-          }),
-        );
-      }
+				// ---------------------------------------------------
+				// Another refresh already running
+				// ---------------------------------------------------
 
-      // ---------------------------------------------------
-      // START REFRESH
-      // ---------------------------------------------------
+				if (isRefreshing) {
 
-      isRefreshing = true;
+					return refreshTokenSubject.pipe(
 
-      refreshTokenSubject.next(null);
+						filter(token => token !== null),
 
-      console.log("[REFRESH] Access token expired. Refreshing...");
+						take(1),
 
-      return authService.refreshToken(refreshToken).pipe(
-        switchMap((response) => {
-          const data = response?.data;
+						switchMap(token => {
 
-          const newAccessToken = data?.accessToken;
+							const retryRequest =
+								req.clone({
+									setHeaders: {
+										Authorization:
+											`Bearer ${token}`
+									}
+								});
 
-          const newRefreshToken = data?.refreshToken;
+							return next(retryRequest);
+						})
+					);
+				}
 
-          if (!newAccessToken) {
-            throw new Error("Refresh API did not return accessToken.");
-          }
+				// ---------------------------------------------------
+				// START REFRESH
+				// ---------------------------------------------------
 
-          // Save new access token
-          storage.saveAccessToken(newAccessToken);
+				isRefreshing = true;
 
-          // Save refresh token if backend returns one
-          if (newRefreshToken) {
-            storage.saveRefreshToken(newRefreshToken);
-          }
+				refreshTokenSubject.next(null);
 
-          isRefreshing = false;
+				console.log(
+					'[REFRESH] Access token expired. Refreshing...'
+				);
 
-          refreshTokenSubject.next(newAccessToken);
+				return authService
+					.refreshToken(refreshToken)
+					.pipe(
 
-          console.log("[REFRESH] Token refreshed successfully");
+						switchMap(response => {
 
-          const retryRequest = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${newAccessToken}`,
-            },
-          });
+							const data =
+								response?.data;
 
-          return next(retryRequest);
-        }),
+							const newAccessToken =
+								data?.accessToken;
 
-        catchError((refreshError) => {
-          isRefreshing = false;
+							const newRefreshToken =
+								data?.refreshToken;
 
-          refreshTokenSubject.next(null);
+							if (!newAccessToken) {
 
-          const status =
-            refreshError instanceof HttpErrorResponse ? refreshError.status : 0;
+								throw new Error(
+									'Refresh API did not return accessToken.'
+								);
+							}
 
-          // A rejected/expired/revoked refresh token cannot recover the
-          // session. Clear stale credentials only for definitive auth
-          // failures; retain them for temporary network/server failures.
-          if ([400, 401, 403, 404].includes(status)) {
-            authService.logout();
-          }
+							// Save new access token
+							storage.saveAccessToken(
+								newAccessToken
+							);
 
-          return throwError(() => refreshError);
-        }),
-      );
-    }),
-  );
-};
+							// Save refresh token if backend returns one
+							if (newRefreshToken) {
+
+								storage.saveRefreshToken(
+									newRefreshToken
+								);
+							}
+
+							isRefreshing = false;
+
+							refreshTokenSubject.next(
+								newAccessToken
+							);
+
+							console.log(
+								'[REFRESH] Token refreshed successfully'
+							);
+
+							const retryRequest =
+								req.clone({
+									setHeaders: {
+										Authorization:
+											`Bearer ${newAccessToken}`
+									}
+								});
+
+							return next(retryRequest);
+						}),
+
+						catchError(refreshError => {
+
+							isRefreshing = false;
+
+							refreshTokenSubject.next(null);
+
+							const status = refreshError instanceof HttpErrorResponse
+								? refreshError.status
+								: 0;
+
+							// A rejected/expired/revoked refresh token cannot recover the
+							// session. Clear stale credentials only for definitive auth
+							// failures; retain them for temporary network/server failures.
+							if ([400, 401, 403, 404].includes(status)) {
+								authService.logout();
+							}
+
+							return throwError(() => refreshError);
+						})
+					);
+			})
+		);
+	};
